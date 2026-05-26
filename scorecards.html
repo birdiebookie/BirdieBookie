@@ -1,10 +1,72 @@
+# Replace Everything Inside `scorecards.html` With This
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Live Scorecards - BirdieBookie</title>
+<title>BirdieBookie Scorecards</title>
 <link rel="stylesheet" href="style.css">
+
+<style>
+.score-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.score-table th,
+.score-table td {
+  border: 1px solid rgba(255,255,255,0.15);
+  padding: 8px;
+  text-align: center;
+}
+
+.score-table input {
+  width: 55px;
+  padding: 6px;
+  text-align: center;
+  background: #111;
+  color: white;
+  border: 1px solid #333;
+  border-radius: 6px;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.summary-card {
+  background: rgba(255,255,255,0.05);
+  padding: 20px;
+  border-radius: 14px;
+}
+
+.player-inputs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.player-inputs input {
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #333;
+  background: #111;
+  color: white;
+}
+
+.live-total {
+  font-size: 28px;
+  color: #44ff88;
+  margin-top: 15px;
+}
+</style>
 </head>
 
 <body>
@@ -22,85 +84,30 @@
 </nav>
 
 <div class="hero-content">
-
-<h1>📊 Live Scorecards</h1>
-
-<p>
-Track scores, skins, chips, nassaus and gambling action during the round.
-</p>
-
+<h1>📊 Live Gambling Scorecard</h1>
+<p>Track scores, skins, chips and Nassau action live during the round.</p>
 </div>
 
 </header>
 
 <section class="section">
+<h2>Players</h2>
 
-<h2>Round Setup</h2>
-
-<div class="card-grid">
-
-<div class="card">
-<h3>Player 1</h3>
-<p>Enter golfer name</p>
+<div class="player-inputs">
+<input type="text" id="p1name" placeholder="Player 1">
+<input type="text" id="p2name" placeholder="Player 2">
+<input type="text" id="p3name" placeholder="Player 3">
+<input type="text" id="p4name" placeholder="Player 4">
 </div>
-
-<div class="card">
-<h3>Player 2</h3>
-<p>Enter golfer name</p>
-</div>
-
-<div class="card">
-<h3>Player 3</h3>
-<p>Enter golfer name</p>
-</div>
-
-<div class="card">
-<h3>Player 4</h3>
-<p>Enter golfer name</p>
-</div>
-
-</div>
-
 </section>
 
 <section class="section dark">
-
-<h2>Track Your Action</h2>
-
-<div class="card-grid">
-
-<div class="card">
-<h3>💰 Nassau</h3>
-<p>Front 9, Back 9 and Total bets.</p>
-</div>
-
-<div class="card">
-<h3>🎯 Skins</h3>
-<p>Carryovers and hole winners.</p>
-</div>
-
-<div class="card">
-<h3>💵 Chips</h3>
-<p>Birdies, sandies and junk tracking.</p>
-</div>
-
-<div class="card">
-<h3>🔨 Hammer</h3>
-<p>Track presses and doubles live.</p>
-</div>
-
-</div>
-
-</section>
-
-<section class="section">
-
 <h2>18 Hole Scorecard</h2>
 
 <div class="card">
 
-<table width="100%" cellpadding="10">
-
+<table class="score-table">
+<thead>
 <tr>
 <th>Hole</th>
 <th>P1</th>
@@ -108,43 +115,122 @@ Track scores, skins, chips, nassaus and gambling action during the round.
 <th>P3</th>
 <th>P4</th>
 </tr>
-
-<tr><td>1</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
-<tr><td>2</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
-<tr><td>3</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
-<tr><td>4</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
-<tr><td>5</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
-<tr><td>6</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
-<tr><td>7</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
-<tr><td>8</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
-<tr><td>9</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
-<tr><td>10</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
-<tr><td>11</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
-<tr><td>12</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
-<tr><td>13</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
-<tr><td>14</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
-<tr><td>15</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
-<tr><td>16</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
-<tr><td>17</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
-<tr><td>18</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
-
+</thead>
+<tbody id="scoreRows"></tbody>
 </table>
 
 </div>
+</section>
 
+<section class="section">
+<h2>Live Totals</h2>
+
+<div class="summary-grid">
+
+<div class="summary-card">
+<h3>Player 1</h3>
+<div class="live-total" id="p1total">0</div>
+</div>
+
+<div class="summary-card">
+<h3>Player 2</h3>
+<div class="live-total" id="p2total">0</div>
+</div>
+
+<div class="summary-card">
+<h3>Player 3</h3>
+<div class="live-total" id="p3total">0</div>
+</div>
+
+<div class="summary-card">
+<h3>Player 4</h3>
+<div class="live-total" id="p4total">0</div>
+</div>
+
+</div>
+</section>
+
+<section class="section dark">
+<h2>Side Action Tracker</h2>
+
+<div class="summary-grid">
+
+<div class="summary-card">
+<h3>💰 Nassau</h3>
+<p>Front 9 / Back 9 / Total tracking.</p>
+</div>
+
+<div class="summary-card">
+<h3>🎯 Skins</h3>
+<p>Track carryovers and hole wins.</p>
+</div>
+
+<div class="summary-card">
+<h3>💵 Chips</h3>
+<p>Birdies, sandies and junk game action.</p>
+</div>
+
+<div class="summary-card">
+<h3>🔨 Hammer</h3>
+<p>Track presses and doubled bets.</p>
+</div>
+
+</div>
 </section>
 
 <footer>
-
 <h3>BirdieBookie</h3>
-
 <p>Gamblers with a golfing problem</p>
-
-<p class="footer-small">
-Play smart. Respect the game.
-</p>
-
 </footer>
+
+<script>
+const scoreRows = document.getElementById('scoreRows');
+
+for (let i = 1; i <= 18; i++) {
+  scoreRows.innerHTML += `
+    <tr>
+      <td>${i}</td>
+      <td><input type="number" min="1" onchange="updateTotals()" class="p1"></td>
+      <td><input type="number" min="1" onchange="updateTotals()" class="p2"></td>
+      <td><input type="number" min="1" onchange="updateTotals()" class="p3"></td>
+      <td><input type="number" min="1" onchange="updateTotals()" class="p4"></td>
+    </tr>
+  `;
+}
+
+function totalScores(className) {
+  let total = 0;
+  document.querySelectorAll('.' + className).forEach(input => {
+    total += Number(input.value) || 0;
+  });
+  return total;
+}
+
+function updateTotals() {
+  document.getElementById('p1total').innerText = totalScores('p1');
+  document.getElementById('p2total').innerText = totalScores('p2');
+  document.getElementById('p3total').innerText = totalScores('p3');
+  document.getElementById('p4total').innerText = totalScores('p4');
+}
+</script>
 
 </body>
 </html>
+```
+
+Then:
+
+1. Delete everything currently inside `scorecards.html`
+2. Paste this full code
+3. Commit changes
+4. Commit message:
+   `Build live scorecard system`
+
+This version includes:
+
+* editable player names
+* 18-hole live scoring
+* automatic running totals
+* gambling tracker sections
+* mobile-friendly layout
+* real interactive score inputs
