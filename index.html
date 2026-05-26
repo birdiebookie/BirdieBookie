@@ -1,104 +1,140 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>BirdieBookie</title>
-
-  <style>
-    body {
-      margin: 0;
-      background: black;
-      color: white;
-      font-family: Arial;
-      text-align: center;
-    }
-
-    .hero {
-      padding: 80px 20px;
-      background: #111;
-    }
-
-    h1 {
-      font-size: 64px;
-      color: #00ff99;
-    }
-
-    .subtitle {
-      font-size: 28px;
-      margin-bottom: 40px;
-    }
-
-    .button {
-      display: inline-block;
-      margin: 10px;
-      padding: 15px 30px;
-      background: #00ff99;
-      color: black;
-      text-decoration: none;
-      border-radius: 12px;
-      font-size: 20px;
-      font-weight: bold;
-    }
-
-    .section {
-      padding: 60px 20px;
-    }
-
-    .game-box {
-      background: #1a1a1a;
-      margin: 15px auto;
-      padding: 20px;
-      border-radius: 14px;
-      max-width: 500px;
-      font-size: 28px;
-    }
-
-    footer {
-      padding: 40px;
-      color: gray;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BirdieBookie</title>
+<link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<div class="hero">
-  <h1>BirdieBookie</h1>
+<header class="hero">
+  <nav>
+    <div class="logo">Birdie<span>Bookie</span></div>
 
-  <div class="subtitle">
-    Gamblers with a golfing problem
+    <div class="nav-links">
+      <a href="#games">Games</a>
+      <a href="#tools">Tools</a>
+      <a href="#scorecards">Scorecards</a>
+      <a href="#rules">Rules</a>
+    </div>
+  </nav>
+
+  <div class="hero-content">
+    <h1>BirdieBookie</h1>
+    <p>Gamblers with a golfing problem</p>
+
+    <div class="hero-buttons">
+      <a href="#games" class="btn green">Featured Games</a>
+      <a href="#tools" class="btn">Calculators</a>
+      <a href="#scorecards" class="btn">Live Scorecards</a>
+    </div>
   </div>
+</header>
 
-  <a class="button" href="#games">Games</a>
-  <a class="button" href="#calculators">Calculators</a>
-  <a class="button" href="#scorecards">Scorecards</a>
-</div>
+<section id="games" class="section">
+  <h2>Featured Golf Gambling Games</h2>
 
-<div class="section" id="games">
-  <h2>Featured Games</h2>
+  <div class="card-grid">
 
-  <d<a href="wolf.html" class="game-box">🐺 Wolf</a>iv>
-  <div class="game-box">💰 Nassau</div>
-  <div class="game-box">⛳ Skins</div>
-  <div class="game-box">😈 Leftist</div>
-  <div class="game-box">🔥 Hammer</div>
-</div>
+    <div class="card">
+      <h3>💵 Chips Game</h3>
+      <p>The king of golf side action. Birdies, sandies, greenies, barkies and junk.</p>
+    </div>
 
-<div class="section" id="calculators">
-  <h2>Calculators</h2>
+    <div class="card">
+      <h3>💰 Nassau</h3>
+      <p>Classic front 9, back 9 and total match betting.</p>
+    </div>
 
-  <div class="game-box">🧮 Nassau Calculator</div>
-  <div class="game-box">📊 Skins Calculator</div>
-</div>
+    <div class="card">
+      <h3>⬅️ Lefty</h3>
+      <p>Player farthest left becomes the automatic challenger against the group.</p>
+    </div>
 
-<div class="section" id="scorecards">
-  <h2>Scorecards</h2>
+    <div class="card">
+      <h3>↔️ Left Right</h3>
+      <p>Two players on the left versus two players on the right in a high action team game.</p>
+    </div>
 
-  <div class="game-box">📱 Wolf Scorecard</div>
-  <div class="game-box">🎯 Skins Tracker</div>
-</div>
+    <div class="card">
+      <h3>🎯 Skins</h3>
+      <p>Win the hole outright and take the skin.</p>
+    </div>
+
+    <div class="card">
+      <h3>🔨 Hammer</h3>
+      <p>Press the bet and double the pressure.</p>
+    </div>
+
+    <div class="card">
+      <h3>🎲 Vegas</h3>
+      <p>Big swings. Big numbers. Big gambling energy.</p>
+    </div>
+
+  </div>
+</section>
+
+<section id="tools" class="section dark">
+  <h2>Golf Gambling Tools</h2>
+
+  <div class="card-grid">
+
+    <div class="card">
+      <h3>Press Calculator</h3>
+      <p>Auto-track presses and payouts during the round.</p>
+    </div>
+
+    <div class="card">
+      <h3>Nassau Splitter</h3>
+      <p>Instantly calculate front, back and total payouts.</p>
+    </div>
+
+    <div class="card">
+      <h3>Random Team Picker</h3>
+      <p>Create fair teams with one click.</p>
+    </div>
+
+    <div class="card">
+      <h3>Side Game Generator</h3>
+      <p>Generate random gambling formats for your foursome.</p>
+    </div>
+
+  </div>
+</section>
+
+<section id="scorecards" class="section">
+  <h2>Live Scorecards</h2>
+
+  <div class="scorecard-box">
+    <p>
+      Keep track of scores, skins, chips, nassaus and payouts live during the round.
+    </p>
+
+    <a href="#" class="btn green">Start Round</a>
+  </div>
+</section>
+
+<section id="rules" class="section dark">
+  <h2>Rules Hub</h2>
+
+  <div class="card-grid">
+
+    <div class="card"><h3>Chips</h3></div>
+    <div class="card"><h3>Nassau</h3></div>
+    <div class="card"><h3>Lefty</h3></div>
+    <div class="card"><h3>Left Right</h3></div>
+    <div class="card"><h3>Skins</h3></div>
+    <div class="card"><h3>Vegas</h3></div>
+
+  </div>
+</section>
 
 <footer>
-  More degeneracy coming soon.
+  <h3>BirdieBookie</h3>
+  <p>Gamblers with a golfing problem</p>
+  <p class="footer-small">Play smart. Respect the game.</p>
 </footer>
 
 </body>
