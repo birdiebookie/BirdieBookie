@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>BirdieBookie</title>
-
-  <style>
-    body {
-      margin: 0;
-      background: #0b0b0b;
-      color: white;
-      font-family: Arial;
+font-family: Arial;
       text-align: center;
     }
 
@@ -18,13 +8,17 @@
     }
 
     h1 {
-      font-size: 60px;
-      margin-bottom: 10px;
+      font-size: 64px;
       color: #00ff99;
+      margin-bottom: 10px;
     }
 
     h2 {
-      font-size: 30px;
+      font-size: 42px;
+    }
+
+    .subtitle {
+      font-size: 28px;
       margin-bottom: 40px;
     }
 
@@ -35,22 +29,22 @@
       background: #00ff99;
       color: black;
       text-decoration: none;
-      border-radius: 10px;
+      border-radius: 12px;
       font-weight: bold;
       font-size: 20px;
     }
 
-    .games {
-      padding: 50px 20px;
+    .section {
+      padding: 60px 20px;
     }
 
     .game-box {
       background: #1a1a1a;
       margin: 15px auto;
       padding: 20px;
-      border-radius: 12px;
-      max-width: 400px;
-      font-size: 24px;
+      border-radius: 14px;
+      max-width: 500px;
+      font-size: 28px;
     }
 
     footer {
@@ -64,20 +58,41 @@
 
   <div class="hero">
     <h1>BirdieBookie</h1>
-    <h2>Gamblers with a golfing problem</h2>
 
-    <a class="button" href="#">Games</a>
-    <a class="button" href="#">Calculators</a>
-    <a class="button" href="#">Scorecards</a>
+    <div class="subtitle">
+      Gamblers with a golfing problem
+    </div>
+
+    <a class="button" href="#games">Games</a>
+    <a class="button" href="#calculators">Calculators</a>
+    <a class="button" href="#scorecards">Scorecards</a>
   </div>
 
-  <div class="games">
+  <div class="section" id="games">
     <h2>Featured Games</h2>
 
     <div class="game-box">🐺 Wolf</div>
     <div class="game-box">💰 Nassau</div>
     <div class="game-box">⛳ Skins</div>
     <div class="game-box">😈 Leftist</div>
+    <div class="game-box">🔥 Hammer</div>
+    <div class="game-box">🍺 Bingo Bango Bongo</div>
+  </div>
+
+  <div class="section" id="calculators">
+    <h2>Golf Gambling Calculators</h2>
+
+    <div class="game-box">🧮 Nassau Calculator</div>
+    <div class="game-box">📊 Skins Payout Calculator</div>
+    <div class="game-box">💵 Team Match Calculator</div>
+  </div>
+
+  <div class="section" id="scorecards">
+    <h2>Live Scorecards</h2>
+
+    <div class="game-box">📱 2 Man Match</div>
+    <div class="game-box">🏌️ Wolf Scorecard</div>
+    <div class="game-box">🎯 Skins Tracker</div>
   </div>
 
   <footer>
@@ -86,3 +101,4 @@
 
 </body>
 </html>
+STEP 3
