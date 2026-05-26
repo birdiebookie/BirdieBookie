@@ -1,1 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Left Right - BirdieBookie</title>
+<link rel="stylesheet" href="style.css">
+</head>
 
+<body>
+
+<header class="hero">
+
+<nav>
+<div class="logo">Birdie<span>Bookie</span></div>
+
+<div class="nav-links">
+<a href="index.html">Home</a>
+<a href="games.html">Games</a>
+<a href="rules.html">Rules</a>
+<a href="scorecards.html">Scorecards</a>
+</div>
+</nav>
+
+<div class="hero-content">
+
+<h1>↔️ Left Right</h1>
+
+<p>
+One of the most dangerous golf gambling games ever created.
+Constant partner changes. Constant pressure.
+</p>
+
+</div>
+
+</header>
+
+<section class="section">
+
+<h2>How Left Right Works</h2>
+
+<div class="card">
+
+<p>
+After every tee shot, teams are created based on ball position.
+</p>
+
+<ul>
+<li>The two balls farthest left become partners</li>
+<li>The two balls farthest right become partners</li>
+</ul>
+
+<p>
+The teams change almost every hole.
+</p>
+
+<p>
+Usually played as best ball with one team paying the other.
+</p>
+
+<p>
+Aggressive players can end up on the same side creating huge swings.
+</p>
+
+</div>
+
+</section>
+
+<section class="section dark">
+
+<h2>Why Left Right Gets Dangerous</h2>
+
+<div class="card-grid">
+
+<div class="card">
+<h3>Changing Teams</h3>
+<p>
+Your partner constantly changes throughout the round.
+</p>
+</div>
+
+<div class="card">
+<h3>Big Momentum Swings</h3>
+<p>
+One drive can completely change the betting setup.
+</p>
+</div>
+
+<div class="card">
+<h3>Pressure Tee Shots</h3>
+<p>
+Players start aiming away from danger to avoid bad team positions.
+</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>Popular Left Right Rules</h2>
+
+<div class="card">
+
+<ul>
+<li>Best ball scoring</li>
+<li>Automatic presses</li>
+<li>Carryovers</li>
+<li>Hammer options</li>
+<li>Birdie doubles</li>
+<li>Wolf hole variations</li>
+</ul>
+
+<p>
+Many groups combine Left Right with Nassau or Hammer formats for massive action.
+</p>
+
+</div>
+
+</section>
+
+<section class="section dark">
+
+<h2>BirdieBookie Tip</h2>
+
+<div class="card">
+
+<p>
+Left Right creates chaos because partnerships change constantly.
+</p>
+
+<p>
+Before the round decide:
+</p>
+
+<ul>
+<li>Bet size per hole</li>
+<li>Carryover rules</li>
+<li>Whether birdies double</li>
+<li>Press rules</li>
+<li>Tie rules</li>
+</ul>
+
+<p>
+This game can turn friendly rounds into absolute financial warfare by the back nine.
+</p>
+
+</div>
+
+</section>
+
+<footer>
+
+<h3>BirdieBookie</h3>
+
+<p>Gamblers with a golfing problem</p>
+
+<p class="footer-small">
+Play smart. Respect the game.
+</p>
+
+</footer>
+
+</body>
+</html>
