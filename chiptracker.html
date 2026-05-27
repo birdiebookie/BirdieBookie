@@ -325,3 +325,446 @@ p4 + ': $' + money4;
 
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Advanced Chip Tracker - BirdieBookie</title>
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+.tracker-box{
+max-width:1400px;
+margin:auto;
+background:rgba(255,255,255,.05);
+padding:30px;
+border-radius:20px;
+}
+
+.player-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:25px;
+margin-top:30px;
+}
+
+.player-card{
+background:rgba(255,255,255,.04);
+padding:25px;
+border-radius:20px;
+text-align:center;
+}
+
+.player-card input{
+width:100%;
+padding:12px;
+border:none;
+border-radius:10px;
+background:#111;
+color:white;
+font-size:16px;
+text-align:center;
+margin-bottom:18px;
+}
+
+.total{
+font-size:52px;
+font-weight:bold;
+margin:20px 0;
+color:#44ff88;
+}
+
+.money-total{
+font-size:22px;
+margin-top:10px;
+color:#ffb347;
+}
+
+.event-grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:10px;
+margin-top:20px;
+}
+
+.event-grid button{
+padding:14px;
+border:none;
+border-radius:12px;
+background:#44ff88;
+font-weight:bold;
+cursor:pointer;
+font-size:15px;
+}
+
+.event-grid button:hover{
+transform:scale(1.03);
+}
+
+.snake-btn{
+background:#ff6666 !important;
+color:white;
+}
+
+.eagle-btn{
+background:#ffb347 !important;
+color:black;
+}
+
+.leader-box{
+margin-top:40px;
+padding:30px;
+border-radius:20px;
+background:rgba(68,255,136,.08);
+text-align:center;
+}
+
+.leader-box h2{
+margin-bottom:20px;
+}
+
+.leaderboard{
+font-size:22px;
+line-height:2;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header class="hero">
+
+<nav>
+
+<div class="logo">
+Birdie<span>Bookie</span>
+</div>
+
+<div class="nav-links">
+
+<a href="index.html">Home</a>
+
+<a href="games.html">Games</a>
+
+<a href="scorecards.html">Scorecards</a>
+
+<a href="invite.html">Invite Players</a>
+
+</div>
+
+</nav>
+
+<div class="hero-content">
+
+<h1>🪙 Advanced Chip Tracker</h1>
+
+<p>
+Track live golf gambling events hole-by-hole.
+</p>
+
+</div>
+
+</header>
+
+<section class="section">
+
+<div class="tracker-box">
+
+<h2>Chip Value</h2>
+
+<select id="chipValue" style="padding:12px;border-radius:10px;background:#111;color:white;font-size:16px;">
+
+<option value="1">$1 Per Chip</option>
+
+<option value="2">$2 Per Chip</option>
+
+<option value="5">$5 Per Chip</option>
+
+<option value="10">$10 Per Chip</option>
+
+<option value="20">$20 Per Chip</option>
+
+</select>
+
+<div class="player-grid">
+
+<!-- PLAYER 1 -->
+
+<div class="player-card">
+
+<input type="text" id="name1" placeholder="Player 1">
+
+<div class="total" id="score1">
+0
+</div>
+
+<div class="money-total" id="money1">
+$0
+</div>
+
+<div class="event-grid">
+
+<button onclick="addChip(1,1)">
+Greenie
+</button>
+
+<button onclick="addChip(1,1)">
+Sandie
+</button>
+
+<button onclick="addChip(1,1)">
+Barkie
+</button>
+
+<button onclick="addChip(1,1)">
+Birdie
+</button>
+
+<button onclick="addChip(1,1)">
+Polie
+</button>
+
+<button onclick="addChip(1,1)">
+Arnie
+</button>
+
+<button class="eagle-btn" onclick="addChip(1,5)">
+Eagle +5
+</button>
+
+<button class="snake-btn" onclick="addChip(1,-1)">
+Snake -1
+</button>
+
+</div>
+
+</div>
+
+<!-- PLAYER 2 -->
+
+<div class="player-card">
+
+<input type="text" id="name2" placeholder="Player 2">
+
+<div class="total" id="score2">
+0
+</div>
+
+<div class="money-total" id="money2">
+$0
+</div>
+
+<div class="event-grid">
+
+<button onclick="addChip(2,1)">Greenie</button>
+
+<button onclick="addChip(2,1)">Sandie</button>
+
+<button onclick="addChip(2,1)">Barkie</button>
+
+<button onclick="addChip(2,1)">Birdie</button>
+
+<button onclick="addChip(2,1)">Polie</button>
+
+<button onclick="addChip(2,1)">Arnie</button>
+
+<button class="eagle-btn" onclick="addChip(2,5)">Eagle +5</button>
+
+<button class="snake-btn" onclick="addChip(2,-1)">Snake -1</button>
+
+</div>
+
+</div>
+
+<!-- PLAYER 3 -->
+
+<div class="player-card">
+
+<input type="text" id="name3" placeholder="Player 3">
+
+<div class="total" id="score3">
+0
+</div>
+
+<div class="money-total" id="money3">
+$0
+</div>
+
+<div class="event-grid">
+
+<button onclick="addChip(3,1)">Greenie</button>
+
+<button onclick="addChip(3,1)">Sandie</button>
+
+<button onclick="addChip(3,1)">Barkie</button>
+
+<button onclick="addChip(3,1)">Birdie</button>
+
+<button onclick="addChip(3,1)">Polie</button>
+
+<button onclick="addChip(3,1)">Arnie</button>
+
+<button class="eagle-btn" onclick="addChip(3,5)">Eagle +5</button>
+
+<button class="snake-btn" onclick="addChip(3,-1)">Snake -1</button>
+
+</div>
+
+</div>
+
+<!-- PLAYER 4 -->
+
+<div class="player-card">
+
+<input type="text" id="name4" placeholder="Player 4">
+
+<div class="total" id="score4">
+0
+</div>
+
+<div class="money-total" id="money4">
+$0
+</div>
+
+<div class="event-grid">
+
+<button onclick="addChip(4,1)">Greenie</button>
+
+<button onclick="addChip(4,1)">Sandie</button>
+
+<button onclick="addChip(4,1)">Barkie</button>
+
+<button onclick="addChip(4,1)">Birdie</button>
+
+<button onclick="addChip(4,1)">Polie</button>
+
+<button onclick="addChip(4,1)">Arnie</button>
+
+<button class="eagle-btn" onclick="addChip(4,5)">Eagle +5</button>
+
+<button class="snake-btn" onclick="addChip(4,-1)">Snake -1</button>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="leader-box">
+
+<h2>
+🔥 Live Leaderboard
+</h2>
+
+<div class="leaderboard" id="leaderboard">
+
+No action yet.
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<footer>
+
+<h3>BirdieBookie</h3>
+
+<p>
+Gamblers with a golfing problem
+</p>
+
+</footer>
+
+<script>
+
+let scores = [0,0,0,0];
+
+function addChip(player, amount){
+
+scores[player-1] += amount;
+
+document.getElementById(
+'score'+player
+).innerText = scores[player-1];
+
+updateMoney();
+
+updateLeaderboard();
+
+}
+
+function updateMoney(){
+
+const chipValue =
+parseInt(document.getElementById('chipValue').value);
+
+for(let i=1;i<=4;i++){
+
+const money =
+scores[i-1] * chipValue;
+
+document.getElementById(
+'money'+i
+).innerText =
+'$' + money;
+
+}
+
+}
+
+function updateLeaderboard(){
+
+const players = [
+
+{
+name: document.getElementById('name1').value || 'Player 1',
+score: scores[0]
+},
+
+{
+name: document.getElementById('name2').value || 'Player 2',
+score: scores[1]
+},
+
+{
+name: document.getElementById('name3').value || 'Player 3',
+score: scores[2]
+},
+
+{
+name: document.getElementById('name4').value || 'Player 4',
+score: scores[3]
+}
+
+];
+
+players.sort((a,b)=>b.score-a.score);
+
+let html = '';
+
+players.forEach(player=>{
+
+html +=
+player.name +
+' : ' +
+player.score +
+' chips<br>';
+
+});
+
+document.getElementById('leaderboard').innerHTML =
+html;
+
+}
+
+</script>
+
+</body>
+</html>
