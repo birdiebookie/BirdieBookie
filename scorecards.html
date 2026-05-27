@@ -3,54 +3,45 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BirdieBookie Scorecard</title>
+<title>BirdieBookie Scorecards</title>
 <link rel="stylesheet" href="style.css">
 
 <style>
 
-.score-wrap{
+.scorecard-wrap{
 overflow-x:auto;
-margin-top:25px;
+margin-top:30px;
 }
 
-.score-table{
+.scorecard{
 width:100%;
+min-width:1800px;
 border-collapse:collapse;
-min-width:1600px;
 }
 
-.score-table th,
-.score-table td{
-border:1px solid rgba(255,255,255,.12);
+.scorecard th,
+.scorecard td{
+border:1px solid rgba(255,255,255,.15);
 padding:8px;
 text-align:center;
 }
 
-.score-table input{
+.scorecard input{
 width:55px;
 height:38px;
 background:#111;
-color:white;
 border:1px solid #333;
 border-radius:8px;
+color:white;
 text-align:center;
 font-size:16px;
-}
-
-.gray-line{
-background:rgba(255,255,255,.05);
-opacity:.35;
-}
-
-.active-line{
-background:rgba(68,255,136,.08);
 }
 
 .player-inputs{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
 gap:15px;
-margin-top:25px;
+margin-top:30px;
 }
 
 .player-inputs input{
@@ -62,8 +53,30 @@ color:white;
 font-size:16px;
 }
 
-.toggle-box{
-margin-top:30px;
+.player-name{
+font-weight:bold;
+color:#44ff88;
+min-width:120px;
+}
+
+.gray-line{
+background:rgba(255,255,255,.05);
+opacity:.30;
+transition:.3s;
+}
+
+.left-right-active{
+background:rgba(68,255,136,.10);
+opacity:1;
+}
+
+.total-box{
+font-weight:bold;
+color:#44ff88;
+}
+
+.toggle-area{
+margin-top:25px;
 text-align:center;
 }
 
@@ -75,16 +88,6 @@ background:#44ff88;
 font-weight:bold;
 cursor:pointer;
 font-size:16px;
-}
-
-.section-total{
-font-weight:bold;
-color:#44ff88;
-}
-
-.name-cell{
-font-weight:bold;
-min-width:120px;
 }
 
 </style>
@@ -110,10 +113,10 @@ Birdie<span>Bookie</span>
 
 <div class="hero-content">
 
-<h1>📊 BirdieBookie Scorecard</h1>
+<h1>📊 Live Scorecards</h1>
 
 <p>
-Built for gambling rounds, side action and complete golf chaos.
+Built for gambling rounds, presses, side action and complete chaos.
 </p>
 
 </div>
@@ -122,21 +125,24 @@ Built for gambling rounds, side action and complete golf chaos.
 
 <section class="section">
 
-<h2>Players</h2>
+<h2>Enter Players</h2>
 
 <div class="player-inputs">
 
-<input type="text" id="p1" placeholder="Player 1" onkeyup="updateNames()">
-<input type="text" id="p2" placeholder="Player 2" onkeyup="updateNames()">
-<input type="text" id="p3" placeholder="Player 3" onkeyup="updateNames()">
-<input type="text" id="p4" placeholder="Player 4" onkeyup="updateNames()">
+<input type="text" id="player1" placeholder="Player 1" onkeyup="updateNames()">
+
+<input type="text" id="player2" placeholder="Player 2" onkeyup="updateNames()">
+
+<input type="text" id="player3" placeholder="Player 3" onkeyup="updateNames()">
+
+<input type="text" id="player4" placeholder="Player 4" onkeyup="updateNames()">
 
 </div>
 
-<div class="toggle-box">
+<div class="toggle-area">
 
 <button class="toggle-btn" onclick="toggleLeftRight()">
-Toggle Left Right Mode
+Toggle Left Right
 </button>
 
 </div>
@@ -145,15 +151,16 @@ Toggle Left Right Mode
 
 <section class="section dark">
 
-<h2>Live Gambling Lines</h2>
+<h2>BirdieBookie Gambling Scorecard</h2>
 
-<div class="score-wrap">
+<div class="scorecard-wrap">
 
-<table class="score-table">
+<table class="scorecard">
 
 <thead>
 
 <tr>
+
 <th>Line</th>
 
 <th>1</th>
@@ -180,7 +187,6 @@ Toggle Left Right Mode
 
 <th>IN</th>
 <th>TOTAL</th>
-
 <th>PLAYER</th>
 
 </tr>
@@ -189,7 +195,8 @@ Toggle Left Right Mode
 
 <tbody>
 
-<tr class="active-line">
+<tr>
+
 <td>1</td>
 
 <td><input type="number" min="0" max="10"></td>
@@ -202,7 +209,7 @@ Toggle Left Right Mode
 <td><input type="number" min="0" max="10"></td>
 <td><input type="number" min="0" max="10"></td>
 
-<td class="section-total">0</td>
+<td class="total-box">0</td>
 
 <td><input type="number" min="0" max="10"></td>
 <td><input type="number" min="0" max="10"></td>
@@ -214,87 +221,149 @@ Toggle Left Right Mode
 <td><input type="number" min="0" max="10"></td>
 <td><input type="number" min="0" max="10"></td>
 
-<td class="section-total">0</td>
-<td class="section-total">0</td>
+<td class="total-box">0</td>
+<td class="total-box">0</td>
 
-<td class="name-cell" id="line1name">Player 1</td>
+<td class="player-name" id="line1">Player 1</td>
 
 </tr>
 
-<tr class="gray-line left-right-line">
+<tr class="gray-line lr-line">
+
 <td>2</td>
 
-<td colspan="22">
-LEFT RIGHT MODE ONLY
-</td>
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
 
-<td class="name-cell" id="line2name">Player 2</td>
+<td class="total-box">0</td>
+
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
+
+<td class="total-box">0</td>
+<td class="total-box">0</td>
+
+<td class="player-name" id="line2">Player 2</td>
 
 </tr>
 
-<tr class="active-line">
+<tr>
+
 <td>3</td>
 
-<td colspan="22">
-ACTIVE GAMBLING LINE
-</td>
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
 
-<td class="name-cell" id="line3name">Player 3</td>
+<td class="total-box">0</td>
+
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
+
+<td class="total-box">0</td>
+<td class="total-box">0</td>
+
+<td class="player-name" id="line3">Player 3</td>
 
 </tr>
 
-<tr class="gray-line left-right-line">
+<tr class="gray-line lr-line">
+
 <td>4</td>
 
-<td colspan="22">
-LEFT RIGHT MODE ONLY
-</td>
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
 
-<td class="name-cell" id="line4name">Player 4</td>
+<td class="total-box">0</td>
+
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
+<td><input type="number" min="0" max="10"></td>
+
+<td class="total-box">0</td>
+<td class="total-box">0</td>
+
+<td class="player-name" id="line4">Player 4</td>
 
 </tr>
 
-<tr class="active-line">
+<tr>
+
 <td>7</td>
 
-<td colspan="22">
-ACTIVE GAMBLING LINE
+<td colspan="22" class="player-name" id="line7">
+Player 1
 </td>
-
-<td class="name-cell" id="line7name">Player 1</td>
 
 </tr>
 
-<tr class="gray-line left-right-line">
+<tr class="gray-line lr-line">
+
 <td>8</td>
 
-<td colspan="22">
-LEFT RIGHT MODE ONLY
+<td colspan="22" class="player-name" id="line8">
+Player 2
 </td>
-
-<td class="name-cell" id="line8name">Player 2</td>
 
 </tr>
 
-<tr class="active-line">
+<tr>
+
 <td>9</td>
 
-<td colspan="22">
-ACTIVE GAMBLING LINE
+<td colspan="22" class="player-name" id="line9">
+Player 3
 </td>
-
-<td class="name-cell" id="line9name">Player 3</td>
 
 </tr>
 
-<tr class="gray-line left-right-line">
+<tr class="gray-line lr-line">
+
 <td>10</td>
 
-<td colspan="22">
-LEFT RIGHT MODE ONLY
+<td colspan="22" class="player-name" id="line10">
+Player 4
 </td>
-
-<td class="name-cell" id="line10name">Player 4</td>
 
 </tr>
 
@@ -320,40 +389,38 @@ Gamblers with a golfing problem
 
 function updateNames(){
 
-const p1 = document.getElementById('p1').value || 'Player 1';
-const p2 = document.getElementById('p2').value || 'Player 2';
-const p3 = document.getElementById('p3').value || 'Player 3';
-const p4 = document.getElementById('p4').value || 'Player 4';
+const p1 = document.getElementById('player1').value || 'Player 1';
+const p2 = document.getElementById('player2').value || 'Player 2';
+const p3 = document.getElementById('player3').value || 'Player 3';
+const p4 = document.getElementById('player4').value || 'Player 4';
 
-document.getElementById('line1name').innerText = p1;
-document.getElementById('line2name').innerText = p2;
-document.getElementById('line3name').innerText = p3;
-document.getElementById('line4name').innerText = p4;
+document.getElementById('line1').innerText = p1;
+document.getElementById('line2').innerText = p2;
+document.getElementById('line3').innerText = p3;
+document.getElementById('line4').innerText = p4;
 
-document.getElementById('line7name').innerText = p1;
-document.getElementById('line8name').innerText = p2;
-document.getElementById('line9name').innerText = p3;
-document.getElementById('line10name').innerText = p4;
+document.getElementById('line7').innerText = p1;
+document.getElementById('line8').innerText = p2;
+document.getElementById('line9').innerText = p3;
+document.getElementById('line10').innerText = p4;
 
 }
 
-let leftRightMode = false;
+let leftRightEnabled = false;
 
 function toggleLeftRight(){
 
-leftRightMode = !leftRightMode;
+leftRightEnabled = !leftRightEnabled;
 
-const lines = document.querySelectorAll('.left-right-line');
+const rows = document.querySelectorAll('.lr-line');
 
-lines.forEach(line => {
+rows.forEach(row => {
 
-if(leftRightMode){
-line.style.opacity = '1';
-line.style.background = 'rgba(68,255,136,.10)';
+if(leftRightEnabled){
+row.classList.add('left-right-active');
 }
 else{
-line.style.opacity = '.35';
-line.style.background = 'rgba(255,255,255,.05)';
+row.classList.remove('left-right-active');
 }
 
 });
