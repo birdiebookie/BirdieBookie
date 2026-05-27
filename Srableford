@@ -1,1 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stableford - BirdieBookie</title>
+<link rel="stylesheet" href="style.css">
+</head>
 
+<body>
+
+<header class="hero">
+
+<nav>
+
+<div class="logo">
+Birdie<span>Bookie</span>
+</div>
+
+<div class="nav-links">
+<a href="index.html">Home</a>
+<a href="games.html">Games</a>
+<a href="scorecards.html">Scorecards</a>
+</div>
+
+</nav>
+
+<div class="hero-content">
+
+<h1>⛳ Stableford</h1>
+
+<p>
+Aggressive golf gets rewarded.
+Big numbers hurt less. Birdies matter more.
+</p>
+
+</div>
+
+</header>
+
+<section class="section">
+
+<h2>How Stableford Works</h2>
+
+<div class="card">
+
+<p>
+Stableford uses a point system instead of total strokes.
+</p>
+
+<p>
+Players earn points based on their score on each hole.
+</p>
+
+<ul>
+<li>Double Bogey or worse = 0 points</li>
+<li>Bogey = 1 point</li>
+<li>Par = 2 points</li>
+<li>Birdie = 3 points</li>
+<li>Eagle = 4 points</li>
+</ul>
+
+<p>
+The player with the highest point total at the end wins.
+</p>
+
+<p>
+Because blow-up holes hurt less, players attack pins more aggressively.
+</p>
+
+</div>
+
+</section>
+
+<section class="section dark">
+
+<h2>Why Golfers Love Stableford</h2>
+
+<div class="card-grid">
+
+<div class="card">
+<h3>Fast Pace</h3>
+<p>
+Players can pick up after disaster holes instead of grinding.
+</p>
+</div>
+
+<div class="card">
+<h3>Birdies Matter</h3>
+<p>
+Aggressive scoring is heavily rewarded.
+</p>
+</div>
+
+<div class="card">
+<h3>Great for Gambling</h3>
+<p>
+Momentum swings happen constantly throughout the round.
+</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>BirdieBookie Tip</h2>
+
+<div class="card">
+
+<p>
+Before the round decide:
+</p>
+
+<ul>
+<li>Point system</li>
+<li>Handicap adjustments</li>
+<li>Dollar value per point</li>
+<li>Whether team scoring is allowed</li>
+</ul>
+
+<p>
+Stableford keeps players aggressive because one bad hole does not destroy the round.
+</p>
+
+</div>
+
+</section>
+
+<footer>
+
+<h3>BirdieBookie</h3>
+
+<p>
+Gamblers with a golfing problem
+</p>
+
+<p class="footer-small">
+Play smart. Respect the game.
+</p>
+
+</footer>
+
+</body>
+</html>
