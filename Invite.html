@@ -1,196 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Invite Players - BirdieBookie</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<style>
+  <title>Invite Players | BirdieBookie</title>
 
-.invite-box{
-max-width:700px;
-margin:auto;
-background:rgba(255,255,255,.05);
-padding:30px;
-border-radius:20px;
-}
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom, #0b3d0b, #145214);
+      color: white;
+      text-align: center;
+      padding: 40px;
+    }
 
-.invite-box input{
-width:100%;
-padding:14px;
-margin-top:12px;
-margin-bottom:20px;
-border:none;
-border-radius:10px;
-background:#111;
-color:white;
-font-size:16px;
-}
+    h1 {
+      font-size: 48px;
+      margin-bottom: 10px;
+    }
 
-.invite-btn{
-padding:16px 28px;
-border:none;
-border-radius:12px;
-background:#44ff88;
-font-weight:bold;
-font-size:16px;
-cursor:pointer;
-width:100%;
-}
+    p {
+      font-size: 20px;
+      max-width: 700px;
+      margin: auto;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
 
-.output-box{
-margin-top:30px;
-padding:20px;
-border-radius:16px;
-background:rgba(68,255,136,.08);
-word-break:break-all;
-display:none;
-}
+    .card {
+      background: rgba(255,255,255,0.1);
+      border-radius: 20px;
+      padding: 30px;
+      max-width: 700px;
+      margin: auto;
+      box-shadow: 0 0 20px rgba(0,0,0,0.4);
+    }
 
-.output-box a{
-color:#44ff88;
-}
+    .button {
+      display: inline-block;
+      background: gold;
+      color: black;
+      padding: 15px 30px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 20px;
+      transition: 0.3s;
+    }
 
-.copy-btn{
-margin-top:15px;
-padding:12px 20px;
-border:none;
-border-radius:10px;
-background:#44ff88;
-font-weight:bold;
-cursor:pointer;
-}
+    .button:hover {
+      transform: scale(1.05);
+    }
 
-</style>
-
+    .quote {
+      margin-top: 40px;
+      font-style: italic;
+      color: #90ee90;
+    }
+  </style>
 </head>
 
 <body>
 
-<header class="hero">
+  <h1>⛳ Invite Your Golf Crew</h1>
 
-<nav>
+  <div class="card">
+    <p>
+      BirdieBookie is built for golfers who love action,
+      side games, trash talk, and winning chips.
+    </p>
 
-<div class="logo">
-Birdie<span>Bookie</span>
-</div>
+    <p>
+      Send this page to your foursome and get the bets rolling.
+    </p>
 
-<div class="nav-links">
-<a href="index.html">Home</a>
-<a href="games.html">Games</a>
-<a href="scorecards.html">Scorecards</a>
-</div>
+    <a class="button" href="index.html">
+      Enter BirdieBookie
+    </a>
 
-</nav>
+    <div class="quote" id="quote"></div>
+  </div>
 
-<div class="hero-content">
+  <script>
+    const quotes = [
+      "Auto-press was a terrible idea.",
+      "Down 14 chips before the turn.",
+      "Never trust a guy with iron covers.",
+      "Par saves friendships.",
+      "$2 Nassau. $97 emotional damage.",
+      "Hammered the carry. Immediate regret."
+    ];
 
-<h1>📱 Invite Players</h1>
+    const randomQuote =
+      quotes[Math.floor(Math.random() * quotes.length)];
 
-<p>
-Create a live gambling round and text the group.
-</p>
-
-</div>
-
-</header>
-
-<section class="section">
-
-<div class="invite-box">
-
-<h2>Create Round</h2>
-
-<input type="text" id="roundName" placeholder="Round Name">
-
-<input type="text" id="player1" placeholder="Player 1">
-
-<input type="text" id="player2" placeholder="Player 2">
-
-<input type="text" id="player3" placeholder="Player 3">
-
-<input type="text" id="player4" placeholder="Player 4">
-
-<button class="invite-btn" onclick="createInvite()">
-Generate Invite Link
-</button>
-
-<div class="output-box" id="outputBox">
-
-<h3>Round Invite Link</h3>
-
-<p id="inviteLink"></p>
-
-<button class="copy-btn" onclick="copyInvite()">
-Copy Invite Link
-</button>
-
-</div>
-
-</div>
-
-</section>
-
-<footer>
-
-<h3>BirdieBookie</h3>
-
-<p>
-Gamblers with a golfing problem
-</p>
-
-</footer>
-
-<script>
-
-let finalInvite = '';
-
-function createInvite(){
-
-const roundName =
-document.getElementById('roundName').value || 'BirdieBookie Round';
-
-const p1 =
-document.getElementById('player1').value || 'Player 1';
-
-const p2 =
-document.getElementById('player2').value || 'Player 2';
-
-const p3 =
-document.getElementById('player3').value || 'Player 3';
-
-const p4 =
-document.getElementById('player4').value || 'Player 4';
-
-const roundId =
-Math.random().toString(36).substring(2,10);
-
-finalInvite =
-window.location.origin +
-'/scorecards.html?' +
-'round=' + encodeURIComponent(roundName) +
-'&p1=' + encodeURIComponent(p1) +
-'&p2=' + encodeURIComponent(p2) +
-'&p3=' + encodeURIComponent(p3) +
-'&p4=' + encodeURIComponent(p4);
-
-document.getElementById('outputBox').style.display = 'block';
-
-document.getElementById('inviteLink').innerHTML =
-'<a href=\"' + finalInvite + '\">' + finalInvite + '</a>';
-
-}
-
-function copyInvite(){
-
-navigator.clipboard.writeText(finalInvite);
-
-alert('Invite link copied!');
-
-}
-
-</script>
+    document.getElementById("quote").innerText = randomQuote;
+  </script>
 
 </body>
 </html>
