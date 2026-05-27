@@ -3,333 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Live Chip Tracker - BirdieBookie</title>
-<link rel="stylesheet" href="style.css">
-
-<style>
-
-.tracker-box{
-max-width:1200px;
-margin:auto;
-background:rgba(255,255,255,.05);
-padding:30px;
-border-radius:20px;
-}
-
-.player-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:25px;
-margin-top:30px;
-}
-
-.player-card{
-background:rgba(255,255,255,.04);
-padding:25px;
-border-radius:20px;
-text-align:center;
-}
-
-.player-card h2{
-margin-bottom:20px;
-}
-
-.total{
-font-size:52px;
-font-weight:bold;
-margin:20px 0;
-color:#44ff88;
-}
-
-.button-row{
-display:flex;
-justify-content:center;
-gap:12px;
-margin-top:20px;
-flex-wrap:wrap;
-}
-
-.button-row button{
-padding:14px 18px;
-border:none;
-border-radius:12px;
-background:#44ff88;
-font-weight:bold;
-cursor:pointer;
-font-size:16px;
-}
-
-.player-card input{
-width:100%;
-padding:12px;
-border:none;
-border-radius:10px;
-background:#111;
-color:white;
-font-size:16px;
-text-align:center;
-}
-
-.summary-box{
-margin-top:40px;
-padding:30px;
-border-radius:20px;
-background:rgba(68,255,136,.08);
-}
-
-.summary-box h2{
-margin-bottom:20px;
-}
-
-.summary-box p{
-line-height:2;
-font-size:18px;
-}
-
-.degenerate-box{
-margin-top:35px;
-padding:20px;
-border-radius:18px;
-background:rgba(255,140,0,.12);
-border:1px solid rgba(255,140,0,.35);
-text-align:center;
-}
-
-.degenerate-title{
-font-size:20px;
-font-weight:bold;
-margin-bottom:12px;
-color:#ffb347;
-}
-
-.degenerate-emojis{
-font-size:34px;
-letter-spacing:4px;
-margin-bottom:12px;
-}
-
-</style>
-
-</head>
-
-<body>
-
-<header class="hero">
-
-<nav>
-
-<div class="logo">
-Birdie<span>Bookie</span>
-</div>
-
-<div class="nav-links">
-
-<a href="index.html">Home</a>
-
-<a href="games.html">Games</a>
-
-<a href="scorecards.html">Scorecards</a>
-
-<a href="invite.html">Invite Players</a>
-
-</div>
-
-</nav>
-
-<div class="hero-content">
-
-<h1>🪙 Live Chip Tracker</h1>
-
-<p>
-No physical chips needed.
-Track everything live during the round.
-</p>
-
-</div>
-
-</header>
-
-<section class="section">
-
-<div class="tracker-box">
-
-<h2>Chip Value</h2>
-
-<select id="chipValue" style="padding:12px;border-radius:10px;background:#111;color:white;font-size:16px;">
-<option value="1">$1 Per Chip</option>
-<option value="2">$2 Per Chip</option>
-<option value="5">$5 Per Chip</option>
-<option value="10">$10 Per Chip</option>
-<option value="20">$20 Per Chip</option>
-</select>
-
-<div class="player-grid">
-
-<div class="player-card">
-
-<input type="text" id="name1" placeholder="Player 1">
-
-<div class="total" id="score1">0</div>
-
-<div class="button-row">
-
-<button onclick="changeScore(1,1)">+1</button>
-
-<button onclick="changeScore(1,-1)">-1</button>
-
-</div>
-
-</div>
-
-<div class="player-card">
-
-<input type="text" id="name2" placeholder="Player 2">
-
-<div class="total" id="score2">0</div>
-
-<div class="button-row">
-
-<button onclick="changeScore(2,1)">+1</button>
-
-<button onclick="changeScore(2,-1)">-1</button>
-
-</div>
-
-</div>
-
-<div class="player-card">
-
-<input type="text" id="name3" placeholder="Player 3">
-
-<div class="total" id="score3">0</div>
-
-<div class="button-row">
-
-<button onclick="changeScore(3,1)">+1</button>
-
-<button onclick="changeScore(3,-1)">-1</button>
-
-</div>
-
-</div>
-
-<div class="player-card">
-
-<input type="text" id="name4" placeholder="Player 4">
-
-<div class="total" id="score4">0</div>
-
-<div class="button-row">
-
-<button onclick="changeScore(4,1)">+1</button>
-
-<button onclick="changeScore(4,-1)">-1</button>
-
-</div>
-
-</div>
-
-</div>
-
-<div class="summary-box">
-
-<h2>Live Settlement</h2>
-
-<p id="summaryText">
-Enter players and start tracking chips.
-</p>
-
-</div>
-
-<div class="degenerate-box">
-
-<div class="degenerate-title">
-Degenerate Rating
-</div>
-
-<div class="degenerate-emojis">
-🟠🟠🟠🟠🟠🟠🟠🟠
-</div>
-
-<p>
-Tiny chip values somehow become huge money every single round.
-</p>
-
-</div>
-
-</div>
-
-</section>
-
-<footer>
-
-<h3>BirdieBookie</h3>
-
-<p>
-Gamblers with a golfing problem
-</p>
-
-</footer>
-
-<script>
-
-let scores = [0,0,0,0];
-
-function changeScore(player, amount){
-
-scores[player-1] += amount;
-
-document.getElementById(
-'score'+player
-).innerText = scores[player-1];
-
-updateSummary();
-
-}
-
-function updateSummary(){
-
-const chipValue =
-parseInt(document.getElementById('chipValue').value);
-
-const p1 =
-document.getElementById('name1').value || 'Player 1';
-
-const p2 =
-document.getElementById('name2').value || 'Player 2';
-
-const p3 =
-document.getElementById('name3').value || 'Player 3';
-
-const p4 =
-document.getElementById('name4').value || 'Player 4';
-
-const money1 = scores[0] * chipValue;
-const money2 = scores[1] * chipValue;
-const money3 = scores[2] * chipValue;
-const money4 = scores[3] * chipValue;
-
-document.getElementById('summaryText').innerHTML =
-
-p1 + ': $' + money1 + '<br><br>' +
-
-p2 + ': $' + money2 + '<br><br>' +
-
-p3 + ': $' + money3 + '<br><br>' +
-
-p4 + ': $' + money4;
-
-}
-
-</script>
-
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Advanced Chip Tracker - BirdieBookie</title>
 <link rel="stylesheet" href="style.css">
 
@@ -509,35 +182,43 @@ $0
 <div class="event-grid">
 
 <button onclick="addChip(1,1)">
-Greenie
+Greenie (+1)
 </button>
 
 <button onclick="addChip(1,1)">
-Sandie
+Sandie (+1)
 </button>
 
 <button onclick="addChip(1,1)">
-Barkie
+Barkie (+1)
 </button>
 
 <button onclick="addChip(1,1)">
-Birdie
+Birdie (+1)
 </button>
 
 <button onclick="addChip(1,1)">
-Polie
+Polie (+1)
 </button>
 
 <button onclick="addChip(1,1)">
-Arnie
+Arnie (+1)
+</button>
+
+<button onclick="addChip(1,2)">
+Chip-in (+2)
+</button>
+
+<button onclick="addChip(1,2)">
+Double Polie (+2)
 </button>
 
 <button class="eagle-btn" onclick="addChip(1,5)">
-Eagle +5
+Eagle (+5)
 </button>
 
 <button class="snake-btn" onclick="addChip(1,-1)">
-Snake -1
+Snake (-1)
 </button>
 
 </div>
@@ -560,21 +241,45 @@ $0
 
 <div class="event-grid">
 
-<button onclick="addChip(2,1)">Greenie</button>
+<button onclick="addChip(2,1)">
+Greenie (+1)
+</button>
 
-<button onclick="addChip(2,1)">Sandie</button>
+<button onclick="addChip(2,1)">
+Sandie (+1)
+</button>
 
-<button onclick="addChip(2,1)">Barkie</button>
+<button onclick="addChip(2,1)">
+Barkie (+1)
+</button>
 
-<button onclick="addChip(2,1)">Birdie</button>
+<button onclick="addChip(2,1)">
+Birdie (+1)
+</button>
 
-<button onclick="addChip(2,1)">Polie</button>
+<button onclick="addChip(2,1)">
+Polie (+1)
+</button>
 
-<button onclick="addChip(2,1)">Arnie</button>
+<button onclick="addChip(2,1)">
+Arnie (+1)
+</button>
 
-<button class="eagle-btn" onclick="addChip(2,5)">Eagle +5</button>
+<button onclick="addChip(2,2)">
+Chip-in (+2)
+</button>
 
-<button class="snake-btn" onclick="addChip(2,-1)">Snake -1</button>
+<button onclick="addChip(2,2)">
+Double Polie (+2)
+</button>
+
+<button class="eagle-btn" onclick="addChip(2,5)">
+Eagle (+5)
+</button>
+
+<button class="snake-btn" onclick="addChip(2,-1)">
+Snake (-1)
+</button>
 
 </div>
 
@@ -596,21 +301,45 @@ $0
 
 <div class="event-grid">
 
-<button onclick="addChip(3,1)">Greenie</button>
+<button onclick="addChip(3,1)">
+Greenie (+1)
+</button>
 
-<button onclick="addChip(3,1)">Sandie</button>
+<button onclick="addChip(3,1)">
+Sandie (+1)
+</button>
 
-<button onclick="addChip(3,1)">Barkie</button>
+<button onclick="addChip(3,1)">
+Barkie (+1)
+</button>
 
-<button onclick="addChip(3,1)">Birdie</button>
+<button onclick="addChip(3,1)">
+Birdie (+1)
+</button>
 
-<button onclick="addChip(3,1)">Polie</button>
+<button onclick="addChip(3,1)">
+Polie (+1)
+</button>
 
-<button onclick="addChip(3,1)">Arnie</button>
+<button onclick="addChip(3,1)">
+Arnie (+1)
+</button>
 
-<button class="eagle-btn" onclick="addChip(3,5)">Eagle +5</button>
+<button onclick="addChip(3,2)">
+Chip-in (+2)
+</button>
 
-<button class="snake-btn" onclick="addChip(3,-1)">Snake -1</button>
+<button onclick="addChip(3,2)">
+Double Polie (+2)
+</button>
+
+<button class="eagle-btn" onclick="addChip(3,5)">
+Eagle (+5)
+</button>
+
+<button class="snake-btn" onclick="addChip(3,-1)">
+Snake (-1)
+</button>
 
 </div>
 
@@ -632,21 +361,45 @@ $0
 
 <div class="event-grid">
 
-<button onclick="addChip(4,1)">Greenie</button>
+<button onclick="addChip(4,1)">
+Greenie (+1)
+</button>
 
-<button onclick="addChip(4,1)">Sandie</button>
+<button onclick="addChip(4,1)">
+Sandie (+1)
+</button>
 
-<button onclick="addChip(4,1)">Barkie</button>
+<button onclick="addChip(4,1)">
+Barkie (+1)
+</button>
 
-<button onclick="addChip(4,1)">Birdie</button>
+<button onclick="addChip(4,1)">
+Birdie (+1)
+</button>
 
-<button onclick="addChip(4,1)">Polie</button>
+<button onclick="addChip(4,1)">
+Polie (+1)
+</button>
 
-<button onclick="addChip(4,1)">Arnie</button>
+<button onclick="addChip(4,1)">
+Arnie (+1)
+</button>
 
-<button class="eagle-btn" onclick="addChip(4,5)">Eagle +5</button>
+<button onclick="addChip(4,2)">
+Chip-in (+2)
+</button>
 
-<button class="snake-btn" onclick="addChip(4,-1)">Snake -1</button>
+<button onclick="addChip(4,2)">
+Double Polie (+2)
+</button>
+
+<button class="eagle-btn" onclick="addChip(4,5)">
+Eagle (+5)
+</button>
+
+<button class="snake-btn" onclick="addChip(4,-1)">
+Snake (-1)
+</button>
 
 </div>
 
@@ -668,6 +421,20 @@ No action yet.
 
 </div>
 
+<div class="personality-box financial-warning">
+
+<div class="personality-title">
+Chip Game Warning
+</div>
+
+<div class="personality-text">
+
+Most chip games begin as “friendly action” and end with someone questioning every missed three-footer.
+
+</div>
+
+</div>
+
 </div>
 
 </section>
@@ -679,6 +446,10 @@ No action yet.
 <p>
 Gamblers with a golfing problem
 </p>
+
+<div class="footer-quote">
+Every gimmie eventually costs somebody money.
+</div>
 
 </footer>
 
