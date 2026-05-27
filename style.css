@@ -231,3 +231,192 @@ font-size:16px;
 opacity:.9;
 line-height:1.6;
 }
+/* =========================
+MOBILE OPTIMIZATION
+========================= */
+
+@media (max-width: 900px){
+
+nav{
+flex-direction:column;
+gap:18px;
+padding:20px;
+}
+
+.nav-links{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:12px;
+}
+
+.hero-content h1{
+font-size:42px;
+line-height:1.2;
+}
+
+.hero-content p{
+font-size:18px;
+padding:0 12px;
+}
+
+.btn{
+width:100%;
+max-width:320px;
+margin:auto;
+display:block;
+text-align:center;
+}
+
+.hero-buttons{
+flex-direction:column;
+align-items:center;
+}
+
+.section{
+padding:60px 18px;
+}
+
+.feature-grid{
+grid-template-columns:1fr;
+}
+
+.player-grid{
+grid-template-columns:1fr;
+}
+
+.team-grid{
+grid-template-columns:1fr;
+}
+
+.status-grid{
+grid-template-columns:1fr;
+}
+
+.value-grid{
+grid-template-columns:1fr;
+}
+
+.option-grid{
+grid-template-columns:1fr;
+}
+
+.checkbox-grid{
+grid-template-columns:1fr;
+}
+
+.scorecard-wrap{
+overflow-x:auto;
+-webkit-overflow-scrolling:touch;
+padding-bottom:12px;
+}
+
+.scorecard{
+min-width:1400px;
+}
+
+.scorecard th{
+position:sticky;
+top:0;
+background:#111;
+z-index:2;
+}
+
+.scorecard td:first-child,
+.scorecard th:first-child{
+position:sticky;
+left:0;
+background:#111;
+z-index:3;
+min-width:120px;
+}
+
+.scorecard input{
+width:62px;
+height:48px;
+font-size:18px;
+}
+
+.button-row{
+flex-direction:column;
+}
+
+.button-row button{
+width:100%;
+font-size:18px;
+padding:16px;
+}
+
+.toggle-btn{
+width:100%;
+max-width:340px;
+font-size:18px;
+padding:18px;
+}
+
+.player-inputs{
+grid-template-columns:1fr;
+}
+
+.player-inputs input{
+font-size:18px;
+padding:18px;
+}
+
+input,
+select,
+button,
+textarea{
+font-size:16px;
+}
+
+.settlement-grid{
+grid-template-columns:1fr;
+}
+
+.money-result{
+font-size:42px;
+}
+
+.degenerate-emojis{
+font-size:28px;
+line-height:1.4;
+word-break:break-word;
+}
+
+footer{
+padding:50px 20px;
+text-align:center;
+}
+
+}
+
+/* =========================
+EXTRA SMALL PHONES
+========================= */
+
+@media (max-width: 500px){
+
+.hero-content h1{
+font-size:34px;
+}
+
+.logo{
+font-size:28px;
+}
+
+.scorecard input{
+width:56px;
+height:44px;
+font-size:16px;
+}
+
+.total{
+font-size:42px;
+}
+
+.money-result{
+font-size:34px;
+}
+
+}
