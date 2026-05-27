@@ -1,44 +1,9 @@
-# BirdieBookie — Round Invite System V1
-
-## What This Adds
-
-This feature lets:
-
-* One player create a round
-* Enter player names + phone numbers
-* Generate a shareable invite link
-* Text the link to players
-* Open the same scorecard from every phone
-
-This is the foundation for:
-
-* Live multiplayer scoring
-* Chips tracking
-* Nassau tracking
-* Side action syncing
-* Real gambling dashboard features
-
----
-
-# STEP 1 — CREATE NEW FILE
-
-Create a new file in GitHub called:
-
-```text
-invite.html
-```
-
-Delete everything inside it.
-
-Paste this FULL code:
-
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BirdieBookie Invite Round</title>
+<title>Invite Players - BirdieBookie</title>
 <link rel="stylesheet" href="style.css">
 
 <style>
@@ -80,10 +45,21 @@ padding:20px;
 border-radius:16px;
 background:rgba(68,255,136,.08);
 word-break:break-all;
+display:none;
 }
 
 .output-box a{
 color:#44ff88;
+}
+
+.copy-btn{
+margin-top:15px;
+padding:12px 20px;
+border:none;
+border-radius:10px;
+background:#44ff88;
+font-weight:bold;
+cursor:pointer;
 }
 
 </style>
@@ -113,7 +89,7 @@ Birdie<span>Bookie</span>
 <h1>📱 Invite Players</h1>
 
 <p>
-Create a live gambling round and invite the group.
+Create a live gambling round and text the group.
 </p>
 
 </div>
@@ -124,28 +100,31 @@ Create a live gambling round and invite the group.
 
 <div class="invite-box">
 
-<h2>Create Your Round</h2>
+<h2>Create Round</h2>
 
 <input type="text" id="roundName" placeholder="Round Name">
 
-<input type="text" id="player1" placeholder="Player 1 Name">
-<input type="text" id="player2" placeholder="Player 2 Name">
-<input type="text" id="player3" placeholder="Player 3 Name">
-<input type="text" id="player4" placeholder="Player 4 Name">
+<input type="text" id="player1" placeholder="Player 1">
+
+<input type="text" id="player2" placeholder="Player 2">
+
+<input type="text" id="player3" placeholder="Player 3">
+
+<input type="text" id="player4" placeholder="Player 4">
 
 <button class="invite-btn" onclick="createInvite()">
 Generate Invite Link
 </button>
 
-<div class="output-box" id="output" style="display:none;">
+<div class="output-box" id="outputBox">
 
 <h3>Round Invite Link</h3>
 
 <p id="inviteLink"></p>
 
-<p>
-Copy and text this link to the group.
-</p>
+<button class="copy-btn" onclick="copyInvite()">
+Copy Invite Link
+</button>
 
 </div>
 
@@ -165,31 +144,49 @@ Gamblers with a golfing problem
 
 <script>
 
+let finalInvite = '';
+
 function createInvite(){
 
-const roundName = document.getElementById('roundName').value;
-const p1 = document.getElementById('player1').value;
-const p2 = document.getElementById('player2').value;
-const p3 = document.getElementById('player3').value;
-const p4 = document.getElementById('player4').value;
+const roundName =
+document.getElementById('roundName').value || 'BirdieBookie Round';
 
-const roundId = Math.random().toString(36).substring(2,10);
+const p1 =
+document.getElementById('player1').value || 'Player 1';
 
-const inviteURL =
+const p2 =
+document.getElementById('player2').value || 'Player 2';
+
+const p3 =
+document.getElementById('player3').value || 'Player 3';
+
+const p4 =
+document.getElementById('player4').value || 'Player 4';
+
+const roundId =
+Math.random().toString(36).substring(2,10);
+
+finalInvite =
 window.location.origin +
-'/scorecards.html?round=' + roundId +
+'/scorecards.html?' +
+'round=' + encodeURIComponent(roundName) +
 '&p1=' + encodeURIComponent(p1) +
 '&p2=' + encodeURIComponent(p2) +
 '&p3=' + encodeURIComponent(p3) +
 '&p4=' + encodeURIComponent(p4);
 
-const output = document.getElementById('output');
-const inviteLink = document.getElementById('inviteLink');
+document.getElementById('outputBox').style.display = 'block';
 
-inviteLink.innerHTML =
-'<a href="'+inviteURL+'">'+inviteURL+'</a>';
+document.getElementById('inviteLink').innerHTML =
+'<a href=\"' + finalInvite + '\">' + finalInvite + '</a>';
 
-output.style.display = 'block';
+}
+
+function copyInvite(){
+
+navigator.clipboard.writeText(finalInvite);
+
+alert('Invite link copied!');
 
 }
 
@@ -197,106 +194,3 @@ output.style.display = 'block';
 
 </body>
 </html>
-```
-
----
-
-# STEP 2 — UPDATE HOMEPAGE
-
-Open:
-
-```text
-index.html
-```
-
-Add this button under the existing buttons:
-
-```html
-<a href="invite.html" class="btn">Invite Players</a>
-```
-
----
-
-# STEP 3 — UPDATE SCORECARD
-
-Inside:
-
-```text
-scorecards.html
-```
-
-Add this script ABOVE the closing:
-
-```html
-</body>
-```
-
-Paste:
-
-```html
-<script>
-
-const params = new URLSearchParams(window.location.search);
-
-const p1 = params.get('p1');
-const p2 = params.get('p2');
-const p3 = params.get('p3');
-const p4 = params.get('p4');
-
-if(p1){
-document.getElementById('line1').innerText = p1;
-}
-
-if(p2){
-document.getElementById('line3').innerText = p2;
-}
-
-if(p3){
-document.getElementById('line7').innerText = p3;
-}
-
-if(p4){
-document.getElementById('line9').innerText = p4;
-}
-
-</script>
-```
-
----
-
-# WHAT THIS DOES
-
-Now:
-
-* master player creates round
-* names are entered once
-* invite link generated
-* link texts to group
-* everyone opens same scorecard setup
-
----
-
-# IMPORTANT
-
-This is VERSION 1.
-
-It does NOT yet:
-
-* sync scores live
-* save rounds permanently
-* use real accounts
-* use databases
-* send automatic texts
-
-But this is the correct architecture starting point.
-
-The next version later can use:
-
-* Firebase
-* Supabase
-* live syncing
-* real multiplayer updates
-* chips tracking
-* payouts
-* skins automation
-* Venmo integration
