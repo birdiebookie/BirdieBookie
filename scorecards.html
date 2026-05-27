@@ -90,6 +90,16 @@ cursor:pointer;
 font-size:16px;
 }
 
+.round-box{
+margin-top:25px;
+padding:18px;
+background:rgba(68,255,136,.08);
+border-radius:16px;
+text-align:center;
+font-size:18px;
+font-weight:bold;
+}
+
 </style>
 
 </head>
@@ -107,6 +117,7 @@ Birdie<span>Bookie</span>
 <div class="nav-links">
 <a href="index.html">Home</a>
 <a href="games.html">Games</a>
+<a href="invite.html">Invite Players</a>
 </div>
 
 </nav>
@@ -116,7 +127,7 @@ Birdie<span>Bookie</span>
 <h1>📊 BirdieBookie Gambling Scorecard</h1>
 
 <p>
-Built for gambling rounds, presses and side action.
+Built for gambling rounds, side action and golf chaos.
 </p>
 
 </div>
@@ -124,6 +135,10 @@ Built for gambling rounds, presses and side action.
 </header>
 
 <section class="section">
+
+<div class="round-box" id="roundBox">
+Live Gambling Round
+</div>
 
 <h2>Enter Players</h2>
 
@@ -399,6 +414,39 @@ row.classList.remove('left-right-active');
 
 });
 
+}
+
+const params = new URLSearchParams(window.location.search);
+
+const round = params.get('round');
+const p1 = params.get('p1');
+const p2 = params.get('p2');
+const p3 = params.get('p3');
+const p4 = params.get('p4');
+
+if(round){
+document.getElementById('roundBox').innerText =
+'Live Round: ' + round;
+}
+
+if(p1){
+document.getElementById('line1').innerText = p1;
+document.getElementById('player1').value = p1;
+}
+
+if(p2){
+document.getElementById('line3').innerText = p2;
+document.getElementById('player2').value = p2;
+}
+
+if(p3){
+document.getElementById('line7').innerText = p3;
+document.getElementById('player3').value = p3;
+}
+
+if(p4){
+document.getElementById('line9').innerText = p4;
+document.getElementById('player4').value = p4;
 }
 
 </script>
