@@ -420,3 +420,184 @@ font-size:34px;
 }
 
 }
+
+/* =========================
+BIRDIEBOOKIE PERSONALITY LAYER
+========================= */
+
+.personality-box{
+margin-top:35px;
+padding:24px;
+border-radius:20px;
+background:rgba(255,80,80,.08);
+border:1px solid rgba(255,80,80,.25);
+text-align:center;
+}
+
+.personality-title{
+font-size:22px;
+font-weight:bold;
+margin-bottom:14px;
+color:#ff7b7b;
+}
+
+.personality-text{
+font-size:17px;
+line-height:1.8;
+opacity:.95;
+}
+
+.sicko-mode{
+background:linear-gradient(
+135deg,
+rgba(255,0,0,.12),
+rgba(255,140,0,.12)
+);
+border:2px solid rgba(255,80,80,.45);
+box-shadow:0 0 25px rgba(255,80,80,.15);
+}
+
+.financial-warning{
+background:rgba(255,180,0,.10);
+border:1px solid rgba(255,180,0,.35);
+color:#ffcf70;
+}
+
+.friendship-warning{
+background:rgba(255,80,120,.10);
+border:1px solid rgba(255,80,120,.35);
+color:#ff9ab6;
+}
+
+.marriage-warning{
+background:rgba(255,0,0,.12);
+border:1px solid rgba(255,0,0,.35);
+color:#ff8d8d;
+}
+
+.warning-banner{
+margin-top:25px;
+padding:16px;
+border-radius:14px;
+text-align:center;
+font-weight:bold;
+font-size:18px;
+background:rgba(255,120,0,.12);
+border:1px solid rgba(255,120,0,.30);
+color:#ffb347;
+animation:pulseWarning 2s infinite;
+}
+
+@keyframes pulseWarning{
+
+0%{
+transform:scale(1);
+}
+
+50%{
+transform:scale(1.02);
+}
+
+100%{
+transform:scale(1);
+}
+
+}
+
+.press-alert{
+margin-top:20px;
+padding:18px;
+border-radius:14px;
+background:rgba(255,0,0,.14);
+border:1px solid rgba(255,0,0,.35);
+font-size:20px;
+font-weight:bold;
+text-align:center;
+color:#ff8b8b;
+}
+
+.no-blood{
+background:rgba(68,255,136,.10);
+border:1px solid rgba(68,255,136,.30);
+color:#8dffba;
+}
+
+.footer-quote{
+margin-top:18px;
+font-size:15px;
+opacity:.75;
+font-style:italic;
+line-height:1.7;
+}
+
+.glow-text{
+text-shadow:
+0 0 8px rgba(68,255,136,.4),
+0 0 18px rgba(68,255,136,.2);
+}
+
+/* =========================
+DEGENERATE LEVEL COLORS
+========================= */
+
+.degenerate-low{
+border-color:#66ff99;
+}
+
+.degenerate-mid{
+border-color:#ffcc66;
+}
+
+.degenerate-high{
+border-color:#ff884d;
+}
+
+.degenerate-extreme{
+border-color:#ff4444;
+box-shadow:0 0 20px rgba(255,68,68,.18);
+}
+
+/* =========================
+ROTATING FOOTER FEEL
+========================= */
+
+footer{
+position:relative;
+overflow:hidden;
+}
+
+footer::after{
+content:"Presses ruin lives.";
+display:block;
+margin-top:16px;
+font-size:14px;
+opacity:.55;
+font-style:italic;
+letter-spacing:1px;
+}
+
+/* =========================
+MOBILE PERSONALITY
+========================= */
+
+@media (max-width: 700px){
+
+.personality-title{
+font-size:20px;
+}
+
+.personality-text{
+font-size:16px;
+}
+
+.warning-banner{
+font-size:16px;
+line-height:1.5;
+}
+
+.press-alert{
+font-size:18px;
+line-height:1.5;
+}
+
+}
