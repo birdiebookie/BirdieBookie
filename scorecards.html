@@ -100,6 +100,51 @@ font-size:18px;
 font-weight:bold;
 }
 
+.settlement-box{
+margin-top:50px;
+padding:35px;
+border-radius:20px;
+background:rgba(255,140,0,.10);
+border:1px solid rgba(255,140,0,.30);
+display:none;
+}
+
+.settlement-box h2{
+margin-bottom:25px;
+text-align:center;
+}
+
+.settlement-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+margin-top:25px;
+}
+
+.settlement-card{
+background:rgba(255,255,255,.05);
+padding:25px;
+border-radius:18px;
+text-align:center;
+}
+
+.settlement-card h3{
+margin-bottom:15px;
+}
+
+.money-result{
+font-size:34px;
+font-weight:bold;
+}
+
+.positive{
+color:#44ff88;
+}
+
+.negative{
+color:#ff6666;
+}
+
 </style>
 
 </head>
@@ -231,7 +276,8 @@ Toggle Left Right
 <td><input type="number" min="0" max="10"></td>
 <td><input type="number" min="0" max="10"></td>
 <td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
+
+<td><input type="number" min="0" max="10" class="hole18"></td>
 
 <td class="total-box">0</td>
 <td class="total-box">0</td>
@@ -239,131 +285,125 @@ Toggle Left Right
 </tr>
 
 <tr class="gray-line lr-line">
-
 <td>Left Right</td>
-
 <td colspan="21">
 Reserved Left Right Action Line
 </td>
-
 </tr>
 
 <tr>
 
 <td class="player-name" id="line3">Player 2</td>
 
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
+<td colspan="18"></td>
 
-<td class="total-box">0</td>
+<td><input type="number" min="0" max="10" class="hole18"></td>
 
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-
-<td class="total-box">0</td>
-<td class="total-box">0</td>
+<td colspan="2"></td>
 
 </tr>
 
 <tr class="gray-line lr-line">
-
 <td>Left Right</td>
-
 <td colspan="21">
 Reserved Left Right Action Line
 </td>
-
 </tr>
 
 <tr>
 
 <td class="player-name" id="line7">Player 3</td>
 
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
+<td colspan="18"></td>
 
-<td class="total-box">0</td>
+<td><input type="number" min="0" max="10" class="hole18"></td>
 
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-
-<td class="total-box">0</td>
-<td class="total-box">0</td>
+<td colspan="2"></td>
 
 </tr>
 
 <tr class="gray-line lr-line">
-
 <td>Left Right</td>
-
 <td colspan="21">
 Reserved Left Right Action Line
 </td>
-
 </tr>
 
 <tr>
 
 <td class="player-name" id="line9">Player 4</td>
 
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
+<td colspan="18"></td>
 
-<td class="total-box">0</td>
+<td><input type="number" min="0" max="10" class="hole18"></td>
 
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-
-<td class="total-box">0</td>
-<td class="total-box">0</td>
+<td colspan="2"></td>
 
 </tr>
 
 </tbody>
 
 </table>
+
+</div>
+
+<div class="settlement-box" id="settlementBox">
+
+<h2>
+💰 Final Settlement
+</h2>
+
+<div class="settlement-grid">
+
+<div class="settlement-card">
+
+<h3 id="settleName1">
+Player 1
+</h3>
+
+<div class="money-result positive" id="settle1">
++$0
+</div>
+
+</div>
+
+<div class="settlement-card">
+
+<h3 id="settleName2">
+Player 2
+</h3>
+
+<div class="money-result negative" id="settle2">
+-$0
+</div>
+
+</div>
+
+<div class="settlement-card">
+
+<h3 id="settleName3">
+Player 3
+</h3>
+
+<div class="money-result positive" id="settle3">
++$0
+</div>
+
+</div>
+
+<div class="settlement-card">
+
+<h3 id="settleName4">
+Player 4
+</h3>
+
+<div class="money-result negative" id="settle4">
+-$0
+</div>
+
+</div>
+
+</div>
 
 </div>
 
@@ -393,6 +433,11 @@ document.getElementById('line3').innerText = p2;
 document.getElementById('line7').innerText = p3;
 document.getElementById('line9').innerText = p4;
 
+document.getElementById('settleName1').innerText = p1;
+document.getElementById('settleName2').innerText = p2;
+document.getElementById('settleName3').innerText = p3;
+document.getElementById('settleName4').innerText = p4;
+
 }
 
 let leftRightEnabled = false;
@@ -416,6 +461,61 @@ row.classList.remove('left-right-active');
 
 }
 
+const hole18Inputs =
+document.querySelectorAll('.hole18');
+
+hole18Inputs.forEach(input => {
+
+input.addEventListener('change', checkSettlement);
+
+});
+
+function checkSettlement(){
+
+let complete = true;
+
+hole18Inputs.forEach(input => {
+
+if(input.value === ''){
+complete = false;
+}
+
+});
+
+if(complete){
+
+document.getElementById('settlementBox').style.display =
+'block';
+
+generateSettlement();
+
+}
+
+}
+
+function generateSettlement(){
+
+const results = [
+Math.floor(Math.random()*80)-40,
+Math.floor(Math.random()*80)-40,
+Math.floor(Math.random()*80)-40,
+Math.floor(Math.random()*80)-40
+];
+
+document.getElementById('settle1').innerText =
+(results[0] >=0 ? '+' : '') + '$' + results[0];
+
+document.getElementById('settle2').innerText =
+(results[1] >=0 ? '+' : '') + '$' + results[1];
+
+document.getElementById('settle3').innerText =
+(results[2] >=0 ? '+' : '') + '$' + results[2];
+
+document.getElementById('settle4').innerText =
+(results[3] >=0 ? '+' : '') + '$' + results[3];
+
+}
+
 const params = new URLSearchParams(window.location.search);
 
 const round = params.get('round');
@@ -432,21 +532,25 @@ document.getElementById('roundBox').innerText =
 if(p1){
 document.getElementById('line1').innerText = p1;
 document.getElementById('player1').value = p1;
+document.getElementById('settleName1').innerText = p1;
 }
 
 if(p2){
 document.getElementById('line3').innerText = p2;
 document.getElementById('player2').value = p2;
+document.getElementById('settleName2').innerText = p2;
 }
 
 if(p3){
 document.getElementById('line7').innerText = p3;
 document.getElementById('player3').value = p3;
+document.getElementById('settleName3').innerText = p3;
 }
 
 if(p4){
 document.getElementById('line9').innerText = p4;
 document.getElementById('player4').value = p4;
+document.getElementById('settleName4').innerText = p4;
 }
 
 </script>
