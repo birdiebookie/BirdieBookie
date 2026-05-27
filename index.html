@@ -5,6 +5,58 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BirdieBookie</title>
 <link rel="stylesheet" href="style.css">
+
+<style>
+
+.hero-buttons{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:15px;
+margin-top:30px;
+}
+
+.feature-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:25px;
+margin-top:40px;
+}
+
+.feature-card{
+background:rgba(255,255,255,.05);
+padding:30px;
+border-radius:20px;
+transition:.3s;
+text-decoration:none;
+color:white;
+}
+
+.feature-card:hover{
+transform:translateY(-5px);
+background:rgba(68,255,136,.08);
+}
+
+.feature-card h3{
+margin-bottom:15px;
+font-size:24px;
+}
+
+.feature-card p{
+opacity:.9;
+line-height:1.6;
+}
+
+.live-box{
+margin-top:40px;
+padding:30px;
+border-radius:20px;
+background:rgba(68,255,136,.08);
+text-align:center;
+}
+
+</style>
+
 </head>
 
 <body>
@@ -18,28 +70,37 @@ Birdie<span>Bookie</span>
 </div>
 
 <div class="nav-links">
+
 <a href="games.html">Games</a>
+
 <a href="scorecards.html">Scorecards</a>
+
+<a href="invite.html">Invite Players</a>
+
 </div>
 
 </nav>
 
 <div class="hero-content">
 
-<h1>BirdieBookie</h1>
+<h1>⛳ BirdieBookie</h1>
 
 <p>
-Gamblers with a golfing problem
+Gamblers with a golfing problem.
 </p>
 
 <div class="hero-buttons">
 
 <a href="games.html" class="btn green">
-Games
+View Games
 </a>
 
 <a href="scorecards.html" class="btn">
 Live Scorecards
+</a>
+
+<a href="invite.html" class="btn">
+Invite Players
 </a>
 
 </div>
@@ -50,37 +111,51 @@ Live Scorecards
 
 <section class="section">
 
-<h2>Featured Games</h2>
+<h2>BirdieBookie Features</h2>
 
-<div class="card-grid">
+<div class="feature-grid">
 
-<div class="card">
-<h3>↔️ Left Right</h3>
+<a href="games.html" class="feature-card">
+
+<h3>🎯 Golf Gambling Games</h3>
+
 <p>
-Constant partner changes and dangerous momentum swings.
+Explore Nassau, Left Right, Demon, Chips, Bingo Bango Bongo, Rabbit, Vegas, Skins and more.
 </p>
+
+</a>
+
+<a href="scorecards.html" class="feature-card">
+
+<h3>📊 Live Gambling Scorecards</h3>
+
+<p>
+Track scores, gambling lines, side action and full 18-hole rounds.
+</p>
+
+</a>
+
+<a href="invite.html" class="feature-card">
+
+<h3>📱 Invite Players</h3>
+
+<p>
+Create a live round and text the invite link to the entire group.
+</p>
+
+</a>
+
 </div>
 
-<div class="card">
-<h3>🐺 Wolf</h3>
-<p>
-Classic rotating golf gambling game.
-</p>
-</div>
+<div class="live-box">
 
-<div class="card">
-<h3>💰 Nassau</h3>
-<p>
-Front 9, Back 9 and Total betting.
-</p>
-</div>
+<h2>
+🔥 Built For Golf Degenerates
+</h2>
 
-<div class="card">
-<h3>😈 Demon</h3>
 <p>
-Three matching scores creates the Demon.
+BirdieBookie was built for golfers who know the pressure of a five-foot putt worth real money.
 </p>
-</div>
 
 </div>
 
@@ -92,6 +167,10 @@ Three matching scores creates the Demon.
 
 <p>
 Gamblers with a golfing problem
+</p>
+
+<p class="footer-small">
+Play smart. Respect the game.
 </p>
 
 </footer>
