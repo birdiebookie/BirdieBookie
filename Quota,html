@@ -1,1 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quota - BirdieBookie</title>
+<link rel="stylesheet" href="style.css">
+</head>
 
+<body>
+
+<header class="hero">
+
+<nav>
+
+<div class="logo">
+Birdie<span>Bookie</span>
+</div>
+
+<div class="nav-links">
+<a href="index.html">Home</a>
+<a href="games.html">Games</a>
+<a href="scorecards.html">Scorecards</a>
+</div>
+
+</nav>
+
+<div class="hero-content">
+
+<h1>🎯 Quota</h1>
+
+<p>
+Beat your target. Beat the group.
+Quota rewards aggressive scoring and consistency.
+</p>
+
+</div>
+
+</header>
+
+<section class="section">
+
+<h2>How Quota Works</h2>
+
+<div class="card">
+
+<p>
+Each player receives a quota number based on handicap or skill level.
+</p>
+
+<p>
+Players earn points during the round:
+</p>
+
+<ul>
+<li>Bogey = 1 point</li>
+<li>Par = 2 points</li>
+<li>Birdie = 4 points</li>
+<li>Eagle = 8 points</li>
+</ul>
+
+<p>
+At the end of the round:
+</p>
+
+<ul>
+<li>Beat your quota = win money</li>
+<li>Miss your quota = lose money</li>
+</ul>
+
+<p>
+The farther above or below quota you finish, the bigger the payout.
+</p>
+
+</div>
+
+</section>
+
+<section class="section dark">
+
+<h2>Why Golfers Love Quota</h2>
+
+<div class="card-grid">
+
+<div class="card">
+<h3>Everyone Has a Chance</h3>
+<p>
+Higher handicaps can compete fairly against better players.
+</p>
+</div>
+
+<div class="card">
+<h3>Aggressive Golf Wins</h3>
+<p>
+Birdies become extremely valuable.
+</p>
+</div>
+
+<div class="card">
+<h3>Big Late-Round Drama</h3>
+<p>
+Players chase quota numbers aggressively on the back nine.
+</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>BirdieBookie Tip</h2>
+
+<div class="card">
+
+<p>
+Before the round decide:
+</p>
+
+<ul>
+<li>Point system</li>
+<li>Quota calculations</li>
+<li>Dollar value per point</li>
+<li>Maximum payout limits</li>
+</ul>
+
+<p>
+Quota is one of the best gambling formats for mixed skill groups.
+</p>
+
+</div>
+
+</section>
+
+<footer>
+
+<h3>BirdieBookie</h3>
+
+<p>
+Gamblers with a golfing problem
+</p>
+
+<p class="footer-small">
+Play smart. Respect the game.
+</p>
+
+</footer>
+
+</body>
+</html>
