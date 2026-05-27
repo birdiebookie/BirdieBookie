@@ -86,8 +86,9 @@ margin-bottom:15px;
 }
 
 .status-card p{
-font-size:24px;
+font-size:22px;
 font-weight:bold;
+line-height:1.5;
 }
 
 .rules-box{
@@ -167,10 +168,10 @@ Birdie<span>Bookie</span>
 
 <div class="hero-content">
 
-<h1>💰 Nassau Calculator</h1>
+<h1>💰 Advanced Nassau Calculator</h1>
 
 <p>
-Track Front, Back and Total live during the round.
+Live Nassau tracking with presses, carryovers and dormie alerts.
 </p>
 
 </div>
@@ -215,12 +216,12 @@ Track Front, Back and Total live during the round.
 
 <div class="button-row">
 
-<button onclick="changeScore(1,1)">
-Win Hole
+<button onclick="changeScore(1)">
+Team 1 Wins Hole
 </button>
 
 <button onclick="halveHole()">
-Halve
+Push Hole
 </button>
 
 </div>
@@ -239,12 +240,12 @@ Halve
 
 <div class="button-row">
 
-<button onclick="changeScore(2,1)">
-Win Hole
+<button onclick="changeScore(2)">
+Team 2 Wins Hole
 </button>
 
 <button onclick="halveHole()">
-Halve
+Push Hole
 </button>
 
 </div>
@@ -287,7 +288,7 @@ All Square
 
 <div class="status-card">
 
-<h3>Current Press</h3>
+<h3>Press / Carryover</h3>
 
 <p id="pressStatus">
 None
@@ -305,20 +306,20 @@ None
 
 <li>Front 9, Back 9 and Total are separate bets</li>
 
-<li>Players can press during the round</li>
+<li>Automatic presses trigger when teams fall behind</li>
 
-<li>Carryovers and automatic presses are common</li>
+<li>Pushed holes create carryovers</li>
 
-<li>Momentum swings can get expensive quickly</li>
+<li>Dormie situations increase pressure late in the round</li>
 
-<li>Most groups combine Nassau with Chips</li>
+<li>Most groups combine Nassau with Chips or Left Right</li>
 
-<li>Late back-nine presses create chaos</li>
+<li>Momentum swings become expensive quickly</li>
 
 </ul>
 
 <p>
-The Nassau is the foundation of golf gambling.
+The Nassau is the backbone of golf gambling.
 </p>
 
 </div>
@@ -334,7 +335,7 @@ Degenerate Rating
 </div>
 
 <p>
-Simple at the start. Dangerous by hole 14.
+Simple at the start. Financial stress by the back nine.
 </p>
 
 </div>
@@ -357,20 +358,25 @@ Gamblers with a golfing problem
 
 let team1Score = 0;
 let team2Score = 0;
+
 let holesPlayed = 0;
 
-function changeScore(team, amount){
+let carryover = 0;
+
+let pressActive = false;
+
+function changeScore(team){
 
 holesPlayed++;
 
 if(team === 1){
-team1Score += amount;
+team1Score++;
 }
 else{
-team2Score += amount;
+team2Score++;
 }
 
-updateBoard();
+updateBoard(team);
 
 }
 
@@ -378,11 +384,13 @@ function halveHole(){
 
 holesPlayed++;
 
-updateBoard();
+carryover++;
+
+updateBoard(0);
 
 }
 
-function updateBoard(){
+function updateBoard(lastWinner){
 
 document.getElementById('score1').innerText =
 team1Score;
@@ -411,32 +419,73 @@ leader;
 document.getElementById('totalStatus').innerText =
 leader;
 
-if(Math.abs(diff) >= 2){
+/* =========================
+AUTOMATIC PRESS LOGIC
+========================= */
+
+if(Math.abs(diff) >= 2 && !pressActive){
+
+pressActive = true;
+
 document.getElementById('pressStatus').innerText =
-'Press Recommended';
+'🔥 Automatic Press Active';
+
 }
-else{
+else if(Math.abs(diff) < 2){
+
+pressActive = false;
+
 document.getElementById('pressStatus').innerText =
 'None';
+
+}
+
+/* =========================
+CARRYOVER LOGIC
+========================= */
+
+if(carryover > 0){
+
+document.getElementById('pressStatus').innerText +=
+' | Carryover: ' + (carryover + 1) + ' Holes';
+
+}
+
+/* =========================
+DORMIE LOGIC
+========================= */
+
+const holesRemaining = 18 - holesPlayed;
+
+if(Math.abs(diff) === holesRemaining && holesRemaining > 0){
+
+document.getElementById('totalStatus').innerText =
+leader + ' | DORMIE';
+
+}
+
+/* =========================
+MATCH CLOSED LOGIC
+========================= */
+
+if(Math.abs(diff) > holesRemaining){
+
+document.getElementById('totalStatus').innerText =
+leader + ' | MATCH CLOSED';
+
+}
+
+/* =========================
+RESET CARRYOVER
+========================= */
+
+if(lastWinner !== 0){
+carryover = 0;
 }
 
 }
 
 </script>
-<div class="degenerate-box">
 
-<div class="degenerate-title">
-Degenerate Rating
-</div>
-
-<div class="degenerate-emojis">
-🟠🟠🟠🟠🟠🟠🟠🟠🟠
-</div>
-
-<div class="degenerate-text">
-Friendship destruction possible.
-</div>
-
-</div>
 </body>
 </html>
