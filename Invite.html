@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Invite Players - BirdieBookie</title>
+<title>Invite Players</title>
 
 <style>
 
@@ -12,7 +12,7 @@ body{
     margin:0;
     background:black;
     color:white;
-    font-family:Arial, Helvetica, sans-serif;
+    font-family:Arial, sans-serif;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -21,82 +21,79 @@ body{
 
 .container{
     width:90%;
-    max-width:500px;
+    max-width:600px;
     text-align:center;
 }
 
 h1{
     color:#00ff99;
-    font-size:58px;
+    font-size:70px;
     margin-bottom:10px;
 }
 
 .sub{
     color:#cccccc;
     margin-bottom:35px;
-    font-size:20px;
+    font-size:22px;
 }
 
-.player-box{
-    background:#111;
+.player{
+    margin-bottom:20px;
+}
+
+.player input{
+    width:100%;
+    padding:18px;
+    font-size:22px;
+    border-radius:14px;
     border:2px solid #00ff99;
-    border-radius:18px;
-    padding:20px;
-    margin-bottom:18px;
-}
-
-.player-box input{
-    width:90%;
-    padding:14px;
-    margin-top:10px;
-    border:none;
-    border-radius:10px;
-    font-size:18px;
-    background:#222;
+    background:#111;
     color:white;
+    box-sizing:border-box;
 }
 
-.send-btn{
-    margin-top:25px;
+.create-btn{
+    margin-top:20px;
     background:#00cc77;
-    border:none;
     color:white;
-    padding:18px 45px;
-    font-size:28px;
-    border-radius:16px;
+    border:none;
+    padding:20px 50px;
+    font-size:30px;
+    border-radius:18px;
     cursor:pointer;
-    transition:.2s;
 }
 
-.send-btn:hover{
-    transform:scale(1.05);
+.create-btn:hover{
     background:#00ff99;
 }
 
-.success{
-    margin-top:25px;
-    color:#00ff99;
-    font-size:24px;
+#inviteArea{
+    margin-top:40px;
     display:none;
 }
 
-.link-box{
-    margin-top:20px;
+#inviteLink{
     background:#111;
-    padding:15px;
-    border-radius:12px;
+    border:2px solid #00ff99;
+    padding:18px;
+    border-radius:14px;
+    font-size:18px;
     word-wrap:break-word;
-    display:none;
+    margin-bottom:20px;
 }
 
 .copy-btn{
-    margin-top:10px;
-    padding:10px 20px;
-    border:none;
-    border-radius:10px;
-    background:#00cc77;
+    background:#222;
     color:white;
+    border:none;
+    padding:14px 30px;
+    font-size:20px;
+    border-radius:14px;
     cursor:pointer;
+}
+
+.copy-btn:hover{
+    background:#444;
 }
 
 </style>
@@ -109,80 +106,106 @@ h1{
 <h1>⛳ Invite Players</h1>
 
 <div class="sub">
-Send your golf crew the round invite.
+Enter 2, 3, or 4 golfers
 </div>
 
-<div class="player-box">
-    <h2>Player 1</h2>
-    <input type="text" id="p1" placeholder="Enter player name">
+<div class="player">
+    <input type="text" id="p1" placeholder="Player 1">
 </div>
 
-<div class="player-box">
-    <h2>Player 2</h2>
-    <input type="text" id="p2" placeholder="Enter player name">
+<div class="player">
+    <input type="text" id="p2" placeholder="Player 2">
 </div>
 
-<div class="player-box">
-    <h2>Player 3</h2>
-    <input type="text" id="p3" placeholder="Enter player name">
+<div class="player">
+    <input type="text" id="p3" placeholder="Player 3">
 </div>
 
-<button class="send-btn" onclick="sendInvite()">
-Send Invite
+<div class="player">
+    <input type="text" id="p4" placeholder="Player 4">
+</div>
+
+<button class="create-btn" onclick="createInvite()">
+    Create Invite
 </button>
 
-<div class="success" id="successMsg">
-✅ Invite Created!
-</div>
+<div id="inviteArea">
 
-<div class="link-box" id="linkBox">
+    <h2 style="color:#00ff99;">
+        Invite Ready
+    </h2>
+
     <div id="inviteLink"></div>
 
     <button class="copy-btn" onclick="copyInvite()">
         Copy Invite Link
     </button>
+
 </div>
 
 </div>
 
 <script>
 
-function sendInvite(){
+function createInvite(){
 
-    const p1 = document.getElementById('p1').value;
-    const p2 = document.getElementById('p2').value;
-    const p3 = document.getElementById('p3').value;
+    let p1 =
+    document.getElementById("p1").value.trim();
 
-    if(!p1 || !p2 || !p3){
-        alert("Please enter all 3 golfers.");
+    let p2 =
+    document.getElementById("p2").value.trim();
+
+    let p3 =
+    document.getElementById("p3").value.trim();
+
+    let p4 =
+    document.getElementById("p4").value.trim();
+
+    let players = [];
+
+    if(p1 !== "") players.push(p1);
+    if(p2 !== "") players.push(p2);
+    if(p3 !== "") players.push(p3);
+    if(p4 !== "") players.push(p4);
+
+    if(players.length < 2){
+        alert("Enter at least 2 golfers");
         return;
     }
 
-    const roomCode = Math.random().toString(36).substring(2,8).toUpperCase();
+    let roomCode =
+    Math.random().toString(36)
+    .substring(2,8)
+    .toUpperCase();
 
-    const inviteURL =
-    "https://birdiebookie.com/round.html?room=" +
-    roomCode +
-    "&p1=" + encodeURIComponent(p1) +
-    "&p2=" + encodeURIComponent(p2) +
-    "&p3=" + encodeURIComponent(p3);
+    let invite =
+    "https://birdiebookie.com/scorecards.html?room="
+    + roomCode;
 
-    document.getElementById('successMsg').style.display = 'block';
+    players.forEach((player,index)=>{
 
-    document.getElementById('linkBox').style.display = 'block';
+        invite +=
+        "&p" + (index + 1) + "="
+        + encodeURIComponent(player);
 
-    document.getElementById('inviteLink').innerHTML =
-    inviteURL;
+    });
+
+    document.getElementById("inviteArea")
+    .style.display = "block";
+
+    document.getElementById("inviteLink")
+    .innerHTML = invite;
 }
 
 function copyInvite(){
 
-    const text =
-    document.getElementById('inviteLink').innerText;
+    let text =
+    document.getElementById("inviteLink")
+    .innerText;
 
     navigator.clipboard.writeText(text);
 
-    alert("Invite Link Copied!");
+    alert("Invite copied!");
 }
 
 </script>
