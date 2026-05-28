@@ -1,143 +1,321 @@
-```html id="z8f2ka"
+```html id="bph2tv"
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>BirdieBookie Scorecard</title>
+
+<style>
+
+body{
+    margin:0;
+    background:black;
+    color:white;
+    font-family:Arial;
+    overflow-x:auto;
+}
+
+.scorecard{
+    padding:20px;
+    width:max-content;
+}
+
+.row{
+    display:flex;
+    align-items:center;
+    margin-bottom:10px;
+}
+
+.header{
+    background:#00ff99;
+    color:black;
+    font-weight:bold;
+}
+
+.player-name{
+    width:170px;
+    font-size:28px;
+    color:#00ff99;
+    font-weight:bold;
+}
+
+.hole-box{
+    width:55px;
+    height:55px;
+    margin-right:5px;
+    border-radius:10px;
+    border:2px solid #00ff99;
+    background:#111;
+    color:white;
+    text-align:center;
+    font-size:22px;
+}
+
+.header-box{
+    width:55px;
+    height:55px;
+    margin-right:5px;
+    border-radius:10px;
+    background:#00ff99;
+    color:black;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-weight:bold;
+    font-size:20px;
+}
+
+.total-box{
+    width:70px;
+}
+
+</style>
+
+</head>
+
 <body>
 
 <div class="scorecard">
 
-<!-- LINE 1 -->
+<!-- HEADER -->
 <div class="row">
+
+<div class="player-name">PLAYER</div>
+
+<div class="header-box">1</div>
+<div class="header-box">2</div>
+<div class="header-box">3</div>
+<div class="header-box">4</div>
+<div class="header-box">5</div>
+<div class="header-box">6</div>
+<div class="header-box">7</div>
+<div class="header-box">8</div>
+<div class="header-box">9</div>
+
+<div class="header-box total-box">OUT</div>
+
+<div class="header-box">10</div>
+<div class="header-box">11</div>
+<div class="header-box">12</div>
+<div class="header-box">13</div>
+<div class="header-box">14</div>
+<div class="header-box">15</div>
+<div class="header-box">16</div>
+<div class="header-box">17</div>
+<div class="header-box">18</div>
+
+<div class="header-box total-box">IN</div>
+
+<div class="header-box total-box">TOT</div>
+
+</div>
+
+<!-- PLAYER 1 -->
+<div class="row">
+
 <div class="player-name">Player 1</div>
 
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+
+<input class="hole-box total-box">
+
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+
+<input class="hole-box total-box">
+
+<input class="hole-box total-box">
+
 </div>
 
-<!-- LINE 2 -->
+<!-- PLAYER 2 -->
 <div class="row">
-<div class="blank-name"></div>
 
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-</div>
-
-<!-- LINE 3 -->
-<div class="row">
 <div class="player-name">Player 2</div>
 
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+
+<input class="hole-box total-box">
+
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+
+<input class="hole-box total-box">
+
+<input class="hole-box total-box">
+
 </div>
 
-<!-- LINE 4 -->
+<!-- TOTAL FRONT -->
 <div class="row">
-<div class="blank-name"></div>
 
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
+<div class="player-name">TOTAL</div>
+
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+
+<input class="hole-box total-box">
+
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+
+<input class="hole-box total-box">
+
+<input class="hole-box total-box">
+
 </div>
 
-<!-- LINE 5 -->
-<div class="total-row">
-<div class="total-text">TOTAL</div>
-
-<input class="total-score">
-</div>
-
-<!-- LINE 6 -->
-<div class="total-row">
-<div class="total-text">TOTAL</div>
-
-<input class="total-score">
-</div>
-
-<!-- LINE 7 -->
+<!-- TOTAL BACK -->
 <div class="row">
+
+<div class="player-name">TOTAL</div>
+
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+
+<input class="hole-box total-box">
+
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+
+<input class="hole-box total-box">
+
+<input class="hole-box total-box">
+
+</div>
+
+<!-- PLAYER 3 -->
+<div class="row">
+
 <div class="player-name">Player 3</div>
 
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+
+<input class="hole-box total-box">
+
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+
+<input class="hole-box total-box">
+
+<input class="hole-box total-box">
+
 </div>
 
-<!-- LINE 8 -->
+<!-- PLAYER 4 -->
 <div class="row">
-<div class="blank-name"></div>
 
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-</div>
-
-<!-- LINE 9 -->
-<div class="row">
 <div class="player-name">Player 4</div>
 
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-</div>
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
 
-<!-- LINE 10 -->
-<div class="row">
-<div class="blank-name"></div>
+<input class="hole-box total-box">
 
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
-<input class="score-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+
+<input class="hole-box total-box">
+
+<input class="hole-box total-box">
+
 </div>
 
 </div>
 
 </body>
+
+</html>
 ```
