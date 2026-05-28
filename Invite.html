@@ -1,103 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Invite Players | BirdieBookie</title>
+<title>Birdie Bookie Invite</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to bottom, #0b3d0b, #145214);
-      color: white;
-      text-align: center;
-      padding: 40px;
-    }
+<style>
 
-    h1 {
-      font-size: 48px;
-      margin-bottom: 10px;
-    }
+body{
+    margin:0;
+    background:#00150f;
+    color:white;
+    font-family:Arial, Helvetica, sans-serif;
+    text-align:center;
+}
 
-    p {
-      font-size: 20px;
-      max-width: 700px;
-      margin: auto;
-      margin-bottom: 30px;
-      line-height: 1.6;
-    }
+header{
+    background:#000;
+    padding:25px;
+    border-bottom:3px solid #00ff88;
+}
 
-    .card {
-      background: rgba(255,255,255,0.1);
-      border-radius: 20px;
-      padding: 30px;
-      max-width: 700px;
-      margin: auto;
-      box-shadow: 0 0 20px rgba(0,0,0,0.4);
-    }
+h1{
+    margin:0;
+    color:#00ff88;
+    font-size:42px;
+}
 
-    .button {
-      display: inline-block;
-      background: gold;
-      color: black;
-      padding: 15px 30px;
-      border-radius: 12px;
-      text-decoration: none;
-      font-weight: bold;
-      margin-top: 20px;
-      transition: 0.3s;
-    }
+.container{
+    max-width:700px;
+    margin:50px auto;
+    padding:30px;
+    background:#021d17;
+    border-radius:20px;
+    box-shadow:0 0 20px rgba(0,255,120,.2);
+}
 
-    .button:hover {
-      transform: scale(1.05);
-    }
+input{
+    width:90%;
+    padding:18px;
+    margin:15px 0;
+    border:none;
+    border-radius:12px;
+    background:#111;
+    color:white;
+    font-size:18px;
+}
 
-    .quote {
-      margin-top: 40px;
-      font-style: italic;
-      color: #90ee90;
-    }
-  </style>
+button{
+    padding:18px 35px;
+    background:#00aa66;
+    color:white;
+    border:none;
+    border-radius:12px;
+    font-size:20px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    background:#00cc88;
+    transform:scale(1.05);
+}
+
+#output{
+    margin-top:30px;
+    color:#00ff88;
+    font-size:20px;
+    word-wrap:break-word;
+}
+
+footer{
+    margin-top:60px;
+    color:#666;
+}
+
+</style>
 </head>
 
 <body>
 
-  <h1>⛳ Invite Your Golf Crew</h1>
+<header>
+<h1>⛳ Invite Your Golf Crew</h1>
+</header>
 
-  <div class="card">
-    <p>
-      BirdieBookie is built for golfers who love action,
-      side games, trash talk, and winning chips.
-    </p>
+<div class="container">
 
-    <p>
-      Send this page to your foursome and get the bets rolling.
-    </p>
+<h2>Create Round Invite</h2>
 
-    <a class="button" href="index.html">
-      Enter BirdieBookie
-    </a>
+<input type="text" id="course" placeholder="Golf Course Name">
 
-    <div class="quote" id="quote"></div>
-  </div>
+<input type="date" id="date">
 
-  <script>
-    const quotes = [
-      "Auto-press was a terrible idea.",
-      "Down 14 chips before the turn.",
-      "Never trust a guy with iron covers.",
-      "Par saves friendships.",
-      "$2 Nassau. $97 emotional damage.",
-      "Hammered the carry. Immediate regret."
-    ];
+<input type="time" id="time">
 
-    const randomQuote =
-      quotes[Math.floor(Math.random() * quotes.length)];
+<button onclick="generateInvite()">
+Generate Invite
+</button>
 
-    document.getElementById("quote").innerText = randomQuote;
-  </script>
+<div id="output"></div>
+
+</div>
+
+<footer>
+Birdie Bookie © 2026
+</footer>
+
+<script>
+
+function generateInvite(){
+
+    let course =
+        document.getElementById("course").value;
+
+    let date =
+        document.getElementById("date").value;
+
+    let time =
+        document.getElementById("time").value;
+
+    let inviteLink =
+        "🏌️ Join our Birdie Bookie round at "
+        + course +
+        " on " +
+        date +
+        " at " +
+        time +
+        "!";
+
+    document.getElementById("output").innerHTML =
+        inviteLink;
+}
+
+</script>
 
 </body>
 </html>
