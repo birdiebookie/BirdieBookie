@@ -1,7 +1,11 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Invite Players</title>
@@ -97,6 +101,7 @@ h1{
 }
 
 </style>
+
 </head>
 
 <body>
@@ -110,36 +115,36 @@ Enter 2, 3, or 4 golfers
 </div>
 
 <div class="player">
-    <input type="text" id="p1" placeholder="Player 1">
+<input type="text" id="p1" placeholder="Player 1">
 </div>
 
 <div class="player">
-    <input type="text" id="p2" placeholder="Player 2">
+<input type="text" id="p2" placeholder="Player 2">
 </div>
 
 <div class="player">
-    <input type="text" id="p3" placeholder="Player 3">
+<input type="text" id="p3" placeholder="Player 3">
 </div>
 
 <div class="player">
-    <input type="text" id="p4" placeholder="Player 4">
+<input type="text" id="p4" placeholder="Player 4">
 </div>
 
 <button class="create-btn" onclick="createInvite()">
-    Create Invite
+Create Invite
 </button>
 
 <div id="inviteArea">
 
-    <h2 style="color:#00ff99;">
-        Invite Ready
-    </h2>
+<h2 style="color:#00ff99;">
+Invite Ready
+</h2>
 
-    <div id="inviteLink"></div>
+<div id="inviteLink"></div>
 
-    <button class="copy-btn" onclick="copyInvite()">
-        Copy Invite Link
-    </button>
+<button class="copy-btn" onclick="copyInvite()">
+Copy Invite Link
+</button>
 
 </div>
 
@@ -169,7 +174,9 @@ function createInvite(){
     if(p4 !== "") players.push(p4);
 
     if(players.length < 2){
+
         alert("Enter at least 2 golfers");
+
         return;
     }
 
@@ -211,4 +218,6 @@ function copyInvite(){
 </script>
 
 </body>
+
 </html>
+```
