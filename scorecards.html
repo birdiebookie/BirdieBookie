@@ -3,222 +3,113 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BirdieBookie Scorecards</title>
-<link rel="stylesheet" href="style.css">
+
+<title>Birdie Bookie Scorecard</title>
 
 <style>
 
-.scorecard-wrap{
-overflow-x:auto;
-margin-top:30px;
+body{
+    margin:0;
+    background:#00150f;
+    color:white;
+    font-family:Arial, Helvetica, sans-serif;
 }
 
-.scorecard{
-width:100%;
-min-width:1800px;
-border-collapse:collapse;
+header{
+    background:#000;
+    padding:20px;
+    text-align:center;
+    border-bottom:3px solid #00ff88;
 }
 
-.scorecard th,
-.scorecard td{
-border:1px solid rgba(255,255,255,.15);
-padding:8px;
-text-align:center;
+h1{
+    color:#00ff88;
+    margin:0;
+    font-size:42px;
 }
 
-.scorecard input{
-width:55px;
-height:38px;
-background:#111;
-border:1px solid #333;
-border-radius:8px;
-color:white;
-text-align:center;
-font-size:16px;
+.wrapper{
+    overflow-x:auto;
+    padding:20px;
 }
 
-.player-inputs{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-gap:15px;
-margin-top:30px;
+table{
+    border-collapse:collapse;
+    min-width:2200px;
+    width:100%;
 }
 
-.player-inputs input{
-padding:14px;
-border-radius:10px;
-border:none;
-background:#111;
-color:white;
-font-size:16px;
+th{
+    background:#00291f;
+    color:#fff;
+    padding:14px;
+    border:1px solid #1f4d3c;
+    font-size:18px;
+}
+
+td{
+    border:1px solid #1f4d3c;
+    padding:10px;
+    text-align:center;
 }
 
 .player-name{
-font-weight:bold;
-color:#44ff88;
-min-width:120px;
+    min-width:140px;
+    color:#00ff88;
+    font-weight:bold;
+    font-size:22px;
+    background:#001b15;
 }
 
-.gray-line{
-background:rgba(255,255,255,.05);
-opacity:.30;
-transition:.3s;
+input{
+    width:45px;
+    height:40px;
+    background:#111;
+    color:#00ff88;
+    border:1px solid #444;
+    border-radius:8px;
+    text-align:center;
+    font-size:18px;
 }
 
-.left-right-active{
-background:rgba(68,255,136,.10);
-opacity:1;
+.total{
+    color:#00ff88;
+    font-size:22px;
+    font-weight:bold;
 }
 
-.total-box{
-font-weight:bold;
-color:#44ff88;
+.action-row{
+    background:#021d17;
+    color:#777;
+    font-size:14px;
 }
 
-.toggle-area{
-margin-top:25px;
-text-align:center;
+.action-cell{
+    padding:12px;
 }
 
-.toggle-btn{
-padding:14px 24px;
-border:none;
-border-radius:12px;
-background:#44ff88;
-font-weight:bold;
-cursor:pointer;
-font-size:16px;
-}
-
-.round-box{
-margin-top:25px;
-padding:18px;
-background:rgba(68,255,136,.08);
-border-radius:16px;
-text-align:center;
-font-size:18px;
-font-weight:bold;
-}
-
-.settlement-box{
-margin-top:50px;
-padding:35px;
-border-radius:20px;
-background:rgba(255,140,0,.10);
-border:1px solid rgba(255,140,0,.30);
-display:none;
-}
-
-.settlement-box h2{
-margin-bottom:25px;
-text-align:center;
-}
-
-.settlement-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:20px;
-margin-top:25px;
-}
-
-.settlement-card{
-background:rgba(255,255,255,.05);
-padding:25px;
-border-radius:18px;
-text-align:center;
-}
-
-.settlement-card h3{
-margin-bottom:15px;
-}
-
-.money-result{
-font-size:34px;
-font-weight:bold;
-}
-
-.positive{
-color:#44ff88;
-}
-
-.negative{
-color:#ff6666;
+footer{
+    text-align:center;
+    padding:20px;
+    color:#666;
 }
 
 </style>
-
 </head>
 
 <body>
 
-<header class="hero">
-
-<nav>
-
-<div class="logo">
-Birdie<span>Bookie</span>
-</div>
-
-<div class="nav-links">
-<a href="index.html">Home</a>
-<a href="games.html">Games</a>
-<a href="invite.html">Invite Players</a>
-</div>
-
-</nav>
-
-<div class="hero-content">
-
-<h1>📊 BirdieBookie Gambling Scorecard</h1>
-
-<p>
-Built for gambling rounds, side action and golf chaos.
-</p>
-
-</div>
-
+<header>
+    <h1>⛳ Birdie Bookie Scorecard</h1>
 </header>
 
-<section class="section">
+<div class="wrapper">
 
-<div class="round-box" id="roundBox">
-Live Gambling Round
-</div>
-
-<h2>Enter Players</h2>
-
-<div class="player-inputs">
-
-<input type="text" id="player1" placeholder="Player 1" onkeyup="updateNames()">
-
-<input type="text" id="player2" placeholder="Player 2" onkeyup="updateNames()">
-
-<input type="text" id="player3" placeholder="Player 3" onkeyup="updateNames()">
-
-<input type="text" id="player4" placeholder="Player 4" onkeyup="updateNames()">
-
-</div>
-
-<div class="toggle-area">
-
-<button class="toggle-btn" onclick="toggleLeftRight()">
-Toggle Left Right
-</button>
-
-</div>
-
-</section>
-
-<section class="section dark">
-
-<div class="scorecard-wrap">
-
-<table class="scorecard">
+<table>
 
 <thead>
 
 <tr>
-
 <th>Player</th>
 
 <th>1</th>
@@ -250,96 +141,7 @@ Toggle Left Right
 
 </thead>
 
-<tbody>
-
-<tr>
-
-<td class="player-name" id="line1">Player 1</td>
-
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-
-<td class="total-box">0</td>
-
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-<td><input type="number" min="0" max="10"></td>
-
-<td><input type="number" min="0" max="10" class="hole18"></td>
-
-<td class="total-box">0</td>
-<td class="total-box">0</td>
-
-</tr>
-
-<tr class="gray-line lr-line">
-<td>Left Right</td>
-<td colspan="21">
-Reserved Left Right Action Line
-</td>
-</tr>
-
-<tr>
-
-<td class="player-name" id="line3">Player 2</td>
-
-<td colspan="18"></td>
-
-<td><input type="number" min="0" max="10" class="hole18"></td>
-
-<td colspan="2"></td>
-
-</tr>
-
-<tr class="gray-line lr-line">
-<td>Left Right</td>
-<td colspan="21">
-Reserved Left Right Action Line
-</td>
-</tr>
-
-<tr>
-
-<td class="player-name" id="line7">Player 3</td>
-
-<td colspan="18"></td>
-
-<td><input type="number" min="0" max="10" class="hole18"></td>
-
-<td colspan="2"></td>
-
-</tr>
-
-<tr class="gray-line lr-line">
-<td>Left Right</td>
-<td colspan="21">
-Reserved Left Right Action Line
-</td>
-</tr>
-
-<tr>
-
-<td class="player-name" id="line9">Player 4</td>
-
-<td colspan="18"></td>
-
-<td><input type="number" min="0" max="10" class="hole18"></td>
-
-<td colspan="2"></td>
-
-</tr>
+<tbody id="scoreBody">
 
 </tbody>
 
@@ -347,211 +149,137 @@ Reserved Left Right Action Line
 
 </div>
 
-<div class="settlement-box" id="settlementBox">
-
-<h2>
-💰 Final Settlement
-</h2>
-
-<div class="settlement-grid">
-
-<div class="settlement-card">
-
-<h3 id="settleName1">
-Player 1
-</h3>
-
-<div class="money-result positive" id="settle1">
-+$0
-</div>
-
-</div>
-
-<div class="settlement-card">
-
-<h3 id="settleName2">
-Player 2
-</h3>
-
-<div class="money-result negative" id="settle2">
--$0
-</div>
-
-</div>
-
-<div class="settlement-card">
-
-<h3 id="settleName3">
-Player 3
-</h3>
-
-<div class="money-result positive" id="settle3">
-+$0
-</div>
-
-</div>
-
-<div class="settlement-card">
-
-<h3 id="settleName4">
-Player 4
-</h3>
-
-<div class="money-result negative" id="settle4">
--$0
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
 <footer>
-
-<h3>BirdieBookie</h3>
-
-<p>
-Gamblers with a golfing problem
-</p>
-
+Birdie Bookie © 2026
 </footer>
 
 <script>
 
-function updateNames(){
-
-const p1 = document.getElementById('player1').value || 'Player 1';
-const p2 = document.getElementById('player2').value || 'Player 2';
-const p3 = document.getElementById('player3').value || 'Player 3';
-const p4 = document.getElementById('player4').value || 'Player 4';
-
-document.getElementById('line1').innerText = p1;
-document.getElementById('line3').innerText = p2;
-document.getElementById('line7').innerText = p3;
-document.getElementById('line9').innerText = p4;
-
-document.getElementById('settleName1').innerText = p1;
-document.getElementById('settleName2').innerText = p2;
-document.getElementById('settleName3').innerText = p3;
-document.getElementById('settleName4').innerText = p4;
-
-}
-
-let leftRightEnabled = false;
-
-function toggleLeftRight(){
-
-leftRightEnabled = !leftRightEnabled;
-
-const rows = document.querySelectorAll('.lr-line');
-
-rows.forEach(row => {
-
-if(leftRightEnabled){
-row.classList.add('left-right-active');
-}
-else{
-row.classList.remove('left-right-active');
-}
-
-});
-
-}
-
-const hole18Inputs =
-document.querySelectorAll('.hole18');
-
-hole18Inputs.forEach(input => {
-
-input.addEventListener('change', checkSettlement);
-
-});
-
-function checkSettlement(){
-
-let complete = true;
-
-hole18Inputs.forEach(input => {
-
-if(input.value === ''){
-complete = false;
-}
-
-});
-
-if(complete){
-
-document.getElementById('settlementBox').style.display =
-'block';
-
-generateSettlement();
-
-}
-
-}
-
-function generateSettlement(){
-
-const results = [
-Math.floor(Math.random()*80)-40,
-Math.floor(Math.random()*80)-40,
-Math.floor(Math.random()*80)-40,
-Math.floor(Math.random()*80)-40
+const players = [
+    "Player 1",
+    "Player 2",
+    "Player 3",
+    "Player 4",
+    "Player 5",
+    "Player 6",
+    "Player 7",
+    "Player 8",
+    "Player 9",
+    "Player 10"
 ];
 
-document.getElementById('settle1').innerText =
-(results[0] >=0 ? '+' : '') + '$' + results[0];
+const scoreBody = document.getElementById("scoreBody");
 
-document.getElementById('settle2').innerText =
-(results[1] >=0 ? '+' : '') + '$' + results[1];
+players.forEach((player, playerIndex) => {
 
-document.getElementById('settle3').innerText =
-(results[2] >=0 ? '+' : '') + '$' + results[2];
+    let row = document.createElement("tr");
 
-document.getElementById('settle4').innerText =
-(results[3] >=0 ? '+' : '') + '$' + results[3];
+    let playerCell = document.createElement("td");
+    playerCell.className = "player-name";
+    playerCell.contentEditable = true;
+    playerCell.innerText = player;
 
-}
+    row.appendChild(playerCell);
 
-const params = new URLSearchParams(window.location.search);
+    let frontInputs = [];
+    let backInputs = [];
 
-const round = params.get('round');
-const p1 = params.get('p1');
-const p2 = params.get('p2');
-const p3 = params.get('p3');
-const p4 = params.get('p4');
+    for(let i=1;i<=18;i++){
 
-if(round){
-document.getElementById('roundBox').innerText =
-'Live Round: ' + round;
-}
+        let td = document.createElement("td");
 
-if(p1){
-document.getElementById('line1').innerText = p1;
-document.getElementById('player1').value = p1;
-document.getElementById('settleName1').innerText = p1;
-}
+        let input = document.createElement("input");
+        input.type = "number";
+        input.min = "1";
 
-if(p2){
-document.getElementById('line3').innerText = p2;
-document.getElementById('player2').value = p2;
-document.getElementById('settleName2').innerText = p2;
-}
+        td.appendChild(input);
 
-if(p3){
-document.getElementById('line7').innerText = p3;
-document.getElementById('player3').value = p3;
-document.getElementById('settleName3').innerText = p3;
-}
+        row.appendChild(td);
 
-if(p4){
-document.getElementById('line9').innerText = p4;
-document.getElementById('player4').value = p4;
-document.getElementById('settleName4').innerText = p4;
-}
+        if(i <= 9){
+            frontInputs.push(input);
+        } else {
+            backInputs.push(input);
+        }
+
+        if(i === 9){
+
+            let outTd = document.createElement("td");
+            outTd.className = "total";
+            outTd.innerText = "0";
+
+            row.appendChild(outTd);
+
+            frontInputs.forEach(input => {
+                input.addEventListener("input", () => {
+
+                    let total = 0;
+
+                    frontInputs.forEach(box => {
+                        total += Number(box.value) || 0;
+                    });
+
+                    outTd.innerText = total;
+
+                    updateGrandTotal();
+                });
+            });
+
+        }
+
+    }
+
+    let inTd = document.createElement("td");
+    inTd.className = "total";
+    inTd.innerText = "0";
+
+    row.appendChild(inTd);
+
+    let grandTd = document.createElement("td");
+    grandTd.className = "total";
+    grandTd.innerText = "0";
+
+    row.appendChild(grandTd);
+
+    function updateGrandTotal(){
+
+        let front = 0;
+        let back = 0;
+
+        frontInputs.forEach(box => {
+            front += Number(box.value) || 0;
+        });
+
+        backInputs.forEach(box => {
+            back += Number(box.value) || 0;
+        });
+
+        inTd.innerText = back;
+
+        grandTd.innerText = front + back;
+    }
+
+    backInputs.forEach(input => {
+        input.addEventListener("input", updateGrandTotal);
+    });
+
+    scoreBody.appendChild(row);
+
+    let actionRow = document.createElement("tr");
+    actionRow.className = "action-row";
+
+    let actionCell = document.createElement("td");
+    actionCell.colSpan = "23";
+    actionCell.className = "action-cell";
+
+    actionCell.innerText =
+        "Reserved Left Right Action Line";
+
+    actionRow.appendChild(actionCell);
+
+    scoreBody.appendChild(actionRow);
+
+});
 
 </script>
 
