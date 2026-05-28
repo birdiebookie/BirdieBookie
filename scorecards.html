@@ -41,7 +41,7 @@ table{
 
 th{
     background:#00291f;
-    color:#fff;
+    color:white;
     padding:14px;
     border:1px solid #1f4d3c;
     font-size:18px;
@@ -54,11 +54,11 @@ td{
 }
 
 .player-name{
-    min-width:140px;
-    color:#00ff88;
-    font-weight:bold;
-    font-size:22px;
+    min-width:150px;
     background:#001b15;
+    color:#00ff88;
+    font-size:24px;
+    font-weight:bold;
 }
 
 input{
@@ -80,12 +80,14 @@ input{
 
 .action-row{
     background:#021d17;
-    color:#777;
-    font-size:14px;
+    color:#666;
+    height:55px;
 }
 
 .action-cell{
-    padding:12px;
+    text-align:left;
+    padding-left:20px;
+    font-size:16px;
 }
 
 footer{
@@ -100,7 +102,7 @@ footer{
 <body>
 
 <header>
-    <h1>⛳ Birdie Bookie Scorecard</h1>
+<h1>⛳ Birdie Bookie Scorecard</h1>
 </header>
 
 <div class="wrapper">
@@ -110,6 +112,7 @@ footer{
 <thead>
 
 <tr>
+
 <th>Player</th>
 
 <th>1</th>
@@ -141,9 +144,7 @@ footer{
 
 </thead>
 
-<tbody id="scoreBody">
-
-</tbody>
+<tbody id="scoreBody"></tbody>
 
 </table>
 
@@ -155,29 +156,32 @@ Birdie Bookie © 2026
 
 <script>
 
-const players = [
+const realPlayers = [
     "Player 1",
     "Player 2",
     "Player 3",
-    "Player 4",
-    "Player 5",
-    "Player 6",
-    "Player 7",
-    "Player 8",
-    "Player 9",
-    "Player 10"
+    "Player 4"
 ];
 
-const scoreBody = document.getElementById("scoreBody");
+const scoreBody =
+    document.getElementById("scoreBody");
 
-players.forEach((player, playerIndex) => {
+realPlayers.forEach(player => {
 
-    let row = document.createElement("tr");
+    let row =
+        document.createElement("tr");
 
-    let playerCell = document.createElement("td");
-    playerCell.className = "player-name";
-    playerCell.contentEditable = true;
-    playerCell.innerText = player;
+    let playerCell =
+        document.createElement("td");
+
+    playerCell.className =
+        "player-name";
+
+    playerCell.contentEditable =
+        true;
+
+    playerCell.innerText =
+        player;
 
     row.appendChild(playerCell);
 
@@ -186,11 +190,13 @@ players.forEach((player, playerIndex) => {
 
     for(let i=1;i<=18;i++){
 
-        let td = document.createElement("td");
+        let td =
+            document.createElement("td");
 
-        let input = document.createElement("input");
+        let input =
+            document.createElement("input");
+
         input.type = "number";
-        input.min = "1";
 
         td.appendChild(input);
 
@@ -204,80 +210,104 @@ players.forEach((player, playerIndex) => {
 
         if(i === 9){
 
-            let outTd = document.createElement("td");
-            outTd.className = "total";
+            let outTd =
+                document.createElement("td");
+
+            outTd.className =
+                "total";
+
             outTd.innerText = "0";
 
             row.appendChild(outTd);
 
-            frontInputs.forEach(input => {
-                input.addEventListener("input", () => {
+            frontInputs.forEach(box => {
+
+                box.addEventListener("input", () => {
 
                     let total = 0;
 
-                    frontInputs.forEach(box => {
-                        total += Number(box.value) || 0;
+                    frontInputs.forEach(score => {
+                        total += Number(score.value) || 0;
                     });
 
                     outTd.innerText = total;
 
-                    updateGrandTotal();
+                    updateTotals();
                 });
+
             });
 
         }
 
     }
 
-    let inTd = document.createElement("td");
-    inTd.className = "total";
+    let inTd =
+        document.createElement("td");
+
+    inTd.className =
+        "total";
+
     inTd.innerText = "0";
 
     row.appendChild(inTd);
 
-    let grandTd = document.createElement("td");
-    grandTd.className = "total";
+    let grandTd =
+        document.createElement("td");
+
+    grandTd.className =
+        "total";
+
     grandTd.innerText = "0";
 
     row.appendChild(grandTd);
 
-    function updateGrandTotal(){
+    function updateTotals(){
 
         let front = 0;
         let back = 0;
 
-        frontInputs.forEach(box => {
-            front += Number(box.value) || 0;
+        frontInputs.forEach(score => {
+            front += Number(score.value) || 0;
         });
 
-        backInputs.forEach(box => {
-            back += Number(box.value) || 0;
+        backInputs.forEach(score => {
+            back += Number(score.value) || 0;
         });
 
         inTd.innerText = back;
-
         grandTd.innerText = front + back;
     }
 
-    backInputs.forEach(input => {
-        input.addEventListener("input", updateGrandTotal);
+    backInputs.forEach(box => {
+        box.addEventListener("input", updateTotals);
     });
 
     scoreBody.appendChild(row);
 
-    let actionRow = document.createElement("tr");
-    actionRow.className = "action-row";
+    for(let i=0;i<2;i++){
 
-    let actionCell = document.createElement("td");
-    actionCell.colSpan = "23";
-    actionCell.className = "action-cell";
+        let actionRow =
+            document.createElement("tr");
 
-    actionCell.innerText =
-        "Reserved Left Right Action Line";
+        actionRow.className =
+            "action-row";
 
-    actionRow.appendChild(actionCell);
+        let actionCell =
+            document.createElement("td");
 
-    scoreBody.appendChild(actionRow);
+        actionCell.colSpan = "23";
+
+        actionCell.className =
+            "action-cell";
+
+        actionCell.innerText =
+            "Reserved Left Right Action Line";
+
+        actionRow.appendChild(actionCell);
+
+        scoreBody.appendChild(actionRow);
+
+    }
 
 });
 
