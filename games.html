@@ -1,196 +1,205 @@
+```html id="mq5hzu"
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Games - BirdieBookie</title>
+
+<title>BirdieBookie Games</title>
+
 <link rel="stylesheet" href="style.css">
+
+<style>
+
+.games-page{
+    padding:60px 30px;
+    text-align:center;
+}
+
+.games-title{
+    font-size:72px;
+    color:#00ff99;
+    margin-bottom:60px;
+}
+
+.games-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:35px;
+}
+
+.game-card{
+    background:#111;
+    border:2px solid #00ff99;
+    border-radius:22px;
+    padding:30px;
+    text-align:left;
+}
+
+.game-card h2{
+    color:#00ff99;
+    font-size:38px;
+    margin-bottom:20px;
+}
+
+.game-card p{
+    color:#cccccc;
+    font-size:20px;
+    line-height:1.6;
+    margin-bottom:25px;
+}
+
+.game-select{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:20px;
+    color:#00ff99;
+    font-size:18px;
+    font-weight:bold;
+}
+
+.game-select input{
+    width:24px;
+    height:24px;
+    accent-color:#00ff99;
+    cursor:pointer;
+}
+
+</style>
+
 </head>
 
 <body>
 
-<header class="hero">
+<div class="games-page">
 
-<nav>
+<h1 class="games-title">
+Featured Games
+</h1>
 
-<div class="logo">
-Birdie<span>Bookie</span>
-</div>
+<div class="games-grid">
 
-<div class="nav-links">
-<a href="index.html">Home</a>
-<a href="scorecards.html">Scorecards</a>
-</div>
+<!-- LEFT RIGHT -->
+<div class="game-card">
 
-</nav>
+<label class="game-select">
+<input type="checkbox">
+Playing This Game
+</label>
 
-<div class="hero-content">
+<h2>↔️ Left Right</h2>
 
-<h1>Golf Gambling Games</h1>
-
-<p>
-Choose your action. Choose your chaos.
-</p>
-
-</div>
-
-</header>
-
-<section class="section">
-
-<h2>Featured Games</h2>
-
-<div class="card-grid">
-
-<a href="leftright.html" class="card">
-<h3>↔️ Left Right</h3>
 <p>
 Constant partner changes and dangerous momentum swings.
 </p>
-</a>
 
-<a href="wolf.html" class="card">
-<h3>🐺 Wolf</h3>
-<p>
-Classic rotating golf gambling game.
-</p>
-</a>
+</div>
 
-<a href="nassau.html" class="card">
-<h3>💰 Nassau</h3>
+<!-- NASSAU -->
+<div class="game-card">
+
+<label class="game-select">
+<input type="checkbox">
+Playing This Game
+</label>
+
+<h2>💰 Nassau</h2>
+
 <p>
 Front 9, Back 9 and Total match betting.
 </p>
-</a>
 
-<a href="skins.html" class="card">
-<h3>🎯 Skins</h3>
+</div>
+
+<!-- SKINS -->
+<div class="game-card">
+
+<label class="game-select">
+<input type="checkbox">
+Playing This Game
+</label>
+
+<h2>🎯 Skins</h2>
+
 <p>
 Win holes outright and stack carryovers.
 </p>
-</a>
 
-<a href="vegas.html" class="card">
-<h3>🎲 Vegas</h3>
+</div>
+
+<!-- VEGAS -->
+<div class="game-card">
+
+<label class="game-select">
+<input type="checkbox">
+Playing This Game
+</label>
+
+<h2>🎲 Vegas</h2>
+
 <p>
 Big numbers and huge momentum swings.
 </p>
-</a>
 
-<a href="hammer.html" class="card">
-<h3>🔨 Hammer</h3>
+</div>
+
+<!-- HAMMER -->
+<div class="game-card">
+
+<label class="game-select">
+<input type="checkbox">
+Playing This Game
+</label>
+
+<h2>🔨 Hammer</h2>
+
 <p>
 Double the pressure anytime during a hole.
 </p>
-</a>
 
-<a href="chips.html" class="card">
-<h3>💵 Chips</h3>
+</div>
+
+<!-- CHIPS -->
+<div class="game-card">
+
+<label class="game-select">
+<input type="checkbox">
+Playing This Game
+</label>
+
+<h2>💵 Chips</h2>
+
 <p>
 Birdies, sandies, barkies and junk action.
 </p>
-</a>
-
-<a href="leftist.html" class="card">
-<h3>↔️ Leftist</h3>
-<p>
-The farthest left player becomes the wolf.
-</p>
-</a>
-
-<a href="demon.html" class="card">
-<h3>😈 Demon</h3>
-<p>
-Three matching scores creates the Demon.
-</p>
-</a>
-
-<a href="bingobangobongo.html" class="card">
-<h3>🎯 Bingo Bango Bongo</h3>
-<p>
-3 points available every hole.
-Bingo, Bango and Bongo scoring.
-</p>
-</a>
-
-<a href="train.html" class="card">
-<h3>🚂 Train</h3>
-<p>
-Momentum builds until somebody stops the train.
-</p>
-</a>
-
-<a href="quota.html" class="card">
-<h3>🎯 Quota</h3>
-<p>
-Beat your target quota and win the action.
-</p>
-</a>
-
-<a href="rabbit.html" class="card">
-<h3>🐇 Rabbit</h3>
-<p>
-Catch the rabbit and protect it for massive payouts.
-</p>
-</a>
-
-<a href="stableford.html" class="card">
-<h3>⛳ Stableford</h3>
-<p>
-Aggressive scoring with points instead of strokes.
-</p>
-</a>
-
-<a href="putts.html" class="card">
-<h3>🟢 Total Putts</h3>
-<p>
-Lowest putts front, back and total wins.
-</p>
-</a>
-
-<a href="crierswhiners.html" class="card">
-<h3>😭 Criers & Whiners</h3>
-<p>
-Strategic mulligans create gambling chaos.
-</p>
-</a>
-
-<a href="gameof11.html" class="card">
-<h3>🎯 Game of 11</h3>
-<p>
-Choose only 11 scores during the round.
-Choose wisely.
-</p>
-</a>
-
-<a href="gameof9.html" class="card">
-<h3>9️⃣ Game of 9</h3>
-<p>
-Every hole awards 9 total points in this brutal 3-player game.
-</p>
-</a>
 
 </div>
 
-</section>
+<!-- LEFTIST -->
+<div class="game-card">
 
-<footer>
+<label class="game-select">
+<input type="checkbox">
+Playing This Game
+</label>
 
-<h3>BirdieBookie</h3>
+<h2>⬅️ Leftist</h2>
 
 <p>
-Gamblers with a golfing problem
+The farthest left player automatically becomes the wolf.
 </p>
 
-<p class="footer-small">
-Play smart. Respect the game.
-</p>
+</div>
 
-</footer>
+</div>
+
+</div>
 
 </body>
+
 </html>
-<div class="game-card">
-    <h2>🐺 Wolf</h2>
-    <p>Classic rotating golf gambling game.</p>
-</div>
+```
