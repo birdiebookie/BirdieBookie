@@ -1,36 +1,86 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Invite Players</title>
 
 <style>
 
 body{
-background:black;
-color:white;
-font-family:Arial;
-text-align:center;
-padding-top:100px;
+    margin:0;
+    background:#000;
+    color:white;
+    font-family:Arial;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+}
+
+.container{
+    width:90%;
+    max-width:500px;
+    text-align:center;
 }
 
 h1{
-color:#00ff88;
-font-size:50px;
+    color:#00ff99;
+    font-size:64px;
+    margin-bottom:15px;
+}
+
+.sub{
+    color:#ccc;
+    margin-bottom:30px;
+}
+
+.player{
+    margin-bottom:20px;
+}
+
+.player input{
+    width:100%;
+    padding:16px;
+    border:none;
+    border-radius:12px;
+    background:#111;
+    color:white;
+    font-size:20px;
+    border:2px solid #00ff99;
 }
 
 button{
-padding:20px 40px;
-font-size:25px;
-background:#00aa66;
-color:white;
-border:none;
-border-radius:10px;
-cursor:pointer;
+    margin-top:20px;
+    background:#00cc77;
+    color:white;
+    border:none;
+    padding:18px 40px;
+    border-radius:16px;
+    font-size:28px;
+    cursor:pointer;
 }
 
 button:hover{
-background:#00cc88;
+    background:#00ff99;
+}
+
+#inviteArea{
+    margin-top:30px;
+    display:none;
+}
+
+#inviteLink{
+    background:#111;
+    padding:18px;
+    border-radius:12px;
+    word-wrap:break-word;
+    margin-bottom:15px;
+}
+
+.copy-btn{
+    background:#222;
 }
 
 </style>
@@ -38,15 +88,84 @@ background:#00cc88;
 
 <body>
 
+<div class="container">
+
 <h1>⛳ Invite Players</h1>
 
-<p>
-Send your golf crew the round invite.
-</p>
+<div class="sub">
+Enter your 3 golfers
+</div>
 
-<button onclick="alert('Invite Sent!')">
-Send Invite
+<div class="player">
+<input type="text" id="p1" placeholder="Player 1">
+</div>
+
+<div class="player">
+<input type="text" id="p2" placeholder="Player 2">
+</div>
+
+<div class="player">
+<input type="text" id="p3" placeholder="Player 3">
+</div>
+
+<button onclick="createInvite()">
+Create Invite
 </button>
+
+<div id="inviteArea">
+
+<h2 style="color:#00ff99;">Invite Ready</h2>
+
+<div id="inviteLink"></div>
+
+<button class="copy-btn" onclick="copyInvite()">
+Copy Invite Link
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+function createInvite(){
+
+    let p1 = document.getElementById("p1").value;
+    let p2 = document.getElementById("p2").value;
+    let p3 = document.getElementById("p3").value;
+
+    if(p1 === "" || p2 === "" || p3 === ""){
+        alert("Enter all 3 golfers");
+        return;
+    }
+
+    let code =
+    Math.random().toString(36).substring(2,8).toUpperCase();
+
+    let invite =
+    "https://birdiebookie.com/scorecards.html?room="
+    + code
+    + "&p1=" + encodeURIComponent(p1)
+    + "&p2=" + encodeURIComponent(p2)
+    + "&p3=" + encodeURIComponent(p3);
+
+    document.getElementById("inviteArea").style.display = "block";
+
+    document.getElementById("inviteLink").innerHTML =
+    invite;
+}
+
+function copyInvite(){
+
+    let text =
+    document.getElementById("inviteLink").innerText;
+
+    navigator.clipboard.writeText(text);
+
+    alert("Invite copied!");
+}
+
+</script>
 
 </body>
 </html>
