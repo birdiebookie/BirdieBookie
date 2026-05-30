@@ -225,19 +225,24 @@ The farthest left tee shot becomes the automatic bettor.
 
 <script>
 document.querySelectorAll('.game-select input').forEach(box => {
-    box.addEventListener('change', function() {
+  box.addEventListener('change', function() {
 
-        const card = this.closest('.game-card');
+    const card = this.closest('.game-card');
 
-        if (this.checked) {
-            card.style.border = '3px solid #00ff99';
-            card.style.boxShadow = '0 0 20px #00ff99';
-        } else {
-            card.style.border = '2px solid #00ff99';
-            card.style.boxShadow = 'none';
-        }
+    if (this.checked) {
+      card.style.border = '3px solid #00ff99';
+      card.style.boxShadow = '0 0 20px #00ff99';
 
-    });
+      const game = card.querySelector('h2').innerText
+        .replace(/[^a-zA-Z]/g,'')
+        .toLowerCase();
+
+      window.location.href = game + '.html';
+    } else {
+      card.style.border = '2px solid #00ff99';
+      card.style.boxShadow = 'none';
+    }
+  });
 });
 </script>
 
