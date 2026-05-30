@@ -221,7 +221,29 @@ The farthest left tee shot becomes the automatic bettor.
 </div>
 
 </div>
+223 </div>
 
+<script>
+document.querySelectorAll('.game-select input').forEach(box => {
+    box.addEventListener('change', function() {
+
+        const card = this.closest('.game-card');
+
+        if (this.checked) {
+            card.style.border = '3px solid #00ff99';
+            card.style.boxShadow = '0 0 20px #00ff99';
+        } else {
+            card.style.border = '2px solid #00ff99';
+            card.style.boxShadow = 'none';
+        }
+
+    });
+});
+</script>
+
+</body>
+
+</html>
 </body>
 
 </html>
