@@ -390,15 +390,59 @@ body{
 </div>
 
 <script>
-
 document.addEventListener("DOMContentLoaded", function() {
-    const rows = document.querySelectorAll(".row");
-    console.log("BirdieBookie loaded");
 
-    rows.forEach(row => {
-    console.log(row);
+function checkSkins() {
+
+    // clear old highlights
+    document.querySelectorAll(".hole-box").forEach(box => {
+        box.style.backgroundColor = "#111";
+        box.style.color = "white";
+    });
+
+    for (let hole = 0; hole < 18; hole++) {
+
+        const p1 = document.querySelectorAll("#player1 .hole-box")[hole];
+        const p2 = document.querySelectorAll("#player2 .hole-box")[hole];
+        const p3 = document.querySelectorAll("#player3 .hole-box")[hole];
+        const p4 = document.querySelectorAll("#player4 .hole-box")[hole];
+
+        const scores = [
+            { box: p1, score: parseInt(p1.value) },
+            { box: p2, score: parseInt(p2.value) },
+            { box: p3, score: parseInt(p3.value) },
+            { box: p4, score: parseInt(p4.value) }
+        ];
+
+        if (scores.some(s => isNaN(s.score))) {
+            continue;
+        }
+
+        const lowest = Math.min(...scores.map(s => s.score));
+
+        const winners = scores.filter(s => s.score === lowest);
+
+        if (winners.length === 1) {
+            winners[0].box.style.backgroundColor = "yellow";
+            winners[0].box.style.color = "black";
+        }
+    }
+}
+
+document.querySelectorAll("#player1 .hole-box, #player2 .hole-box, #player3 .hole-box, #player4 .hole-box")
+.forEach(box => {
+    box.addEventListener("input", checkSkins);
 });
+
 });
+
+    
+    
+
+    
+
+
+
 
 </script>
 
