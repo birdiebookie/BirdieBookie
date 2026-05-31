@@ -428,7 +428,33 @@ function checkSkins() {
         }
     }
 }
+for (let hole = 0; hole < 18; hole++) {
 
+    const p1 = parseInt(document.querySelectorAll("#player1 .hole-box")[hole].value) || 0;
+    const p2 = parseInt(document.querySelectorAll("#player2 .hole-box")[hole].value) || 0;
+    const p3 = parseInt(document.querySelectorAll("#player3 .hole-box")[hole].value) || 0;
+    const p4 = parseInt(document.querySelectorAll("#player4 .hole-box")[hole].value) || 0;
+
+    const team12 = document.querySelectorAll("#total12 .hole-box")[hole];
+    const team34 = document.querySelectorAll("#total34 .hole-box")[hole];
+
+    team12.value = p1 + p2;
+    team34.value = p3 + p4;
+
+    team12.style.backgroundColor = "#111";
+    team34.style.backgroundColor = "#111";
+    team12.style.color = "white";
+    team34.style.color = "white";
+
+    if ((p1 + p2) < (p3 + p4)) {
+        team12.style.backgroundColor = "yellow";
+        team12.style.color = "black";
+    }
+    else if ((p3 + p4) < (p1 + p2)) {
+        team34.style.backgroundColor = "yellow";
+        team34.style.color = "black";
+    }
+}
 document.querySelectorAll("#player1 .hole-box, #player2 .hole-box, #player3 .hole-box, #player4 .hole-box")
 .forEach(box => {
     box.addEventListener("input", checkSkins);
