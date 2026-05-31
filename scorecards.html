@@ -457,7 +457,9 @@ for (let hole = 0; hole < 18; hole++) {
 }
 document.querySelectorAll("#player1 .hole-box, #player2 .hole-box, #player3 .hole-box, #player4 .hole-box")
 .forEach(box => {
-    box.addEventListener("input", checkSkins);
+box.addEventListener("input", function() {
+    checkSkins();
+});
 });
 
 });
