@@ -1,3 +1,4 @@
+Scorecard before team total
 
 <!DOCTYPE html>
 <html lang="en">
@@ -400,7 +401,7 @@ function checkSkins() {
         box.style.color = "white";
     });
 
-    
+    for (let hole = 0; hole < 18; hole++) {
 
         const p1 = document.querySelectorAll("#player1 .hole-box")[hole];
         const p2 = document.querySelectorAll("#player2 .hole-box")[hole];
@@ -429,73 +430,20 @@ function checkSkins() {
     }
 }
 
-
-    const p1 = parseInt(document.querySelectorAll("#player1 .hole-box")[hole].value) || 0;
-    const p2 = parseInt(document.querySelectorAll("#player2 .hole-box")[hole].value) || 0;
-    const p3 = parseInt(document.querySelectorAll("#player3 .hole-box")[hole].value) || 0;
-    const p4 = parseInt(document.querySelectorAll("#player4 .hole-box")[hole].value) || 0;
-
-    const team12 = document.querySelectorAll("#total12 .hole-box")[hole];
-    const team34 = document.querySelectorAll("#total34 .hole-box")[hole];
-
-    team12.value = p1 + p2;
-    team34.value = p3 + p4;
-
-   
-
 document.querySelectorAll("#player1 .hole-box, #player2 .hole-box, #player3 .hole-box, #player4 .hole-box")
 .forEach(box => {
-box.addEventListener("input", function() {
-    checkSkins();
+    box.addEventListener("input", checkSkins);
 });
-});    
 
-for (let hole = 0; hole < 18; hole++) {
-    const p1 = parseInt(document.querySelectorAll("#player1 .hole-box")[hole].value) || 0;
-    const p2 = parseInt(document.querySelectorAll("#player2 .hole-box")[hole].value) || 0;
-    const p3 = parseInt(document.querySelectorAll("#player3 .hole-box")[hole].value) || 0;
-    const p4 = parseInt(document.querySelectorAll("#player4 .hole-box")[hole].value) || 0;
-    document.querySelectorAll("#total12 .hole-box")[hole].value = p1 + p2;
-    document.querySelectorAll("#total34 .hole-box")[hole].value = p3 + p4;
-
-    document.querySelectorAll("#player1 .hole-box")[9].value = (
-    (parseInt(document.querySelectorAll("#player1 .hole-box")[0].value) || 0) +
-    (parseInt(document.querySelectorAll("#player1 .hole-box")[1].value) || 0) +
-    (parseInt(document.querySelectorAll("#player1 .hole-box")[2].value) || 0) +
-    (parseInt(document.querySelectorAll("#player1 .hole-box")[3].value) || 0) +
-    (parseInt(document.querySelectorAll("#player1 .hole-box")[4].value) || 0) +
-    (parseInt(document.querySelectorAll("#player1 .hole-box")[5].value) || 0) +
-    (parseInt(document.querySelectorAll("#player1 .hole-box")[6].value) || 0) +
-    (parseInt(document.querySelectorAll("#player1 .hole-box")[7].value) || 0) +
-    (parseInt(document.querySelectorAll("#player1 .hole-box")[8].value) || 0)
-
-    document.querySelectorAll("#player1 .hole-box")[19].value = (
-    (parseInt(document.querySelectorAll("#player1 .hole-box")[10].value) || 0) +
-    (parseInt(document.querySelectorAll("#player1 .hole-box")[11].value) || 0) +
-    (parseInt(document.querySelectorAll("#player1 .hole-box")[12].value) || 0) +
-    (parseInt(document.querySelectorAll("#player1 .hole-box")[13].value) || 0) +
-    (parseInt(document.querySelectorAll("#player1 .hole-box")[14].value) || 0) +
-    (parseInt(document.querySelectorAll("#player1 .hole-box")[15].value) || 0) +
-    (parseInt(document.querySelectorAll("#player1 .hole-box")[16].value) || 0) +
-    (parseInt(document.querySelectorAll("#player1 .hole-box")[17].value) || 0) +
-    (parseInt(document.querySelectorAll("#player1 .hole-box")[18].value) || 0);
-
-
-
-    
-    
-
-    
-
-
-
-document.querySelectorAll("#player1 .hole-box, #player2 .hole-box, #player3 .hole-box, #player4 .hole-box")
-.forEach(box => {
-    box.addEventListener("input", function() {
-        checkSkins();
-    });
-checkSkins();
 });
+
+    
+    
+
+    
+
+
+
 
 </script>
 
