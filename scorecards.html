@@ -435,8 +435,8 @@ for (let hole = 0; hole < 18; hole++) {
     const p3 = parseInt(document.querySelectorAll("#player3 .hole-box")[hole].value) || 0;
     const p4 = parseInt(document.querySelectorAll("#player4 .hole-box")[hole].value) || 0;
 
-    const team12 = document.querySelectorAll("#total12 input")[hole];
-    const team34 = document.querySelectorAll("#total34 input")[hole];
+    const team12 = document.querySelector("#total12").querySelectorAll("input")[hole];
+    const team34 = document.querySelector("#total34").querySelectorAll("input")[hole];
 
     team12.value = p1 + p2;
     team34.value = p3 + p4;
