@@ -441,19 +441,7 @@ for (let hole = 0; hole < 18; hole++) {
     team12.value = p1 + p2;
     team34.value = p3 + p4;
 
-    team12.style.backgroundColor = "#111";
-    team34.style.backgroundColor = "#111";
-    team12.style.color = "white";
-    team34.style.color = "white";
-
-    if ((p1 + p2) < (p3 + p4)) {
-        team12.style.backgroundColor = "yellow";
-        team12.style.color = "black";
-    }
-    else if ((p3 + p4) < (p1 + p2)) {
-        team34.style.backgroundColor = "yellow";
-        team34.style.color = "black";
-    }
+   
 
 document.querySelectorAll("#player1 .hole-box, #player2 .hole-box, #player3 .hole-box, #player4 .hole-box")
 .forEach(box => {
