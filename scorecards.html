@@ -431,6 +431,15 @@ function checkSkins() {
 }
 function updateTeamTotals() {
 
+    const team12 = document.querySelectorAll("#total12 .hole-box");
+    const team34 = document.querySelectorAll("#total34 .hole-box");
+
+    let front12 = 0;
+    let back12 = 0;
+
+    let front34 = 0;
+    let back34 = 0;
+
     for (let hole = 0; hole < 18; hole++) {
 
         const p1 = parseInt(document.querySelectorAll("#player1 .hole-box")[hole].value) || 0;
@@ -438,9 +447,29 @@ function updateTeamTotals() {
         const p3 = parseInt(document.querySelectorAll("#player3 .hole-box")[hole].value) || 0;
         const p4 = parseInt(document.querySelectorAll("#player4 .hole-box")[hole].value) || 0;
 
-        document.querySelectorAll("#total12 .hole-box")[hole].value = p1 + p2;
-        document.querySelectorAll("#total34 .hole-box")[hole].value = p3 + p4;
+        const total12 = p1 + p2;
+        const total34 = p3 + p4;
+
+        team12[hole].value = total12 || "";
+        team34[hole].value = total34 || "";
+
+        if (hole < 9) {
+            front12 += total12;
+            front34 += total34;
+        } else {
+            back12 += total12;
+            back34 += total34;
+        }
     }
+
+    team12[9].value = front12 || "";
+    team12[19].value = back12 || "";
+    team12[20].value = front12 + back12 || "";
+
+    team34[9].value = front34 || "";
+    team34[19].value = back34 || "";
+    team34[20].value = front34 + back34 || "";
+}
 }
 
 document.querySelectorAll("#player1 .hole-box, #player2 .hole-box, #player3 .hole-box, #player4 .hole-box")
