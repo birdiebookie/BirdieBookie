@@ -400,7 +400,7 @@ function checkSkins() {
         box.style.color = "white";
     });
 
-    for (let hole = 0; hole < 18; hole++) {
+    
 
         const p1 = document.querySelectorAll("#player1 .hole-box")[hole];
         const p2 = document.querySelectorAll("#player2 .hole-box")[hole];
@@ -428,7 +428,7 @@ function checkSkins() {
         }
     }
 }
-for (let hole = 0; hole < 18; hole++) {
+
 
     const p1 = parseInt(document.querySelectorAll("#player1 .hole-box")[hole].value) || 0;
     const p2 = parseInt(document.querySelectorAll("#player2 .hole-box")[hole].value) || 0;
@@ -447,6 +447,8 @@ document.querySelectorAll("#player1 .hole-box, #player2 .hole-box, #player3 .hol
 .forEach(box => {
 box.addEventListener("input", function() {
     checkSkins();
+});
+});    
 
 for (let hole = 0; hole < 18; hole++) {
     const p1 = parseInt(document.querySelectorAll("#player1 .hole-box")[hole].value) || 0;
@@ -487,8 +489,14 @@ for (let hole = 0; hole < 18; hole++) {
 
 
 
-}
+document.querySelectorAll("#player1 .hole-box, #player2 .hole-box, #player3 .hole-box, #player4 .hole-box")
+.forEach(box => {
+    box.addEventListener("input", function() {
+        checkSkins();
+    });
+checkSkins();
 });
+
 </script>
 
 </body>
