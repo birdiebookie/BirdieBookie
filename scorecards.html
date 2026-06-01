@@ -429,15 +429,33 @@ function checkSkins() {
         }
     }
 }
+function updateTeamTotals() {
+
+    for (let hole = 0; hole < 18; hole++) {
+
+        const p1 = parseInt(document.querySelectorAll("#player1 .hole-box")[hole].value) || 0;
+        const p2 = parseInt(document.querySelectorAll("#player2 .hole-box")[hole].value) || 0;
+        const p3 = parseInt(document.querySelectorAll("#player3 .hole-box")[hole].value) || 0;
+        const p4 = parseInt(document.querySelectorAll("#player4 .hole-box")[hole].value) || 0;
+
+        document.querySelectorAll("#total12 .hole-box")[hole].value = p1 + p2;
+        document.querySelectorAll("#total34 .hole-box")[hole].value = p3 + p4;
+    }
+}
 
 document.querySelectorAll("#player1 .hole-box, #player2 .hole-box, #player3 .hole-box, #player4 .hole-box")
 .forEach(box => {
-    box.addEventListener("input", checkSkins);
-});
+
+    box.addEventListener("input", function() {
+        checkSkins();
+        updateTeamTotals();
+    });
 
 });
 
-    
+updateTeamTotals();
+
+});
     
 
     
