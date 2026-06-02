@@ -486,55 +486,7 @@ const p4 = parseInt(player4[hole].value) || 0;
         team34[9].value = front34 || "";
     team34[19].value = back34 || "";
     team34[20].value = (front34 + back34) || "";
-      const player1 = document.querySelectorAll("#player1 .hole-box");
-const player2 = document.querySelectorAll("#player2 .hole-box");
-const player3 = document.querySelectorAll("#player3 .hole-box");
-const player4 = document.querySelectorAll("#player4 .hole-box");
-
-let front1 = 0, back1 = 0;
-let front2 = 0, back2 = 0;
-let front3 = 0, back3 = 0;
-let front4 = 0, back4 = 0;
-
-for (let hole = 0; hole < 18; hole++) {
-
-    const p1 = parseInt(player1[hole].value) || 0;
-    const p2 = parseInt(player2[hole].value) || 0;
-    const p3 = parseInt(player3[hole].value) || 0;
-    const p4 = parseInt(player4[hole].value) || 0;
-
-    if (hole < 9) {
-        front1 += p1;
-        front2 += p2;
-        front3 += p3;
-        front4 += p4;
-    } else {
-        back1 += p1;
-        back2 += p2;
-        back3 += p3;
-        back4 += p4;
-    }
-}
-
-player1[9].value = front1 || "";
-player1[19].value = back1 || "";
-player1[20].value = (front1 + back1) || "";
-
-player2[9].value = front2 || "";
-player2[19].value = back2 || "";
-player2[20].value = (front2 + back2) || "";
-
-player3[9].value = front3 || "";
-player3[19].value = back3 || "";
-player3[20].value = (front3 + back3) || "";
-
-player4[9].value = front4 || "";
-player4[19].value = back4 || "";
-player4[20].value = (front4 + back4) || "";  
-
-}
-
-
+      
 document.querySelectorAll("#player1 .hole-box, #player2 .hole-box, #player3 .hole-box, #player4 .hole-box")
 .forEach(box => {
 
