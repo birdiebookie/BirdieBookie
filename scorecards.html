@@ -488,6 +488,30 @@ const p4 = parseInt(player4[hole].value) || 0;
         
     team34[20].value = (front34 + back34) || "";
      } 
+    function updatePlayerTotals() {
+
+    ["player1","player2","player3","player4"].forEach(function(id) {
+
+        const boxes = document.querySelectorAll("#" + id + " .hole-box");
+
+        let front = 0;
+        let back = 0;
+
+        for (let i = 0; i < 9; i++) {
+            front += parseInt(boxes[i].value) || 0;
+        }
+
+        for (let i = 10; i < 19; i++) {
+            back += parseInt(boxes[i].value) || 0;
+        }
+
+        boxes[9].value = front || "";
+        boxes[19].value = back || "";
+        boxes[20].value = (front + back) || "";
+
+    });
+
+}
     document.querySelectorAll("#player1 .hole-box, #player2 .hole-box, #player3 .hole-box, #player4 .hole-box")
 .forEach(box => {
 
