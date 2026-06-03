@@ -501,14 +501,13 @@ const p4 = parseInt(player4[hole].value) || 0;
             front += parseInt(boxes[i].value) || 0;
         }
 
-        for (let i = 10; i < 19; i++) {
+        for (let i = 10; i <= 18; i++) {
             back += parseInt(boxes[i].value) || 0;
         }
 
-        boxes[9].value = front || "";
-        boxes[19].value = back || "";
-        boxes[20].value = (front + back) || "";
-
+       boxes[9].value = front || "";
+boxes[19].value = back || "";
+boxes[20].value = front + back;
     });
 
 }
