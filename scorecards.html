@@ -462,13 +462,7 @@ const p4 = parseInt(player4[hole].value) || 0;
         const total34 = p3 + p4;
 
         
-        if (hole < 9) {
-    team12[hole].value = total12 || "";
-    team34[hole].value = total34 || "";
-team12[hole + 1].value = total12 || "";
-team34[hole + 1].value = total34 || "";
-    
-team34[hole].value = total34 || "";
+      
 }
 
         if (hole < 9) {
@@ -481,11 +475,11 @@ team34[hole].value = total34 || "";
     }
 
     team12[9].value = front12 || "";
-    team12[18].value = back12 || "";
+    team12[19].value = back12 || "";
     team12[20].value = (front12 + back12) || "";
 
         team34[9].value = front34 || "";
-    team34[18].value = back34 || "";
+    team34[19].value = back34 || "";
         
     team34[20].value = (front34 + back34) || "";
      } 
