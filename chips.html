@@ -387,7 +387,24 @@ Play smart. Respect the game.
 
 380 </footer>
 </footer>
+388 </footer>
 
+<script>
+document.getElementById("startRoundBtn").addEventListener("click", function() {
+
+    let selectedGames = [];
+
+    if(document.getElementById("fairways").checked) selectedGames.push("Fairways");
+    if(document.getElementById("greenies").checked) selectedGames.push("Greenies");
+    if(document.getElementById("sandies").checked) selectedGames.push("Sandies");
+
+    localStorage.setItem("activeChipGames", JSON.stringify(selectedGames));
+
+});
+</script>
+
+391 </body>
+392 </html>
 </body>
 </html>
 ```
