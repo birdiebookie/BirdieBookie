@@ -522,7 +522,14 @@ checkSkins();
 
 });
 </script>
+<script>
+const activeChipGames = JSON.parse(localStorage.getItem("activeChipGames")) || [];
 
+document.getElementById("activeChipGames").innerHTML =
+activeChipGames.length
+? activeChipGames.join("<br>")
+: "No chip games selected";
+</script>
 </body>
 
 </html>
