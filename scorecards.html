@@ -454,6 +454,10 @@ const total34Hole = s3 + s4;
 
 team12[hole].value = total12Hole || "";
 team34[hole].value = total34Hole || "";
+    if (hole === 17) {
+    team12[17].value = total12Hole;
+    team34[17].value = total34Hole;
+}
 console.log(hole, total12Hole, total34Hole);
 if (hole < 9) {
 out12 += total12Hole;
