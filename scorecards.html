@@ -318,173 +318,75 @@ body{
 </div>
 
 <div style="padding:30px;">
-<h2 style="color:#00ff99;">ACTIVE CHIP GAMES</h2>
 
-<div id="activeChipGames" style="color:white; margin-bottom:20px;">
-    No chip games selected
-</div>
-    <hr style="margin:20px 0;">
 <h1 style="color:#00ff99;">CHIP COUNT</h1>
 
 <h2 style="color:#00ff99;">FRONT 9</h2>
-<h3 style="color:#00ff99;">HOLES 1-9</h3>
+
 <div class="row">
 <div class="player-name">Player 1</div>
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
+<input class="hole-box total-box">
 </div>
+
 <div class="row">
 <div class="player-name">Player 2</div>
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
+<input class="hole-box total-box">
 </div>
 
 <div class="row">
 <div class="player-name">Player 3</div>
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
+<input class="hole-box total-box">
 </div>
 
 <div class="row">
 <div class="player-name">Player 4</div>
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
+<input class="hole-box total-box">
 </div>
 
 <h2 style="color:#00ff99; margin-top:30px;">BACK 9</h2>
-<h3 style="color:#00ff99;">HOLES 10-18</h3>
+
 <div class="row">
 <div class="player-name">Player 1</div>
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
+<input class="hole-box total-box">
 </div>
 
 <div class="row">
 <div class="player-name">Player 2</div>
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
+<input class="hole-box total-box">
 </div>
 
 <div class="row">
 <div class="player-name">Player 3</div>
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
+<input class="hole-box total-box">
 </div>
 
 <div class="row">
 <div class="player-name">Player 4</div>
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
+<input class="hole-box total-box">
 </div>
-<div class="row" id="chipPlayer1">
+
+<h2 style="color:#00ff99; margin-top:30px;">TOTAL CHIP COUNT</h2>
 
 <div class="row">
 <div class="player-name">Player 1</div>
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
+<input class="hole-box total-box">
 </div>
 
-<div class="row" id="chipPlayer2">
+<div class="row">
 <div class="player-name">Player 2</div>
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
+<input class="hole-box total-box">
 </div>
 
-<div class="row" id="chipPlayer3">
+<div class="row">
 <div class="player-name">Player 3</div>
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
+<input class="hole-box total-box">
 </div>
 
-<div class="row" id="chipPlayer4">
+<div class="row">
 <div class="player-name">Player 4</div>
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
+<input class="hole-box total-box">
 </div>
+
 </div>
 </div>
 
@@ -552,8 +454,7 @@ const total34Hole = s3 + s4;
 
 team12[hole].value = total12Hole || "";
 team34[hole].value = total34Hole || "";
-    
-console.log(hole, total12Hole, total34Hole);
+
 if (hole < 9) {
 out12 += total12Hole;
 out34 += total34Hole;
@@ -590,16 +491,13 @@ inn += parseInt(boxes[i].value) || 0;
 }
 
 boxes[9].value = out || "";
-boxes[18].value = inn || "";
-boxes[19].value = (out + inn) || "";
+boxes[19].value = inn || "";
+boxes[20].value = (out + inn) || "";
 
 });
 
 }
-console.log(document.querySelectorAll("#player1 .hole-box").length);
 
-document.querySelectorAll("#player1 .hole-box, #player2 .hole-box, #player3 .hole-box, #player4 .hole-box")
-.forEach(function(box){
 document.querySelectorAll("#player1 .hole-box, #player2 .hole-box, #player3 .hole-box, #player4 .hole-box")
 .forEach(function(box){
 
@@ -619,14 +517,7 @@ checkSkins();
 
 });
 </script>
-<script>
-const activeChipGames = JSON.parse(localStorage.getItem("activeChipGames")) || [];
 
-document.getElementById("activeChipGames").innerHTML =
-activeChipGames.length
-? activeChipGames.join("<br>")
-: "No chip games selected";
-</script>
 </body>
 
 </html>
