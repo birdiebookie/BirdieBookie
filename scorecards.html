@@ -427,7 +427,7 @@ winners[0].box.style.color = "black";
 }
 
 function updateTeamTotals() {
-
+saveScorecard();
 const team12 = document.querySelectorAll("#total12 .hole-box");
 const team34 = document.querySelectorAll("#total34 .hole-box");
 
@@ -537,7 +537,59 @@ checkSkins();
 });
 
 });
+});
+    
+function saveScorecard() {
 
+const data = {
+
+name1: document.getElementById("name1").value,
+name2: document.getElementById("name2").value,
+name3: document.getElementById("name3").value,
+name4: document.getElementById("name4").value,
+
+player1: Array.from(document.querySelectorAll("#player1 .hole-box")).map(x => x.value),
+player2: Array.from(document.querySelectorAll("#player2 .hole-box")).map(x => x.value),
+player3: Array.from(document.querySelectorAll("#player3 .hole-box")).map(x => x.value),
+player4: Array.from(document.querySelectorAll("#player4 .hole-box")).map(x => x.value)
+
+};
+
+localStorage.setItem("birdiebookieScorecard", JSON.stringify(data));
+
+}
+function loadScorecard() {
+
+const saved = localStorage.getItem("birdiebookieScorecard");
+
+if (!saved) return;
+
+const data = JSON.parse(saved);
+
+document.getElementById("name1").value = data.name1 || "";
+document.getElementById("name2").value = data.name2 || "";
+document.getElementById("name3").value = data.name3 || "";
+document.getElementById("name4").value = data.name4 || "";
+
+["player1","player2","player3","player4"].forEach(function(id){
+
+const boxes = document.querySelectorAll("#" + id + " .hole-box");
+
+(data[id] || []).forEach(function(value,index){
+
+if (boxes[index]) {
+boxes[index].value = value;
+}
+
+});
+
+});
+
+}
+loadScorecard();
+    updateTeamTotals();
+updatePlayerTotals();
+checkSkins();
 updateTeamTotals();
 updatePlayerTotals();
 checkSkins();
