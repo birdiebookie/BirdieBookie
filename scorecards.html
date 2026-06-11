@@ -459,10 +459,12 @@ team34[hole].value = total34Hole || "";
     team34[18].value = total34Hole || "";
 }
 
-if (hole < 9) {
+if (hole >= 0 && hole <= 8) {
 out12 += total12Hole;
 out34 += total34Hole;
-} else {
+}
+
+if (hole >= 10 && hole <= 18) {
 in12 += total12Hole;
 in34 += total34Hole;
 }
