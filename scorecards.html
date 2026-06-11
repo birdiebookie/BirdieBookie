@@ -318,7 +318,7 @@ body{
 </div>
 <div style="text-align:center; margin-top:20px; margin-bottom:20px;">
 
-<button id="saveBtn">⚪ SAVE ROUND</button>
+<button id="saveBtn" onclick="saveRound()">⚪ SAVE ROUND</button>
 
 </div>
 <div style="padding:30px;">
@@ -541,7 +541,11 @@ checkSkins();
 });
 
 });
+function saveRound() {
 
+alert("ROUND SAVED");
+
+}
 updateTeamTotals();
 updatePlayerTotals();
 checkSkins();
