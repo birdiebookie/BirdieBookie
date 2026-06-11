@@ -494,16 +494,13 @@ inn += parseInt(boxes[i].value) || 0;
 boxes[9].value = out || "";
 boxes[19].value = inn || "";
 boxes[20].value = (out + inn) || "";
-
-});
-
-}
-
-document.querySelectorAll("#player1 .hole-box, #player2 .hole-box, #player3 .hole-box, #player4 .hole-box")
-.forEach(function(box){
-
 box.addEventListener("input", function(){
 
+updateTeamTotals();
+updatePlayerTotals();
+checkSkins();
+
+});
 function updateNames() {
 
 const names = [
@@ -528,6 +525,15 @@ updateNames();
     updateTeamTotals();
 updatePlayerTotals();
 checkSkins();
+document.querySelectorAll("#player1 .hole-box, #player2 .hole-box, #player3 .hole-box, #player4 .hole-box")
+.forEach(function(box){
+
+box.addEventListener("input", function(){
+
+localStorage.setItem("scorecardData", JSON.stringify(getScorecardData()));
+
+});
+
 
 });
 
