@@ -454,7 +454,10 @@ const total34Hole = s3 + s4;
 
 team12[hole].value = total12Hole || "";
 team34[hole].value = total34Hole || "";
-   
+    if (hole === 18) {
+    team12[18].value = total12Hole || "";
+    team34[18].value = total34Hole || "";
+}
 
 if (hole < 9) {
 out12 += total12Hole;
@@ -494,13 +497,16 @@ inn += parseInt(boxes[i].value) || 0;
 boxes[9].value = out || "";
 boxes[19].value = inn || "";
 boxes[20].value = (out + inn) || "";
-box.addEventListener("input", function(){
-
-updateTeamTotals();
-updatePlayerTotals();
-checkSkins();
 
 });
+
+}
+
+document.querySelectorAll("#player1 .hole-box, #player2 .hole-box, #player3 .hole-box, #player4 .hole-box")
+.forEach(function(box){
+
+box.addEventListener("input", function(){
+
 function updateNames() {
 
 const names = [
@@ -525,15 +531,6 @@ updateNames();
     updateTeamTotals();
 updatePlayerTotals();
 checkSkins();
-document.querySelectorAll("#player1 .hole-box, #player2 .hole-box, #player3 .hole-box, #player4 .hole-box")
-.forEach(function(box){
-
-box.addEventListener("input", function(){
-
-localStorage.setItem("scorecardData", JSON.stringify(getScorecardData()));
-
-});
-
 
 });
 
