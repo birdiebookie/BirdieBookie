@@ -476,7 +476,16 @@ team34[9].value = out34 || "";
 team34[19].value = in34 || "";
 team34[20].value = (out34 + in34) || "";
 }
+function saveScorecard() {
 
+const values = [];
+
+document.querySelectorAll("#player1 .hole-box, #player2 .hole-box, #player3 .hole-box, #player4 .hole-box")
+.forEach(box => values.push(box.value));
+
+localStorage.setItem("scorecardData", JSON.stringify(values));
+
+}
 function updatePlayerTotals() {
 
 ["player1","player2","player3","player4"].forEach(function(id){
