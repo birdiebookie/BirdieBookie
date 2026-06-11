@@ -501,12 +501,6 @@ boxes[20].value = (out + inn) || "";
 });
 
 }
-
-document.querySelectorAll("#player1 .hole-box, #player2 .hole-box, #player3 .hole-box, #player4 .hole-box")
-.forEach(function(box){
-
-box.addEventListener("input", function(){
-
 function updateNames() {
 
 const names = [
@@ -522,6 +516,12 @@ document.querySelectorAll(".chip-p3").forEach(x => x.textContent = names[2]);
 document.querySelectorAll(".chip-p4").forEach(x => x.textContent = names[3]);
 
 }
+document.querySelectorAll("#player1 .hole-box, #player2 .hole-box, #player3 .hole-box, #player4 .hole-box")
+.forEach(function(box){
+
+box.addEventListener("input", function(){
+
+
 
 document.querySelectorAll(".player-input").forEach(function(box){
 box.addEventListener("input", updateNames);
@@ -532,9 +532,6 @@ updateNames();
 updatePlayerTotals();
 checkSkins();
 
-});
-
-});
 
 updateTeamTotals();
 updatePlayerTotals();
