@@ -428,7 +428,7 @@ winners[0].box.style.color = "black";
 
 function updateTeamTotals() {
 
-const team12 = document.querySelectorAll("#total12 .hole-box");
+id="total12" = document.querySelectorAll("#total12 .hole-box");
 const team34 = document.querySelectorAll("#total34 .hole-box");
 
 const p1 = document.querySelectorAll("#player1 .hole-box");
@@ -503,7 +503,8 @@ document.querySelectorAll("#player1 .hole-box, #player2 .hole-box, #player3 .hol
 
 box.addEventListener("input", function(){
 
-updateTeamTotals();
+console.log("TEAM TOTALS RUNNING");
+    updateTeamTotals();
 updatePlayerTotals();
 checkSkins();
 
