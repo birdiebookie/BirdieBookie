@@ -526,10 +526,7 @@ document.querySelectorAll(".chip-p4").forEach(x => x.textContent = names[3]);
 document.querySelectorAll(".player-input").forEach(function(box){
 box.addEventListener("input", updateNames);
 });
-document.getElementById("name1").value = localStorage.getItem("name1") || "Player 1";
-document.getElementById("name2").value = localStorage.getItem("name2") || "Player 2";
-document.getElementById("name3").value = localStorage.getItem("name3") || "Player 3";
-document.getElementById("name4").value = localStorage.getItem("name4") || "Player 4";
+
 updateNames();
     updateTeamTotals();
 updatePlayerTotals();
