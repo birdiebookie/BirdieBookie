@@ -546,6 +546,36 @@ updateTeamTotals();
 updatePlayerTotals();
 checkSkins();
 
+    const saved = localStorage.getItem("birdiebookieScorecard");
+
+if(saved){
+
+const data = JSON.parse(saved);
+
+document.getElementById("name1").value = data.name1 || "";
+document.getElementById("name2").value = data.name2 || "";
+document.getElementById("name3").value = data.name3 || "";
+document.getElementById("name4").value = data.name4 || "";
+
+["player1","player2","player3","player4"].forEach(function(id){
+
+const boxes = document.querySelectorAll("#" + id + " .hole-box");
+
+(data[id] || []).forEach(function(value,index){
+
+if(boxes[index]){
+boxes[index].value = value;
+}
+
+});
+
+});
+
+updateTeamTotals();
+updatePlayerTotals();
+checkSkins();
+
+}
 });
 function saveRound() {
 
