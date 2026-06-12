@@ -549,6 +549,11 @@ checkSkins();
 });
 function saveRound() {
 
+localStorage.setItem(
+"birdiebookieBackup",
+document.body.innerHTML
+);
+
 alert("ROUND SAVED");
 
 }
