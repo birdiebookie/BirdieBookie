@@ -438,6 +438,38 @@ winners[0].box.style.backgroundColor = "yellow";
 winners[0].box.style.color = "black";
 }
 }
+
+const team12 = document.querySelectorAll("#total12 .hole-box");
+const team34 = document.querySelectorAll("#total34 .hole-box");
+
+let carryHoles = [];
+
+for (let hole = 0; hole <= 18; hole++) {
+
+const score12 = parseInt(team12[hole].value);
+const score34 = parseInt(team34[hole].value);
+
+if (isNaN(score12) || isNaN(score34)) continue;
+
+if (score12 === score34) {
+carryHoles.push(hole);
+continue;
+}
+
+carryHoles.push(hole);
+
+const winnerTeam = score12 < score34 ? team12 : team34;
+
+carryHoles.forEach(function(h){
+
+winnerTeam[h].style.backgroundColor = "yellow";
+winnerTeam[h].style.color = "black";
+
+});
+
+carryHoles = [];
+}
+
 }
 
 function updateTeamTotals() {
