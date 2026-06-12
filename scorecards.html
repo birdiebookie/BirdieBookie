@@ -549,10 +549,21 @@ checkSkins();
 });
 function saveRound() {
 
-localStorage.setItem(
-"birdiebookieBackup",
-document.body.innerHTML
-);
+const data = {
+
+name1: document.getElementById("name1").value,
+name2: document.getElementById("name2").value,
+name3: document.getElementById("name3").value,
+name4: document.getElementById("name4").value,
+
+player1: Array.from(document.querySelectorAll("#player1 .hole-box")).map(x => x.value),
+player2: Array.from(document.querySelectorAll("#player2 .hole-box")).map(x => x.value),
+player3: Array.from(document.querySelectorAll("#player3 .hole-box")).map(x => x.value),
+player4: Array.from(document.querySelectorAll("#player4 .hole-box")).map(x => x.value)
+
+};
+
+localStorage.setItem("birdiebookieScorecard", JSON.stringify(data));
 
 alert("ROUND SAVED");
 
