@@ -442,29 +442,18 @@ if (winners.length > 1) {
 
 carrySkins.push(hole);
 
+const winner = winners[0];
+
 carrySkins.forEach(function(h){
+const carryBox = document.querySelectorAll("#player1 .hole-box, #player2 .hole-box, #player3 .hole-box, #player4 .hole-box")[0];
 
-const p1carry = document.querySelectorAll("#player1 .hole-box")[h];
-const p2carry = document.querySelectorAll("#player2 .hole-box")[h];
-const p3carry = document.querySelectorAll("#player3 .hole-box")[h];
-const p4carry = document.querySelectorAll("#player4 .hole-box")[h];
-
-const scoresCarry = [
-{ box:p1carry, score:parseInt(p1carry.value) },
-{ box:p2carry, score:parseInt(p2carry.value) },
-{ box:p3carry, score:parseInt(p3carry.value) },
-{ box:p4carry, score:parseInt(p4carry.value) }
-];
-
-const lowCarry = Math.min(...scoresCarry.map(x => x.score));
-const winnerCarry = scoresCarry.filter(x => x.score === lowCarry);
-
-winnerCarry[0].box.style.backgroundColor = "yellow";
-winnerCarry[0].box.style.color = "black";
+winner.box.style.backgroundColor = "yellow";
+winner.box.style.color = "black";
 
 });
 
 carrySkins = [];
+
 }
 
 const team12 = document.querySelectorAll("#total12 .hole-box");
@@ -479,7 +468,8 @@ const score34 = parseInt(team34[hole].value);
 
 if (isNaN(score12) || isNaN(score34)) continue;
 
-if (score12 === score34) {
+
+    if (score12 === score34) {
 carryHoles.push(hole);
 continue;
 }
