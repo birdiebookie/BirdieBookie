@@ -455,6 +455,17 @@ if (winners.length === 1) {
 winners[0].box.style.backgroundColor = "yellow";
 winners[0].box.style.color = "black";
 
+} else if (
+document.getElementById("carryoverToggle").checked &&
+winners.length > 1
+) {
+
+winners.forEach(function(player){
+
+player.box.style.backgroundColor = "yellow";
+player.box.style.color = "black";
+
+});
 
 }
 }
