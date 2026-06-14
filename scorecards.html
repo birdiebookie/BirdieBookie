@@ -85,8 +85,21 @@ body{
     border:none;
     cursor:pointer;
 }
-</style>
 
+#restartBtn{
+    width:140px;
+    height:140px;
+    border-radius:50%;
+    background:red;
+    color:white;
+    font-size:30px;
+    font-weight:bold;
+    border:none;
+    cursor:pointer;
+    margin-left:20px;
+}
+
+</style>
 </head>
 
 <body>
@@ -329,6 +342,7 @@ body{
 <div style="text-align:center; margin-top:20px; margin-bottom:20px;">
 
 <button id="saveBtn" onclick="saveRound()">SAVE</button>
+<button id="restartBtn" onclick="newRound()">RESTART</button>
 
 </div>
 <div style="padding:30px;">
@@ -640,9 +654,29 @@ localStorage.setItem("birdiebookieScorecard", JSON.stringify(data));
 alert("ROUND SAVED");
 
 }
+
+function newRound(){
+
+if(!confirm("WARNING!\n\nYou will lose all current scores.\n\nStart a new round?")){
+return;
+}
+
+localStorage.removeItem("birdiebookieScorecard");
+
+document.querySelectorAll(".hole-box").forEach(function(box){
+box.value="";
+});
+
+document.getElementById("name1").value="Player 1";
+document.getElementById("name2").value="Player 2";
+document.getElementById("name3").value="Player 3";
+document.getElementById("name4").value="Player 4";
+
+location.reload();
+
+}    
 </script>
-    
-
 </body>
-
 </html>
+
+
