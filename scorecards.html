@@ -456,7 +456,19 @@ if (winners.length === 1) {
     winners[0].box.style.color = "black";
 
 }
+else if (
+document.getElementById("carryoverToggle").checked &&
+winners.length > 1
+) {
 
+winners.forEach(function(player){
+
+player.box.style.backgroundColor = "yellow";
+player.box.style.color = "black";
+
+});
+
+}
 const team12 = document.querySelectorAll("#total12 .hole-box");
 const team34 = document.querySelectorAll("#total34 .hole-box");
 
