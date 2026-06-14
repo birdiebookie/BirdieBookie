@@ -547,7 +547,7 @@ let in12 = 0;
 let out34 = 0;
 let in34 = 0;
 
-for (let hole = 0; hole <= 18; hole++) {
+for (let hole of [0,1,2,3,4,5,6,7,8,10,11,12,13,14,15,16,17,18]) {
 
 const s1 = parseInt(p1[hole].value) || 0;
 const s2 = parseInt(p2[hole].value) || 0;
@@ -559,10 +559,7 @@ const total34Hole = s3 + s4;
 
 team12[hole].value = total12Hole || "";
 team34[hole].value = total34Hole || "";
-    if (hole === 18) {
-    team12[18].value = total12Hole || "";
-    team34[18].value = total34Hole || "";
-}
+
 
 if (hole >= 0 && hole <= 8) {
 out12 += total12Hole;
