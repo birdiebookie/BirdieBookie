@@ -1,12 +1,4 @@
-
-
-
-
-
-
-
-
-	Scorecard before team total
+Scorecard before team total
 
 <!DOCTYPE html>
 <html lang="en">
@@ -93,32 +85,14 @@ body{
     border:none;
     cursor:pointer;
 }
-
-#restartBtn{
-    width:140px;
-    height:140px;
-    border-radius:50%;
-    background:red;
-    color:white;
-    font-size:30px;
-    font-weight:bold;
-    border:none;
-    cursor:pointer;
-    margin-left:20px;
-}
-
 </style>
+
 </head>
 
 <body>
 
 <div class="scorecard">
-<div style="margin-bottom:20px;">
-<label style="color:#00ff99;font-size:20px;font-weight:bold;">
-<input type="checkbox" id="carryoverToggle" checked>
- Carryovers
-</label>
-</div>
+
 <!-- HEADER -->
 <div class="row">
 
@@ -355,7 +329,6 @@ body{
 <div style="text-align:center; margin-top:20px; margin-bottom:20px;">
 
 <button id="saveBtn" onclick="saveRound()">SAVE</button>
-<button id="restartBtn" onclick="newRound()">RESTART</button>
 
 </div>
 <div style="padding:30px;">
@@ -435,8 +408,7 @@ body{
 document.addEventListener("DOMContentLoaded", function () {
 
 function checkSkins() {
-const carryoversOn = document.getElementById("carryoverToggle").checked;
-	
+
 document.querySelectorAll(".hole-box").forEach(box => {
 box.style.backgroundColor = "#111";
 box.style.color = "white";
@@ -461,40 +433,9 @@ if (scores.some(x => isNaN(x.score))) continue;
 const low = Math.min(...scores.map(x => x.score));
 const winners = scores.filter(x => x.score === low);
 
-if (!window.playerCarryHoles) {
-window.playerCarryHoles = [];
-}
-
-
-if (winners.length > 1 && carryoversOn) {
-
-window.playerCarryHoles.push(hole);
-
-} else {
-
-if(carryoversOn){
-window.playerCarryHoles.push(hole);
-}
-
-}
-
-
-
-
-window.playerCarryHoles.forEach(function(h){
-
-const targetBox =
-winners[0].box === p1 ? document.querySelectorAll("#player1 .hole-box")[h] :
-winners[0].box === p2 ? document.querySelectorAll("#player2 .hole-box")[h] :
-winners[0].box === p3 ? document.querySelectorAll("#player3 .hole-box")[h] :
-document.querySelectorAll("#player4 .hole-box")[h];
-
-targetBox.style.backgroundColor = "yellow";
-targetBox.style.color = "black";
-
-});
-
-window.playerCarryHoles = [];
+if (winners.length === 1) {
+winners[0].box.style.backgroundColor = "yellow";
+winners[0].box.style.color = "black";
 }
 }
 
@@ -547,7 +488,7 @@ let in12 = 0;
 let out34 = 0;
 let in34 = 0;
 
-for (let hole of [0,1,2,3,4,5,6,7,8,10,11,12,13,14,15,16,17,18]) {
+for (let hole = 0; hole <= 18; hole++) {
 
 const s1 = parseInt(p1[hole].value) || 0;
 const s2 = parseInt(p2[hole].value) || 0;
@@ -559,7 +500,10 @@ const total34Hole = s3 + s4;
 
 team12[hole].value = total12Hole || "";
 team34[hole].value = total34Hole || "";
-
+    if (hole === 18) {
+    team12[18].value = total12Hole || "";
+    team34[18].value = total34Hole || "";
+}
 
 if (hole >= 0 && hole <= 8) {
 out12 += total12Hole;
@@ -696,27 +640,9 @@ localStorage.setItem("birdiebookieScorecard", JSON.stringify(data));
 alert("ROUND SAVED");
 
 }
-
-function newRound(){
-
-if(!confirm("WARNING!\n\nYou will lose all current scores.\n\nStart a new round?")){
-return;
-}
-
-localStorage.removeItem("birdiebookieScorecard");
-
-document.querySelectorAll(".hole-box").forEach(function(box){
-box.value="";
-});
-
-document.getElementById("name1").value="Player 1";
-document.getElementById("name2").value="Player 2";
-document.getElementById("name3").value="Player 3";
-document.getElementById("name4").value="Player 4";
-
-location.reload();
-
-}    
 </script>
+    
+
 </body>
+
 </html>
