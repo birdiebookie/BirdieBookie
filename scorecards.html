@@ -473,9 +473,11 @@ carryHoles.push(hole);
 continue;
 }
 
-carryHoles.push(hole);
-
 const winnerTeam = score12 < score34 ? team12 : team34;
+
+if(document.getElementById("carryoverToggle").checked){
+
+carryHoles.push(hole);
 
 carryHoles.forEach(function(h){
 
@@ -483,6 +485,13 @@ winnerTeam[h].style.backgroundColor = "yellow";
 winnerTeam[h].style.color = "black";
 
 });
+
+} else {
+
+winnerTeam[hole].style.backgroundColor = "yellow";
+winnerTeam[hole].style.color = "black";
+
+}
 
 carryHoles = [];
 }
