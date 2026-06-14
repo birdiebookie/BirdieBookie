@@ -656,7 +656,26 @@ alert("ROUND SAVED");
 }
 </script>
     
+function newRound(){
 
+if(!confirm("WARNING!\n\nYou will lose all current scores.\n\nStart a new round?")){
+return;
+}
+
+localStorage.removeItem("birdiebookieScorecard");
+
+document.querySelectorAll(".hole-box").forEach(function(box){
+box.value="";
+});
+
+document.getElementById("name1").value="Player 1";
+document.getElementById("name2").value="Player 2";
+document.getElementById("name3").value="Player 3";
+document.getElementById("name4").value="Player 4";
+
+location.reload();
+
+}
 </body>
 a
 </html>
