@@ -462,7 +462,7 @@ window.playerCarryHoles.push(hole);
 
 } else {
 
-window.playerCarryHoles = carryoversOn ? [...window.playerCarryHoles, hole] : [];
+window.playerCarryHoles = carryoversOn ? [...window.playerCarryHoles, hole] : [hole];
 window.playerCarryHoles.forEach(function(h){
 
 const targetBox =
