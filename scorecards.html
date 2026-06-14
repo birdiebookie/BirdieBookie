@@ -436,6 +436,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function checkSkins() {
 const carryoversOn = document.getElementById("carryoverToggle").checked;
+	console.log("carryoversOn =", carryoversOn);
 document.querySelectorAll(".hole-box").forEach(box => {
 box.style.backgroundColor = "#111";
 box.style.color = "white";
@@ -464,13 +465,21 @@ if (!window.playerCarryHoles) {
 window.playerCarryHoles = [];
 }
 
-if (winners.length > 1) {
+
+if (winners.length > 1 && carryoversOn) {
 
 window.playerCarryHoles.push(hole);
 
 } else {
 
+if(carryoversOn){
 window.playerCarryHoles.push(hole);
+}
+
+}
+
+
+
 
 window.playerCarryHoles.forEach(function(h){
 
