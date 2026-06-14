@@ -1,4 +1,12 @@
-Scorecard before team total
+
+
+
+
+
+
+
+
+	Scorecard before team total
 
 <!DOCTYPE html>
 <html lang="en">
@@ -105,12 +113,7 @@ body{
 <body>
 
 <div class="scorecard">
-<div style="color:#00ff99; font-size:24px; margin-bottom:15px;">
-<label>
-<input type="checkbox" id="carryoverToggle" checked>
-Skins Carryovers
-</label>
-</div>
+
 <!-- HEADER -->
 <div class="row">
 
@@ -432,7 +435,7 @@ document.querySelectorAll(".hole-box").forEach(box => {
 box.style.backgroundColor = "#111";
 box.style.color = "white";
 });
-const carryoversOn = document.getElementById("carryoverToggle").checked;
+
 for (let hole of [0,1,2,3,4,5,6,7,8,10,11,12,13,14,15,16,17,18]) {
 
 const p1 = document.querySelectorAll("#player1 .hole-box")[hole];
@@ -456,13 +459,14 @@ if (!window.playerCarryHoles) {
 window.playerCarryHoles = [];
 }
 
-if (winners.length > 1 && carryoversOn) {
+if (winners.length > 1) {
 
 window.playerCarryHoles.push(hole);
 
 } else {
 
-window.playerCarryHoles = carryoversOn ? [...window.playerCarryHoles, hole] : [hole];
+window.playerCarryHoles.push(hole);
+
 window.playerCarryHoles.forEach(function(h){
 
 const targetBox =
@@ -476,7 +480,6 @@ targetBox.style.color = "black";
 
 });
 
-if(carryoversOn){
 window.playerCarryHoles = [];
 }
 }
@@ -700,11 +703,9 @@ document.getElementById("name2").value="Player 2";
 document.getElementById("name3").value="Player 3";
 document.getElementById("name4").value="Player 4";
 
-location.reload();
+location.reload();a
 
 }    
 </script>
 </body>
 </html>
-
-
