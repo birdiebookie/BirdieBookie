@@ -413,7 +413,7 @@ document.querySelectorAll(".hole-box").forEach(box => {
 box.style.backgroundColor = "#111";
 box.style.color = "white";
 });
-let carrySkins = [];
+
 for (let hole of [0,1,2,3,4,5,6,7,8,10,11,12,13,14,15,16,17,18]) {
 
 const p1 = document.querySelectorAll("#player1 .hole-box")[hole];
@@ -430,40 +430,13 @@ const scores = [
 
 if (scores.some(x => isNaN(x.score))) continue;
 
-let carrySkins = [];
-    
 const low = Math.min(...scores.map(x => x.score));
 const winners = scores.filter(x => x.score === low);
 
-if (winners.length > 1) {
-    carrySkins.push(hole);
-    continue;
+if (winners.length === 1) {
+winners[0].box.style.backgroundColor = "yellow";
+winners[0].box.style.color = "black";
 }
-
-carrySkins.push(hole);
-
-
-
-carrySkins.forEach(function(h){
-
-const p1carry = document.querySelectorAll("#player1 .hole-box")[h];
-const p2carry = document.querySelectorAll("#player2 .hole-box")[h];
-const p3carry = document.querySelectorAll("#player3 .hole-box")[h];
-const p4carry = document.querySelectorAll("#player4 .hole-box")[h];
-
-[p1carry, p2carry, p3carry, p4carry].forEach(function(box){
-    if(box){
-        box.style.backgroundColor = "yellow";
-        box.style.color = "black";
-    }
-});
-
-});
-
-carrySkins = [];
-
-
-
 }
 
 const team12 = document.querySelectorAll("#total12 .hole-box");
@@ -478,8 +451,7 @@ const score34 = parseInt(team34[hole].value);
 
 if (isNaN(score12) || isNaN(score34)) continue;
 
-
-    if (score12 === score34) {
+if (score12 === score34) {
 carryHoles.push(hole);
 continue;
 }
