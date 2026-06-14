@@ -552,7 +552,10 @@ team34[9].value = out34 || "";
 team34[19].value = in34 || "";
 team34[20].value = (out34 + in34) || "";
 }
-
+function newRound() {
+localStorage.removeItem("scorecardData");
+location.reload();
+}
 function updatePlayerTotals() {
 
 ["player1","player2","player3","player4"].forEach(function(id){
