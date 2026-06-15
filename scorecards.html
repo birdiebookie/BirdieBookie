@@ -452,22 +452,11 @@ const winners = scores.filter(x => x.score === low);
 
 if (winners.length === 1) {
 
-    winners[0].box.style.backgroundColor = "yellow";
-    winners[0].box.style.color = "black";
+winners[0].box.style.backgroundColor = "yellow";
+winners[0].box.style.color = "black";
+
 
 }
-else if (
-document.getElementById("carryoverToggle").checked &&
-winners.length > 1
-) {
-
-winners.forEach(function(player){
-
-player.box.style.backgroundColor = "yellow";
-player.box.style.color = "black";
-
-});
-
 }
 const team12 = document.querySelectorAll("#total12 .hole-box");
 const team34 = document.querySelectorAll("#total34 .hole-box");
@@ -696,7 +685,7 @@ document.getElementById("name1").value="Player 1";
 document.getElementById("name2").value="Player 2";
 document.getElementById("name3").value="Player 3";
 document.getElementById("name4").value="Player 4";
-
+	
 location.reload();
 
 }    
