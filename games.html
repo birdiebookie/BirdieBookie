@@ -91,7 +91,7 @@ Featured Games
 <div class="games-grid">
 
 <!-- LEFT RIGHT -->
-<div class="game-card" onclick="alert('CARD CLICKED')">
+<div class="game-card" onclick="startLeftRight()">
 <label class="game-select">
 <input type="checkbox" onclick="startLeftRight()">
 Playing This Game
@@ -255,7 +255,8 @@ document.querySelectorAll('.game-select input').forEach(box => {
   });
 });
 function startLeftRight(){
-alert("LEFT RIGHT BUTTON WORKS");
+    localStorage.setItem("leftRightActive","true");
+    alert("FUNCTION RUNNING");
 }
 </script>
 
