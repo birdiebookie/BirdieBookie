@@ -104,7 +104,11 @@ body{
 
 <body>
 
-<div class="scorecard">
+<div id="leftRightBanner" style="display:none; background:#00ff99; color:black; font-size:32px; font-weight:bold; text-align:center; padding:15px; margin:20px; border-radius:12px;">
+YOU ARE NOW PLAYING LEFT RIGHT
+</div>
+	
+	<div class="scorecard">
 
 <!-- HEADER -->
 <div class="row">
@@ -351,6 +355,9 @@ Team Carryovers ON
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
+	if(localStorage.getItem("leftRightActive")==="true"){
+document.getElementById("leftRightBanner").style.display="block";
+}
 function checkSkins() {
 
 document.querySelectorAll(".hole-box").forEach(box => {
