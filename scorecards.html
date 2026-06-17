@@ -662,7 +662,54 @@ boxes[20].value = (out + inn) || "";
 });
 
 }
+function validateLeftRightHole(holeIndex) {
 
+const rows = [
+document.querySelectorAll("#lr1 .hole-box"),
+document.querySelectorAll("#lr2 .hole-box"),
+document.querySelectorAll("#lr3 .hole-box"),
+document.querySelectorAll("#lr4 .hole-box")
+];
+
+const values = [];
+
+for(let r=0;r<4;r++){
+const v = parseInt(rows[r][holeIndex].value) || 0;
+values.push(v);
+}
+
+const total = values[0] + values[1] + values[2] + values[3];
+
+const positives = values.filter(v => v > 0).length;
+const negatives = values.filter(v => v < 0).length;
+
+for(let r=0;r<4;r++){
+rows[r][holeIndex].style.backgroundColor = "";
+}
+
+if(total === 0 && positives === 2 && negatives === 2){
+
+for(let r=0;r<4;r++){
+
+if(values[r] > 0){
+rows[r][holeIndex].style.backgroundColor = "#006600";
+}
+
+if(values[r] < 0){
+rows[r][holeIndex].style.backgroundColor = "#660000";
+}
+
+}
+
+return true;
+
+}
+
+alert("Left Right hole must have exactly 2 positive numbers, 2 negative numbers, and total 0.");
+
+return false;
+
+}
 document.querySelectorAll("#player1 .hole-box, #player2 .hole-box, #player3 .hole-box, #player4 .hole-box")
 .forEach(function(box){
 
