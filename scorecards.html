@@ -104,11 +104,7 @@ body{
 
 <body>
 
-<div id="leftRightBanner" style="display:none; background:#00ff99; color:black; font-size:32px; font-weight:bold; text-align:center; padding:15px; margin:20px; border-radius:12px;">
-YOU ARE NOW PLAYING LEFT RIGHT
-</div>
-	
-	<div class="scorecard">
+<div class="scorecard">
 
 <!-- HEADER -->
 <div class="row">
@@ -210,7 +206,36 @@ YOU ARE NOW PLAYING LEFT RIGHT
 </div>
 
 
+<div class="row" id="total12">
+<div class="player-name">TOTAL 1&2</div>
 
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+
+<input class="hole-box total-box">
+
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+<input class="hole-box">
+
+<input class="hole-box total-box">
+
+<input class="hole-box total-box">
+
+</div>
 
 <!-- TOTAL BACK -->
 <div class="row" id="total34">
@@ -323,12 +348,82 @@ YOU ARE NOW PLAYING LEFT RIGHT
 Team Carryovers ON
 </label>
 </div>
+<div style="padding:30px;">
+
+<h1 style="color:#00ff99;">CHIP COUNT</h1>
+
+<h2 style="color:#00ff99;">FRONT 9</h2>
+
+<div class="row">
+<div class="player-name chip-p1">Player 1</div>
+<input class="hole-box total-box">
+</div>
+
+<div class="row">
+<div class="player-name chip-p2">Player 2</div>
+<input class="hole-box total-box">
+</div>
+
+<div class="row">
+<div class="player-name chip-p3">Player 3</div>
+<input class="hole-box total-box">
+</div>
+
+<div class="row">
+<div class="player-name chip-p4">Player 4</div>
+<input class="hole-box total-box">
+</div>
+
+<h2 style="color:#00ff99; margin-top:30px;">BACK 9</h2>
+
+<div class="row">
+<div class="player-name chip-p1">Player 1</div>
+<input class="hole-box total-box">
+</div>
+
+<div class="row">
+<div class="player-name chip-p2">Player 2</div>
+<input class="hole-box total-box">
+</div>
+
+<div class="row">
+<div class="player-name chip-p3">Player 3</div>
+<input class="hole-box total-box">
+</div>
+
+<div class="row">
+<div class="player-name chip-p4">Player 4</div>
+<input class="hole-box total-box">
+</div>
+
+<h2 style="color:#00ff99; margin-top:30px;">TOTAL CHIP COUNT</h2>
+
+<div class="row">
+<div class="player-name chip-p1">Player 1</div>
+<input class="hole-box total-box">
+</div>
+
+<div class="row">
+<div class="player-name chip-p2">Player 2</div>
+<input class="hole-box total-box">
+</div>
+
+<div class="row">
+<div class="player-name chip-p3">Player 3</div>
+<input class="hole-box total-box">
+</div>
+
+<div class="row">
+<div class="player-name chip-p4">Player 4</div>
+<input class="hole-box total-box">
+</div>
+
+</div>
+</div>
+
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
-	if(localStorage.getItem("leftRightActive")==="true"){
-document.getElementById("leftRightBanner").style.display="block";
-}
 function checkSkins() {
 
 document.querySelectorAll(".hole-box").forEach(box => {
@@ -356,13 +451,11 @@ const low = Math.min(...scores.map(x => x.score));
 const winners = scores.filter(x => x.score === low);
 
 if (winners.length === 1) {
-
 winners[0].box.style.backgroundColor = "yellow";
 winners[0].box.style.color = "black";
-
-
 }
 }
+
 const team12 = document.querySelectorAll("#total12 .hole-box");
 const team34 = document.querySelectorAll("#total34 .hole-box");
 
@@ -552,7 +645,7 @@ checkSkins();
 
 }
 });
-function saveRound(){
+function saveRound() {
 
 const data = {
 
@@ -590,10 +683,10 @@ document.getElementById("name1").value="Player 1";
 document.getElementById("name2").value="Player 2";
 document.getElementById("name3").value="Player 3";
 document.getElementById("name4").value="Player 4";
-	
+
 location.reload();
 
 }    
 </script>
 </body>
-</html>
+</html>a
