@@ -692,7 +692,8 @@ if(total === 0 && positives === 2 && negatives === 2){
 for(let r=0;r<4;r++){
 
 if(values[r] > 0){
-rows[r][holeIndex].style.backgroundColor = "#006600";
+rows[r][holeIndex].style.backgroundColor = "#00ff00";
+rows[r][holeIndex].style.color = "black";
 }
 
 if(values[r] < 0){
@@ -742,7 +743,11 @@ box.addEventListener("input", updateNames);
 updateNames();
     updateTeamTotals();
 updatePlayerTotals();
-    validateLeftRightHole(0);
+    const holeIndex =
+Array.from(box.parentNode.querySelectorAll(".hole-box"))
+.indexOf(box);
+
+validateLeftRightHole(holeIndex);
 checkSkins();
 
 });
