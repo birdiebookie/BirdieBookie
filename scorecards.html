@@ -602,9 +602,7 @@ let in12 = 0;
 let out34 = 0;
 let in34 = 0;
 
-for (let hole = 0; hole <= 20; hole++) {
-
-if (hole === 9 || hole === 19 || hole === 20) continue;
+for (let hole = 0; hole <= 18; hole++) {
 
 const s1 = parseInt(p1[hole].value) || 0;
 const s2 = parseInt(p2[hole].value) || 0;
@@ -616,7 +614,10 @@ const total34Hole = s3 + s4;
 
 team12[hole].value = total12Hole || "";
 team34[hole].value = total34Hole || "";
-  
+    if (hole === 18) {
+    team12[18].value = total12Hole || "";
+    team34[18].value = total34Hole || "";
+}
 
 if (hole >= 0 && hole <= 8) {
 out12 += total12Hole;
@@ -662,56 +663,8 @@ boxes[20].value = (out + inn) || "";
 });
 
 }
-function validateLeftRightHole(holeIndex) {
 
-
-const rows = [
-document.querySelectorAll("#lr1 .hole-box"),
-document.querySelectorAll("#lr2 .hole-box"),
-document.querySelectorAll("#lr3 .hole-box"),
-document.querySelectorAll("#lr4 .hole-box")
-];
-const values = [];
-
-for(let r=0;r<4;r++){
-const v = parseInt(rows[r][holeIndex].value) || 0;
-values.push(v);
-}
-
-const total = values[0] + values[1] + values[2] + values[3];
-
-const positives = values.filter(v => v > 0).length;
-const negatives = values.filter(v => v < 0).length;
-
-for(let r=0;r<4;r++){
-rows[r][holeIndex].style.backgroundColor = "";
-}
-
-if(total === 0 && positives === 2 && negatives === 2){
-
-for(let r=0;r<4;r++){
-
-if(values[r] > 0){
-rows[r][holeIndex].style.backgroundColor = "#00ff00";
-rows[r][holeIndex].style.color = "black";
-}
-
-if(values[r] < 0){
-rows[r][holeIndex].style.backgroundColor = "#660000";
-}
-
-}
-
-return true;
-
-}
-
-alert("Left Right hole must have exactly 2 positive numbers, 2 negative numbers, and total 0.");
-
-return false;
-
-}
-document.querySelectorAll("#lr1 .hole-box, #lr2 .hole-box, #lr3 .hole-box, #lr4 .hole-box")
+document.querySelectorAll("#player1 .hole-box, #player2 .hole-box, #player3 .hole-box, #player4 .hole-box")
 .forEach(function(box){
 
 box.addEventListener("input", function(){
@@ -743,11 +696,6 @@ box.addEventListener("input", updateNames);
 updateNames();
     updateTeamTotals();
 updatePlayerTotals();
-    const holeIndex =
-Array.from(box.parentNode.querySelectorAll(".hole-box"))
-.indexOf(box);
-
-validateLeftRightHole(holeIndex);
 checkSkins();
 
 });
@@ -771,7 +719,6 @@ document.getElementById("name4").value = data.name4 || "";
 document.getElementById("lrName1").value = data.name1 || "";
 document.getElementById("lrName2").value = data.name2 || "";
 document.getElementById("lrName3").value = data.name3 || "";
-document.getElementById("lrName4").value = data.name4 || "";
 document.getElementById("lrName4").value = data.name4 || "";
 
 ["player1","player2","player3","player4"].forEach(function(id){
