@@ -688,7 +688,7 @@ box.style.color = "white";
 });
 
 }
-document.querySelectorAll("#player1 .hole-box, #player2 .hole-box, #player3 .hole-box, #player4 .hole-box")
+document.querySelectorAll(".hole-box")
 .forEach(function(box){
 
 box.addEventListener("input", function(){
@@ -721,7 +721,7 @@ updateNames();
     updateTeamTotals();
 updatePlayerTotals();
 checkSkins();
-
+colorLeftRight();
 });
 
 });
