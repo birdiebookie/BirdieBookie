@@ -663,7 +663,31 @@ boxes[20].value = (out + inn) || "";
 });
 
 }
+function colorLeftRight() {
 
+["lr1","lr2","lr3","lr4"].forEach(function(id){
+
+const boxes = document.querySelectorAll("#" + id + " .hole-box");
+
+boxes.forEach(function(box){
+
+const value = parseInt(box.value);
+
+if(value > 0){
+box.style.color = "lime";
+}
+else if(value < 0){
+box.style.color = "red";
+}
+else{
+box.style.color = "white";
+}
+
+});
+
+});
+
+}
 document.querySelectorAll("#player1 .hole-box, #player2 .hole-box, #player3 .hole-box, #player4 .hole-box")
 .forEach(function(box){
 
@@ -738,6 +762,7 @@ boxes[index].value = value;
 updateTeamTotals();
 updatePlayerTotals();
 checkSkins();
+    colorLeftRight();
 
 }
 });
