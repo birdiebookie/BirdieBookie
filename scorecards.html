@@ -663,7 +663,37 @@ boxes[20].value = (out + inn) || "";
 });
 
 }
-function colorLeftRight() {
+
+    function updateLeftRightTotals() {
+
+["lr1","lr2","lr3","lr4"].forEach(function(id){
+
+const boxes = document.querySelectorAll("#" + id + " .hole-box");
+
+let out = 0;
+let inn = 0;
+
+for(let i = 0; i <= 8; i++){
+
+out += parseInt(boxes[i].value) || 0;
+
+}
+
+for(let i = 10; i <= 18; i++){
+
+inn += parseInt(boxes[i].value) || 0;
+
+}
+
+boxes[9].value = out || "";
+boxes[19].value = inn || "";
+boxes[20].value = (out + inn) || "";
+
+});
+
+colorLeftRight();
+
+}function colorLeftRight() {
 
 ["lr1","lr2","lr3","lr4"].forEach(function(id){
 
@@ -722,12 +752,14 @@ updateNames();
 updatePlayerTotals();
 checkSkins();
 colorLeftRight();
+    updateLeftRightTotals();
 });
 
 });
 
 updateTeamTotals();
 updatePlayerTotals();
+    updateLeftRightTotals();
 checkSkins();
 
     const saved = localStorage.getItem("birdiebookieScorecard");
