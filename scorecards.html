@@ -74,9 +74,32 @@ body{
 .total-box{
     width:70px;
 }
+#saveBtn{
+    width:140px;
+    height:140px;
+    border-radius:50%;
+    background:white;
+    color:#00ff99;
+    font-size:38px;
+    font-weight:bold;
+    border:none;
+    cursor:pointer;
+}
+
+#restartBtn{
+    width:140px;
+    height:140px;
+    border-radius:50%;
+    background:red;
+    color:white;
+    font-size:30px;
+    font-weight:bold;
+    border:none;
+    cursor:pointer;
+    margin-left:20px;
+}
 
 </style>
-
 </head>
 
 <body>
@@ -313,10 +336,106 @@ body{
 
 </div>
 
-<div style="padding:30px;">
+<div style="text-align:center; margin-top:20px; margin-bottom:20px;">
 
+<button id="saveBtn" onclick="saveRound()">SAVE</button>
+<button id="restartBtn" onclick="newRound()">RESTART</button>
+
+    <br><br>
+
+<label style="color:#00ff99; font-size:24px;">
+<input type="checkbox" id="carryoverToggle" checked>
+Team Carryovers ON
+</label>
+</div>
+<h1 style="color:#00ff99;">LEFT RIGHT LEDGER</h1>
+
+<div class="scorecard" id="leftRightLedger">
+
+<div class="row">
+<div class="player-name">PLAYER</div>
+
+<div class="header-box">1</div>
+<div class="header-box">2</div>
+<div class="header-box">3</div>
+<div class="header-box">4</div>
+<div class="header-box">5</div>
+<div class="header-box">6</div>
+<div class="header-box">7</div>
+<div class="header-box">8</div>
+<div class="header-box">9</div>
+
+<div class="header-box total-box">OUT</div>
+
+<div class="header-box">10</div>
+<div class="header-box">11</div>
+<div class="header-box">12</div>
+<div class="header-box">13</div>
+<div class="header-box">14</div>
+<div class="header-box">15</div>
+<div class="header-box">16</div>
+<div class="header-box">17</div>
+<div class="header-box">18</div>
+
+<div class="header-box total-box">IN</div>
+
+<div class="header-box total-box">TOT</div>
 </div>
 
+<div class="row" id="lr1">
+<input class="player-name" id="lrName1" readonly>
+<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
+<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
+<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
+<input class="hole-box total-box" readonly>
+<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
+<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
+<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
+<input class="hole-box total-box" readonly>
+<input class="hole-box total-box" readonly>
+</div>
+
+<div class="row" id="lr2">
+<input class="player-name" id="lrName2" readonly>
+<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
+<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
+<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
+<input class="hole-box total-box" readonly>
+<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
+<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
+<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
+<input class="hole-box total-box" readonly>
+<input class="hole-box total-box" readonly>
+</div>
+
+<div class="row" id="lr3">
+<input class="player-name" id="lrName3" readonly>
+<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
+<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
+<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
+<input class="hole-box total-box" readonly>
+<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
+<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
+<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
+<input class="hole-box total-box" readonly>
+<input class="hole-box total-box" readonly>
+</div>
+
+<div class="row" id="lr4">
+<input class="player-name" id="lrName4" readonly>
+<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
+<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
+<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
+<input class="hole-box total-box" readonly>
+<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
+<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
+<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
+<input class="hole-box total-box" readonly>
+<input class="hole-box total-box" readonly>
+</div>
+
+</div>
+    
 <div style="padding:30px;">
 
 <h1 style="color:#00ff99;">CHIP COUNT</h1>
@@ -400,7 +519,7 @@ box.style.backgroundColor = "#111";
 box.style.color = "white";
 });
 
-for (let hole = 0; hole <= 18; hole++) {
+for (let hole of [0,1,2,3,4,5,6,7,8,10,11,12,13,14,15,16,17,18]) {
 
 const p1 = document.querySelectorAll("#player1 .hole-box")[hole];
 const p2 = document.querySelectorAll("#player2 .hole-box")[hole];
@@ -424,6 +543,47 @@ winners[0].box.style.backgroundColor = "yellow";
 winners[0].box.style.color = "black";
 }
 }
+
+const team12 = document.querySelectorAll("#total12 .hole-box");
+const team34 = document.querySelectorAll("#total34 .hole-box");
+
+let carryHoles = [];
+
+for (let hole of [0,1,2,3,4,5,6,7,8,10,11,12,13,14,15,16,17,18]) {
+
+const score12 = parseInt(team12[hole].value);
+const score34 = parseInt(team34[hole].value);
+
+if (isNaN(score12) || isNaN(score34)) continue;
+
+if (score12 === score34) {
+carryHoles.push(hole);
+continue;
+}
+
+const winnerTeam = score12 < score34 ? team12 : team34;
+
+if(document.getElementById("carryoverToggle").checked){
+
+carryHoles.push(hole);
+
+carryHoles.forEach(function(h){
+
+winnerTeam[h].style.backgroundColor = "yellow";
+winnerTeam[h].style.color = "black";
+
+});
+
+} else {
+
+winnerTeam[hole].style.backgroundColor = "yellow";
+winnerTeam[hole].style.color = "black";
+
+}
+
+carryHoles = [];
+}
+
 }
 
 function updateTeamTotals() {
@@ -459,10 +619,12 @@ team34[hole].value = total34Hole || "";
     team34[18].value = total34Hole || "";
 }
 
-if (hole < 9) {
+if (hole >= 0 && hole <= 8) {
 out12 += total12Hole;
 out34 += total34Hole;
-} else {
+}
+
+if (hole >= 10 && hole <= 18) {
 in12 += total12Hole;
 in34 += total34Hole;
 }
@@ -501,8 +663,32 @@ boxes[20].value = (out + inn) || "";
 });
 
 }
+function colorLeftRight() {
 
-document.querySelectorAll("#player1 .hole-box, #player2 .hole-box, #player3 .hole-box, #player4 .hole-box")
+["lr1","lr2","lr3","lr4"].forEach(function(id){
+
+const boxes = document.querySelectorAll("#" + id + " .hole-box");
+
+boxes.forEach(function(box){
+
+const value = parseInt(box.value);
+
+if(value > 0){
+box.style.color = "lime";
+}
+else if(value < 0){
+box.style.color = "red";
+}
+else{
+box.style.color = "white";
+}
+
+});
+
+});
+
+}
+document.querySelectorAll(".hole-box")
 .forEach(function(box){
 
 box.addEventListener("input", function(){
@@ -520,6 +706,10 @@ document.querySelectorAll(".chip-p1").forEach(x => x.textContent = names[0]);
 document.querySelectorAll(".chip-p2").forEach(x => x.textContent = names[1]);
 document.querySelectorAll(".chip-p3").forEach(x => x.textContent = names[2]);
 document.querySelectorAll(".chip-p4").forEach(x => x.textContent = names[3]);
+    document.getElementById("lrName1").value = names[0];
+document.getElementById("lrName2").value = names[1];
+document.getElementById("lrName3").value = names[2];
+document.getElementById("lrName4").value = names[3];
 
 }
 
@@ -531,7 +721,7 @@ updateNames();
     updateTeamTotals();
 updatePlayerTotals();
 checkSkins();
-
+colorLeftRight();
 });
 
 });
@@ -540,9 +730,85 @@ updateTeamTotals();
 updatePlayerTotals();
 checkSkins();
 
+    const saved = localStorage.getItem("birdiebookieScorecard");
+
+if(saved){
+
+const data = JSON.parse(saved);
+
+document.getElementById("name1").value = data.name1 || "";
+document.getElementById("name2").value = data.name2 || "";
+document.getElementById("name3").value = data.name3 || "";
+document.getElementById("name4").value = data.name4 || "";
+document.getElementById("lrName1").value = data.name1 || "";
+document.getElementById("lrName2").value = data.name2 || "";
+document.getElementById("lrName3").value = data.name3 || "";
+document.getElementById("lrName4").value = data.name4 || "";
+
+["player1","player2","player3","player4"].forEach(function(id){
+
+const boxes = document.querySelectorAll("#" + id + " .hole-box");
+
+(data[id] || []).forEach(function(value,index){
+
+if(boxes[index]){
+boxes[index].value = value;
+}
+
 });
+
+});
+
+updateTeamTotals();
+updatePlayerTotals();
+checkSkins();
+    colorLeftRight();
+
+}
+});
+function saveRound() {
+
+const data = {
+
+name1: document.getElementById("name1").value,
+name2: document.getElementById("name2").value,
+name3: document.getElementById("name3").value,
+name4: document.getElementById("name4").value,
+
+player1: Array.from(document.querySelectorAll("#player1 .hole-box")).map(x => x.value),
+player2: Array.from(document.querySelectorAll("#player2 .hole-box")).map(x => x.value),
+player3: Array.from(document.querySelectorAll("#player3 .hole-box")).map(x => x.value),
+player4: Array.from(document.querySelectorAll("#player4 .hole-box")).map(x => x.value)
+
+};
+
+localStorage.setItem("birdiebookieScorecard", JSON.stringify(data));
+
+alert("ROUND SAVED");
+
+}
+
+function newRound(){
+
+if(!confirm("WARNING!\n\nYou will lose all current scores.\n\nStart a new round?")){
+return;
+}
+
+localStorage.removeItem("birdiebookieScorecard");
+
+document.querySelectorAll(".hole-box").forEach(function(box){
+box.value="";
+});
+
+document.getElementById("name1").value="Player 1";
+document.getElementById("name2").value="Player 2";
+document.getElementById("name3").value="Player 3";
+document.getElementById("name4").value="Player 4";
+
+location.reload();
+
+}    
 </script>
-
 </body>
+</html>a
 
-</html>
