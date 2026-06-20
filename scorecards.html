@@ -565,10 +565,6 @@ const score34 = parseInt(team34[hole].value);
 
 if (isNaN(score12) || isNaN(score34)) continue;
 
-if (score12 === score34) {
-carryHoles.push(hole);
-continue;
-}
 
 const winnerTeam = score12 < score34 ? team12 : team34;
 
