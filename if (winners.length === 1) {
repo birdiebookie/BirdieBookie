@@ -548,8 +548,13 @@ const low = Math.min(...scores.map(x => x.score));
 const winners = scores.filter(x => x.score === low);
 
 if (winners.length === 1) {
-winners[0].box.style.backgroundColor = "yellow";
-winners[0].box.style.color = "black";
+    winners[0].box.style.backgroundColor = "yellow";
+    winners[0].box.style.color = "black";
+} else {
+    winners.forEach(w => {
+        w.box.style.backgroundColor = "orange";
+        w.box.style.color = "black";
+    });
 }
 }
 
