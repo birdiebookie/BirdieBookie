@@ -538,9 +538,27 @@ if (scores.some(x => isNaN(x.score))) continue;
 const low = Math.min(...scores.map(x => x.score));
 const winners = scores.filter(x => x.score === low);
 
-if (winners.length === 1) {
-winners[0].box.style.backgroundColor = "yellow";
-winners[0].box.style.color = "black";
+if (!window.skinCarryHoles) {
+window.skinCarryHoles = [];
+}
+
+if (winners.length > 1) {
+window.skinCarryHoles.push(hole);
+}
+else {
+
+window.skinCarryHoles.push(hole);
+
+window.skinCarryHoles.forEach(function(h){
+
+const box = document.querySelectorAll("#player" + (scores.findIndex(x => x.score === low) + 1) + " .hole-box")[h];
+
+box.style.backgroundColor = "yellow";
+box.style.color = "black";
+
+});
+
+window.skinCarryHoles = [];
 }
 }
 
