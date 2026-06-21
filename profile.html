@@ -537,33 +537,10 @@ if (scores.some(x => isNaN(x.score))) continue;
 
 const low = Math.min(...scores.map(x => x.score));
 const winners = scores.filter(x => x.score === low);
-let skinCarryWinner = window.skinCarryWinner || null;
 
-if (winners.length > 1) {
-
-window.skinCarryHoles.push(hole);
-
-}
-else {
-
-if (skinCarryWinner === null) {
-skinCarryWinner = winners[0].box;
-}
-
-window.skinCarryHoles.push(hole);
-
-window.skinCarryHoles.forEach(function(h){
-
-skinCarryWinner.style.backgroundColor = "yellow";
-skinCarryWinner.style.color = "black";
-
-});
-
-window.skinCarryHoles = [];
-skinCarryWinner = null;
-}
-
-window.skinCarryWinner = skinCarryWinner;
+if (winners.length === 1) {
+winners[0].box.style.backgroundColor = "yellow";
+winners[0].box.style.color = "black";
 }
 }
 
