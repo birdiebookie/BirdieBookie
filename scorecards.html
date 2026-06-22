@@ -522,77 +522,52 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 function checkSkins() {
+    document.querySelectorAll(".hole-box").forEach(box => {
+        box.style.backgroundColor = "#111";
+        box.style.color = "white";
+    });
 
-document.querySelectorAll(".hole-box").forEach(box => {
-box.style.backgroundColor = "#111";
-box.style.color = "white";
-});
+    const individualToggle = document.getElementById("individualSkinsToggle");
+    const teamToggle = document.getElementById("teamSkinsToggle");
+    const carryoverToggle = document.getElementById("carryoverToggle");
 
-for (let hole of [0,1,2,3,4,5,6,7,8,10,11,12,13,14,15,16,17,18]) {
+    let carryover = 0;
+    let tiedHoles = [];
 
-const p1 = document.querySelectorAll("#player1 .hole-box")[hole];
-const p2 = document.querySelectorAll("#player2 .hole-box")[hole];
-const p3 = document.querySelectorAll("#player3 .hole-box")[hole];
-const p4 = document.querySelectorAll("#player4 .hole-box")[hole];
+    if (individualToggle && individualToggle.checked) {
+        for (let hole = 0; hole < 18; hole++) {
+            const p1 = document.querySelectorAll("#player1 .hole-box")[hole];
+            const p2 = document.querySelectorAll("#player2 .hole-box")[hole];
+            const p3 = document.querySelectorAll("#player3 .hole-box")[hole];
+            const p4 = document.querySelectorAll("#player4 .hole-box")[hole];
 
-const scores = [
-{ box:p1, score:parseInt(p1.value) },
-{ box:p2, score:parseInt(p2.value) },
-{ box:p3, score:parseInt(p3.value) },
-{ box:p4, score:parseInt(p4.value) }
-];
+            const scores = [
+                { box: p1, score: parseInt(p1.value) },
+                { box: p2, score: parseInt(p2.value) },
+                { box: p3, score: parseInt(p3.value) },
+                { box: p4, score: parseInt(p4.value) }
+            ];
 
-if (scores.some(x => isNaN(x.score))) continue;
+            const validScores = scores.filter(s => !isNaN(s.score));
+            if (validScores.length < 2) continue;
 
-const low = Math.min(...scores.map(x => x.score));
-const winners = scores.filter(x => x.score === low);
+            const minScore = Math.min(...validScores.map(s => s.score));
+            const winners = validScores.filter(s => s.score === minScore);
 
-if (winners.length === 1) {
-winners[0].box.style.backgroundColor = "yellow";
-winners[0].box.style.color = "black";
-}
-}
-
-const team12 = document.querySelectorAll("#total12 .hole-box");
-const team34 = document.querySelectorAll("#total34 .hole-box");
-
-let carryHoles = [];
-
-for (let hole of [0,1,2,3,4,5,6,7,8,10,11,12,13,14,15,16,17,18]) {
-
-const score12 = parseInt(team12[hole].value);
-const score34 = parseInt(team34[hole].value);
-
-if (isNaN(score12) || isNaN(score34)) continue;
-
-if (score12 === score34) {
-carryHoles.push(hole);
-continue;
-}
-
-const winnerTeam = score12 < score34 ? team12 : team34;
-
-if(document.getElementById("carryoverToggle").checked){
-
-carryHoles.push(hole);
-
-carryHoles.forEach(function(h){
-
-winnerTeam[h].style.backgroundColor = "yellow";
-winnerTeam[h].style.color = "black";
-
-});
-
-} else {
-
-winnerTeam[hole].style.backgroundColor = "yellow";
-winnerTeam[hole].style.color = "black";
-
-}
-
-carryHoles = [];
-}
-
+            if (winners.length === 1) {
+                tiedHoles.forEach(h => {
+                    winners[0].box.parentElement.querySelectorAll(".hole-box")[h].style.backgroundColor = "yellow";
+                    winners[0].box.parentElement.querySelectorAll(".hole-box")[h].style.color = "black";
+                });
+                winners[0].box.style.backgroundColor = "yellow";
+                winners[0].box.style.color = "black";
+                tiedHoles = [];
+                carryover = 0;
+            } else {
+                tiedHoles.push(hole);
+            }
+        }
+    }
 }
 
 function updateTeamTotals() {
