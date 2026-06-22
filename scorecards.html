@@ -14,7 +14,43 @@ GOLF IS ABOUT ONE THING AND ONE THING ONLY , TAKING YOUR FRIENDS MONEY 💰
 <title>BirdieBookie Scorecard</title>
 
 <style>
+#courseInfoBar {
+    background:#111;
+    border-bottom: 3px solid #00ff99;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
 
+#courseInfoBar h2 {
+    color: #00ff99;
+    margin: 0;
+    font-size: 22px;
+    margin-right: 20px;
+}
+
+.game-tag {
+    background: #00ff99;
+    color: black;
+    font-weight: bold;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 16px;
+}
+
+#changeCourseBtn {
+    margin-left: auto;
+    background: transparent;
+    color: #00ff99;
+    border: 2px solid #00ff99;
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
 body{
     margin:0;
     background:black;
@@ -117,7 +153,12 @@ body{
 </head>
 
 <body>
-
+<!-- COURSE INFO BAR -->
+<div id="courseInfoBar">
+    <h2 id="courseNameDisplay">📍 No Course Selected</h2>
+    <div id="gameTagsDisplay"></div>
+    <button id="changeCourseBtn" onclick="window.location.href='courses.html'">⛳ CHANGE COURSE</button>
+</div>
 <div class="scorecard">
 
 <!-- HEADER -->
@@ -354,7 +395,7 @@ body{
 
 <button id="saveBtn" onclick="saveRound()">SAVE</button>
 <button id="restartBtn" onclick="newRound()">RESTART</button>
-<button id="coursesBtn">COURSES</button>
+<button id="coursesBtn" onclick="window.location.href='courses.html'">COURSES</button>
     
     <br><br>
 
