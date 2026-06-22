@@ -856,7 +856,18 @@ document.getElementById("name4").value="Player 4";
 
 location.reload();
 
-}    
+} 
+    // Auto-populate Left Right Ledger names
+['1','2','3','4'].forEach(function(n) {
+    var src = document.getElementById('name' + n);
+    var dst = document.getElementById('lrName' + n);
+    if (src && dst) {
+        dst.value = src.value;
+        src.addEventListener('input', function() {
+            dst.value = src.value;
+        });
+    }
+});
 </script>
 </body>
 </html>a
