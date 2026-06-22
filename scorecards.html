@@ -568,6 +568,37 @@ function checkSkins() {
             }
         }
     }
+            if (teamToggle && teamToggle.checked) {
+            let teamCarryover = 0;
+            let teamTiedHoles = [];
+
+            for (let hole = 0; hole < 18; hole++) {
+                const team12boxes = document.querySelectorAll("#total12 .hole-box");
+                const team34boxes = document.querySelectorAll("#total34 .hole-box");
+
+                const t12 = parseInt(team12boxes[hole].value);
+                const t34 = parseInt(team34boxes[hole].value);
+
+                if (isNaN(t12) || isNaN(t34)) continue;
+
+                if (t12 !== t34) {
+                    const winnerBoxes = t12 < t34 ? team12boxes : team34boxes;
+
+                    teamTiedHoles.forEach(h => {
+                        winnerBoxes[h].style.backgroundColor = "yellow";
+                        winnerBoxes[h].style.color = "black";
+                    });
+
+                    winnerBoxes[hole].style.backgroundColor = "yellow";
+                    winnerBoxes[hole].style.color = "black";
+
+                    teamTiedHoles = [];
+                    teamCarryover = 0;
+                } else {
+                    teamTiedHoles.push(hole);
+                }
+            }
+        }
 }
 
 function updateTeamTotals() {
