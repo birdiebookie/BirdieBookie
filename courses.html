@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BirdieBookie - Courses</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background-color: #000; color: #fff; font-family: Arial, sans-serif; min-height: 100vh; padding-bottom: 100px; }
+    .header { background: linear-gradient(135deg, #1a1a1a, #0d0d0d); border-bottom: 2px solid #00cc44; padding: 16px; text-align: center; position: sticky; top: 0; z-index: 100; }
+    .header h1 { color: #00cc44; font-size: 1.6rem; letter-spacing: 2px; text-transform: uppercase; }
+    .header p { color: #888; font-size: 0.75rem; margin-top: 4px; letter-spacing: 1px; }
+    .add-course-banner { background: linear-gradient(135deg, #0a2a0a, #0d1a0d); border: 1px solid #00cc44; border-radius: 8px; margin: 12px; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; }
+    .add-course-banner span { color: #aaa; font-size: 0.8rem; }
+    .add-course-btn { background: #00cc44; color: #000; border: none; border-radius: 6px; padding: 6px 14px; font-size: 0.8rem; font-weight: bold; cursor: pointer; letter-spacing: 1px; }
+    .search-section { padding: 0 12px; margin-bottom: 10px; }
+    .search-row { display: flex; gap: 8px; margin-bottom: 8px; }
+    .state-select { background: #1a1a1a; color: #00cc44; border: 1px solid #00cc44; border-radius: 8px; padding: 10px 8px; font-size: 0.9rem; font-weight: bold; width: 90px; cursor: pointer; text-align: center; }
+    .state-select:focus { outline: none; border-color: #00ff55; }
+    .search-input { flex: 1; background: #1a1a1a; color: #fff; border: 1px solid #444; border-radius: 8px; padding: 10px 14px; font-size: 0.9rem; }
+    .search-input:focus { outline: none; border-color: #00cc44; }
+    .search-input::placeholder { color: #555; }
+    .course-list-container { padding: 0 12px; margin-bottom: 16px; }
+    .section-label { color: #555; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; padding-left: 4px; }
+    .course-list { list-style: none; border: 1px solid #222; border-radius: 10px; overflow: hidden; }
+    .course-item { background: #111; padding: 14px 16px; border-bottom: 1px solid #1e1e1e; cursor: pointer; display: flex; align-items: center; justify-content: space-between; font-size: 0.95rem; color: #ddd; }
+    .course-item:last-child { border-bottom: none; }
+    .course-item.selected { background: #0a2a0a; color: #00cc44; border-left: 4px solid #00cc44; }
+    .course-item .course-check { color: #00cc44; font-size: 1.1rem; display: none; }
+    .course-item.selected .course-check { display: block; }
+    .no-results { text-align: center; color: #555; padding: 24px; font-size: 0.85rem; font-style: italic; }
+    .games-section { padding: 0 12px; margin-bottom: 16px; }
+    .games-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+    .games-title { color: #00cc44; font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; font-weight: bold; }
+    .games-subtitle { color: #555; font-size: 0.7rem; }
+    .games-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .game-btn { background: #111; color: #aaa; border: 1px solid #333; border-radius: 8px; padding: 12px 8px; font-size: 0.82rem; cursor: pointer; text-align: center; letter-spacing: 0.5px; }
+    .game-btn.selected { background: #0a2a0a; color: #00cc44; border-color: #00cc44; font-weight: bold; }
+    .game-btn.selected::before { content: '✓ '; color: #00cc44; }
+    .game-btn.disabled { opacity: 0.35; cursor: not-allowed; }
+    .play-btn-container { position: fixed; bottom: 0; left: 0; right: 0; padding: 12px 16px; background: linear-gradient(to top, #000 70%, transparent); z-index: 200; }
+    .play-btn { width: 100%; background: linear-gradient(135deg, #00cc44, #00aa33); color: #000; border: none; border-radius: 12px; padding: 16px; font-size: 1.1rem; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; box-shadow: 0 4px 20px rgba(0,204,68,0.4); }
+    .play-btn:disabled { background: #333; color: #666; box-shadow: none; cursor: not-allowed; }
+    .play-btn-sub { text-align: center; color: #444; font-size: 0.7rem; margin-top: 6px; letter-spacing: 1px; }
+    .selection-preview { margin: 0 12px 12px; background: #0a1a0a; border: 1px solid #1a3a1a; border-radius: 8px; padding: 10px 14px; display: none; }
+    .selection-preview.visible { display: block; }
+    .preview-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 6px; }
+    .preview-games { display: flex; gap: 8px; flex-wrap: wrap; }
+    .preview-tag { background: #00cc44; color: #000; border-radius: 4px; padding: 3px 8px; font-size: 0.72rem; font-weight: bold; }
+    .preview-course { color: #00cc44; font-size: 0.82rem; font-weight: bold; text-align: right; }
+    .preview-label { color: #444; font-size: 0.65rem; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+    .back-btn { background: none; border: 1px solid #444; color: #888; border-radius: 8px; padding: 6px 14px; font-size: 0.8rem; cursor: pointer; margin: 12px 12px 0; display: block; }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>⛳ BirdieBookie Courses</h1>
+    <p>Select your course &amp; game</p>
+  </div>
+
+  <button class="back-btn" onclick="window.location.href='scorecards.html'">← Back to Scorecard</button>
+
+  <div class="add-course-banner">
+    <span>Don't see your course?</span>
+    <button class="add-course-btn" onclick="addCourse()">+ ADD COURSE</button>
+  </div>
+
+  <div class="search-section">
+    <div class="search-row">
+      <select class="state-select" id="stateSelect" onchange="filterCourses()">
+        <option value="OH">🌿 OH</option>
+        <option value="SC">SC</option>
+      </select>
+      <input class="search-input" type="text" id="searchInput" placeholder="🔍  Search course name..." oninput="filterCourses()" />
+    </div>
+  </div>
+
+  <div class="course-list-container">
+    <div class="section-label">Courses</div>
+    <ul class="course-list" id="courseList"></ul>
+  </div>
+
+  <div class="games-section">
+    <div class="games-header">
+      <span class="games-title">🎮 Select Game(s)</span>
+      <span class="games-subtitle">Optional — pick up to 2</span>
+    </div>
+    <div class="games-grid" id="gamesGrid"></div>
+  </div>
+
+  <div class="selection-preview" id="selectionPreview">
+    <div class="preview-label">Your Selection</div>
+    <div class="preview-row">
+      <div class="preview-games" id="previewGames"></div>
+      <div class="preview-course" id="previewCourse"></div>
+    </div>
+  </div>
+
+  <div class="play-btn-container">
+    <button class="play-btn" id="playBtn" onclick="playThisCourse()" disabled>
+      ⛳ PLAY THIS COURSE
+    </button>
+    <div class="play-btn-sub" id="playBtnSub">Select a course to continue</div>
+  </div>
+
+<script>
+  const courseData = {
+    OH: [
+      "Sharon Woods Golf Course",
+      "Mill Golf Course",
+      "Oasis Golf Club",
+      "Blue Ash Golf Course",
+      "Mason Golf Center",
+      "Walden Ponds Golf Course",
+      "Hickory Woods Golf Course",
+      "Stonelick Hills Golf Course",
+      "Elks Run Golf Club",
+      "Cedar Trace Golf Club"
+    ],
+    SC: []
+  };
+
+  const gamesList = [
+    "Nassau","Skins","Left Right Ledger","Stroke Play",
+    "Stableford","Bingo Bango Bongo","Wolf","Best Ball"
+  ];
+
+  let selectedCourse = null;
+  let selectedGames  = [];
+
+  window.onload = function() {
+    buildGames();
+    filterCourses();
+  };
+
+  function buildGames() {
+    const grid = document.getElementById('gamesGrid');
+    grid.innerHTML = '';
+    gamesList.forEach(game => {
+      const btn = document.createElement('button');
+      btn.className = 'game-btn';
+      btn.textContent = game;
+      btn.dataset.game = game;
+      btn.onclick = () => toggleGame(game, btn);
+      grid.appendChild(btn);
+    });
+  }
+
+  function toggleGame(game, btn) {
+    if (btn.classList.contains('selected')) {
+      btn.classList.remove('selected');
+      selectedGames = selectedGames.filter(g => g !== game);
+    } else {
+      if (selectedGames.length >= 2) { shakeBtn(btn); return; }
+      btn.classList.add('selected');
+      selectedGames.push(game);
+    }
+    updateDisabledGames();
+    updatePreview();
+  }
+
+  function updateDisabledGames() {
+    document.querySelectorAll('.game-btn').forEach(btn => {
+      if (selectedGames.length >= 2 && !btn.classList.contains('selected')) {
+        btn.classList.add('disabled');
+      } else {
+        btn.classList.remove('disabled');
+      }
+    });
+  }
+
+  function shakeBtn(btn) {
+    btn.style.transition = 'transform 0.1s';
+    btn.style.transform = 'translateX(-6px)';
+    setTimeout(() => btn.style.transform = 'translateX(6px)', 100);
+    setTimeout(() => btn.style.transform = 'translateX(-4px)', 200);
+    setTimeout(() => btn.style.transform = 'translateX(4px)', 300);
+    setTimeout(() => btn.style.transform = 'translateX(0)', 400);
+  }
+
+  function filterCourses() {
+    const state   = document.getElementById('stateSelect').value;
+    const query   = document.getElementById('searchInput').value.toLowerCase().trim();
+    const courses = courseData[state] || [];
+    const list    = document.getElementById('courseList');
+    const filtered = courses.filter(c => c.toLowerCase().includes(query));
+    list.innerHTML = '';
+    if (filtered.length === 0) {
+      list.innerHTML = '<li class="no-results">No courses found — try a different search</li>';
+      return;
+    }
+    filtered.forEach(course => {
+      const li = document.createElement('li');
+      li.className = 'course-item' + (course === selectedCourse ? ' selected' : '');
+      li.innerHTML = `<span>${course}</span><span class="course-check">✓</span>`;
+      li.onclick = () => selectCourse(course, li);
+      list.appendChild(li);
+    });
+  }
+
+  function selectCourse(course, li) {
+    document.querySelectorAll('.course-item').forEach(item => item.classList.remove('selected'));
+    selectedCourse = course;
+    li.classList.add('selected');
+    updatePreview();
+    updatePlayBtn();
+  }
+
+  function updatePreview() {
+    const preview = document.getElementById('selectionPreview');
+    const previewGames  = document.getElementById('previewGames');
+    const previewCourse = document.getElementById('previewCourse');
+    if (!selectedCourse && selectedGames.length === 0) { preview.classList.remove('visible'); return; }
+    preview.classList.add('visible');
+    previewGames.innerHTML = selectedGames.map(g => `<span class="preview-tag">${g}</span>`).join('');
+    previewCourse.textContent = selectedCourse ? '⛳ ' + selectedCourse : '';
+    updatePlayBtn();
+  }
+
+  function updatePlayBtn() {
+    const btn = document.getElementById('playBtn');
+    const sub = document.getElementById('playBtnSub');
+    if (selectedCourse) {
+      btn.disabled = false;
+      sub.textContent = selectedGames.length > 0
+        ? selectedGames.join(' + ') + ' at ' + selectedCourse
+        : '⛳ ' + selectedCourse + ' — no game selected';
+    } else {
+      btn.disabled = true;
+      sub.textContent = 'Select a course to continue';
+    }
+  }
+
+  function playThisCourse() {
+    if (!selectedCourse) return;
+    localStorage.setItem('bb_course', selectedCourse);
+    localStorage.setItem('bb_games', JSON.stringify(selectedGames));
+    localStorage.setItem('bb_clearScores', 'true');
+    window.location.href = 'scorecards.html';
+  }
+
+  function addCourse() {
+    alert('📋 Course submission coming soon!\n\nSend your course name to BirdieBookie and we\'ll add it!');
+  }
+</script>
+</body>
+</html>
