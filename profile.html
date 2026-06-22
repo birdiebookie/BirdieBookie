@@ -809,5 +809,21 @@ location.reload();
 
 }    
 </script>
-</body>
+
+<script>
+function syncNames() {
+    var names = ['name1','name2','name3','name4'];
+    var lrNames = ['lrName1','lrName2','lrName3','lrName4'];
+    names.forEach(function(id, i) {
+        var src = document.getElementById(id);
+        var tgt = document.getElementById(lrNames[i]);
+        if(src && tgt) tgt.value = src.value;
+    });
+}
+['name1','name2','name3','name4'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if(el) el.addEventListener('input', syncNames);
+});
+window.addEventListener('load', syncNames);
+</script></body>
 </html>a
