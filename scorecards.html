@@ -565,83 +565,61 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 function checkSkins() {
-    document.querySelectorAll(".hole-box").forEach(box => {
-        box.style.backgroundColor = "#111";
-        box.style.color = "white";
+    ["player1","player2","player3","player4","total12","total34"].forEach(id => {
+        document.querySelectorAll("#" + id + " .hole-box").forEach(box => {
+            box.style.backgroundColor = "#111";
+            box.style.color = "white";
+        });
     });
 
-    const individualToggle = document.getElementById("carryoverToggle");
-const teamToggle = document.getElementById("carryoverToggle");
-    const carryoverToggle = document.getElementById("carryoverToggle");
-
-    let carryover = 0;
+    const toggle = document.getElementById("carryoverToggle");
+    const playerIds = ["player1","player2","player3","player4"];
     let tiedHoles = [];
 
-    if (individualToggle && individualToggle.checked) {
+    if (toggle && toggle.checked) {
         for (let hole = 0; hole < 18; hole++) {
-            const p1 = document.querySelectorAll("#player1 .hole-box")[hole];
-            const p2 = document.querySelectorAll("#player2 .hole-box")[hole];
-            const p3 = document.querySelectorAll("#player3 .hole-box")[hole];
-            const p4 = document.querySelectorAll("#player4 .hole-box")[hole];
-
-            const scores = [
-                { box: p1, score: parseInt(p1.value) },
-                { box: p2, score: parseInt(p2.value) },
-                { box: p3, score: parseInt(p3.value) },
-                { box: p4, score: parseInt(p4.value) }
-            ];
-
+            const scores = playerIds.map(id => {
+                const box = document.querySelectorAll("#" + id + " .hole-box")[hole];
+                return { id: id, box: box, score: parseInt(box.value) };
+            });
             const validScores = scores.filter(s => !isNaN(s.score));
             if (validScores.length < 2) continue;
-
             const minScore = Math.min(...validScores.map(s => s.score));
             const winners = validScores.filter(s => s.score === minScore);
-
             if (winners.length === 1) {
                 tiedHoles.forEach(h => {
-                    winners[0].box.parentElement.querySelectorAll(".hole-box")[h].style.backgroundColor = "yellow";
-                    winners[0].box.parentElement.querySelectorAll(".hole-box")[h].style.color = "black";
+                    const b = document.querySelectorAll("#" + winners[0].id + " .hole-box")[h];
+                    if (b) { b.style.backgroundColor = "yellow"; b.style.color = "black"; }
                 });
                 winners[0].box.style.backgroundColor = "yellow";
                 winners[0].box.style.color = "black";
                 tiedHoles = [];
-                carryover = 0;
             } else {
                 tiedHoles.push(hole);
             }
         }
-    }
-            if (teamToggle && teamToggle.checked) {
-            let teamCarryover = 0;
-            let teamTiedHoles = [];
 
-            for (let hole = 0; hole < 18; hole++) {
-                const team12boxes = document.querySelectorAll("#total12 .hole-box");
-                const team34boxes = document.querySelectorAll("#total34 .hole-box");
-
-                const t12 = parseInt(team12boxes[hole].value);
-                const t34 = parseInt(team34boxes[hole].value);
-
-                if (isNaN(t12) || isNaN(t34)) continue;
-
-                if (t12 !== t34) {
-                    const winnerBoxes = t12 < t34 ? team12boxes : team34boxes;
-
-                    teamTiedHoles.forEach(h => {
-                        winnerBoxes[h].style.backgroundColor = "yellow";
-                        winnerBoxes[h].style.color = "black";
-                    });
-
-                    winnerBoxes[hole].style.backgroundColor = "yellow";
-                    winnerBoxes[hole].style.color = "black";
-
-                    teamTiedHoles = [];
-                    teamCarryover = 0;
-                } else {
-                    teamTiedHoles.push(hole);
-                }
+        let teamTiedHoles = [];
+        for (let hole = 0; hole < 18; hole++) {
+            const team12boxes = document.querySelectorAll("#total12 .hole-box");
+            const team34boxes = document.querySelectorAll("#total34 .hole-box");
+            const t12 = parseInt(team12boxes[hole].value);
+            const t34 = parseInt(team34boxes[hole].value);
+            if (isNaN(t12) || isNaN(t34)) continue;
+            if (t12 !== t34) {
+                const winnerBoxes = t12 < t34 ? team12boxes : team34boxes;
+                teamTiedHoles.forEach(h => {
+                    winnerBoxes[h].style.backgroundColor = "yellow";
+                    winnerBoxes[h].style.color = "black";
+                });
+                winnerBoxes[hole].style.backgroundColor = "yellow";
+                winnerBoxes[hole].style.color = "black";
+                teamTiedHoles = [];
+            } else {
+                teamTiedHoles.push(hole);
             }
         }
+    }
 }
 
 function updateTeamTotals() {
