@@ -748,7 +748,32 @@ boxes[19].value = inn || "";
 boxes[20].value = (out + inn) || "";
 
 
+function updateChipsTotals() {
 
+["chip1","chip2","chip3","chip4"].forEach(function(id){
+
+const boxes = document.querySelectorAll("#" + id + " .hole-box");
+
+let out = 0;
+let inn = 0;
+
+for(let i = 0; i <= 8; i++){
+out += parseInt(boxes[i].value) || 0;
+}
+
+for(let i = 10; i <= 18; i++){
+inn += parseInt(boxes[i].value) || 0;
+}
+
+boxes[9].value = out || "";
+boxes[19].value = inn || "";
+boxes[20].value = (out + inn) || "";
+
+});
+
+}
+    
+});
 
 boxes[20].value = (out + inn) || "";
 
