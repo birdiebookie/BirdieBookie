@@ -597,16 +597,26 @@ const teamToggle = document.getElementById("carryoverToggle");
             const minScore = Math.min(...validScores.map(s => s.score));
             const winners = validScores.filter(s => s.score === minScore);
 
-            if (winners.length === 1) {
+           if (winners.length === 1) {
+                const winnerId = winners[0].box.closest('.row').id;
                 tiedHoles.forEach(h => {
-                    winners[0].box.parentElement.querySelectorAll(".hole-box")[h].style.backgroundColor = "yellow";
-                    winners[0].box.parentElement.querySelectorAll(".hole-box")[h].style.color = "black";
+                    const winnerTiedBox = document.querySelectorAll("#" + winnerId + " .hole-box")[h];
+                    if (winnerTiedBox) {
+                        winnerTiedBox.style.backgroundColor = "yellow";
+                        winnerTiedBox.style.color = "black";
+                    }
                 });
                 winners[0].box.style.backgroundColor = "yellow";
                 winners[0].box.style.color = "black";
                 tiedHoles = [];
                 carryover = 0;
             } else {
+                scores.forEach(s => {
+                    if (!isNaN(s.score)) {
+                        s.box.style.backgroundColor = "#111";
+                        s.box.style.color = "white";
+                    }
+                });
                 tiedHoles.push(hole);
             }
         }
