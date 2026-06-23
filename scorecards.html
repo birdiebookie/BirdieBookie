@@ -594,7 +594,7 @@ function checkSkins() {
                 winners[0].box.style.backgroundColor = "yellow";
                 winners[0].box.style.color = "black";
                 tiedHoles = [];
-            }} else {
+            } else {
                 playerIds.forEach(id => {
                     const b = document.querySelectorAll("#" + id + " .hole-box")[hole];
                     if (b) { b.style.backgroundColor = "#111"; b.style.color = "white"; }
