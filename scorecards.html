@@ -606,9 +606,13 @@ const teamToggle = document.getElementById("carryoverToggle");
                 winners[0].box.style.color = "black";
                 tiedHoles = [];
                 carryover = 0;
-            } else {
-                tiedHoles.push(hole);
-            }
+            }} else {
+    scores.forEach(s => {
+        s.box.style.backgroundColor = "#111";
+        s.box.style.color = "white";
+    });
+    tiedHoles.push(hole);
+}
         }
     }
             if (teamToggle && teamToggle.checked) {
