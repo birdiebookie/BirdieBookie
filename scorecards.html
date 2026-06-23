@@ -577,19 +577,13 @@ const teamToggle = document.getElementById("carryoverToggle");
     let carryover = 0;
     let tiedHoles = [];
 
-    if (individualToggle && individualToggle.checked) {
+   if (individualToggle && individualToggle.checked) {
+        const playerIds = ["player1","player2","player3","player4"];
         for (let hole = 0; hole < 18; hole++) {
-            const p1 = document.querySelectorAll("#player1 .hole-box")[hole];
-            const p2 = document.querySelectorAll("#player2 .hole-box")[hole];
-            const p3 = document.querySelectorAll("#player3 .hole-box")[hole];
-            const p4 = document.querySelectorAll("#player4 .hole-box")[hole];
-
-            const scores = [
-                { box: p1, score: parseInt(p1.value) },
-                { box: p2, score: parseInt(p2.value) },
-                { box: p3, score: parseInt(p3.value) },
-                { box: p4, score: parseInt(p4.value) }
-            ];
+            const scores = playerIds.map(id => {
+                const box = document.querySelectorAll("#" + id + " .hole-box")[hole];
+                return { id: id, box: box, score: parseInt(box.value) };
+            });
 
             const validScores = scores.filter(s => !isNaN(s.score));
             if (validScores.length < 2) continue;
@@ -597,10 +591,9 @@ const teamToggle = document.getElementById("carryoverToggle");
             const minScore = Math.min(...validScores.map(s => s.score));
             const winners = validScores.filter(s => s.score === minScore);
 
-           if (winners.length === 1) {
-                const winnerId = winners[0].box.closest('.row').id;
+            if (winners.length === 1) {
                 tiedHoles.forEach(h => {
-                    const winnerTiedBox = document.querySelectorAll("#" + winnerId + " .hole-box")[h];
+                    const winnerTiedBox = document.querySelectorAll("#" + winners[0].id + " .hole-box")[h];
                     if (winnerTiedBox) {
                         winnerTiedBox.style.backgroundColor = "yellow";
                         winnerTiedBox.style.color = "black";
@@ -611,12 +604,6 @@ const teamToggle = document.getElementById("carryoverToggle");
                 tiedHoles = [];
                 carryover = 0;
             } else {
-                scores.forEach(s => {
-                    if (!isNaN(s.score)) {
-                        s.box.style.backgroundColor = "#111";
-                        s.box.style.color = "white";
-                    }
-                });
                 tiedHoles.push(hole);
             }
         }
