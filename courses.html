@@ -265,7 +265,7 @@
 
   function playThisCourse() {
     if (!selectedCourse) return;
-    localStorage.setItem('bb_course', selectedCourse);
+    localStorage.setItem('selectedCourse', selectedCourse);
     localStorage.setItem('bb_games', JSON.stringify(selectedGames));
     localStorage.setItem('bb_clearScores', 'true');
     window.location.href = 'scorecards.html';
