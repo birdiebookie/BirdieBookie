@@ -569,8 +569,7 @@ const gameTagsDisplay =
 document.getElementById("gameTagsDisplay");
 
 gameTagsDisplay.innerHTML = "";
-   const savedCourse = localStorage.getItem("bb_course");
-
+   const savedCourse = localStorage.getItem("selectedCourse");
 if(savedCourse){
 document.getElementById("courseNameDisplay").textContent =
 "📍 " + savedCourse;
