@@ -170,7 +170,7 @@ Double the pressure anytime during a hole.
 </div>
 
 <!-- CHIPS -->
-<div class="game-card" onclick="window.location.href='chips.html'">
+<div class="game-card">
 
 <label class="game-select">
 <input type="checkbox">
@@ -246,11 +246,20 @@ document.querySelectorAll('.game-select input').forEach(box => {
       card.style.border = '3px solid #00ff99';
       card.style.boxShadow = '0 0 20px #00ff99';
 
-      const game = card.querySelector('h2').innerText
-  .replace(/[^a-zA-Z]/g,'')
-  .toLowerCase();
+      const game = card.querySelector('h2').innerText;
 
-window.location.href = game + '.html';
+let selectedGames =
+JSON.parse(localStorage.getItem("selectedGames")) || [];
+
+selectedGames =
+selectedGames.filter(g => g !== game);
+
+selectedGames.push(game);
+
+localStorage.setItem(
+    "selectedGames",
+    JSON.stringify(selectedGames)
+);
     } else {
       card.style.border = '2px solid #00ff99';
       card.style.boxShadow = 'none';
