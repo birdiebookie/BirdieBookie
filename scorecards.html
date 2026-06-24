@@ -562,26 +562,7 @@ Team Carryovers ON
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-const selectedGames =
-JSON.parse(localStorage.getItem("selectedGames")) || [];
 
-const gameTagsDisplay =
-document.getElementById("gameTagsDisplay");
-
-gameTagsDisplay.innerHTML = "";
-document.getElementById("courseNameDisplay").textContent =
-"📍 " + (localStorage.getItem("selectedCourse") || "No Course Selected");
-selectedGames.forEach(function(game){
-
-const tag = document.createElement("span");
-
-tag.className = "game-tag";
-
-tag.textContent = game;
-
-gameTagsDisplay.appendChild(tag);
-
-});
 
 function checkSkins() {
     document.querySelectorAll(".hole-box").forEach(box => {
@@ -796,7 +777,7 @@ boxes[20].value = (out + inn) || "";
 
 boxes[20].value = (out + inn) || "";
 
-function colorLeftRight() {
+}function colorLeftRight() {
 
 ["lr1","lr2","lr3","lr4"].forEach(function(id){
 
