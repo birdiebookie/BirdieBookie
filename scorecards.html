@@ -155,7 +155,7 @@ body{
 <body>
 <!-- COURSE INFO BAR -->
 <div id="courseInfoBar">
-    <h2 id="courseNameDisplay">TEST COURSE</h2>
+    <h2 id="courseNameDisplay">📍 No Course Selected</h2>
     <div id="gameTagsDisplay"></div>
     <button id="changeCourseBtn" onclick="window.location.href='courses.html'">⛳ CHANGE COURSE</button>
 </div>
@@ -569,12 +569,8 @@ const gameTagsDisplay =
 document.getElementById("gameTagsDisplay");
 
 gameTagsDisplay.innerHTML = "";
-   const savedCourse = localStorage.getItem("selectedCourse");
-if(savedCourse){
 document.getElementById("courseNameDisplay").textContent =
-"📍 " + savedCourse;
-}
-
+"📍 " + (localStorage.getItem("selectedCourse") || "No Course Selected");
 selectedGames.forEach(function(game){
 
 const tag = document.createElement("span");
