@@ -261,9 +261,22 @@ localStorage.setItem(
     JSON.stringify(selectedGames)
 );
     } else {
-      card.style.border = '2px solid #00ff99';
-      card.style.boxShadow = 'none';
-    }
+  card.style.border = '2px solid #00ff99';
+  card.style.boxShadow = 'none';
+
+  const game = card.querySelector('h2').innerText;
+
+  let selectedGames =
+  JSON.parse(localStorage.getItem("selectedGames")) || [];
+
+  selectedGames =
+  selectedGames.filter(g => g !== game);
+
+  localStorage.setItem(
+      "selectedGames",
+      JSON.stringify(selectedGames)
+  );
+}
   });
 });
     document.getElementById("startRoundBtn")
