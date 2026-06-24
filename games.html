@@ -216,6 +216,23 @@ The farthest left tee shot becomes the automatic bettor.
 </p>
 
 </div>
+    <div style="text-align:center;margin-top:40px;">
+
+<button id="startRoundBtn"
+style="
+background:#00ff99;
+color:black;
+font-size:24px;
+font-weight:bold;
+padding:15px 40px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+">
+START ROUND
+</button>
+
+</div>
 
 
 
@@ -230,15 +247,36 @@ document.querySelectorAll('.game-select input').forEach(box => {
       card.style.boxShadow = '0 0 20px #00ff99';
 
       const game = card.querySelector('h2').innerText
-        .replace(/[^a-zA-Z]/g,'')
-        .toLowerCase();
+  .replace(/[^a-zA-Z]/g,'')
+  .toLowerCase();
 
-      window.location.href = game + '.html';
+window.location.href = game + '.html';
     } else {
       card.style.border = '2px solid #00ff99';
       card.style.boxShadow = 'none';
     }
   });
+});
+    document.getElementById("startRoundBtn")
+.addEventListener("click", function(){
+
+let games =
+JSON.parse(localStorage.getItem("selectedGames")) || [];
+
+if(games.length === 0){
+    alert("Please select at least one game.");
+    return;
+}
+
+let msg =
+"Today's Games:\n\n" +
+games.join("\n");
+
+if(confirm(msg)){
+    window.location.href =
+    "scorecards.html";
+}
+
 });
 function startLeftRight(){
     localStorage.setItem("leftRightActive","true");
