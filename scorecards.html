@@ -562,7 +562,25 @@ Team Carryovers ON
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
+const selectedGames =
+JSON.parse(localStorage.getItem("selectedGames")) || [];
 
+const gameTagsDisplay =
+document.getElementById("gameTagsDisplay");
+
+gameTagsDisplay.innerHTML = "";
+
+selectedGames.forEach(function(game){
+
+const tag = document.createElement("span");
+
+tag.className = "game-tag";
+
+tag.textContent = game;
+
+gameTagsDisplay.appendChild(tag);
+
+});
 
 function checkSkins() {
     document.querySelectorAll(".hole-box").forEach(box => {
