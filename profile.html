@@ -1,829 +1,361 @@
-Scorecard before team total
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>BirdieBookie Scorecard</title>
+<title>Player Profile - BirdieBookie</title>
+<link rel="stylesheet" href="style.css">
 
 <style>
 
-body{
-    margin:0;
-    background:black;
-    color:white;
-    font-family:Arial;
-    overflow-x:auto;
+.profile-box{
+max-width:800px;
+margin:auto;
+background:rgba(255,255,255,.05);
+padding:35px;
+border-radius:24px;
 }
 
-.scorecard{
-    padding:20px;
-    width:max-content;
+.profile-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:25px;
+margin-top:30px;
 }
 
-.row{
-    display:flex;
-    align-items:center;
-    margin-bottom:10px;
+.profile-field{
+display:flex;
+flex-direction:column;
 }
 
-.header{
-    background:#00ff99;
-    color:black;
-    font-weight:bold;
+.profile-field label{
+margin-bottom:10px;
+font-weight:bold;
+font-size:16px;
 }
 
-.player-name{
-    width:170px;
-    font-size:28px;
-    color:#00ff99;
-    font-weight:bold;
+.profile-field input,
+.profile-field select{
+padding:14px;
+border:none;
+border-radius:12px;
+background:#111;
+color:white;
+font-size:16px;
 }
 
-.hole-box{
-    width:55px;
-    height:55px;
-    margin-right:5px;
-    border-radius:10px;
-    border:2px solid #00ff99;
-    background:#111;
-    color:white;
-    text-align:center;
-    font-size:22px;
+.photo-upload{
+margin-top:30px;
+text-align:center;
 }
 
-.header-box{
-    width:55px;
-    height:55px;
-    margin-right:5px;
-    border-radius:10px;
-    background:#00ff99;
-    color:black;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-weight:bold;
-    font-size:20px;
+.photo-upload input{
+margin-top:15px;
 }
 
-.total-box{
-    width:70px;
-}
-#saveBtn{
-    width:140px;
-    height:140px;
-    border-radius:50%;
-    background:white;
-    color:#00ff99;
-    font-size:38px;
-    font-weight:bold;
-    border:none;
-    cursor:pointer;
+.profile-preview{
+width:140px;
+height:140px;
+margin:auto;
+border-radius:50%;
+background:rgba(255,255,255,.08);
+display:flex;
+align-items:center;
+justify-content:center;
+overflow:hidden;
+border:3px solid rgba(68,255,136,.35);
 }
 
-#restartBtn{
-    width:140px;
-    height:140px;
-    border-radius:50%;
-    background:red;
-    color:white;
-    font-size:30px;
-    font-weight:bold;
-    border:none;
-    cursor:pointer;
-    margin-left:20px;
+.profile-preview img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.save-btn{
+margin-top:35px;
+width:100%;
+padding:18px;
+border:none;
+border-radius:14px;
+background:#44ff88;
+font-weight:bold;
+font-size:18px;
+cursor:pointer;
+}
+
+.optional-box{
+margin-top:35px;
+padding:24px;
+border-radius:18px;
+background:rgba(68,255,136,.08);
+text-align:center;
+}
+
+.optional-box h3{
+margin-bottom:12px;
+}
+
+.saved-box{
+display:none;
+margin-top:30px;
+padding:22px;
+border-radius:18px;
+background:rgba(68,255,136,.10);
+text-align:center;
+font-size:18px;
+font-weight:bold;
+}
+
+@media (max-width:700px){
+
+.profile-grid{
+grid-template-columns:1fr;
+}
+
 }
 
 </style>
+
 </head>
 
 <body>
 
-<div class="scorecard">
+<header class="hero">
 
-<!-- HEADER -->
-<div class="row">
+<nav>
 
-<div class="player-name">PLAYER</div>
+<div class="logo">
+Birdie<span>Bookie</span>
+</div>
 
-<div class="header-box">1</div>
-<div class="header-box">2</div>
-<div class="header-box">3</div>
-<div class="header-box">4</div>
-<div class="header-box">5</div>
-<div class="header-box">6</div>
-<div class="header-box">7</div>
-<div class="header-box">8</div>
-<div class="header-box">9</div>
+<div class="nav-links">
 
-<div class="header-box total-box">OUT</div>
+<a href="index.html">Home</a>
 
-<div class="header-box">10</div>
-<div class="header-box">11</div>
-<div class="header-box">12</div>
-<div class="header-box">13</div>
-<div class="header-box">14</div>
-<div class="header-box">15</div>
-<div class="header-box">16</div>
-<div class="header-box">17</div>
-<div class="header-box">18</div>
+<a href="games.html">Games</a>
 
-<div class="header-box total-box">IN</div>
+<a href="scorecards.html">Scorecards</a>
 
-<div class="header-box total-box">TOT</div>
+<a href="invite.html">Invite Players</a>
 
 </div>
 
-<div class="row" id="player1">
+</nav>
 
+<div class="hero-content">
 
-<input class="player-name player-input" id="name1" value="Player 1">
+<h1>👤 Player Profile</h1>
 
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-
-<input class="hole-box total-box">
-
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-
-<input class="hole-box total-box">
-
-<input class="hole-box total-box">
+<p>
+Optional profile setup for faster invites and gambling rounds.
+</p>
 
 </div>
 
-<!-- PLAYER 2 -->
-<div class="row" id="player2">
+</header>
 
-<input class="player-name player-input" id="name2" value="Player 2">
+<section class="section">
 
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
+<div class="profile-box">
 
-<input class="hole-box total-box">
+<div class="photo-upload">
 
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
+<div class="profile-preview" id="previewBox">
 
-<input class="hole-box total-box">
-
-<input class="hole-box total-box">
+📸
 
 </div>
 
-
-<div class="row" id="total12">
-<div class="player-name">TOTAL 1&2</div>
-
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-
-<input class="hole-box total-box">
-
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-
-<input class="hole-box total-box">
-
-<input class="hole-box total-box">
+<input type="file" id="photoInput" accept="image/*">
 
 </div>
 
-<!-- TOTAL BACK -->
-<div class="row" id="total34">
+<div class="profile-grid">
 
-<div class="player-name">TOTAL 3&4</div>
+<div class="profile-field">
 
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-
-<input class="hole-box total-box">
-
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-
-<input class="hole-box total-box">
-
-<input class="hole-box total-box">
-
-</div>
-
-<!-- PLAYER 3 -->
-<div class="row" id="player3">
-
-<input class="player-name player-input" id="name3" value="Player 3">
-
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-
-<input class="hole-box total-box">
-
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-
-<input class="hole-box total-box">
-
-<input class="hole-box total-box">
-
-</div>
-
-<!-- PLAYER 4 -->
-<div class="row" id="player4">
-
-<input class="player-name player-input" id="name4" value="Player 4">
-
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-
-<input class="hole-box total-box">
-
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-<input class="hole-box">
-
-<input class="hole-box total-box">
-
-<input class="hole-box total-box">
-
-</div>
-
-<div style="text-align:center; margin-top:20px; margin-bottom:20px;">
-
-<button id="saveBtn" onclick="saveRound()">SAVE</button>
-<button id="restartBtn" onclick="newRound()">RESTART</button>
-
-    <br><br>
-
-<label style="color:#00ff99; font-size:24px;">
-<input type="checkbox" id="carryoverToggle" checked>
-Team Carryovers ON
+<label>
+Player Name
 </label>
-</div>
-<h1 style="color:#00ff99;">LEFT RIGHT LEDGER</h1>
 
-<div class="scorecard" id="leftRightLedger">
+<input type="text" placeholder="Enter Name">
 
-<div class="row">
-<div class="player-name">PLAYER</div>
-
-<div class="header-box">1</div>
-<div class="header-box">2</div>
-<div class="header-box">3</div>
-<div class="header-box">4</div>
-<div class="header-box">5</div>
-<div class="header-box">6</div>
-<div class="header-box">7</div>
-<div class="header-box">8</div>
-<div class="header-box">9</div>
-
-<div class="header-box total-box">OUT</div>
-
-<div class="header-box">10</div>
-<div class="header-box">11</div>
-<div class="header-box">12</div>
-<div class="header-box">13</div>
-<div class="header-box">14</div>
-<div class="header-box">15</div>
-<div class="header-box">16</div>
-<div class="header-box">17</div>
-<div class="header-box">18</div>
-
-<div class="header-box total-box">IN</div>
-
-<div class="header-box total-box">TOT</div>
 </div>
 
-<div class="row" id="lr1">
-<input class="player-name" id="lrName1" readonly>
-<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
-<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
-<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
-<input class="hole-box total-box" readonly>
-<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
-<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
-<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
-<input class="hole-box total-box" readonly>
-<input class="hole-box total-box" readonly>
+<div class="profile-field">
+
+<label>
+Phone Number
+</label>
+
+<input type="text" placeholder="Enter Phone Number">
+
 </div>
 
-<div class="row" id="lr2">
-<input class="player-name" id="lrName2" readonly>
-<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
-<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
-<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
-<input class="hole-box total-box" readonly>
-<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
-<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
-<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
-<input class="hole-box total-box" readonly>
-<input class="hole-box total-box" readonly>
+<div class="profile-field">
+
+<label>
+Email
+</label>
+
+<input type="email" placeholder="Enter Email">
+
 </div>
 
-<div class="row" id="lr3">
-<input class="player-name" id="lrName3" readonly>
-<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
-<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
-<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
-<input class="hole-box total-box" readonly>
-<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
-<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
-<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
-<input class="hole-box total-box" readonly>
-<input class="hole-box total-box" readonly>
+<div class="profile-field">
+
+<label>
+Handicap
+</label>
+
+<input type="text" placeholder="Enter Handicap">
+
 </div>
 
-<div class="row" id="lr4">
-<input class="player-name" id="lrName4" readonly>
-<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
-<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
-<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
-<input class="hole-box total-box" readonly>
-<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
-<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
-<input class="hole-box lrbox"><input class="hole-box lrbox"><input class="hole-box lrbox">
-<input class="hole-box total-box" readonly>
-<input class="hole-box total-box" readonly>
+<div class="profile-field">
+
+<label>
+Favorite Game
+</label>
+
+<select>
+
+<option>Left Right</option>
+
+<option>Nassau</option>
+
+<option>Demon</option>
+
+<option>Chips</option>
+
+<option>Vegas</option>
+
+<option>Rabbit</option>
+
+<option>Quota</option>
+
+<option>Stableford</option>
+
+</select>
+
+</div>
+
+<div class="profile-field">
+
+<label>
+Degenerate Level
+</label>
+
+<select>
+
+<option>Casual Weekend Golfer</option>
+
+<option>Friendly Action</option>
+
+<option>Wallet Danger</option>
+
+<option>Financial Stress</option>
+
+<option>Full Sicko Mode</option>
+
+</select>
+
 </div>
 
 </div>
-    
-<div style="padding:30px;">
 
-<h1 style="color:#00ff99;">CHIP COUNT</h1>
+<div class="optional-box">
 
-<h2 style="color:#00ff99;">FRONT 9</h2>
+<h3>
+⚠️ Optional Only
+</h3>
 
-<div class="row">
-<div class="player-name chip-p1">Player 1</div>
-<input class="hole-box total-box">
+<p>
+BirdieBookie does not require profiles to use the site.
+Profiles simply make invites and gambling rounds faster.
+</p>
+
 </div>
 
-<div class="row">
-<div class="player-name chip-p2">Player 2</div>
-<input class="hole-box total-box">
+<button class="save-btn" onclick="saveProfile()">
+
+Save Profile
+
+</button>
+
+<div class="saved-box" id="savedBox">
+
+🔥 Profile Saved.
+Financial decisions remain your responsibility.
+
 </div>
 
-<div class="row">
-<div class="player-name chip-p3">Player 3</div>
-<input class="hole-box total-box">
+<div class="personality-box sicko-mode">
+
+<div class="personality-title">
+Degenerate Warning
 </div>
 
-<div class="row">
-<div class="player-name chip-p4">Player 4</div>
-<input class="hole-box total-box">
-</div>
-
-<h2 style="color:#00ff99; margin-top:30px;">BACK 9</h2>
-
-<div class="row">
-<div class="player-name chip-p1">Player 1</div>
-<input class="hole-box total-box">
-</div>
-
-<div class="row">
-<div class="player-name chip-p2">Player 2</div>
-<input class="hole-box total-box">
-</div>
-
-<div class="row">
-<div class="player-name chip-p3">Player 3</div>
-<input class="hole-box total-box">
-</div>
-
-<div class="row">
-<div class="player-name chip-p4">Player 4</div>
-<input class="hole-box total-box">
-</div>
-
-<h2 style="color:#00ff99; margin-top:30px;">TOTAL CHIP COUNT</h2>
-
-<div class="row">
-<div class="player-name chip-p1">Player 1</div>
-<input class="hole-box total-box">
-</div>
-
-<div class="row">
-<div class="player-name chip-p2">Player 2</div>
-<input class="hole-box total-box">
-</div>
-
-<div class="row">
-<div class="player-name chip-p3">Player 3</div>
-<input class="hole-box total-box">
-</div>
-
-<div class="row">
-<div class="player-name chip-p4">Player 4</div>
-<input class="hole-box total-box">
+<div class="personality-text">
+If your favorite game is Demon or Vegas,
+BirdieBookie recommends emotional support and emergency cash reserves.
 </div>
 
 </div>
+
 </div>
+
+</section>
+
+<footer>
+
+<h3>BirdieBookie</h3>
+
+<p>
+Gamblers with a golfing problem
+</p>
+
+<div class="footer-quote">
+Never trust a golfer who says they don't gamble.
+</div>
+
+</footer>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
 
-function checkSkins() {
+const photoInput =
+document.getElementById('photoInput');
 
-document.querySelectorAll(".hole-box").forEach(box => {
-box.style.backgroundColor = "#111";
-box.style.color = "white";
-});
+photoInput.addEventListener('change', function(){
 
-for (let hole of [0,1,2,3,4,5,6,7,8,10,11,12,13,14,15,16,17,18]) {
+const file = this.files[0];
 
-const p1 = document.querySelectorAll("#player1 .hole-box")[hole];
-const p2 = document.querySelectorAll("#player2 .hole-box")[hole];
-const p3 = document.querySelectorAll("#player3 .hole-box")[hole];
-const p4 = document.querySelectorAll("#player4 .hole-box")[hole];
+if(file){
 
-const scores = [
-{ box:p1, score:parseInt(p1.value) },
-{ box:p2, score:parseInt(p2.value) },
-{ box:p3, score:parseInt(p3.value) },
-{ box:p4, score:parseInt(p4.value) }
-];
+const reader = new FileReader();
 
-if (scores.some(x => isNaN(x.score))) continue;
+reader.onload = function(e){
 
-const low = Math.min(...scores.map(x => x.score));
-const winners = scores.filter(x => x.score === low);
-
-if (winners.length === 1) {
-winners[0].box.style.backgroundColor = "yellow";
-winners[0].box.style.color = "black";
-}
-}
-
-const team12 = document.querySelectorAll("#total12 .hole-box");
-const team34 = document.querySelectorAll("#total34 .hole-box");
-
-let carryHoles = [];
-
-for (let hole of [0,1,2,3,4,5,6,7,8,10,11,12,13,14,15,16,17,18]) {
-
-const score12 = parseInt(team12[hole].value);
-const score34 = parseInt(team34[hole].value);
-
-if (isNaN(score12) || isNaN(score34)) continue;
-
-if (score12 === score34) {
-carryHoles.push(hole);
-continue;
-}
-
-const winnerTeam = score12 < score34 ? team12 : team34;
-
-if(document.getElementById("carryoverToggle").checked){
-
-carryHoles.push(hole);
-
-carryHoles.forEach(function(h){
-
-winnerTeam[h].style.backgroundColor = "yellow";
-winnerTeam[h].style.color = "black";
-
-});
-
-} else {
-
-winnerTeam[hole].style.backgroundColor = "yellow";
-winnerTeam[hole].style.color = "black";
+document.getElementById('previewBox').innerHTML =
+'<img src="' + e.target.result + '">';
 
 }
 
-carryHoles = [];
-}
+reader.readAsDataURL(file);
 
-}
-
-function updateTeamTotals() {
-
-const team12 = document.querySelectorAll("#total12 .hole-box");
-const team34 = document.querySelectorAll("#total34 .hole-box");
-
-const p1 = document.querySelectorAll("#player1 .hole-box");
-const p2 = document.querySelectorAll("#player2 .hole-box");
-const p3 = document.querySelectorAll("#player3 .hole-box");
-const p4 = document.querySelectorAll("#player4 .hole-box");
-
-let out12 = 0;
-let in12 = 0;
-
-let out34 = 0;
-let in34 = 0;
-
-for (let hole = 0; hole <= 18; hole++) {
-
-const s1 = parseInt(p1[hole].value) || 0;
-const s2 = parseInt(p2[hole].value) || 0;
-const s3 = parseInt(p3[hole].value) || 0;
-const s4 = parseInt(p4[hole].value) || 0;
-
-const total12Hole = s1 + s2;
-const total34Hole = s3 + s4;
-
-team12[hole].value = total12Hole || "";
-team34[hole].value = total34Hole || "";
-    if (hole === 18) {
-    team12[18].value = total12Hole || "";
-    team34[18].value = total34Hole || "";
-}
-
-if (hole >= 0 && hole <= 8) {
-out12 += total12Hole;
-out34 += total34Hole;
-}
-
-if (hole >= 10 && hole <= 18) {
-in12 += total12Hole;
-in34 += total34Hole;
-}
-}
-
-team12[9].value = out12 || "";
-team12[19].value = in12 || "";
-team12[20].value = (out12 + in12) || "";
-
-team34[9].value = out34 || "";
-team34[19].value = in34 || "";
-team34[20].value = (out34 + in34) || "";
-}
-
-function updatePlayerTotals() {
-
-["player1","player2","player3","player4"].forEach(function(id){
-
-const boxes = document.querySelectorAll("#" + id + " .hole-box");
-
-let out = 0;
-let inn = 0;
-
-for (let i = 0; i < 9; i++) {
-out += parseInt(boxes[i].value) || 0;
-}
-
-for (let i = 10; i <= 18; i++) {
-inn += parseInt(boxes[i].value) || 0;
-}
-
-boxes[9].value = out || "";
-boxes[19].value = inn || "";
-boxes[20].value = (out + inn) || "";
-
-});
-
-}
-function colorLeftRight() {
-
-["lr1","lr2","lr3","lr4"].forEach(function(id){
-
-const boxes = document.querySelectorAll("#" + id + " .hole-box");
-
-boxes.forEach(function(box){
-
-const value = parseInt(box.value);
-
-if(value > 0){
-box.style.color = "lime";
-}
-else if(value < 0){
-box.style.color = "red";
-}
-else{
-box.style.color = "white";
 }
 
 });
 
-});
+function saveProfile(){
 
-}
-document.querySelectorAll(".hole-box")
-.forEach(function(box){
-
-box.addEventListener("input", function(){
-
-function updateNames() {
-
-const names = [
-document.getElementById("name1").value,
-document.getElementById("name2").value,
-document.getElementById("name3").value,
-document.getElementById("name4").value
-];
-
-document.querySelectorAll(".chip-p1").forEach(x => x.textContent = names[0]);
-document.querySelectorAll(".chip-p2").forEach(x => x.textContent = names[1]);
-document.querySelectorAll(".chip-p3").forEach(x => x.textContent = names[2]);
-document.querySelectorAll(".chip-p4").forEach(x => x.textContent = names[3]);
-    document.getElementById("lrName1").value = names[0];
-document.getElementById("lrName2").value = names[1];
-document.getElementById("lrName3").value = names[2];
-document.getElementById("lrName4").value = names[3];
+document.getElementById('savedBox').style.display =
+'block';
 
 }
 
-document.querySelectorAll(".player-input").forEach(function(box){
-box.addEventListener("input", updateNames);
-});
-
-updateNames();
-    updateTeamTotals();
-updatePlayerTotals();
-checkSkins();
-colorLeftRight();
-});
-
-});
-
-updateTeamTotals();
-updatePlayerTotals();
-checkSkins();
-
-    const saved = localStorage.getItem("birdiebookieScorecard");
-
-if(saved){
-
-const data = JSON.parse(saved);
-
-document.getElementById("name1").value = data.name1 || "";
-document.getElementById("name2").value = data.name2 || "";
-document.getElementById("name3").value = data.name3 || "";
-document.getElementById("name4").value = data.name4 || "";
-document.getElementById("lrName1").value = data.name1 || "";
-document.getElementById("lrName2").value = data.name2 || "";
-document.getElementById("lrName3").value = data.name3 || "";
-document.getElementById("lrName4").value = data.name4 || "";
-
-["player1","player2","player3","player4"].forEach(function(id){
-
-const boxes = document.querySelectorAll("#" + id + " .hole-box");
-
-(data[id] || []).forEach(function(value,index){
-
-if(boxes[index]){
-boxes[index].value = value;
-}
-
-});
-
-});
-
-updateTeamTotals();
-updatePlayerTotals();
-checkSkins();
-    colorLeftRight();
-
-}
-});
-function saveRound() {
-
-const data = {
-
-name1: document.getElementById("name1").value,
-name2: document.getElementById("name2").value,
-name3: document.getElementById("name3").value,
-name4: document.getElementById("name4").value,
-
-player1: Array.from(document.querySelectorAll("#player1 .hole-box")).map(x => x.value),
-player2: Array.from(document.querySelectorAll("#player2 .hole-box")).map(x => x.value),
-player3: Array.from(document.querySelectorAll("#player3 .hole-box")).map(x => x.value),
-player4: Array.from(document.querySelectorAll("#player4 .hole-box")).map(x => x.value)
-
-};
-
-localStorage.setItem("birdiebookieScorecard", JSON.stringify(data));
-
-alert("ROUND SAVED");
-
-}
-
-function newRound(){
-
-if(!confirm("WARNING!\n\nYou will lose all current scores.\n\nStart a new round?")){
-return;
-}
-
-localStorage.removeItem("birdiebookieScorecard");
-
-document.querySelectorAll(".hole-box").forEach(function(box){
-box.value="";
-});
-
-document.getElementById("name1").value="Player 1";
-document.getElementById("name2").value="Player 2";
-document.getElementById("name3").value="Player 3";
-document.getElementById("name4").value="Player 4";
-
-location.reload();
-
-}    
 </script>
 
-<script>
-function syncNames() {
-    var names = ['name1','name2','name3','name4'];
-    var lrNames = ['lrName1','lrName2','lrName3','lrName4'];
-    names.forEach(function(id, i) {
-        var src = document.getElementById(id);
-        var tgt = document.getElementById(lrNames[i]);
-        if(src && tgt) tgt.value = src.value;
-    });
-}
-['name1','name2','name3','name4'].forEach(function(id) {
-    var el = document.getElementById(id);
-    if(el) el.addEventListener('input', syncNames);
-});
-window.addEventListener('load', syncNames);
-</script></body>
-</html>a
+</body>
+</html>
