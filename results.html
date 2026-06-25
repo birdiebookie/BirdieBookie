@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BirdieBookie - Results</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Arial', sans-serif;
+      background: #1a1a2e;
+      color: white;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* CONFETTI CANVAS */
+    #confettiCanvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    /* MONEY RAIN */
+    .money-rain {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 998;
+      overflow: hidden;
+    }
+    .dollar {
+      position: absolute;
+      font-size: 2rem;
+      animation: fallDown linear infinite;
+      opacity: 0.8;
+    }
+    @keyframes fallDown {
+      0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* HEADER */
+    .header {
+      text-align: center;
+      padding: 20px;
+      background: linear-gradient(135deg, #0f3460, #16213e);
+      border-bottom: 3px solid #ffd700;
+    }
+    .header h1 {
+      font-size: 1.5rem;
+      color: #ffd700;
+      letter-spacing: 3px;
+    }
+    .header p {
+      color: #aaa;
+      font-size: 0.85rem;
+    }
+
+    /* MAIN CONTAINER */
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* TROPHY SECTION */
+    .trophy-section {
+      text-align: center;
+      padding: 30px 20px;
+      animation: bounceIn 1s ease;
+    }
+    .trophy {
+      font-size: 5rem;
+      animation: trophyBounce 1s ease infinite alternate;
+      display: block;
+    }
+    @keyframes trophyBounce {
+      0% { transform: scale(1) rotate(-5deg); }
+      100% { transform: scale(1.1) rotate(5deg); }
+    }
+    @keyframes bounceIn {
+      0% { transform: scale(0); opacity: 0; }
+      60% { transform: scale(1.2); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+
+    /* WINNER CARD */
+    .winner-card {
+      background: linear-gradient(135deg, #ffd700, #ff8c00);
+      border-radius: 20px;
+      padding: 25px;
+      text-align: center;
+      margin: 15px 0;
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+      animation: glowPulse 2s ease infinite;
+    }
+    @keyframes glowPulse {
+      0%, 100% { box-shadow: 0 0 30px rgba(255,215,0,0.6); }
+      50% { box-shadow: 0 0 60px rgba(255,215,0,1); }
+    }
+    .winner-label {
+      font-size: 0.9rem;
+      font-weight: bold;
+      letter-spacing: 3px;
+      color: #1a1a2e;
+      text-transform: uppercase;
+    }
+    .winner-name {
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: #1a1a2e;
+      margin: 5px 0;
+    }
+    .winner-amount {
+      font-size: 3rem;
+      font-weight: 900;
+      color: #1a1a2e;
+    }
+
+    /* LOSER SECTION */
+    .losers-title {
+      text-align: center;
+      color: #aaa;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      margin: 20px 0 10px;
+      text-transform: uppercase;
+    }
+    .loser-card {
+      background: #16213e;
+      border: 1px solid #333;
+      border-radius: 12px;
+      padding: 15px 20px;
+      margin: 8px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .loser-name {
+      font-size: 1.1rem;
+      color: #ccc;
+    }
+    .loser-emoji { font-size: 1.3rem; }
+    .loser-amount {
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #ff4444;
+    }
+
+    /* INPUT SECTION */
+    .input-section {
+      background: #16213e;
+      border-radius: 15px;
+      padding: 20px;
+      margin: 20px 0;
+      border: 1px solid #333;
+    }
+    .input-section h3 {
+      color: #ffd700;
+      margin-bottom: 15px;
+      font-size: 1rem;
+      letter-spacing: 1px;
+    }
+    .player-input {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 10px 0;
+    }
+    .player-input label {
+      flex: 1;
+      color: #ccc;
+      font-size: 0.95rem;
+    }
+    .player-input input {
+      width: 100px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid #444;
+      background: #0f3460;
+      color: white;
+      font-size: 1rem;
+      text-align: center;
+    }
+    .balance-display {
+      text-align: center;
+      padding: 10px;
+      border-radius: 8px;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    .balance-ok { background: #1a4a1a; color: #44ff44; }
+    .balance-bad { background: #4a1a1a; color: #ff4444; }
+
+    /* BUTTONS */
+    .btn-reveal {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, #ffd700, #ff8c00);
+      color: #1a1a2e;
+      border: none;
+      border-radius: 15px;
+      font-size: 1.2rem;
+      font-weight: 900;
+      cursor: pointer;
+      letter-spacing: 2px;
+      margin: 15px 0;
+      text-transform: uppercase;
+    }
+    .btn-reveal:hover { opacity: 0.9; transform: scale(1.02); }
+
+    /* RESULTS SECTION - hidden until revealed */
+    .results-section { display: none; }
+    .results-section.show { display: block; }
+
+    /* SHARE SECTION */
+    .share-section {
+      text-align: center;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    .share-section h3 {
+      color: #ffd700;
+      margin-bottom: 15px;
+      letter-spacing: 2px;
+    }
+    .share-buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-share {
+      padding: 12px 20px;
+      border-radius: 25px;
+      border: none;
+      font-size: 0.9rem;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-twitter { background: #1da1f2; color: white; }
+    .btn-facebook { background: #1877f2; color: white; }
+    .btn-copy { background: #333; color: #ffd700; border: 1px solid #ffd700; }
+    .btn-share:hover { opacity: 0.85; transform: scale(1.05); }
+
+    /* BRANDING */
+    .branding {
+      text-align: center;
+      padding: 20px;
+      color: #555;
+      font-size: 0.8rem;
+      border-top: 1px solid #222;
+      margin-top: 20px;
+    }
+    .branding span { color: #ffd700; font-weight: bold; }
+
+    /* COPY TOAST */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #ffd700;
+      color: #1a1a2e;
+      padding: 12px 25px;
+      border-radius: 25px;
+      font-weight: bold;
+      display: none;
+      z-index: 9999;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="confettiCanvas"></canvas>
+<div class="money-rain" id="moneyRain"></div>
+<div class="toast" id="toast">✅ Copied to clipboard!</div>
+
+<!-- HEADER -->
+<div class="header">
+  <h1>🏌️ BIRDIE BOOKIE</h1>
+  <p>birdiebookie.com</p>
+</div>
+
+<div class="container">
+
+  <!-- INPUT SECTION -->
+  <div class="input-section" id="inputSection">
+    <h3>💰 ENTER FINAL RESULTS</h3>
+    <p style="color:#aaa; font-size:0.8rem; margin-bottom:15px;">
+      Enter each player's result. Winners = positive (+), Losers = negative (-). Must balance to $0.
+    </p>
+
+    <div id="playerInputs">
+      <!-- Players added dynamically -->
+    </div>
+
+    <div class="balance-display balance-bad" id="balanceDisplay">
+      Balance: $0.00 — Add player amounts above
+    </div>
+
+    <button class="btn-reveal" onclick="revealResults()">
+      🏆 REVEAL WINNER!
+    </button>
+  </div>
+
+  <!-- RESULTS SECTION -->
+  <div class="results-section" id="resultsSection">
+
+    <div class="trophy-section">
+      <span class="trophy">🏆</span>
+      <h2 style="color:#ffd700; font-size:1.2rem; letter-spacing:3px; margin-top:10px;">
+        WE HAVE A WINNER!
+      </h2>
+    </div>
+
+    <!-- WINNER CARD -->
+    <div class="winner-card">
+      <div class="winner-label">🥇 Today's Champion</div>
+      <div class="winner-name" id="winnerName">-</div>
+      <div class="winner-amount" id="winnerAmount">+$0</div>
+      <div style="font-size:0.85rem; color:#1a1a2e; margin-top:5px;">💰 CASHES OUT BIG!</div>
+    </div>
+
+    <!-- LOSERS -->
+    <div class="losers-title">😭 The Walk of Shame</div>
+    <div id="losersList"></div>
+
+    <!-- SHARE SECTION -->
+    <div class="share-section">
+      <h3>📣 SHARE THE GLORY!</h3>
+      <div class="share-buttons">
+        <button class="btn-share btn-twitter" onclick="shareTwitter()">
+          🐦 Twitter/X
+        </button>
+        <button class="btn-share btn-facebook" onclick="shareFacebook()">
+          📘 Facebook
+        </button>
+        <button class="btn-share btn-copy" onclick="copyResult()">
+          📋 Copy Text
+        </button>
+      </div>
+    </div>
+
+    <!-- PLAY AGAIN -->
+    <button class="btn-reveal" onclick="resetPage()" style="background: #333; color: #ffd700; border: 2px solid #ffd700;">
+      🔄 NEW GAME
+    </button>
+
+  </div>
+
+  <!-- BRANDING -->
+  <div class="branding">
+    Powered by <span>BirdieBookie.com</span> 🏌️<br>
+    Gamblers with a Golfing Problem
+  </div>
+
+</div>
+
+<script>
+// =====================
+// PLAYER SETUP
+// =====================
+const players = [
+  { name: "Player 1", emoji: "🏌️" },
+  { name: "Player 2", emoji: "🏌️" },
+  { name: "Player 3", emoji: "🏌️" },
+  { name: "Player 4", emoji: "🏌️" }
+];
+
+// Try to load player names from localStorage
+function loadPlayers() {
+  const container = document.getElementById('playerInputs');
+  container.innerHTML = '';
+
+  players.forEach((p, i) => {
+    const div = document.createElement('div');
+    div.className = 'player-input';
+    div.innerHTML = `
+      <label>${p.emoji} <input type="text" id="pname${i}" value="${p.name}" 
+        style="background:transparent; border:none; border-bottom:1px solid #444; 
+        color:white; width:100px; font-size:0.95rem;" 
+        placeholder="Name"/></label>
+      <input type="number" id="pamount${i}" 
+        placeholder="$0" step="0.50"
+        oninput="checkBalance()" />
+    `;
+    container.appendChild(div);
+  });
+}
+
+// =====================
+// BALANCE CHECKER
+// =====================
+function checkBalance() {
+  let total = 0;
+  players.forEach((p, i) => {
+    const val = parseFloat(document.getElementById(`pamount${i}`).value) || 0;
+    total += val;
+  });
+
+  const display = document.getElementById('balanceDisplay');
+  const rounded = Math.round(total * 100) / 100;
+
+  if (rounded === 0) {
+    display.className = 'balance-display balance-ok';
+    display.textContent = `✅ Balance: $0.00 — Ready to reveal!`;
+  } else {
+    display.className = 'balance-display balance-bad';
+    display.textContent = `❌ Balance: $${rounded.toFixed(2)} — Must equal $0.00`;
+  }
+}
+
+// =====================
+// REVEAL RESULTS
+// =====================
+function revealResults() {
+  // Check balance first
+  let total = 0;
+  let results = [];
+
+  players.forEach((p, i) => {
+    const name = document.getElementById(`pname${i}`).value || p.name;
+    const amount = parseFloat(document.getElementById(`pamount${i}`).value) || 0;
+    total += amount;
+    results.push({ name, amount });
+  });
+
+  const rounded = Math.round(total * 100) / 100;
+  if (rounded !== 0) {
+    alert(`❌ Amounts don't balance! Total is $${rounded.toFixed(2)}. Must be $0.00`);
+    return;
+  }
+
+  // Sort: winners first
+  results.sort((a, b) => b.amount - a.amount);
+
+  // Find winner (highest positive)
+  const winner = results[0];
+  const losers = results.slice(1);
+
+  // Update winner card
+  document.getElementById('winnerName').textContent = winner.name;
+  document.getElementById('winnerAmount').textContent = 
+    `+$${winner.amount.toFixed(2)}`;
+
+  // Update losers
+  const losersList = document.getElementById('losersList');
+  losersList.innerHTML = '';
+  losers.forEach(l => {
+    const card = document.createElement('div');
+    card.className = 'loser-card';
+    const emoji = l.amount < 0 ? '😭' : '😐';
+    card.innerHTML = `
+      <span class="loser-name">${emoji} ${l.name}</span>
+      <span class="loser-amount">${l.amount >= 0 ? '+' : ''}$${l.amount.toFixed(2)}</span>
+    `;
+    losersList.appendChild(card);
+  });
+
+  // Hide input, show results
+  document.getElementById('inputSection').style.display = 'none';
+  document.getElementById('resultsSection').classList.add('show');
+
+  // 🎉 FIRE ANIMATIONS!
+  startConfetti();
+  startMoneyRain();
+  playChaChingSound();
+
+  // Scroll to top
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// =====================
+// CONFETTI
+// =====================
+function startConfetti() {
+  const canvas = document.getElementById('confettiCanvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const pieces = [];
+  const colors = ['#ffd700','#ff8c00','#ff4444','#44ff44','#4444ff','#ff44ff'];
+
+  for (let i = 0; i < 150; i++) {
+    pieces.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height - canvas.height,
+      w: Math.random() * 15 + 5,
+      h: Math.random() * 8 + 3,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      speed: Math.random() * 4 + 2,
+      angle: Math.random() * 360,
+      spin: Math.random() * 5 - 2.5
+    });
+  }
+
+  let frames = 0;
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    pieces.forEach(p => {
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.angle * Math.PI / 180);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+      ctx.restore();
+      p.y += p.speed;
+      p.angle += p.spin;
+      if (p.y > canvas.height) {
+        p.y = -20;
+        p.x = Math.random() * canvas.width;
+      }
+    });
+    frames++;
+    if (frames < 300) requestAnimationFrame(draw);
+    else ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+  draw();
+}
+
+// =====================
+// MONEY RAIN
+// =====================
+function startMoneyRain() {
+  const container = document.getElementById('moneyRain');
+  container.innerHTML = '';
+  const symbols = ['💵','💰','💸','🤑','💴','💶'];
+
+  for (let i = 0; i < 20; i++) {
+    const dollar = document.createElement('div');
+    dollar.className = 'dollar';
+    dollar.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+    dollar.style.left = Math.random() * 100 + 'vw';
+    dollar.style.animationDuration = (Math.random() * 3 + 2) + 's';
+    dollar.style.animationDelay = (Math.random() * 3) + 's';
+    dollar.style.fontSize = (Math.random() * 1.5 + 1.5) + 'rem';
+    container.appendChild(dollar);
+  }
+
+  // Stop after 8 seconds
+  setTimeout(() => { container.innerHTML = ''; }, 8000);
+}
+
+// =====================
+// CHA-CHING SOUND
+// =====================
+function playChaChingSound() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    
+    function playTone(freq, start, duration, type = 'sine') {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, ctx.currentTime + start);
+      gain.gain.setValueAtTime(0.3, ctx.currentTime + start);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + start + duration);
+      osc.start(ctx.currentTime + start);
+      osc.stop(ctx.currentTime + start + duration);
+    }
+
+    // Cha-Ching sequence
+    playTone(800, 0, 0.1, 'square');
+    playTone(1200, 0.1, 0.1, 'square');
+    playTone(1000, 0.2, 0.3, 'sine');
+    playTone(1500, 0.3, 0.4, 'sine');
+  } catch(e) {
+    console.log('Sound not available');
+  }
+}
+
+// =====================
+// SHARE FUNCTIONS
+// =====================
+function getShareText() {
+  const winner = document.getElementById('winnerName').textContent;
+  const amount = document.getElementById('winnerAmount').textContent;
+  return `🏆 ${winner} just won ${amount} on the golf course! 💰⛳ #BirdieBookie #GolfBet birdiebookie.com`;
+}
+
+function shareTwitter() {
+  const text = encodeURIComponent(getShareText());
+  window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
+}
+
+function shareFacebook() {
+  const url = encodeURIComponent('https://birdiebookie.com');
+  window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+}
+
+function copyResult() {
+  navigator.clipboard.writeText(getShareText()).then(() => {
+    const toast = document.getElementById('toast');
+    toast.style.display = 'block';
+    setTimeout(() => { toast.style.display = 'none'; }, 3000);
+  });
+}
+
+// =====================
+// RESET
+// =====================
+function resetPage() {
+  document.getElementById('inputSection').style.display = 'block';
+  document.getElementById('resultsSection').classList.remove('show');
+  document.getElementById('moneyRain').innerHTML = '';
+  players.forEach((p, i) => {
+    document.getElementById(`pamount${i}`).value = '';
+  });
+  checkBalance();
+}
+
+// =====================
+// INIT
+// =====================
+loadPlayers();
+checkBalance();
+</script>
+
+</body>
+</html>
