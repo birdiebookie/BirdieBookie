@@ -155,7 +155,7 @@ body{
 <body>
 <!-- COURSE INFO BAR -->
 <div id="courseInfoBar">
-    <h2 id="courseNameDisplay">📍 No Course Selected</h2>
+            <h2 id="courseNameDisplay">📍 No Course Selected</h2>
     <div id="gameTagsDisplay"></div>
     <button id="changeCourseBtn" onclick="window.location.href='courses.html'">⛳ CHANGE COURSE</button>
 </div>
@@ -936,6 +936,12 @@ location.reload();
         });
     }
 });
+</script>
+    <script>
+    const savedCourse = localStorage.getItem('selectedCourse');
+    if (savedCourse) {
+        document.getElementById('courseNameDisplay').textContent = '📍 ' + savedCourse;
+    }
 </script>
 </body>
 </html>a
