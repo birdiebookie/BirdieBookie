@@ -604,7 +604,7 @@ function checkSkins() {
             const winnerHoles = carryoverOn ? [...indivTiedHoles, hole] : [hole];
             winnerHoles.forEach(h => {
                 const box = document.querySelectorAll("#" + winners[0].id + " .hole-box")[h];
-                box.style.backgroundColor = "#00ff99";
+                yellow
                 box.style.color = "black";
             });
             indivTiedHoles = [];
@@ -623,7 +623,7 @@ function checkSkins() {
         const min = Math.min(...valid.map(s => s.score));
         const winners = valid.filter(s => s.score === min);
         if (winners.length === 1) {
-            winners[0].box.style.backgroundColor = "#00ff99";
+            winners[0].yellow
             winners[0].box.style.color = "black";
         }
     });
