@@ -604,7 +604,7 @@ function checkSkins() {
             const winnerHoles = carryoverOn ? [...indivTiedHoles, hole] : [hole];
             winnerHoles.forEach(h => {
                 const box = document.querySelectorAll("#" + winners[0].id + " .hole-box")[h];
-                yellow
+                box.style.backgroundColor = "yellow";
                 box.style.color = "black";
             });
             indivTiedHoles = [];
@@ -623,7 +623,7 @@ function checkSkins() {
         const min = Math.min(...valid.map(s => s.score));
         const winners = valid.filter(s => s.score === min);
         if (winners.length === 1) {
-            winners[0].yellow
+            winners[0].box.style.backgroundColor = "yellow";
             winners[0].box.style.color = "black";
         }
     });
@@ -640,7 +640,7 @@ function checkSkins() {
             const winnerBoxes = t12 < t34 ? team12boxes : team34boxes;
             const winnerHoles = carryoverOn ? [...teamTiedHoles, hole] : [hole];
             winnerHoles.forEach(h => {
-                winnerBoxes[h].style.backgroundColor = "#00ff99";
+                winnerBoxes[h].style.backgroundColor = "yellow";
                 winnerBoxes[h].style.color = "black";
             });
             teamTiedHoles = [];
@@ -655,9 +655,11 @@ function checkSkins() {
         if (isNaN(t12) || isNaN(t34)) return;
         if (t12 !== t34) {
             const winnerBoxes = t12 < t34 ? team12boxes : team34boxes;
-            winnerBoxes[idx].style.backgroundColor = "#00ff99";
+            winnerBoxes[idx].style.backgroundColor = "yellow";
             winnerBoxes[idx].style.color = "black";
         }
+    });
+}
     });
 }
 
