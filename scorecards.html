@@ -591,7 +591,7 @@ function checkSkins() {
     const rows = ["player1","player2","player3","player4"];
     let indivTiedHoles = [];
 
-    for (let hole = 0; hole < 18; hole++) {
+    for (let hole = 0; hole <= 18; hole++) {
         const scores = rows.map(id => {
             const box = document.querySelectorAll("#" + id + " .hole-box")[hole];
             return { id, box, score: parseInt(box.value) };
@@ -632,7 +632,7 @@ function checkSkins() {
     const team34boxes = document.querySelectorAll("#total34 .hole-box");
     let teamTiedHoles = [];
 
-    for (let hole = 0; hole < 18; hole++) {
+    for (let hole = 0; hole <= 18; hole++) {
         const t12 = parseInt(team12boxes[hole].value);
         const t34 = parseInt(team34boxes[hole].value);
         if (isNaN(t12) || isNaN(t34)) continue;
