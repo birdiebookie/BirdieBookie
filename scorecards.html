@@ -523,7 +523,7 @@ Team Carryovers ON
 </div>
 
 <div class="row" id="chip1">
-<div class="player-name">Player 1</div>
+<div class="player-name" id="chipName1">Player 1</div>
 <input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox">
 <input class="hole-box total-box" readonly>
 <input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox">
@@ -532,7 +532,7 @@ Team Carryovers ON
 </div>
 
 <div class="row" id="chip2">
-<div class="player-name">Player 2</div>
+<div class="player-name" id="chipName2">Player 2</div>
 <input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox">
 <input class="hole-box total-box" readonly>
 <input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox">
@@ -541,7 +541,7 @@ Team Carryovers ON
 </div>
 
 <div class="row" id="chip3">
-<div class="player-name">Player 3</div>
+<div class="player-name" id="chipName3">Player 3</div>
 <input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox">
 <input class="hole-box total-box" readonly>
 <input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox">
@@ -550,7 +550,7 @@ Team Carryovers ON
 </div>
 
 <div class="row" id="chip4">
-<div class="player-name">Player 4</div>
+<div class="player-name" id="chipName4">Player 4</div>
 <input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox">
 <input class="hole-box total-box" readonly>
 <input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox">
@@ -832,7 +832,10 @@ document.querySelectorAll(".chip-p4").forEach(x => x.textContent = names[3]);
 document.getElementById("lrName2").value = names[1];
 document.getElementById("lrName3").value = names[2];
 document.getElementById("lrName4").value = names[3];
-
+document.getElementById("chipName1").textContent = names[0];
+document.getElementById("chipName2").textContent = names[1];
+document.getElementById("chipName3").textContent = names[2];
+document.getElementById("chipName4").textContent = names[3];
 }
 
 document.querySelectorAll(".player-input").forEach(function(box){
