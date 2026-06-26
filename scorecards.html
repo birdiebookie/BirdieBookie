@@ -761,9 +761,6 @@ inn += parseInt(boxes[i].value) || 0;
 boxes[9].value = out || "";
 boxes[19].value = inn || "";
 boxes[20].value = (out + inn) || "";
-    });
-
-}
 
 
 function updateChipsTotals() {
@@ -791,10 +788,11 @@ boxes[20].value = (out + inn) || "";
 
 }
     
+});
 
-}
+boxes[20].value = (out + inn) || "";
 
-function colorLeftRight() {
+}function colorLeftRight() {
 
 ["lr1","lr2","lr3","lr4"].forEach(function(id){
 
