@@ -262,8 +262,9 @@
     };
 
     recognition.onend = function () {
-      // Auto-restart to keep always-on
-      setTimeout(() => recognition.start(), 500);
+      setTimeout(() => {
+        try { recognition.start(); } catch(e) {}
+      }, 2000);
     };
 
     recognition.start();
