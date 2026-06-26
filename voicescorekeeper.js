@@ -84,7 +84,7 @@
     if (!lower.includes('hey birdiebookie') && !lower.includes('birdiebookie')) return null;
 
     // Extract hole number
-    const holeMatch = lower.match(/hole\s+(\w+)/);
+    const holeMatch = lower.match(/(?:hole|whole|coal|roll)\s+(\w+)/);
     if (!holeMatch) return null;
     const holeNum = parseNumber(holeMatch[1]);
     if (isNaN(holeNum) || holeNum < 1 || holeNum > 18) return null;
