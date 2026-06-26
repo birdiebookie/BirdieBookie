@@ -578,7 +578,7 @@ const teamToggle = document.getElementById("carryoverToggle");
     let tiedHoles = [];
 
     if (individualToggle && individualToggle.checked) {
-        for (let hole = 0; hole < 18; hole++) {
+        for (let hole = 0; hole <= 18; hole++) {
             const p1 = document.querySelectorAll("#player1 .hole-box")[hole];
             const p2 = document.querySelectorAll("#player2 .hole-box")[hole];
             const p3 = document.querySelectorAll("#player3 .hole-box")[hole];
@@ -615,7 +615,7 @@ const teamToggle = document.getElementById("carryoverToggle");
             let teamCarryover = 0;
             let teamTiedHoles = [];
 
-            for (let hole = 0; hole < 18; hole++) {
+            for (let hole = 0; hole <= 18; hole++) {
                 const team12boxes = document.querySelectorAll("#total12 .hole-box");
                 const team34boxes = document.querySelectorAll("#total34 .hole-box");
 
