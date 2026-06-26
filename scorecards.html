@@ -637,6 +637,14 @@ const teamToggle = document.getElementById("carryoverToggle");
 
                     teamTiedHoles = [];
                     teamCarryover = 0;
+                    // Highlight IN
+if (hole === 18) {
+    winnerBoxes[19].style.backgroundColor = "yellow";
+    winnerBoxes[19].style.color = "black";
+
+    winnerBoxes[20].style.backgroundColor = "yellow";
+    winnerBoxes[20].style.color = "black";
+}
                 } else {
                     teamTiedHoles.push(hole);
                 }
