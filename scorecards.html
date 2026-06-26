@@ -492,8 +492,174 @@ Team Carryovers ON
 
 </div>
     
-    
+<div style="padding:30px;">
 
+<h1 style="color:#00ff99;">CHIPS / JUNK GAMES / THINGS LEDGER</h1>
+
+<div class="scorecard" id="chipsLedger">
+
+<div class="row">
+
+<div class="player-name">PLAYER</div>
+
+<div class="header-box">1</div>
+<div class="header-box">2</div>
+<div class="header-box">3</div>
+<div class="header-box">4</div>
+<div class="header-box">5</div>
+<div class="header-box">6</div>
+<div class="header-box">7</div>
+<div class="header-box">8</div>
+<div class="header-box">9</div>
+
+<div class="header-box total-box">OUT</div>
+
+<div class="header-box">10</div>
+<div class="header-box">11</div>
+<div class="header-box">12</div>
+<div class="header-box">13</div>
+<div class="header-box">14</div>
+<div class="header-box">15</div>
+<div class="header-box">16</div>
+<div class="header-box">17</div>
+<div class="header-box">18</div>
+
+<div class="header-box total-box">IN</div>
+
+<div class="header-box total-box">TOT</div>
+
+</div>
+
+<div class="row" id="chip1">
+
+<input class="player-name" id="chipName1" readonly>
+
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+
+<input class="hole-box total-box" readonly>
+
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+
+<input class="hole-box total-box" readonly>
+
+<input class="hole-box total-box" readonly>
+
+</div>
+
+<div class="row" id="chip2">
+
+<input class="player-name" id="chipName2" readonly>
+
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+
+<input class="hole-box total-box" readonly>
+
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+
+<input class="hole-box total-box" readonly>
+
+<input class="hole-box total-box" readonly>
+
+</div>    
+<div class="row" id="chip3">
+
+<input class="player-name" id="chipName3" readonly>
+
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+
+<input class="hole-box total-box" readonly>
+
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+
+<input class="hole-box total-box" readonly>
+
+<input class="hole-box total-box" readonly>
+
+</div>
+
+<div class="row" id="chip4">
+
+<input class="player-name" id="chipName4" readonly>
+
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+
+<input class="hole-box total-box" readonly>
+
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+<input class="hole-box chipbox">
+
+<input class="hole-box total-box" readonly>
+
+<input class="hole-box total-box" readonly>
+
+</div>
+
+</div>
+
+</div>
 
 
 <script>
@@ -665,7 +831,63 @@ boxes[20].value = (out + inn) || "";
 });
 
 }
+<script>
+function updateChipsTotals(){
 
+["chip1","chip2","chip3","chip4"].forEach(function(id){
+
+const boxes=document.querySelectorAll("#"+id+" .hole-box");
+
+let out=0;
+let inn=0;
+
+for(let i=0;i<=8;i++){
+out+=parseInt(boxes[i].value)||0;
+}
+
+for(let i=10;i<=18;i++){
+inn+=parseInt(boxes[i].value)||0;
+}
+
+boxes[9].value=out||"";
+boxes[19].value=inn||"";
+boxes[20].value=(out+inn)||"";
+
+});
+
+}
+
+function updateChipNames(){
+
+document.getElementById("chipName1").value=document.getElementById("name1").value;
+document.getElementById("chipName2").value=document.getElementById("name2").value;
+document.getElementById("chipName3").value=document.getElementById("name3").value;
+document.getElementById("chipName4").value=document.getElementById("name4").value;
+
+}
+
+document.querySelectorAll(".chipbox").forEach(function(box){
+
+box.addEventListener("input",function(){
+
+updateChipsTotals();
+
+});
+
+});
+
+document.querySelectorAll(".player-input").forEach(function(box){
+
+box.addEventListener("input",function(){
+
+updateChipNames();
+
+});
+
+});
+
+updateChipNames();
+updateChipsTotals();
     function updateLeftRightTotals() {
 
 ["lr1","lr2","lr3","lr4"].forEach(function(id){
