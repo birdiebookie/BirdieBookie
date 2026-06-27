@@ -262,8 +262,6 @@
     };
 
     recognition.onend = function() {
-      buffer = '';
-      processing = false;
       setTimeout(() => {
         try { recognition.start(); } catch(e) {}
       }, 500);
