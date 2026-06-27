@@ -256,9 +256,7 @@
 
     recognition.onerror = function (e) {
       console.warn('BirdieBookie Voice error:', e.error);
-      if (e.error !== 'no-speech') {
-        setTimeout(() => recognition.start(), 1000);
-      }
+     
     };
 
     recognition.onend = function () {
