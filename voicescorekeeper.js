@@ -111,7 +111,7 @@
 
     console.log('Processing:', lower);
 
-    const holeMatch = lower.match(/(?:hole|whole|coal|roll|goal|all)\s+(\w+)/);
+    const holeMatch = lower.match(/(?:hole|whole|coal|roll|goal|all|old)\s+(\w+)/);
     if (!holeMatch) {
       await speak('I did not catch the hole number. Please try again.');
       return;
@@ -125,10 +125,18 @@
 
     const scores = {};
     for (let i = 0; i < names.length; i++) {
+      const nameAliases = {
+        'sonny': ['sonny','sunny','sony','soni','sunni'],
+      };
       const name = names[i];
-      const escapedName = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const regex = new RegExp(escapedName + '[\\s,]+([\\w]+)', 'i');
-      const match = lower.match(regex);
+      const aliases = nameAliases[name] || [name];
+     let match = null;
+      for (const alias of aliases) {
+        const escaped = alias.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const r = new RegExp(escaped + '[\\s,]+([\\w]+)', 'i');
+        match = lower.match(r);
+        if (match) break;
+      }
       if (match) {
         const score = parseNumber(match[1]);
         if (!isNaN(score)) scores[i] = score;
@@ -193,7 +201,8 @@
         t.includes('birdiebookie') || 
         t.includes('birdie bookie') || 
         t.includes('birdie rookie') ||
-        t.includes('birdie cookie')
+        t.includes('birdie cookie') ||
+        t.includes('birdie boogie')
       );
 
       const hasEnter = transcripts.some(t => 
