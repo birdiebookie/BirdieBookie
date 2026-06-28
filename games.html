@@ -411,73 +411,42 @@ START ROUND
 
 
 <script>
+localStorage.removeItem("selectedGames");
+
 document.querySelectorAll('.game-select input').forEach(box => {
   box.addEventListener('change', function() {
-
     const card = this.closest('.game-card');
+    const game = card.querySelector('h2').innerText.trim();
+    let selectedGames = JSON.parse(localStorage.getItem("selectedGames")) || [];
 
     if (this.checked) {
       card.style.border = '3px solid #00ff99';
       card.style.boxShadow = '0 0 20px #00ff99';
-
-      const game = card.querySelector('h2').innerText;
-
-let selectedGames =
-JSON.parse(localStorage.getItem("selectedGames")) || [];
-
-selectedGames =
-selectedGames.filter(g => g !== game);
-
-selectedGames.push(game);
-
-localStorage.setItem(
-    "selectedGames",
-    JSON.stringify(selectedGames)
-);
+      if (!selectedGames.includes(game)) selectedGames.push(game);
     } else {
-  card.style.border = '2px solid #00ff99';
-  card.style.boxShadow = 'none';
+      card.style.border = '2px solid #00ff99';
+      card.style.boxShadow = 'none';
+      selectedGames = selectedGames.filter(g => g !== game);
+    }
 
-  const game = card.querySelector('h2').innerText;
-
-  let selectedGames =
-  JSON.parse(localStorage.getItem("selectedGames")) || [];
-
-  selectedGames =
-  selectedGames.filter(g => g !== game);
-
-  localStorage.setItem(
-      "selectedGames",
-      JSON.stringify(selectedGames)
-  );
-}
+    localStorage.setItem("selectedGames", JSON.stringify(selectedGames));
   });
 });
-    document.getElementById("startRoundBtn")
-.addEventListener("click", function(){
 
-let games =
-JSON.parse(localStorage.getItem("selectedGames")) || [];
+document.getElementById("startRoundBtn").addEventListener("click", function() {
+  let games = JSON.parse(localStorage.getItem("selectedGames")) || [];
 
-if(games.length === 0){
+  if (games.length === 0) {
     alert("Please select at least one game.");
     return;
-}
+  }
 
-let msg =
-"Today's Games:\n\n" +
-games.join("\n");
+  let msg = "Today's Games:\n\n" + games.map(g => "• " + g).join("\n");
 
-if(confirm(msg)){
-    window.location.href =
-    "scorecards.html";
-}
-
+  if (confirm(msg)) {
+    window.location.href = "scorecards.html";
+  }
 });
-function startLeftRight(){
-    localStorage.setItem("leftRightActive","true");
-    alert("FUNCTION RUNNING");
-}
 </script>
 
 </body>
