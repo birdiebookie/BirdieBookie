@@ -419,6 +419,7 @@ body{
 Team Carryovers ON
 </label>
 </div>
+<div id="leftRightSection" style="display:none;">
 <h1 style="color:#00ff99;">LEFT RIGHT LEDGER</h1>
 
 <div class="scorecard" id="leftRightLedger">
@@ -506,7 +507,7 @@ Team Carryovers ON
 </div>
 
 </div>
-    
+</div>
 <div style="padding:30px;">
 
 <h1 style="color:#00ff99;">CHIPS / THANGS LEDGER</h1>
@@ -976,6 +977,9 @@ location.reload();
         tag.textContent = game;
         tagsDiv.appendChild(tag);
     });
+      if (savedGames.some(g => g.includes('Left Right'))) {
+    document.getElementById('leftRightSection').style.display = 'block';
+}
 </script>
 <script src="voicescorekeeper.js"></script>
 </body>
