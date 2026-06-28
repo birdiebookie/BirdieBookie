@@ -838,22 +838,23 @@ function updateChipsTotals() {
 
 ["chip1","chip2","chip3","chip4"].forEach(function(id){
 
-const boxes = document.querySelectorAll("#" + id + " .hole-box");
+const row = document.querySelector("#" + id);
+const chipboxes = Array.from(row.querySelectorAll(".chipbox"));
+const totals = Array.from(row.querySelectorAll(".total-box"));
 
 let out = 0;
 let inn = 0;
 
-for(let i = 1; i <= 9; i++){
-out += parseInt(boxes[i].value) || 0;
+for(let i = 0; i <= 8; i++){
+  out += parseInt(chipboxes[i].value) || 0;
+}
+for(let i = 9; i <= 17; i++){
+  inn += parseInt(chipboxes[i].value) || 0;
 }
 
-for(let i = 10; i <= 18; i++){
-inn += parseInt(boxes[i].value) || 0;
-}
-
-boxes[9].value = out || "";
-boxes[19].value = inn || "";
-boxes[20].value = (out + inn) || "";
+totals[0].value = out || "";
+totals[1].value = inn || "";
+totals[2].value = (out + inn) || "";
 
 });
 
