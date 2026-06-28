@@ -962,11 +962,20 @@ location.reload();
     }
 });
 </script>
-    <script>
+  <script>
     const savedCourse = localStorage.getItem('selectedCourse');
     if (savedCourse) {
         document.getElementById('courseNameDisplay').textContent = '📍 ' + savedCourse;
     }
+
+    const savedGames = JSON.parse(localStorage.getItem('selectedGames') || '[]');
+    const tagsDiv = document.getElementById('gameTagsDisplay');
+    savedGames.forEach(function(game) {
+        const tag = document.createElement('span');
+        tag.className = 'game-tag';
+        tag.textContent = game;
+        tagsDiv.appendChild(tag);
+    });
 </script>
 <script src="voicescorekeeper.js"></script>
 </body>
