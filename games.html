@@ -84,9 +84,13 @@ body{
 
 <div class="games-page">
 
-<h1 class="games-title">
-Featured Games
-</h1>
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:40px; flex-wrap:wrap; gap:20px;">
+<h1 class="games-title" style="margin:0;">Featured Games</h1>
+<div style="text-align:right;">
+<p style="color:#00ff99; font-size:18px; margin:0 0 10px 0;">Pick 1 or 2 games and tee it up!</p>
+<button id="startRoundBtn" style="background:#00ff99; color:black; font-size:24px; font-weight:bold; padding:15px 40px; border:none; border-radius:12px; cursor:pointer;">START ROUND</button>
+</div>
+</div>
 
 <div class="games-grid">
 
@@ -390,28 +394,13 @@ One golfer's score must count every hole, making consistency the key to winning.
 </p>
 
 </div> 
-    <div style="text-align:center;margin-top:40px;">
-
-<button id="startRoundBtn"
-style="
-background:#00ff99;
-color:black;
-font-size:24px;
-font-weight:bold;
-padding:15px 40px;
-border:none;
-border-radius:12px;
-cursor:pointer;
-">
-START ROUND
-</button>
-
-</div>
+  
 
 
 
 <script>
 localStorage.removeItem("selectedGames");
+    const MAX_GAMES = 2;
 
 document.querySelectorAll('.game-select input').forEach(box => {
   box.addEventListener('change', function() {
@@ -422,7 +411,14 @@ document.querySelectorAll('.game-select input').forEach(box => {
     if (this.checked) {
       card.style.border = '3px solid #00ff99';
       card.style.boxShadow = '0 0 20px #00ff99';
-      if (!selectedGames.includes(game)) selectedGames.push(game);
+      if (!selectedGames.includes(game)) {
+  if (selectedGames.length >= MAX_GAMES) {
+    alert("Maximum 2 games allowed! Uncheck one first.");
+    this.checked = false;
+    return;
+  }
+  selectedGames.push(game);
+}
     } else {
       card.style.border = '2px solid #00ff99';
       card.style.boxShadow = 'none';
