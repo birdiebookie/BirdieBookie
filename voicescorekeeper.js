@@ -123,14 +123,15 @@
       return;
     }
 
+    const nameAliases = {
+      'sonny': ['sonny','sunny','sony','soni','sunni'],
+    };
+
     const scores = {};
     for (let i = 0; i < names.length; i++) {
-      const nameAliases = {
-        'sonny': ['sonny','sunny','sony','soni','sunni'],
-      };
       const name = names[i];
       const aliases = nameAliases[name] || [name];
-     let match = null;
+      let match = null;
       for (const alias of aliases) {
         const escaped = alias.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         const r = new RegExp(escaped + '[\\s,]+([\\w]+)', 'i');
@@ -187,68 +188,66 @@
     let bufferTimer = null;
     let processing = false;
 
+    function resetState() {
+      buffer = '';
+      processing = false;
+      micIcon.style.display = 'none';
+      if (bufferTimer) clearTimeout(bufferTimer);
+      bufferTimer = null;
+    }
+
     recognition.onresult = async function(event) {
-      // Collect all alternatives for better matching
       const result = event.results[event.results.length - 1];
       let transcripts = [];
       for (let i = 0; i < result.length; i++) {
         transcripts.push(result[i].transcript.toLowerCase());
       }
       const transcript = transcripts[0];
-      console.log('Heard:', transcript, '| Alternatives:', transcripts.slice(1).join(' / '));
+      console.log('Heard:', transcript);
 
-      const hasTrigger = transcripts.some(t => 
-        t.includes('birdiebookie') || 
-        t.includes('birdie bookie') || 
+      const hasTrigger = transcripts.some(t =>
+        t.includes('birdiebookie') ||
+        t.includes('birdie bookie') ||
         t.includes('birdie rookie') ||
         t.includes('birdie cookie') ||
         t.includes('birdie boogie')
       );
 
-      const hasEnter = transcripts.some(t => 
-        t.includes('enter scores') || 
+      const hasEnter = transcripts.some(t =>
+        t.includes('enter scores') ||
         t.includes('enter score') ||
-        t.includes('and the scores') ||
         t.includes('enter')
       );
 
       if (hasTrigger) {
+        resetState();
         buffer = transcript;
         micIcon.style.display = 'block';
-        if (bufferTimer) clearTimeout(bufferTimer);
         bufferTimer = setTimeout(async () => {
           if (buffer && !processing) {
             processing = true;
             await processText(buffer, micIcon);
-            micIcon.style.display = 'none';
-            processing = false;
-            buffer = '';
+            resetState();
           }
         }, 4000);
         return;
       }
 
-      if (buffer) {
+      if (buffer && !processing) {
         buffer += ' ' + transcript;
         if (hasEnter) {
           if (bufferTimer) clearTimeout(bufferTimer);
-          if (!processing) {
-            processing = true;
-            micIcon.style.display = 'block';
-            await processText(buffer, micIcon);
-            micIcon.style.display = 'none';
-            processing = false;
-            buffer = '';
-          }
+          processing = true;
+          micIcon.style.display = 'block';
+          await processText(buffer, micIcon);
+          resetState();
         } else {
           if (bufferTimer) clearTimeout(bufferTimer);
           bufferTimer = setTimeout(async () => {
             if (buffer && !processing) {
               processing = true;
               await processText(buffer, micIcon);
-              micIcon.style.display = 'none';
-              processing = false;
-              buffer = '';
+              resetState();
             }
           }, 4000);
         }
@@ -257,11 +256,11 @@
 
     recognition.onerror = function(e) {
       console.warn('Voice error:', e.error);
-      micIcon.style.display = 'none';
-      processing = false;
+      resetState();
     };
 
     recognition.onend = function() {
+      resetState();
       setTimeout(() => {
         try { recognition.start(); } catch(e) {}
       }, 500);
