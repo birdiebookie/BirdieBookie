@@ -733,7 +733,9 @@ inn += parseInt(boxes[i].value) || 0;
 boxes[9].value = out || "";
 boxes[19].value = inn || "";
 boxes[20].value = (out + inn) || "";
- 
+    });
+
+}
 
 });
 
@@ -789,11 +791,31 @@ inn += parseInt(boxes[i].value) || 0;
 boxes[9].value = out || "";
 boxes[19].value = inn || "";
 boxes[20].value = (out + inn) || "";
-});
+
+
+["lr1","lr2","lr3","lr4"].forEach(function(id){
+
+const boxes = document.querySelectorAll("#" + id + " .hole-box");
+
+boxes.forEach(function(box){
+
+const value = parseInt(box.value);
+
+if(value > 0){
+box.style.color = "lime";
+}
+else if(value < 0){
+box.style.color = "red";
+}
+else{
+box.style.color = "white";
 }
 
+});
 
+});
 
+}
 document.querySelectorAll(".hole-box")
 .forEach(function(box){
 
