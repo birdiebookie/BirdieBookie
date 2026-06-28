@@ -858,6 +858,11 @@ checkSkins();
 colorLeftRight();
     updateLeftRightTotals();
 });
+    document.querySelectorAll(".chipbox").forEach(function(box){
+box.addEventListener("input", function(){
+updateChipsTotals();
+});
+});
 
 });
 
