@@ -833,11 +833,6 @@ inn += parseInt(boxes[i].value) || 0;
 
 }
 
-boxes[9].value = out || "";
-boxes[19].value = inn || "";
-boxes[20].value = (out + inn) || "";
-
-
 function updateChipsTotals() {
   ["chip1","chip2","chip3","chip4"].forEach(function(id){
     const row = document.querySelector("#" + id);
