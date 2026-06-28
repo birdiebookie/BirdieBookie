@@ -149,7 +149,21 @@ body{
     cursor:pointer;
     margin-left:20px;
 }
+.junk-btn {
+    background: #111;
+    border: 2px solid #00ff99;
+    color: #00ff99;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+}
 
+.active-junk {
+    background: #00ff99;
+    color: black;
+}
 #resultsBtn {
     width: 200px;
     height: 80px;
@@ -509,6 +523,22 @@ Team Carryovers ON
 </div>
 </div>
 <div style="padding:30px;">
+
+<h1 style="color:#00ff99;">JUNK GAMES</h1>
+
+<div id="junkGamesBar" style="display:flex; flex-wrap:wrap; gap:12px; margin-bottom:24px; padding:0 10px;">
+
+  <div class="junk-btn active-junk" onclick="toggleJunk(this)" data-game="Greenies">🟢 Greenies</div>
+  <div class="junk-btn active-junk" onclick="toggleJunk(this)" data-game="Snakes">🐍 Snakes</div>
+  <div class="junk-btn" onclick="toggleJunk(this)" data-game="Birdies">🐦 Birdies</div>
+  <div class="junk-btn" onclick="toggleJunk(this)" data-game="Polies">🏌️ Polies</div>
+  <div class="junk-btn" onclick="toggleJunk(this)" data-game="Sandies">⛱️ Sandies</div>
+  <div class="junk-btn" onclick="toggleJunk(this)" data-game="Barkies">🌳 Barkies</div>
+  <div class="junk-btn" onclick="toggleJunk(this)" data-game="Fairways">🎯 Fairways</div>
+  <div class="junk-btn" onclick="toggleJunk(this)" data-game="Chip-ins">⛳ Chip-ins</div>
+  <div class="junk-btn" onclick="toggleJunk(this)" data-game="Demons">😈 Demons</div>
+
+</div>
 
 <h1 style="color:#00ff99;">CHIPS / THANGS LEDGER</h1>
 
@@ -980,7 +1010,17 @@ location.reload();
       if (savedGames.some(g => g.includes('Left Right'))) {
     document.getElementById('leftRightSection').style.display = 'block';
 }
-</script>
+function toggleJunk(el) {
+    el.classList.toggle('active-junk');
+    if (el.classList.contains('active-junk')) {
+        el.style.background = '#00ff99';
+        el.style.color = 'black';
+    } else {
+        el.style.background = '#111';
+        el.style.color = '#00ff99';
+    }
+}
+  </script>
 <script src="voicescorekeeper.js"></script>
 </body>
 </html>a
