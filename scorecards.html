@@ -536,7 +536,7 @@ Team Carryovers ON
 <div class="header-box total-box">TOT</div>
 </div>
 
-</div>
+
 
 <div class="row" id="chip1">
 <input class="player-name" id="chipName1" readonly>
@@ -762,10 +762,14 @@ inn += parseInt(boxes[i].value) || 0;
 boxes[9].value = out || "";
 boxes[19].value = inn || "";
 boxes[20].value = (out + inn) || "";
+    });
+
+}
 
 
 function updateChipsTotals() {
 
+    
 ["chip1","chip2","chip3","chip4"].forEach(function(id){
 
 const boxes = document.querySelectorAll("#" + id + " .hole-box");
