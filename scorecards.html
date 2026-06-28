@@ -859,10 +859,14 @@ updateChipsTotals();
 });
 
 });
-document.querySelectorAll(".chipbox").forEach(function(box){
-box.addEventListener("input", function(){
-updateChipsTotals();
-});
+ddocument.querySelectorAll(".chipbox").forEach(function(box){
+
+    box.addEventListener("input", function(){
+
+        updateChipsTotals();
+
+    });
+
 });
 updateTeamTotals();
 updatePlayerTotals();
