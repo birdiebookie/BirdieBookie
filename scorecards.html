@@ -1072,7 +1072,43 @@ function updateNames() {
     if (g9Name3) g9Name3.value = names[2];
 
 }
+// =================== NASSAU ===================
 
+function updateNassau() {
+
+    const p1 = document.querySelectorAll("#player1 .hole-box");
+    const p2 = document.querySelectorAll("#player2 .hole-box");
+
+    let front1 = 0;
+    let front2 = 0;
+    let back1 = 0;
+    let back2 = 0;
+
+    for (let i = 0; i < 9; i++) {
+        front1 += parseInt(p1[i].value) || 0;
+        front2 += parseInt(p2[i].value) || 0;
+    }
+
+    for (let i = 10; i <= 18; i++) {
+        back1 += parseInt(p1[i].value) || 0;
+        back2 += parseInt(p2[i].value) || 0;
+    }
+
+    document.getElementById("nassauP1").textContent =
+        document.getElementById("name1").value || "Player 1";
+
+    document.getElementById("nassauP2").textContent =
+        document.getElementById("name2").value || "Player 2";
+
+    document.getElementById("nassauFront1").value = front1;
+    document.getElementById("nassauFront2").value = front2;
+
+    document.getElementById("nassauBack1").value = back1;
+    document.getElementById("nassauBack2").value = back2;
+
+    document.getElementById("nassauTotal1").value = front1 + back1;
+    document.getElementById("nassauTotal2").value = front2 + back2;
+}
     
 function scoreGameOf9(a, b, c) {
 
@@ -1139,6 +1175,7 @@ function scoreGameOf9(a, b, c) {
         colorLeftRight();
         updateLeftRightTotals();
         updateGameOf9();
+        updateNassau();
     });
 });
 function updateGameOf9() {
