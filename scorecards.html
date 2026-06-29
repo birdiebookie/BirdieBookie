@@ -1229,7 +1229,53 @@ function togglePress(side) {
 function getNassauScore(p1boxes, p2boxes, p3boxes, p4boxes, holeIndex) {
     const s1 = parseInt(p1boxes[holeIndex].value) || 0;
     const s2 = parseInt(p2boxes[holeIndex].value) || 0;
-    const s3 = parseInt(p3boxes
+    const s3 = parseInt(p3boxes[holeIndex].value) || 0;
+    const s4 = parseInt(p4boxes[holeIndex].value) || 0;
+    const hasA = p1boxes[holeIndex].value !== '' || p2boxes[holeIndex].value !== '';
+    const hasB = p3boxes[holeIndex].value !== '' || p4boxes[holeIndex].value !== '';
+    if (!hasA && !hasB) return null;
+    let teamA, teamB;
+    if (nassauBestBall) {
+        teamA = Math.min(s1 || 99, s2 || 99);
+        teamB = Math.min(s3 || 99, s4 || 99);
+    } else {
+        teamA = (s1 || 0) + (s2 || 0);
+        teamB = (s3 || 0) + (s4 || 0);
+    }
+    return { teamA, teamB };
+}
+
+function matchStatus(wins, losses, holesLeft) {
+    const diff = wins - losses;
+    if (diff === 0) return 'AS';
+    const leader = diff > 0 ? 'A' : 'B';
+    const margin = Math.abs(diff);
+    if (margin > holesLeft) return leader + ' wins ' + margin + '&' + (margin - holesLeft - 1);
+    if (margin === holesLeft) return '⚠️ DORMIE ' + leader;
+    return leader + ' ' + margin + ' UP';
+}
+
+function updateNassau() {
+    const p1boxes = document.querySelectorAll('#player1 .hole-box');
+    const p2boxes = document.querySelectorAll('#player2 .hole-box');
+    const p3boxes = document.querySelectorAll('#player3 .hole-box');
+    const p4boxes = document.querySelectorAll('#player4 .hole-box');
+
+    const n1 = document.getElementById('name1').value || 'P1';
+    const n2 = document.getElementById('name2').value || 'P2';
+    const n3 = document.getElementById('name3').value || 'P3';
+    const n4 = document.getElementById('name4').value || 'P4';
+    document.getElementById('ntNameA').textContent = n1 + ' & ' + n2;
+    document.getElementById('ntNameB').textContent = n3 + ' & ' + n4;
+
+    const holeMap = [0,1,2,3,4,5,6,7,8,10,11,12,13,14,15,16,17,18];
+
+    let frontWinsA = 0, frontWinsB = 0, frontPlayed = 0;
+    let backWinsA = 0, backWinsB = 0, backPlayed = 0;
+
+    const hdr7 = document.getElementById('ntHdr7');
+    const hdr16 = document.getElementById('ntHdr16');
+    if (hdr7) {
 
     if (a === "" || b === "" || c === "") return ["","",""];
 
