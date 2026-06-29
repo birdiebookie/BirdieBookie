@@ -752,7 +752,38 @@ POINTS
   <div id="chipAmountDisplay" style="margin-top:10px; color:#ffdd44; font-size:1em; font-weight:bold; min-height:20px;"></div>
 </div>
 <!-- END CHIP AMOUNT SELECTOR -->
-    <h1 style="color:#00ff99;">JUNK GAMES</h1>
+        
+<h1 style="color:#00ff99;">JUNK GAMES</h1>
+<!-- ===================== NASSAU ===================== -->
+
+<h1 style="color:#00ff99;">NASSAU</h1>
+
+<div id="nassauSection" style="margin-bottom:24px;">
+
+  <div class="row">
+    <div class="player-name">Player</div>
+    <div class="header-box">Front</div>
+    <div class="header-box">Back</div>
+    <div class="header-box">18</div>
+  </div>
+
+  <div class="row">
+    <div class="player-name" id="nassauP1">Player 1</div>
+    <input class="hole-box" id="nassauFront1" readonly>
+    <input class="hole-box" id="nassauBack1" readonly>
+    <input class="hole-box" id="nassauTotal1" readonly>
+  </div>
+
+  <div class="row">
+    <div class="player-name" id="nassauP2">Player 2</div>
+    <input class="hole-box" id="nassauFront2" readonly>
+    <input class="hole-box" id="nassauBack2" readonly>
+    <input class="hole-box" id="nassauTotal2" readonly>
+  </div>
+
+</div>
+
+<!-- =================== END NASSAU =================== -->
 
 <div id="junkGamesBar" style="display:flex; flex-wrap:wrap; gap:12px; margin-bottom:24px; padding:0 10px;">
 
@@ -1042,6 +1073,7 @@ function updateNames() {
 
 }
 
+    
 function scoreGameOf9(a, b, c) {
 
     if (a === "" || b === "" || c === "") return ["","",""];
