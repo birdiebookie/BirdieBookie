@@ -49,7 +49,7 @@ label{
     margin-bottom:6px;
 }
 
-input{
+input[type="text"]{
     width:100%;
     padding:12px;
     border-radius:8px;
@@ -77,9 +77,38 @@ input{
     font-weight:bold;
 }
 
-.check{
-    font-size:22px;
+/* TOGGLE BUTTON STYLES */
+.toggle-row {
+    display:flex;
+    align-items:center;
+    gap:18px;
     margin:24px 0;
+    cursor:pointer;
+}
+
+.toggle-box {
+    width:60px;
+    height:60px;
+    border-radius:12px;
+    border:3px solid #00ff99;
+    background:#111;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:32px;
+    flex-shrink:0;
+    transition: background 0.2s;
+}
+
+.toggle-box.on {
+    background:#00ff99;
+    color:#000;
+}
+
+.toggle-label {
+    font-size:28px;
+    font-weight:bold;
+    color:#00ff99;
 }
 
 #extra{
@@ -96,15 +125,9 @@ button{
     border:none;
     border-radius:12px;
     cursor:pointer;
+    margin-top:10px;
 }
 </style>
-
-<script>
-function toggleExtra(cb){
-    document.getElementById("extra").style.display =
-        cb.checked ? "block" : "none";
-}
-</script>
 
 </head>
 
@@ -118,202 +141,112 @@ function toggleExtra(cb){
 
 <div class="panel">
 <h2>HOST INFORMATION</h2>
-
 <label>Host Name</label>
-<input type="text">
-
+<input type="text" id="hostName">
 </div>
 
 <div class="panel">
-
 <h2>ROUND INFORMATION</h2>
-
 <label>Course</label>
-<input type="text">
-
+<input type="text" id="courseName">
 </div>
 
 <div class="panel">
-
 <h2>GAMES</h2>
-
 <label>Selected Games</label>
-<input type="text" readonly>
-
+<input type="text" id="selectedGames" readonly>
 </div>
 
 </div>
-<div class="playerRow">
-
-<div class="playerTitle">
-PLAYER 1
-</div>
-
-<div>
-<label>Name</label>
-<input type="text">
-</div>
-
-<div>
-<label>Phone Number</label>
-<input type="text">
-</div>
-
-</div>
-
 
 <div class="playerRow">
-
-<div class="playerTitle">
-PLAYER 2
+<div class="playerTitle">PLAYER 1</div>
+<div><label>Name</label><input type="text"></div>
+<div><label>Phone Number</label><input type="text"></div>
 </div>
-
-<div>
-<label>Name</label>
-<input type="text">
-</div>
-
-<div>
-<label>Phone Number</label>
-<input type="text">
-</div>
-
-</div>
-
 
 <div class="playerRow">
-
-<div class="playerTitle">
-PLAYER 3
+<div class="playerTitle">PLAYER 2</div>
+<div><label>Name</label><input type="text"></div>
+<div><label>Phone Number</label><input type="text"></div>
 </div>
 
-<div>
-<label>Name</label>
-<input type="text">
+<div class="playerRow">
+<div class="playerTitle">PLAYER 3</div>
+<div><label>Name</label><input type="text"></div>
+<div><label>Phone Number</label><input type="text"></div>
 </div>
 
-<div>
-<label>Phone Number</label>
-<input type="text">
+<!-- ADD GOLFERS TOGGLE -->
+<div class="toggle-row" onclick="toggleExtra()">
+    <div class="toggle-box" id="extraBox">＋</div>
+    <div class="toggle-label">Add Golfers 4–7</div>
 </div>
-
-</div>
-
-
-<div class="check">
-
-<label>
-
-<input
-type="checkbox"
-onchange="toggleExtra(this)">
-
-Add Golfers 4–7
-
-</label>
-
-</div>
-
 
 <div id="extra">
-
+<div class="playerRow">
+<div class="playerTitle">PLAYER 4</div>
+<div><label>Name</label><input type="text"></div>
+<div><label>Phone Number</label><input type="text"></div>
+</div>
 
 <div class="playerRow">
-
-<div class="playerTitle">
-PLAYER 4
+<div class="playerTitle">PLAYER 5</div>
+<div><label>Name</label><input type="text"></div>
+<div><label>Phone Number</label><input type="text"></div>
 </div>
-
-<div>
-<label>Name</label>
-<input type="text">
-</div>
-
-<div>
-<label>Phone Number</label>
-<input type="text">
-</div>
-
-</div>
-
 
 <div class="playerRow">
-
-<div class="playerTitle">
-PLAYER 5
+<div class="playerTitle">PLAYER 6</div>
+<div><label>Name</label><input type="text"></div>
+<div><label>Phone Number</label><input type="text"></div>
 </div>
-
-<div>
-<label>Name</label>
-<input type="text">
-</div>
-
-<div>
-<label>Phone Number</label>
-<input type="text">
-</div>
-
-</div>
-<div class="playerRow">
-
-<div class="playerTitle">
-PLAYER 6
-</div>
-
-<div>
-<label>Name</label>
-<input type="text">
-</div>
-
-<div>
-<label>Phone Number</label>
-<input type="text">
-</div>
-
-</div>
-
 
 <div class="playerRow">
-
-<div class="playerTitle">
-PLAYER 7
+<div class="playerTitle">PLAYER 7</div>
+<div><label>Name</label><input type="text"></div>
+<div><label>Phone Number</label><input type="text"></div>
+</div>
 </div>
 
-<div>
-<label>Name</label>
-<input type="text">
+<!-- REMEMBER GOLFERS TOGGLE -->
+<div class="toggle-row" onclick="toggleRemember()">
+    <div class="toggle-box" id="rememberBox">＋</div>
+    <div class="toggle-label">Remember These Golfers</div>
 </div>
 
-<div>
-<label>Phone Number</label>
-<input type="text">
-</div>
-
-</div>
+<button>SEND INVITES</button>
 
 </div>
 
+<script>
+// Auto-populate Selected Games from localStorage
+window.addEventListener("DOMContentLoaded", function() {
+    const savedGames = JSON.parse(localStorage.getItem("selectedGames") || "[]");
+    if (savedGames.length > 0) {
+        document.getElementById("selectedGames").value = savedGames.join(", ");
+    }
 
-<div class="check">
+    const savedCourse = localStorage.getItem("selectedCourse");
+    if (savedCourse) {
+        document.getElementById("courseName").value = savedCourse;
+    }
+});
 
-<label>
+function toggleExtra() {
+    const box = document.getElementById("extraBox");
+    const extra = document.getElementById("extra");
+    const isOn = box.classList.toggle("on");
+    box.textContent = isOn ? "✓" : "＋";
+    extra.style.display = isOn ? "block" : "none";
+}
 
-<input type="checkbox">
+function toggleRemember() {
+    const box = document.getElementById("rememberBox");
+    const isOn = box.classList.toggle("on");
+    box.textContent = isOn ? "✓" : "＋";
+}
+</script>
 
-Remember These Golfers
-
-</label>
-
-</div>
-
-
-<button>
-
-SEND INVITES
-
-</button>
-
-
-</div>
 </body>
 </html>
