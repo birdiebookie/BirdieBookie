@@ -713,8 +713,47 @@ POINTS
 </div>
     <div style="padding:30px;">
 
-<
+<!-- CHIP AMOUNT SELECTOR -->
+<div id="chipSelector" style="margin-bottom:18px; padding:10px;">
+  <div style="color:#00ff99; font-size:1.1em; font-weight:bold; margin-bottom:10px; letter-spacing:1px;">🎰 SELECT CHIP AMOUNT (applies to all junk games)</div>
+  <div style="display:flex; flex-wrap:wrap; gap:16px; align-items:center;">
+
+    <label style="display:flex; flex-direction:column; align-items:center; cursor:pointer; gap:6px;">
+      <input type="radio" name="chipAmount" value="0.50" style="accent-color:#00ff99;" onchange="setChipAmount(this.value)">
+      <div style="width:54px; height:54px; border-radius:50%; background:radial-gradient(circle at 35% 35%, #fff, #aaa); border:5px dashed #555; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:0.72em; color:#222; box-shadow:0 3px 8px #0008;">50¢</div>
+    </label>
+
+    <label style="display:flex; flex-direction:column; align-items:center; cursor:pointer; gap:6px;">
+      <input type="radio" name="chipAmount" value="1.00" style="accent-color:#00ff99;" onchange="setChipAmount(this.value)">
+      <div style="width:54px; height:54px; border-radius:50%; background:radial-gradient(circle at 35% 35%, #ff6b6b, #aa0000); border:5px dashed #fff; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:0.78em; color:#fff; box-shadow:0 3px 8px #0008;">$1</div>
+    </label>
+
+    <label style="display:flex; flex-direction:column; align-items:center; cursor:pointer; gap:6px;">
+      <input type="radio" name="chipAmount" value="5.00" style="accent-color:#00ff99;" onchange="setChipAmount(this.value)">
+      <div style="width:54px; height:54px; border-radius:50%; background:radial-gradient(circle at 35% 35%, #66ee66, #006600); border:5px dashed #fff; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:0.78em; color:#fff; box-shadow:0 3px 8px #0008;">$5</div>
+    </label>
+
+    <label style="display:flex; flex-direction:column; align-items:center; cursor:pointer; gap:6px;">
+      <input type="radio" name="chipAmount" value="10.00" style="accent-color:#00ff99;" onchange="setChipAmount(this.value)">
+      <div style="width:54px; height:54px; border-radius:50%; background:radial-gradient(circle at 35% 35%, #6699ff, #0000cc); border:5px dashed #fff; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:0.78em; color:#fff; box-shadow:0 3px 8px #0008;">$10</div>
+    </label>
+
+    <label style="display:flex; flex-direction:column; align-items:center; cursor:pointer; gap:6px;">
+      <input type="radio" name="chipAmount" value="20.00" style="accent-color:#00ff99;" onchange="setChipAmount(this.value)">
+      <div style="width:54px; height:54px; border-radius:50%; background:radial-gradient(circle at 35% 35%, #cc66ff, #660099); border:5px dashed #fff; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:0.78em; color:#fff; box-shadow:0 3px 8px #0008;">$20</div>
+    </label>
+
+    <label style="display:flex; flex-direction:column; align-items:center; cursor:pointer; gap:6px;">
+      <input type="radio" name="chipAmount" value="100.00" style="accent-color:#00ff99;" onchange="setChipAmount(this.value)">
+      <div style="width:54px; height:54px; border-radius:50%; background:radial-gradient(circle at 35% 35%, #ffdd44, #aa7700); border:5px dashed #fff; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:0.78em; color:#222; box-shadow:0 3px 8px #0008;">$100</div>
+    </label>
+
+  </div>
+  <div id="chipAmountDisplay" style="margin-top:10px; color:#ffdd44; font-size:1em; font-weight:bold; min-height:20px;"></div>
+</div>
+<!-- END CHIP AMOUNT SELECTOR -->
         
+<h1 style="color:#00ff99;">JUNK GAMES</h1>
 <!-- ===================== NASSAU MATCH TRACKER ===================== -->
 
 <div id="nassauMatchSection" style="display:block; margin-top:30px;">
@@ -1178,9 +1217,10 @@ let nassauPressActive = { front: false, back: false };
 
 function selectNassauChip(val, el) {
     nassauChipValue = val;
-document.querySelectorAll('.nt-chip').forEach(c => c.classList.remove('selected'));
-el.classList.add('selected');
-updateNassau();
+    document.querySelectorAll('.nt-chip').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    document.getElementById('ntChipDisplay').textContent = '✅ Bet: $' + val + ' per 9 | $' + (val * 3) + ' total';
+    updateNassau();
 }
 
 function toggleNassauBestBall() {
@@ -1300,7 +1340,17 @@ function updateNassau() {
     const ntBIn = document.getElementById('ntBIn');
     const ntATot = document.getElementById('ntATot');
     const ntBTot =
-   
+   document.querySelectorAll(".hole-box").forEach(function(box) {
+    box.addEventListener("input", function() {
+        updatePlayerTotals();
+updateTeamTotals();
+updateLeftRightTotals();
+updateChipsTotals();
+checkSkins();
+updateNames();
+updateNassau();
+
+}); // end DOMContentLoaded
 
     updateNames();
 
@@ -1365,14 +1415,7 @@ document.querySelectorAll(".player-input").forEach(function(box) {
 document.querySelectorAll(".chipbox").forEach(function(box) {
     box.addEventListener("input", updateChipsTotals);
 });
-document.querySelectorAll("#player1 .hole-box, #player2 .hole-box, #player3 .hole-box, #player4 .hole-box").forEach(function(box) {
-    box.addEventListener("input", function() {
-        updatePlayerTotals();
-        updateTeamTotals();
-        checkSkins();
-        updateNassau();
-    });
-});
+
 ['1','2','3','4'].forEach(function(n) {
     var src = document.getElementById('name' + n);
     var dst = document.getElementById('lrName' + n);
@@ -1493,51 +1536,6 @@ function setChipAmount(val) {
 }
   </script>
 <script src="voicescorekeeper.js"></script>
-<script>
-const savedCourse = localStorage.getItem('selectedCourse');
-if (savedCourse) {
-    document.getElementById('courseNameDisplay').textContent = '📍 ' + savedCourse;
-}
-
-const savedGames = JSON.parse(localStorage.getItem('selectedGames') || '[]');
-const tagsDiv = document.getElementById('gameTagsDisplay');
-
-savedGames.forEach(function(game) {
-    const tag = document.createElement('span');
-    tag.className = 'game-tag';
-    tag.textContent = game;
-    tagsDiv.appendChild(tag);
-});
-
-if (savedGames.some(g => g.includes('Left Right'))) {
-    document.getElementById('leftRightSection').style.display = 'block';
-}
-
-if (savedGames.some(g => g.includes('Game of 9'))) {
-    document.getElementById('gameOf9Section').style.display = 'block';
-    document.getElementById('player4').style.display = 'none';
-    document.getElementById('total12').style.display = 'none';
-    document.getElementById('total34').style.display = 'none';
-}
-
-let selectedChipAmount = 0;
-
-function setChipAmount(val) {
-    selectedChipAmount = parseFloat(val);
-    document.getElementById('chipAmountDisplay').textContent =
-        '✅ Chip value set: $' + selectedChipAmount.toFixed(2) + ' per junk game';
-}
-
-function toggleJunk(el) {
-    el.classList.toggle('active-junk');
-    if (el.classList.contains('active-junk')) {
-        el.style.background = '#00ff99';
-        el.style.color = 'black';
-    } else {
-        el.style.background = '#111';
-        el.style.color = '#00ff99';
-    }
-}
-</script>
 </body>
 </html>a
+        
