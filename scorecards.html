@@ -1109,61 +1109,7 @@ function scoreGameOf9(a, b, c) {
         updateGameOf9();
     });
 });
-function updateGameOf9() {
 
-    updateNames();
-
-    const rows = [
-        document.querySelectorAll("#player1 .hole-box"),
-        document.querySelectorAll("#player2 .hole-box"),
-        document.querySelectorAll("#player3 .hole-box")
-    ];
-
-    const g9rows = [
-        document.querySelectorAll("#g9row1 .g9box"),
-        document.querySelectorAll("#g9row2 .g9box"),
-        document.querySelectorAll("#g9row3 .g9box")
-    ];
-
-    const outBoxes = document.querySelectorAll(".g9Out");
-    const inBoxes  = document.querySelectorAll(".g9In");
-    const totBoxes = document.querySelectorAll(".g9Tot");
-
-    let totals = [0,0,0];
-    let out = [0,0,0];
-    let inn = [0,0,0];
-
-    for (let hole = 0; hole < 18; hole++) {
-
-        let idx = hole < 9 ? hole : hole + 1;
-
-        const result = scoreGameOf9(
-            rows[0][idx].value,
-            rows[1][idx].value,
-            rows[2][idx].value
-        );
-
-        for (let p = 0; p < 3; p++) {
-
-            g9rows[p][hole].value = result[p];
-
-            const pts = parseInt(result[p]) || 0;
-
-            totals[p] += pts;
-
-            if (hole < 9)
-                out[p] += pts;
-            else
-                inn[p] += pts;
-        }
-    }
-
-    for (let p = 0; p < 3; p++) {
-        outBoxes[p].value = out[p];
-        inBoxes[p].value = inn[p];
-        totBoxes[p].value = totals[p];
-    }
-}
 document.querySelectorAll(".player-input").forEach(function(box) {
     box.addEventListener("input", updateNames);
 });
