@@ -1331,15 +1331,14 @@ function updateNassau() {
    document.querySelectorAll(".hole-box").forEach(function(box) {
     box.addEventListener("input", function() {
         updatePlayerTotals();
-        updateTeamTotals();
-        checkSkins();
-        colorLeftRight();
-        updateLeftRightTotals();
-        updateGameOf9();
-        updateNassau();
-    });
-});
-function updateGameOf9() {
+updateTeamTotals();
+updateLeftRightTotals();
+updateChipsTotals();
+checkSkins();
+updateNames();
+updateNassau();
+
+}); // end DOMContentLoaded
 
     updateNames();
 
