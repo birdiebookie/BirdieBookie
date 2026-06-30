@@ -754,36 +754,161 @@ POINTS
 <!-- END CHIP AMOUNT SELECTOR -->
         
 <h1 style="color:#00ff99;">JUNK GAMES</h1>
-<!-- ===================== NASSAU ===================== -->
+<!-- ===================== NASSAU MATCH TRACKER ===================== -->
 
-<h1 style="color:#00ff99;">NASSAU</h1>
+<div id="nassauMatchSection" style="display:block; margin-top:30px;">
 
-<div id="nassauSection" style="margin-bottom:24px;">
+<h1 style="color:#00ff99; text-align:center;">🏆 NASSAU MATCH TRACKER</h1>
 
-  <div class="row">
-    <div class="player-name">Player</div>
-    <div class="header-box">Front</div>
-    <div class="header-box">Back</div>
-    <div class="header-box">18</div>
-  </div>
+<style>
+.nt-wrap { overflow-x:auto; width:100%; }
+.nt-row { display:flex; align-items:center; margin-bottom:8px; }
+.nt-label { width:120px; min-width:80px; font-size:17px; color:#00ff99; font-weight:bold; }
+.nt-box {
+  width:55px; height:55px; margin-right:5px; border-radius:10px;
+  border:2px solid #00ff99; background:#111; color:white;
+  text-align:center; font-size:18px; line-height:55px;
+  display:flex; align-items:center; justify-content:center; font-weight:bold;
+}
+.nt-hdr { background:#00ff99; color:black; }
+.nt-win  { background:#00ff99 !important; color:black !important; }
+.nt-lose { background:#cc0000 !important; color:white !important; }
+.nt-tie  { background:#555 !important; color:white !important; }
+.nt-press-hole { background:#7b2fff !important; color:white !important; border-color:#7b2fff !important; }
+.nt-status-bar {
+  background:rgba(0,255,153,0.08); border:2px solid #00ff99;
+  border-radius:16px; padding:20px 28px; margin:18px 0;
+  display:flex; flex-wrap:wrap; gap:24px; justify-content:center; align-items:center;
+}
+.nt-status-item { text-align:center; }
+.nt-status-label { color:#aaa; font-size:13px; letter-spacing:1px; text-transform:uppercase; }
+.nt-status-val { font-size:28px; font-weight:bold; color:#00ff99; margin-top:4px; }
+.nt-dormie { background:rgba(255,200,0,0.15); border-color:#ffd700; }
+.nt-dormie .nt-status-val { color:#ffd700; }
+.nt-press-btn {
+  background:#111; border:2px solid #7b2fff; color:#7b2fff;
+  font-size:16px; font-weight:bold; padding:10px 22px; border-radius:25px; cursor:pointer;
+}
+.nt-press-btn.active { background:#7b2fff; color:white; }
+.nt-chip-selector { display:flex; flex-wrap:wrap; gap:14px; align-items:center; margin:16px 0; }
+.nt-chip {
+  width:54px; height:54px; border-radius:50%; display:flex; align-items:center;
+  justify-content:center; font-weight:bold; font-size:13px; cursor:pointer;
+  border:4px dashed #555; color:#222; box-shadow:0 3px 8px #0008;
+  transition: transform 0.15s;
+}
+.nt-chip.selected { transform:scale(1.2); border-color:#fff; box-shadow:0 0 12px #7b2fff; }
+.nt-chip-1  { background: radial-gradient(circle at 35% 35%, #ff6b6b, #aa0000); color:#fff; }
+.nt-chip-5  { background: radial-gradient(circle at 35% 35%, #66ee66, #006600); color:#fff; }
+.nt-chip-10 { background: radial-gradient(circle at 35% 35%, #6699ff, #0000cc); color:#fff; }
+.nt-chip-20 { background: radial-gradient(circle at 35% 35%, #cc66ff, #660099); color:#fff; }
+.nt-chip-100{ background: radial-gradient(circle at 35% 35%, #ffdd44, #aa7700); color:#222; }
+.nt-best-ball-toggle {
+  background:#111; border:2px solid #00ff99; color:#00ff99;
+  font-size:16px; font-weight:bold; padding:10px 22px; border-radius:25px; cursor:pointer;
+}
+.nt-best-ball-toggle.active { background:#00ff99; color:black; }
+</style>
 
-  <div class="row">
-    <div class="player-name" id="nassauP1">Player 1</div>
-    <input class="hole-box" id="nassauFront1" readonly>
-    <input class="hole-box" id="nassauBack1" readonly>
-    <input class="hole-box" id="nassauTotal1" readonly>
-  </div>
+<!-- CHIP SELECTOR -->
+<div style="color:#00ff99; font-weight:bold; font-size:16px; margin-bottom:10px; letter-spacing:1px;">🎰 NASSAU BET VALUE (per 9)</div>
+<div class="nt-chip-selector">
+  <div class="nt-chip nt-chip-1"  onclick="selectNassauChip(1,this)">$1</div>
+  <div class="nt-chip nt-chip-5"  onclick="selectNassauChip(5,this)">$5</div>
+  <div class="nt-chip nt-chip-10" onclick="selectNassauChip(10,this)">$10</div>
+  <div class="nt-chip nt-chip-20" onclick="selectNassauChip(20,this)">$20</div>
+  <div class="nt-chip nt-chip-100" onclick="selectNassauChip(100,this)">$100</div>
+</div>
+<div id="ntChipDisplay" style="color:#ffdd44; font-weight:bold; font-size:15px; margin-bottom:16px;"></div>
 
-  <div class="row">
-    <div class="player-name" id="nassauP2">Player 2</div>
-    <input class="hole-box" id="nassauFront2" readonly>
-    <input class="hole-box" id="nassauBack2" readonly>
-    <input class="hole-box" id="nassauTotal2" readonly>
-  </div>
-
+<!-- BEST BALL TOGGLE -->
+<div style="margin-bottom:18px;">
+  <button class="nt-best-ball-toggle" id="ntBestBallBtn" onclick="toggleNassauBestBall()">⛳ BEST BALL: OFF</button>
 </div>
 
-<!-- =================== END NASSAU =================== -->
+<!-- PRESS BUTTONS -->
+<div style="margin-bottom:18px; display:flex; gap:14px; flex-wrap:wrap; align-items:center;">
+  <span style="color:#aaa; font-size:15px;">PRESSES:</span>
+  <button class="nt-press-btn" id="ntPressFront" onclick="togglePress('front')">FRONT PRESS</button>
+  <button class="nt-press-btn" id="ntPressBack" onclick="togglePress('back')">BACK PRESS</button>
+</div>
+
+<!-- MATCH TRACKER TABLE -->
+<div class="nt-wrap">
+
+<!-- HEADER ROW -->
+<div class="nt-row">
+  <div class="nt-label">HOLE</div>
+  <div class="nt-box nt-hdr">1</div><div class="nt-box nt-hdr">2</div><div class="nt-box nt-hdr">3</div>
+  <div class="nt-box nt-hdr">4</div><div class="nt-box nt-hdr">5</div><div class="nt-box nt-hdr">6</div>
+  <div class="nt-box nt-hdr" id="ntHdr7">7</div><div class="nt-box nt-hdr">8</div><div class="nt-box nt-hdr">9</div>
+  <div class="nt-box nt-hdr" style="width:70px;">OUT</div>
+  <div class="nt-box nt-hdr">10</div><div class="nt-box nt-hdr">11</div><div class="nt-box nt-hdr">12</div>
+  <div class="nt-box nt-hdr">13</div><div class="nt-box nt-hdr">14</div><div class="nt-box nt-hdr">15</div>
+  <div class="nt-box nt-hdr" id="ntHdr16">16</div><div class="nt-box nt-hdr">17</div><div class="nt-box nt-hdr">18</div>
+  <div class="nt-box nt-hdr" style="width:70px;">IN</div>
+  <div class="nt-box nt-hdr" style="width:70px;">TOT</div>
+</div>
+
+<!-- TEAM A ROW -->
+<div class="nt-row" id="ntRowA">
+  <div class="nt-label" id="ntNameA">Team A</div>
+  <div class="nt-box" id="ntA1"></div><div class="nt-box" id="ntA2"></div><div class="nt-box" id="ntA3"></div>
+  <div class="nt-box" id="ntA4"></div><div class="nt-box" id="ntA5"></div><div class="nt-box" id="ntA6"></div>
+  <div class="nt-box" id="ntA7"></div><div class="nt-box" id="ntA8"></div><div class="nt-box" id="ntA9"></div>
+  <div class="nt-box" id="ntAOut" style="width:70px;"></div>
+  <div class="nt-box" id="ntA10"></div><div class="nt-box" id="ntA11"></div><div class="nt-box" id="ntA12"></div>
+  <div class="nt-box" id="ntA13"></div><div class="nt-box" id="ntA14"></div><div class="nt-box" id="ntA15"></div>
+  <div class="nt-box" id="ntA16"></div><div class="nt-box" id="ntA17"></div><div class="nt-box" id="ntA18"></div>
+  <div class="nt-box" id="ntAIn" style="width:70px;"></div>
+  <div class="nt-box" id="ntATot" style="width:70px;"></div>
+</div>
+
+<!-- TEAM B ROW -->
+<div class="nt-row" id="ntRowB">
+  <div class="nt-label" id="ntNameB">Team B</div>
+  <div class="nt-box" id="ntB1"></div><div class="nt-box" id="ntB2"></div><div class="nt-box" id="ntB3"></div>
+  <div class="nt-box" id="ntB4"></div><div class="nt-box" id="ntB5"></div><div class="nt-box" id="ntB6"></div>
+  <div class="nt-box" id="ntB7"></div><div class="nt-box" id="ntB8"></div><div class="nt-box" id="ntB9"></div>
+  <div class="nt-box" id="ntBOut" style="width:70px;"></div>
+  <div class="nt-box" id="ntB10"></div><div class="nt-box" id="ntB11"></div><div class="nt-box" id="ntB12"></div>
+  <div class="nt-box" id="ntB13"></div><div class="nt-box" id="ntB14"></div><div class="nt-box" id="ntB15"></div>
+  <div class="nt-box" id="ntB16"></div><div class="nt-box" id="ntB17"></div><div class="nt-box" id="ntB18"></div>
+  <div class="nt-box" id="ntBIn" style="width:70px;"></div>
+  <div class="nt-box" id="ntBTot" style="width:70px;"></div>
+</div>
+
+</div><!-- end nt-wrap -->
+
+<!-- STATUS BAR -->
+<div class="nt-status-bar" id="ntStatusBar">
+  <div class="nt-status-item">
+    <div class="nt-status-label">FRONT</div>
+    <div class="nt-status-val" id="ntFrontStatus">—</div>
+  </div>
+  <div class="nt-status-item">
+    <div class="nt-status-label">BACK</div>
+    <div class="nt-status-val" id="ntBackStatus">—</div>
+  </div>
+  <div class="nt-status-item">
+    <div class="nt-status-label">OVERALL</div>
+    <div class="nt-status-val" id="ntOverallStatus">—</div>
+  </div>
+  <div class="nt-status-item">
+    <div class="nt-status-label">💰 NET</div>
+    <div class="nt-status-val" id="ntNetStatus">$0</div>
+  </div>
+</div>
+
+<!-- DORMIE ALERT -->
+<div id="ntDormieAlert" style="display:none; background:rgba(255,200,0,0.15); border:2px solid #ffd700; border-radius:16px; padding:16px 24px; text-align:center; margin-top:10px;">
+  <div style="font-size:24px; font-weight:bold; color:#ffd700;">⚠️ DORMIE</div>
+  <div id="ntDormieMsg" style="color:#fff; font-size:16px; margin-top:6px;"></div>
+</div>
+
+</div><!-- end nassauMatchSection -->
+
+<!-- =================== END NASSAU MATCH TRACKER =================== -->
 
 <div id="junkGamesBar" style="display:flex; flex-wrap:wrap; gap:12px; margin-bottom:24px; padding:0 10px;">
 
@@ -1072,45 +1197,85 @@ function updateNames() {
     if (g9Name3) g9Name3.value = names[2];
 
 }
-// =================== NASSAU ===================
+// =================== NASSAU MATCH TRACKER ===================
+
+let nassauChipValue = 0;
+let nassauBestBall = false;
+let nassauPressActive = { front: false, back: false };
+
+function selectNassauChip(val, el) {
+    nassauChipValue = val;
+    document.querySelectorAll('.nt-chip').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    document.getElementById('ntChipDisplay').textContent = '✅ Bet: $' + val + ' per 9 | $' + (val * 3) + ' total';
+    updateNassau();
+}
+
+function toggleNassauBestBall() {
+    nassauBestBall = !nassauBestBall;
+    const btn = document.getElementById('ntBestBallBtn');
+    btn.textContent = '⛳ BEST BALL: ' + (nassauBestBall ? 'ON' : 'OFF');
+    btn.classList.toggle('active', nassauBestBall);
+    updateNassau();
+}
+
+function togglePress(side) {
+    nassauPressActive[side] = !nassauPressActive[side];
+    const btn = document.getElementById(side === 'front' ? 'ntPressFront' : 'ntPressBack');
+    btn.classList.toggle('active', nassauPressActive[side]);
+    updateNassau();
+}
+
+function getNassauScore(p1boxes, p2boxes, p3boxes, p4boxes, holeIndex) {
+    const s1 = parseInt(p1boxes[holeIndex].value) || 0;
+    const s2 = parseInt(p2boxes[holeIndex].value) || 0;
+    const s3 = parseInt(p3boxes[holeIndex].value) || 0;
+    const s4 = parseInt(p4boxes[holeIndex].value) || 0;
+    const hasA = p1boxes[holeIndex].value !== '' || p2boxes[holeIndex].value !== '';
+    const hasB = p3boxes[holeIndex].value !== '' || p4boxes[holeIndex].value !== '';
+    if (!hasA && !hasB) return null;
+    let teamA, teamB;
+    if (nassauBestBall) {
+        teamA = Math.min(s1 || 99, s2 || 99);
+        teamB = Math.min(s3 || 99, s4 || 99);
+    } else {
+        teamA = (s1 || 0) + (s2 || 0);
+        teamB = (s3 || 0) + (s4 || 0);
+    }
+    return { teamA, teamB };
+}
+
+function matchStatus(wins, losses, holesLeft) {
+    const diff = wins - losses;
+    if (diff === 0) return 'AS';
+    const leader = diff > 0 ? 'A' : 'B';
+    const margin = Math.abs(diff);
+    if (margin > holesLeft) return leader + ' wins ' + margin + '&' + (margin - holesLeft - 1);
+    if (margin === holesLeft) return '⚠️ DORMIE ' + leader;
+    return leader + ' ' + margin + ' UP';
+}
 
 function updateNassau() {
+    const p1boxes = document.querySelectorAll('#player1 .hole-box');
+    const p2boxes = document.querySelectorAll('#player2 .hole-box');
+    const p3boxes = document.querySelectorAll('#player3 .hole-box');
+    const p4boxes = document.querySelectorAll('#player4 .hole-box');
 
-    const p1 = document.querySelectorAll("#player1 .hole-box");
-    const p2 = document.querySelectorAll("#player2 .hole-box");
+    const n1 = document.getElementById('name1').value || 'P1';
+    const n2 = document.getElementById('name2').value || 'P2';
+    const n3 = document.getElementById('name3').value || 'P3';
+    const n4 = document.getElementById('name4').value || 'P4';
+    document.getElementById('ntNameA').textContent = n1 + ' & ' + n2;
+    document.getElementById('ntNameB').textContent = n3 + ' & ' + n4;
 
-    let front1 = 0;
-    let front2 = 0;
-    let back1 = 0;
-    let back2 = 0;
+    const holeMap = [0,1,2,3,4,5,6,7,8,10,11,12,13,14,15,16,17,18];
 
-    for (let i = 0; i < 9; i++) {
-        front1 += parseInt(p1[i].value) || 0;
-        front2 += parseInt(p2[i].value) || 0;
-    }
+    let frontWinsA = 0, frontWinsB = 0, frontPlayed = 0;
+    let backWinsA = 0, backWinsB = 0, backPlayed = 0;
 
-    for (let i = 10; i <= 18; i++) {
-        back1 += parseInt(p1[i].value) || 0;
-        back2 += parseInt(p2[i].value) || 0;
-    }
-
-    document.getElementById("nassauP1").textContent =
-        document.getElementById("name1").value || "Player 1";
-
-    document.getElementById("nassauP2").textContent =
-        document.getElementById("name2").value || "Player 2";
-
-    document.getElementById("nassauFront1").value = front1;
-    document.getElementById("nassauFront2").value = front2;
-
-    document.getElementById("nassauBack1").value = back1;
-    document.getElementById("nassauBack2").value = back2;
-
-    document.getElementById("nassauTotal1").value = front1 + back1;
-    document.getElementById("nassauTotal2").value = front2 + back2;
-}
-    
-function scoreGameOf9(a, b, c) {
+    const hdr7 = document.getElementById('ntHdr7');
+    const hdr16 = document.getElementById('ntHdr16');
+    if (hdr7) {
 
     if (a === "" || b === "" || c === "") return ["","",""];
 
@@ -1234,7 +1399,10 @@ function updateGameOf9() {
     }
 }
 document.querySelectorAll(".player-input").forEach(function(box) {
-    box.addEventListener("input", updateNames);
+    box.addEventListener("input", function() {
+        updateNames();
+        updateNassau();
+    });
 });
 
 document.querySelectorAll(".chipbox").forEach(function(box) {
