@@ -1493,5 +1493,51 @@ function setChipAmount(val) {
 }
   </script>
 <script src="voicescorekeeper.js"></script>
+<script>
+const savedCourse = localStorage.getItem('selectedCourse');
+if (savedCourse) {
+    document.getElementById('courseNameDisplay').textContent = '📍 ' + savedCourse;
+}
+
+const savedGames = JSON.parse(localStorage.getItem('selectedGames') || '[]');
+const tagsDiv = document.getElementById('gameTagsDisplay');
+
+savedGames.forEach(function(game) {
+    const tag = document.createElement('span');
+    tag.className = 'game-tag';
+    tag.textContent = game;
+    tagsDiv.appendChild(tag);
+});
+
+if (savedGames.some(g => g.includes('Left Right'))) {
+    document.getElementById('leftRightSection').style.display = 'block';
+}
+
+if (savedGames.some(g => g.includes('Game of 9'))) {
+    document.getElementById('gameOf9Section').style.display = 'block';
+    document.getElementById('player4').style.display = 'none';
+    document.getElementById('total12').style.display = 'none';
+    document.getElementById('total34').style.display = 'none';
+}
+
+let selectedChipAmount = 0;
+
+function setChipAmount(val) {
+    selectedChipAmount = parseFloat(val);
+    document.getElementById('chipAmountDisplay').textContent =
+        '✅ Chip value set: $' + selectedChipAmount.toFixed(2) + ' per junk game';
+}
+
+function toggleJunk(el) {
+    el.classList.toggle('active-junk');
+    if (el.classList.contains('active-junk')) {
+        el.style.background = '#00ff99';
+        el.style.color = 'black';
+    } else {
+        el.style.background = '#111';
+        el.style.color = '#00ff99';
+    }
+}
+</script>
 </body>
 </html>a
