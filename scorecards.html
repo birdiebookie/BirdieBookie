@@ -1086,7 +1086,8 @@ function updateTeamTotals() {
 
     let out12 = 0, in12 = 0, out34 = 0, in34 = 0;
 
-    for (let hole = 0; hole <= 18; hole++) {
+        // Front 9
+    for (let hole = 0; hole <= 8; hole++) {
         const s1 = parseInt(p1[hole].value) || 0;
         const s2 = parseInt(p2[hole].value) || 0;
         const s3 = parseInt(p3[hole].value) || 0;
@@ -1098,14 +1099,25 @@ function updateTeamTotals() {
         team12[hole].value = total12Hole || "";
         team34[hole].value = total34Hole || "";
 
-        if (hole >= 0 && hole <= 8) {
-            out12 += total12Hole;
-            out34 += total34Hole;
-        }
-        if (hole >= 10 && hole <= 18) {
-            in12 += total12Hole;
-            in34 += total34Hole;
-        }
+        out12 += total12Hole;
+        out34 += total34Hole;
+    }
+
+    // Back 9
+    for (let hole = 10; hole <= 18; hole++) {
+        const s1 = parseInt(p1[hole].value) || 0;
+        const s2 = parseInt(p2[hole].value) || 0;
+        const s3 = parseInt(p3[hole].value) || 0;
+        const s4 = parseInt(p4[hole].value) || 0;
+
+        const total12Hole = s1 + s2;
+        const total34Hole = s3 + s4;
+
+        team12[hole].value = total12Hole || "";
+        team34[hole].value = total34Hole || "";
+
+        in12 += total12Hole;
+        in34 += total34Hole;
     }
 
     team12[9].value = out12 || "";
