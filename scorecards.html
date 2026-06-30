@@ -1178,10 +1178,9 @@ let nassauPressActive = { front: false, back: false };
 
 function selectNassauChip(val, el) {
     nassauChipValue = val;
-    document.querySelectorAll('.nt-chip').forEach(c => c.classList.remove('selected'));
-    el.classList.add('selected');
-    document.getElementById('ntChipDisplay').textContent = '✅ Bet: $' + val + ' per 9 | $' + (val * 3) + ' total';
-    updateNassau();
+document.querySelectorAll('.nt-chip').forEach(c => c.classList.remove('selected'));
+el.classList.add('selected');
+updateNassau();
 }
 
 function toggleNassauBestBall() {
