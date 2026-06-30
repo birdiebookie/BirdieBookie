@@ -1276,62 +1276,58 @@ function updateNassau() {
     const hdr7 = document.getElementById('ntHdr7');
     const hdr16 = document.getElementById('ntHdr16');
     if (hdr7) {
-
-    if (a === "" || b === "" || c === "") return ["","",""];
-
-    a = parseInt(a);
-    b = parseInt(b);
-    c = parseInt(c);
-
-    // all tie
-    if (a === b && b === c)
-        return [3,3,3];
-
-    // player 1 wins
-    if (a < b && a < c) {
-
-        if (b === c) return [5,2,2];
-
-        return (b < c)
-            ? [5,3,1]
-            : [5,1,3];
+        hdr7.style.background = nassauPressActive.front ? '#7b2fff' : '#00ff99';
+        hdr7.style.color = nassauPressActive.front ? 'white' : 'black';
+    }
+    if (hdr16) {
+        hdr16.style.background = nassauPressActive.back ? '#7b2fff' : '#00ff99';
+        hdr16.style.color = nassauPressActive.back ? 'white' : 'black';
     }
 
-    // player 2 wins
-    if (b < a && b < c) {
+    for (let h = 0; h < 18; h++) {
+        const idx = holeMap[h];
+        const holeNum = h + 1;
+        const elA = document.getElementById('ntA' + holeNum);
+        const elB = document.getElementById('ntB' + holeNum);
+        const result = getNassauScore(p1boxes, p2boxes, p3boxes, p4boxes, idx);
 
-        if (a === c) return [2,5,2];
+        if (elA) { elA.className = 'nt-box'; elA.textContent = ''; }
+        if (elB) { elB.className = 'nt-box'; elB.textContent = ''; }
 
-        return (a < c)
-            ? [3,5,1]
-            : [1,5,3];
+        if ((holeNum === 7 && nassauPressActive.front) || (holeNum === 16 && nassauPressActive.back)) {
+            if (elA) elA.classList.add('nt-press-hole');
+            if (elB) elB.classList.add('nt-press-hole');
+        }
+
+        if (!result) continue;
+
+        const { teamA, teamB } = result;
+        if (h < 9) frontPlayed++; else backPlayed++;
+
+        if (teamA < teamB) {
+            if (elA) { elA.classList.add('nt-win'); elA.textContent = teamA; }
+            if (elB) { elB.classList.add('nt-lose'); elB.textContent = teamB; }
+            if (h < 9) frontWinsA++; else backWinsA++;
+        } else if (teamB < teamA) {
+            if (elA) { elA.classList.add('nt-lose'); elA.textContent = teamA; }
+            if (elB) { elB.classList.add('nt-win'); elB.textContent = teamB; }
+            if (h < 9) frontWinsB++; else backWinsB++;
+        } else {
+            if (elA) { elA.classList.add('nt-tie'); elA.textContent = teamA; }
+            if (elB) { elB.classList.add('nt-tie'); elB.textContent = teamB; }
+        }
     }
 
-    // player 3 wins
-    if (c < a && c < b) {
+    const frontDiff = frontWinsA - frontWinsB;
+    const backDiff = backWinsA - backWinsB;
+    const totDiff = frontDiff + backDiff;
 
-        if (a === b) return [2,2,5];
-
-        return (a < b)
-            ? [3,1,5]
-            : [1,3,5];
-    }
-
-    // players 1 & 2 tie low
-    if (a === b && a < c)
-        return [4,4,1];
-
-    // players 1 & 3 tie low
-    if (a === c && a < b)
-        return [4,1,4];
-
-    // players 2 & 3 tie low
-    if (b === c && b < a)
-        return [1,4,4];
-
-    return ["","",""];
-
-}
+    const ntAOut = document.getElementById('ntAOut');
+    const ntBOut = document.getElementById('ntBOut');
+    const ntAIn = document.getElementById('ntAIn');
+    const ntBIn = document.getElementById('ntBIn');
+    const ntATot = document.getElementById('ntATot');
+    const ntBTot =
    document.querySelectorAll(".hole-box").forEach(function(box) {
     box.addEventListener("input", function() {
         updatePlayerTotals();
