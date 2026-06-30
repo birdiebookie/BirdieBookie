@@ -441,7 +441,15 @@ document.querySelectorAll('.game-select input').forEach(box => {
       selectedGames = selectedGames.filter(g => g !== game);
     }
 
-    localStorage.setItem("selectedGames", JSON.stringify(selectedGames));
+let selectedGames = [];
+
+document.querySelectorAll(".game-select input").forEach(cb => {
+    if (cb.checked) {
+        selectedGames.push(cb.closest(".game-card").querySelector("h2").innerText.trim());
+    }
+});
+
+localStorage.setItem("selectedGames", JSON.stringify(selectedGames));
   });
 });
 
