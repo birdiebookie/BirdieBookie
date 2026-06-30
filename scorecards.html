@@ -1405,7 +1405,14 @@ document.querySelectorAll(".player-input").forEach(function(box) {
 document.querySelectorAll(".chipbox").forEach(function(box) {
     box.addEventListener("input", updateChipsTotals);
 });
-
+document.querySelectorAll("#player1 .hole-box, #player2 .hole-box, #player3 .hole-box, #player4 .hole-box").forEach(function(box) {
+    box.addEventListener("input", function() {
+        updatePlayerTotals();
+        updateTeamTotals();
+        checkSkins();
+        updateNassau();
+    });
+});
 ['1','2','3','4'].forEach(function(n) {
     var src = document.getElementById('name' + n);
     var dst = document.getElementById('lrName' + n);
