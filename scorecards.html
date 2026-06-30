@@ -435,7 +435,86 @@ body{
 Team Carryovers ON
 </label>
 </div>
-<div id="leftRightSection" style="display:none;">
+<div id="nassauSection" style="display:none;">
+<h1 style="color:#00ff99; padding-left:30px;">🏆 NASSAU MATCH TRACKER</h1>
+
+<div class="scorecard" id="nassauLedger">
+
+<div class="row">
+<div class="player-name">TEAM</div>
+<div class="header-box">1</div>
+<div class="header-box">2</div>
+<div class="header-box">3</div>
+<div class="header-box">4</div>
+<div class="header-box">5</div>
+<div class="header-box">6</div>
+<div class="header-box" id="nassauHole7" onclick="handlePress(7)" style="cursor:pointer;">7</div>
+<div class="header-box">8</div>
+<div class="header-box">9</div>
+<div class="header-box total-box">OUT</div>
+<div class="header-box">10</div>
+<div class="header-box">11</div>
+<div class="header-box">12</div>
+<div class="header-box">13</div>
+<div class="header-box">14</div>
+<div class="header-box" id="nassauHole16" onclick="handlePress(16)" style="cursor:pointer;">16</div>
+<div class="header-box">17</div>
+<div class="header-box">18</div>
+<div class="header-box total-box">IN</div>
+<div class="header-box total-box">TOT</div>
+</div>
+
+<div class="row" id="nassauTeamA">
+<input class="player-name" id="nassauNameA" readonly>
+<input class="hole-box nassauBoxA" readonly>
+<input class="hole-box nassauBoxA" readonly>
+<input class="hole-box nassauBoxA" readonly>
+<input class="hole-box nassauBoxA" readonly>
+<input class="hole-box nassauBoxA" readonly>
+<input class="hole-box nassauBoxA" readonly>
+<input class="hole-box nassauBoxA" readonly>
+<input class="hole-box nassauBoxA" readonly>
+<input class="hole-box nassauBoxA" readonly>
+<input class="hole-box total-box nassauBoxA" readonly>
+<input class="hole-box nassauBoxA" readonly>
+<input class="hole-box nassauBoxA" readonly>
+<input class="hole-box nassauBoxA" readonly>
+<input class="hole-box nassauBoxA" readonly>
+<input class="hole-box nassauBoxA" readonly>
+<input class="hole-box nassauBoxA" readonly>
+<input class="hole-box nassauBoxA" readonly>
+<input class="hole-box nassauBoxA" readonly>
+<input class="hole-box total-box nassauBoxA" readonly>
+<input class="hole-box total-box nassauBoxA" readonly>
+</div>
+
+<div class="row" id="nassauTeamB">
+<input class="player-name" id="nassauNameB" readonly>
+<input class="hole-box nassauBoxB" readonly>
+<input class="hole-box nassauBoxB" readonly>
+<input class="hole-box nassauBoxB" readonly>
+<input class="hole-box nassauBoxB" readonly>
+<input class="hole-box nassauBoxB" readonly>
+<input class="hole-box nassauBoxB" readonly>
+<input class="hole-box nassauBoxB" readonly>
+<input class="hole-box nassauBoxB" readonly>
+<input class="hole-box nassauBoxB" readonly>
+<input class="hole-box total-box nassauBoxB" readonly>
+<input class="hole-box nassauBoxB" readonly>
+<input class="hole-box nassauBoxB" readonly>
+<input class="hole-box nassauBoxB" readonly>
+<input class="hole-box nassauBoxB" readonly>
+<input class="hole-box nassauBoxB" readonly>
+<input class="hole-box nassauBoxB" readonly>
+<input class="hole-box nassauBoxB" readonly>
+<input class="hole-box nassauBoxB" readonly>
+<input class="hole-box total-box nassauBoxB" readonly>
+<input class="hole-box total-box nassauBoxB" readonly>
+</div>
+
+</div>
+</div>
+    <div id="leftRightSection" style="display:none;">
 <h1 style="color:#00ff99;">LEFT RIGHT LEDGER</h1>
 
 <div class="scorecard" id="leftRightLedger">
@@ -822,7 +901,139 @@ function colorLeftRight() {
         });
     });
 }
+function handlePress(holeNum) {
+    const accept = confirm("Press on hole " + holeNum + "?\n\nOK = Press it\nCancel = No press");
+    localStorage.setItem("nassauPress" + holeNum + "Decided", "true");
+    alert(accept ? "Press accepted on hole " + holeNum + "!" : "No press on hole " + holeNum + ".");
+    checkPressReminders();
+}
 
+function checkPressReminders() {
+    const team12 = document.querySelectorAll("#total12 .hole-box");
+    const team34 = document.querySelectorAll("#total34 .hole-box");
+    const hole7Done = team12[6].value !== "" && team34[6].value !== "";
+    const hole16Done = team12[15].value !== "" && team34[15].value !== "";
+    const decided7 = localStorage.getItem("nassauPress7Decided") === "true";
+    const decided16 = localStorage.getItem("nassauPress16Decided") === "true";
+    const h7 = document.getElementById("nassauHole7");
+    const h16 = document.getElementById("nassauHole16");
+
+    if (h7) {
+        if (!decided7 && !hole7Done) {
+            h7.style.background = "#a020f0";
+            h7.style.color = "white";
+        } else {
+            h7.style.background = "#00ff99";
+            h7.style.color = "black";
+        }
+    }
+    if (h16) {
+        if (!decided16 && !hole16Done) {
+            h16.style.background = "#a020f0";
+            h16.style.color = "white";
+        } else {
+            h16.style.background = "#00ff99";
+            h16.style.color = "black";
+        }
+    }
+}
+
+function updateNassauTracker() {
+    const team12 = document.querySelectorAll("#total12 .hole-box");
+    const team34 = document.querySelectorAll("#total34 .hole-box");
+    const boxesA = document.querySelectorAll(".nassauBoxA");
+    const boxesB = document.querySelectorAll(".nassauBoxB");
+
+    if (boxesA.length === 0 || boxesB.length === 0) return;
+
+    function colorHole(i) {
+        const a = parseInt(team12[i].value);
+        const b = parseInt(team34[i].value);
+        if (isNaN(a) || isNaN(b)) {
+            boxesA[i].value = team12[i].value || "";
+            boxesB[i].value = team34[i].value || "";
+            boxesA[i].style.background = "#111";
+            boxesA[i].style.color = "white";
+            boxesB[i].style.background = "#111";
+            boxesB[i].style.color = "white";
+            return;
+        }
+        boxesA[i].value = a;
+        boxesB[i].value = b;
+        if (a < b) {
+            boxesA[i].style.background = "#00ff00";
+            boxesA[i].style.color = "black";
+            boxesB[i].style.background = "#ff3333";
+            boxesB[i].style.color = "white";
+        } else if (b < a) {
+            boxesB[i].style.background = "#00ff00";
+            boxesB[i].style.color = "black";
+            boxesA[i].style.background = "#ff3333";
+            boxesA[i].style.color = "white";
+        } else {
+            boxesA[i].style.background = "gray";
+            boxesA[i].style.color = "white";
+            boxesB[i].style.background = "gray";
+            boxesB[i].style.color = "white";
+        }
+    }
+
+    function setSegment(i, diff, played) {
+        if (played === 0) {
+            boxesA[i].value = "";
+            boxesB[i].value = "";
+            boxesA[i].style.background = "#00ff99";
+            boxesA[i].style.color = "black";
+            boxesB[i].style.background = "#00ff99";
+            boxesB[i].style.color = "black";
+            return;
+        }
+        if (diff > 0) {
+            boxesA[i].value = "+" + diff;
+            boxesB[i].value = "-" + diff;
+            boxesA[i].style.background = "#00ff00";
+            boxesA[i].style.color = "black";
+            boxesB[i].style.background = "#ff3333";
+            boxesB[i].style.color = "white";
+        } else if (diff < 0) {
+            boxesB[i].value = "+" + Math.abs(diff);
+            boxesA[i].value = "-" + Math.abs(diff);
+            boxesB[i].style.background = "#00ff00";
+            boxesB[i].style.color = "black";
+            boxesA[i].style.background = "#ff3333";
+            boxesA[i].style.color = "white";
+        } else {
+            boxesA[i].value = "AS";
+            boxesB[i].value = "AS";
+            boxesA[i].style.background = "gray";
+            boxesA[i].style.color = "white";
+            boxesB[i].style.background = "gray";
+            boxesB[i].style.color = "white";
+        }
+    }
+
+    let frontDiff = 0, frontPlayed = 0;
+    for (let i = 0; i <= 8; i++) {
+        const a = parseInt(team12[i].value);
+        const b = parseInt(team34[i].value);
+        if (!isNaN(a) && !isNaN(b)) { frontDiff += (b - a); frontPlayed++; }
+        colorHole(i);
+    }
+    setSegment(9, frontDiff, frontPlayed);
+
+    let backDiff = 0, backPlayed = 0;
+    for (let i = 10; i <= 18; i++) {
+        const a = parseInt(team12[i].value);
+        const b = parseInt(team34[i].value);
+        if (!isNaN(a) && !isNaN(b)) { backDiff += (b - a); backPlayed++; }
+        colorHole(i);
+    }
+    setSegment(19, backDiff, backPlayed);
+    setSegment(20, frontDiff + backDiff, frontPlayed + backPlayed);
+
+    checkPressReminders();
+}
+    
 function updateNames() {
     const names = [
         document.getElementById("name1").value,
@@ -838,6 +1049,12 @@ function updateNames() {
     document.getElementById("chipName2").value = names[1];
     document.getElementById("chipName3").value = names[2];
     document.getElementById("chipName4").value = names[3];
+const teamAName = [names[0], names[1]].filter(Boolean).join(" & ") || "Team 1&2";
+    const teamBName = [names[2], names[3]].filter(Boolean).join(" & ") || "Team 3&4";
+    const nA = document.getElementById("nassauNameA");
+    const nB = document.getElementById("nassauNameB");
+    if (nA) nA.value = teamAName;
+    if (nB) nB.value = teamBName;
 }
 
 document.querySelectorAll(".hole-box").forEach(function(box) {
@@ -847,6 +1064,7 @@ document.querySelectorAll(".hole-box").forEach(function(box) {
         checkSkins();
         colorLeftRight();
         updateLeftRightTotals();
+        updateNassauTracker();
     });
 });
 
@@ -890,6 +1108,7 @@ if (saved) {
     updateTeamTotals();
     checkSkins();
     colorLeftRight();
+    updateNassauTracker();
     updateNames();
 }
 
@@ -897,6 +1116,7 @@ updatePlayerTotals();
 updateTeamTotals();
 updateLeftRightTotals();
 updateChipsTotals();
+    updateNassauTracker();
 checkSkins();
 updateNames();
 
@@ -920,6 +1140,8 @@ function saveRound() {
 function newRound() {
     if (!confirm("WARNING!\n\nYou will lose all current scores.\n\nStart a new round?")) return;
     localStorage.removeItem("birdiebookieScorecard");
+    localStorage.removeItem("nassauPress7Decided");
+    localStorage.removeItem("nassauPress16Decided");
     document.querySelectorAll(".hole-box").forEach(function(box) { box.value = ""; });
     document.getElementById("name1").value = "Player 1";
     document.getElementById("name2").value = "Player 2";
@@ -945,7 +1167,10 @@ function newRound() {
       if (savedGames.some(g => g.includes('Left Right'))) {
     document.getElementById('leftRightSection').style.display = 'block';
 }
-let selectedChipAmount = 0;
+if (savedGames.some(g => g.includes('Nassau'))) {
+    document.getElementById('nassauSection').style.display = 'block';
+}
+      let selectedChipAmount = 0;
 
 function setChipAmount(val) {
   selectedChipAmount = parseFloat(val);
