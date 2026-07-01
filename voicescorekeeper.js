@@ -170,25 +170,23 @@
     }
   }
 
-  function startListening() {
-    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-      console.warn('Speech recognition not supported.');
-      return;
-    }
+  let recognition = null;
+  let micIcon = null;
+  let userWantsListening = false;
 
+  function buildRecognition() {
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-    const recognition = new SR();
-    recognition.continuous = true;
-    recognition.interimResults = false;
-    recognition.lang = 'en-US';
-    recognition.maxAlternatives = 3;
+    const r = new SR();
+    r.continuous = true;
+    r.interimResults = false;
+    r.lang = 'en-US';
+    r.maxAlternatives = 3;
 
-    const micIcon = createMicIcon();
     let buffer = '';
     let bufferTimer = null;
     let processing = false;
 
-    recognition.onresult = async function(event) {
+    r.onresult = async function(event) {
       const result = event.results[event.results.length - 1];
       let transcripts = [];
       for (let i = 0; i < result.length; i++) {
@@ -254,29 +252,64 @@
       }
     };
 
-    recognition.onerror = function(e) {
+    r.onerror = function(e) {
       console.warn('Voice error:', e.error);
       buffer = '';
       processing = false;
       micIcon.style.display = 'none';
     };
 
-    recognition.onend = function() {
+    r.onend = function() {
       buffer = '';
       processing = false;
-      setTimeout(() => {
-        try { recognition.start(); } catch(e) {}
-      }, 500);
+      micIcon.style.display = 'none';
+      if (userWantsListening) {
+        setTimeout(() => {
+          if (userWantsListening) {
+            try { recognition.start(); } catch(e) {}
+          }
+        }, 800);
+      }
     };
 
-    recognition.start();
-    console.log('BirdieBookie Voice Scorekeeper is listening...');
+    return r;
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', startListening);
-  } else {
-    startListening();
+  function updateToggleButton() {
+    const btn = document.getElementById('voiceToggleBtn');
+    if (!btn) return;
+    if (userWantsListening) {
+      btn.textContent = '🎙️ VOICE ENTRY: ON (tap to stop)';
+      btn.style.background = '#00ff99';
+      btn.style.color = 'black';
+    } else {
+      btn.textContent = '🎙️ VOICE SCORE ENTRY: OFF (tap to start)';
+      btn.style.background = '#111';
+      btn.style.color = '#00ff99';
+    }
   }
+
+  window.BBVoiceToggle = function() {
+    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+      alert('Voice entry is not supported in this browser.');
+      return;
+    }
+
+    if (!micIcon) micIcon = createMicIcon();
+
+    if (userWantsListening) {
+      userWantsListening = false;
+      if (recognition) {
+        try { recognition.stop(); } catch(e) {}
+      }
+      micIcon.style.display = 'none';
+    } else {
+      userWantsListening = true;
+      recognition = buildRecognition();
+      try { recognition.start(); } catch(e) {}
+      console.log('BirdieBookie Voice Scorekeeper is listening...');
+    }
+    updateToggleButton();
+  };
 
 })();
