@@ -667,6 +667,85 @@ DO NOT PLAY CARRYOVERS
 </div>
 
 </div>
+<div id="bankerSection" style="display:none; margin-top:40px;">
+
+<h1 style="color:#00ff99;">🏦 BANKER LEDGER</h1>
+
+<div class="scorecard">
+
+<div class="row">
+<div class="player-name">PLAYER</div>
+
+<div class="header-box">Front Hole</div>
+<div class="header-box">Front Winner</div>
+<div class="header-box">$</div>
+
+<div class="header-box">Back Hole</div>
+<div class="header-box">Back Winner</div>
+<div class="header-box">$</div>
+
+<div class="header-box total-box">TOTAL WON</div>
+</div>
+
+<div class="row">
+<div class="player-name" id="bankerName1">Player 1</div>
+
+<input class="score-box" maxlength="2">
+<input class="score-box" maxlength="1">
+<input class="score-box">
+
+<input class="score-box" maxlength="2">
+<input class="score-box" maxlength="1">
+<input class="score-box">
+
+<div class="total-box">$0</div>
+</div>
+
+<div class="row">
+<div class="player-name" id="bankerName2">Player 2</div>
+
+<input class="score-box" maxlength="2">
+<input class="score-box" maxlength="1">
+<input class="score-box">
+
+<input class="score-box" maxlength="2">
+<input class="score-box" maxlength="1">
+<input class="score-box">
+
+<div class="total-box">$0</div>
+</div>
+
+<div class="row">
+<div class="player-name" id="bankerName3">Player 3</div>
+
+<input class="score-box" maxlength="2">
+<input class="score-box" maxlength="1">
+<input class="score-box">
+
+<input class="score-box" maxlength="2">
+<input class="score-box" maxlength="1">
+<input class="score-box">
+
+<div class="total-box">$0</div>
+</div>
+
+<div class="row">
+<div class="player-name" id="bankerName4">Player 4</div>
+
+<input class="score-box" maxlength="2">
+<input class="score-box" maxlength="1">
+<input class="score-box">
+
+<input class="score-box" maxlength="2">
+<input class="score-box" maxlength="1">
+<input class="score-box">
+
+<div class="total-box">$0</div>
+</div>
+
+</div>
+
+</div>
     <div id="leftRightSection" style="display:none;">
 <h1 style="color:#00ff99;">LEFT RIGHT LEDGER</h1>
 
@@ -1444,7 +1523,10 @@ function newRound() {
 if (savedGames.some(g => g.includes('Nassau'))) {
     document.getElementById('nassauSection').style.display = 'block';
 }
-if (savedGames.some(g => g.includes('Game of 9'))) {
+if (savedGames.some(g => g.includes('Banker'))) {
+    document.getElementById('bankerSection').style.display = 'block';
+}
+      if (savedGames.some(g => g.includes('Game of 9'))) {
     document.getElementById('gameOf9Section').style.display = 'block';
     document.getElementById('mainScorecardCore').style.display = 'none';
     updateG9Names();
