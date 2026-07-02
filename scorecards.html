@@ -1511,10 +1511,16 @@ function newRound() {
 
     const savedGames = JSON.parse(localStorage.getItem('selectedGames') || '[]');
     const tagsDiv = document.getElementById('gameTagsDisplay');
-    savedGames.forEach(function(game) {
+  savedGames.forEach(function(game) {
         const tag = document.createElement('span');
         tag.className = 'game-tag';
         tag.textContent = game;
+        if (game.includes('Quota')) {
+            tag.style.cursor = 'pointer';
+            tag.onclick = function() {
+                document.getElementById('quotaRulesModal').style.display = 'flex';
+            };
+        }
         tagsDiv.appendChild(tag);
     });
       if (savedGames.some(g => g.includes('Left Right'))) {
