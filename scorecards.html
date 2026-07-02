@@ -196,7 +196,8 @@ body{
 </div>
 <div class="scorecard">
 
-<!-- HEADER -->
+<div id="mainScorecardCore">
+    <!-- HEADER -->
 <div class="row">
 
 <div class="player-name">PLAYER</div>
@@ -426,6 +427,7 @@ body{
 
 </div>
 
+    </div>
 <div style="text-align:center; margin-top:20px; margin-bottom:20px;">
 
 <button id="saveBtn" onclick="saveRound()">SAVE</button>
@@ -522,6 +524,148 @@ Team Carryovers ON
 </div>
 
 </div>
+</div>
+<div id="gameOf9Section" style="display:none;">
+<h1 style="color:#00ff99; padding-left:30px;">9️⃣ GAME OF 9</h1>
+
+<div class="scorecard" id="gameOf9Scorecard">
+
+<div class="row">
+<div class="player-name">PLAYER</div>
+<div class="header-box">1</div>
+<div class="header-box">2</div>
+<div class="header-box">3</div>
+<div class="header-box">4</div>
+<div class="header-box">5</div>
+<div class="header-box">6</div>
+<div class="header-box">7</div>
+<div class="header-box">8</div>
+<div class="header-box">9</div>
+<div class="header-box total-box">OUT</div>
+<div class="header-box">10</div>
+<div class="header-box">11</div>
+<div class="header-box">12</div>
+<div class="header-box">13</div>
+<div class="header-box">14</div>
+<div class="header-box">15</div>
+<div class="header-box">16</div>
+<div class="header-box">17</div>
+<div class="header-box">18</div>
+<div class="header-box total-box">IN</div>
+<div class="header-box total-box">TOT</div>
+</div>
+
+<div class="row" id="g9player1">
+<input class="player-name player-input" id="g9name1" value="" placeholder="Player 1">
+<input class="hole-box g9box"><input class="hole-box g9box"><input class="hole-box g9box">
+<input class="hole-box g9box"><input class="hole-box g9box"><input class="hole-box g9box">
+<input class="hole-box g9box"><input class="hole-box g9box"><input class="hole-box g9box">
+<input class="hole-box total-box g9box">
+<input class="hole-box g9box"><input class="hole-box g9box"><input class="hole-box g9box">
+<input class="hole-box g9box"><input class="hole-box g9box"><input class="hole-box g9box">
+<input class="hole-box g9box"><input class="hole-box g9box"><input class="hole-box g9box">
+<input class="hole-box total-box g9box">
+<input class="hole-box total-box g9box">
+</div>
+
+<div class="row" id="g9player2">
+<input class="player-name player-input" id="g9name2" value="" placeholder="Player 2">
+<input class="hole-box g9box"><input class="hole-box g9box"><input class="hole-box g9box">
+<input class="hole-box g9box"><input class="hole-box g9box"><input class="hole-box g9box">
+<input class="hole-box g9box"><input class="hole-box g9box"><input class="hole-box g9box">
+<input class="hole-box total-box g9box">
+<input class="hole-box g9box"><input class="hole-box g9box"><input class="hole-box g9box">
+<input class="hole-box g9box"><input class="hole-box g9box"><input class="hole-box g9box">
+<input class="hole-box g9box"><input class="hole-box g9box"><input class="hole-box g9box">
+<input class="hole-box total-box g9box">
+<input class="hole-box total-box g9box">
+</div>
+
+<div class="row" id="g9player3">
+<input class="player-name player-input" id="g9name3" value="" placeholder="Player 3">
+<input class="hole-box g9box"><input class="hole-box g9box"><input class="hole-box g9box">
+<input class="hole-box g9box"><input class="hole-box g9box"><input class="hole-box g9box">
+<input class="hole-box g9box"><input class="hole-box g9box"><input class="hole-box g9box">
+<input class="hole-box total-box g9box">
+<input class="hole-box g9box"><input class="hole-box g9box"><input class="hole-box g9box">
+<input class="hole-box g9box"><input class="hole-box g9box"><input class="hole-box g9box">
+<input class="hole-box g9box"><input class="hole-box g9box"><input class="hole-box g9box">
+<input class="hole-box total-box g9box">
+<input class="hole-box total-box g9box">
+</div>
+
+</div>
+
+<h1 style="color:#00ff99; padding-left:30px;">🏆 GAME OF 9 POINTS LEDGER</h1>
+
+<div class="scorecard" id="gameOf9Ledger">
+
+<div class="row">
+<div class="player-name">PLAYER</div>
+<div class="header-box">1</div>
+<div class="header-box">2</div>
+<div class="header-box">3</div>
+<div class="header-box">4</div>
+<div class="header-box">5</div>
+<div class="header-box">6</div>
+<div class="header-box">7</div>
+<div class="header-box">8</div>
+<div class="header-box">9</div>
+<div class="header-box total-box">OUT</div>
+<div class="header-box">10</div>
+<div class="header-box">11</div>
+<div class="header-box">12</div>
+<div class="header-box">13</div>
+<div class="header-box">14</div>
+<div class="header-box">15</div>
+<div class="header-box">16</div>
+<div class="header-box">17</div>
+<div class="header-box">18</div>
+<div class="header-box total-box">IN</div>
+<div class="header-box total-box">TOT</div>
+</div>
+
+<div class="row" id="g9ledger1">
+<input class="player-name" id="g9ledgerName1" readonly>
+<input class="hole-box g9ptsA" readonly><input class="hole-box g9ptsA" readonly><input class="hole-box g9ptsA" readonly>
+<input class="hole-box g9ptsA" readonly><input class="hole-box g9ptsA" readonly><input class="hole-box g9ptsA" readonly>
+<input class="hole-box g9ptsA" readonly><input class="hole-box g9ptsA" readonly><input class="hole-box g9ptsA" readonly>
+<input class="hole-box total-box g9ptsA" readonly>
+<input class="hole-box g9ptsA" readonly><input class="hole-box g9ptsA" readonly><input class="hole-box g9ptsA" readonly>
+<input class="hole-box g9ptsA" readonly><input class="hole-box g9ptsA" readonly><input class="hole-box g9ptsA" readonly>
+<input class="hole-box g9ptsA" readonly><input class="hole-box g9ptsA" readonly><input class="hole-box g9ptsA" readonly>
+<input class="hole-box total-box g9ptsA" readonly>
+<input class="hole-box total-box g9ptsA" readonly>
+</div>
+
+<div class="row" id="g9ledger2">
+<input class="player-name" id="g9ledgerName2" readonly>
+<input class="hole-box g9ptsB" readonly><input class="hole-box g9ptsB" readonly><input class="hole-box g9ptsB" readonly>
+<input class="hole-box g9ptsB" readonly><input class="hole-box g9ptsB" readonly><input class="hole-box g9ptsB" readonly>
+<input class="hole-box g9ptsB" readonly><input class="hole-box g9ptsB" readonly><input class="hole-box g9ptsB" readonly>
+<input class="hole-box total-box g9ptsB" readonly>
+<input class="hole-box g9ptsB" readonly><input class="hole-box g9ptsB" readonly><input class="hole-box g9ptsB" readonly>
+<input class="hole-box g9ptsB" readonly><input class="hole-box g9ptsB" readonly><input class="hole-box g9ptsB" readonly>
+<input class="hole-box g9ptsB" readonly><input class="hole-box g9ptsB" readonly><input class="hole-box g9ptsB" readonly>
+<input class="hole-box total-box g9ptsB" readonly>
+<input class="hole-box total-box g9ptsB" readonly>
+</div>
+
+<div class="row" id="g9ledger3">
+<input class="player-name" id="g9ledgerName3" readonly>
+<input class="hole-box g9ptsC" readonly><input class="hole-box g9ptsC" readonly><input class="hole-box g9ptsC" readonly>
+<input class="hole-box g9ptsC" readonly><input class="hole-box g9ptsC" readonly><input class="hole-box g9ptsC" readonly>
+<input class="hole-box g9ptsC" readonly><input class="hole-box g9ptsC" readonly><input class="hole-box g9ptsC" readonly>
+<input class="hole-box total-box g9ptsC" readonly>
+<input class="hole-box g9ptsC" readonly><input class="hole-box g9ptsC" readonly><input class="hole-box g9ptsC" readonly>
+<input class="hole-box g9ptsC" readonly><input class="hole-box g9ptsC" readonly><input class="hole-box g9ptsC" readonly>
+<input class="hole-box g9ptsC" readonly><input class="hole-box g9ptsC" readonly><input class="hole-box g9ptsC" readonly>
+<input class="hole-box total-box g9ptsC" readonly>
+<input class="hole-box total-box g9ptsC" readonly>
+</div>
+
+</div>
+
 </div>
     <div id="leftRightSection" style="display:none;">
 <h1 style="color:#00ff99;">LEFT RIGHT LEDGER</h1>
@@ -1080,6 +1224,13 @@ document.querySelectorAll(".hole-box").forEach(function(box) {
 document.querySelectorAll(".player-input").forEach(function(box) {
     box.addEventListener("input", updateNames);
 });
+document.querySelectorAll(".g9box").forEach(function(box) {
+    box.addEventListener("input", updateGameOf9);
+});
+
+document.querySelectorAll("#g9player1 .player-input, #g9player2 .player-input, #g9player3 .player-input").forEach(function(box) {
+    box.addEventListener("input", updateG9Names);
+});
 
 document.querySelectorAll(".chipbox").forEach(function(box) {
     box.addEventListener("input", updateChipsTotals);
@@ -1129,8 +1280,122 @@ updateChipsTotals();
 checkSkins();
 updateNames();
 
+updateG9Names();
+updateGameOf9();
 }); // end DOMContentLoaded
 
+    function computeG9Points(s1, s2, s3) {
+    const players = [
+        { idx: 0, score: s1 },
+        { idx: 1, score: s2 },
+        { idx: 2, score: s3 }
+    ];
+    if (players.some(p => isNaN(p.score))) return [null, null, null];
+
+    const sorted = [...players].sort((a, b) => a.score - b.score);
+    const basePoints = [5, 3, 1];
+    const result = [0, 0, 0];
+
+    let i = 0;
+    while (i < 3) {
+        let j = i;
+        while (j + 1 < 3 && sorted[j + 1].score === sorted[i].score) j++;
+        const groupTotal = basePoints.slice(i, j + 1).reduce((a, b) => a + b, 0);
+        const share = groupTotal / (j - i + 1);
+        for (let k = i; k <= j; k++) result[sorted[k].idx] = share;
+        i = j + 1;
+    }
+    return result;
+}
+
+function updateG9Names() {
+    const n1 = document.getElementById("g9name1") ? (document.getElementById("g9name1").value || "Player 1") : "Player 1";
+    const n2 = document.getElementById("g9name2") ? (document.getElementById("g9name2").value || "Player 2") : "Player 2";
+    const n3 = document.getElementById("g9name3") ? (document.getElementById("g9name3").value || "Player 3") : "Player 3";
+    const l1 = document.getElementById("g9ledgerName1");
+    const l2 = document.getElementById("g9ledgerName2");
+    const l3 = document.getElementById("g9ledgerName3");
+    if (l1) l1.value = n1;
+    if (l2) l2.value = n2;
+    if (l3) l3.value = n3;
+}
+
+function updateGameOf9() {
+    const g9boxes1 = document.querySelectorAll("#g9player1 .g9box");
+    const g9boxes2 = document.querySelectorAll("#g9player2 .g9box");
+    const g9boxes3 = document.querySelectorAll("#g9player3 .g9box");
+    if (g9boxes1.length === 0) return;
+
+    const ptsA = document.querySelectorAll(".g9ptsA");
+    const ptsB = document.querySelectorAll(".g9ptsB");
+    const ptsC = document.querySelectorAll(".g9ptsC");
+    const rows = [g9boxes1, g9boxes2, g9boxes3];
+
+    g9boxes1.forEach(b => { b.style.backgroundColor = "#111"; b.style.color = "white"; });
+    g9boxes2.forEach(b => { b.style.backgroundColor = "#111"; b.style.color = "white"; });
+    g9boxes3.forEach(b => { b.style.backgroundColor = "#111"; b.style.color = "white"; });
+
+    const toggle = document.getElementById("carryoverToggle");
+    let tiedHoles = [];
+
+    let outStrokes = [0, 0, 0];
+    let inStrokes = [0, 0, 0];
+    let outPts = [0, 0, 0];
+    let inPts = [0, 0, 0];
+
+    const holeIdx = [0,1,2,3,4,5,6,7,8, 10,11,12,13,14,15,16,17,18];
+
+    holeIdx.forEach(function(i, n) {
+        const s1 = parseInt(g9boxes1[i].value);
+        const s2 = parseInt(g9boxes2[i].value);
+        const s3 = parseInt(g9boxes3[i].value);
+
+        const pts = computeG9Points(s1, s2, s3);
+
+        if (ptsA[i]) ptsA[i].value = pts[0] !== null ? pts[0] : "";
+        if (ptsB[i]) ptsB[i].value = pts[1] !== null ? pts[1] : "";
+        if (ptsC[i]) ptsC[i].value = pts[2] !== null ? pts[2] : "";
+
+        const isFront = n < 9;
+        if (!isNaN(s1)) { if (isFront) outStrokes[0] += s1; else inStrokes[0] += s1; }
+        if (!isNaN(s2)) { if (isFront) outStrokes[1] += s2; else inStrokes[1] += s2; }
+        if (!isNaN(s3)) { if (isFront) outStrokes[2] += s3; else inStrokes[2] += s3; }
+
+        if (pts[0] !== null) { if (isFront) outPts[0] += pts[0]; else inPts[0] += pts[0]; }
+        if (pts[1] !== null) { if (isFront) outPts[1] += pts[1]; else inPts[1] += pts[1]; }
+        if (pts[2] !== null) { if (isFront) outPts[2] += pts[2]; else inPts[2] += pts[2]; }
+
+        if (pts[0] !== null && (!toggle || toggle.checked)) {
+            const scores = [s1, s2, s3];
+            const minScore = Math.min(s1, s2, s3);
+            const winners = [0, 1, 2].filter(k => scores[k] === minScore);
+            if (winners.length === 1) {
+                const w = winners[0];
+                tiedHoles.forEach(h => {
+                    rows[w][h].style.backgroundColor = "yellow";
+                    rows[w][h].style.color = "black";
+                });
+                rows[w][i].style.backgroundColor = "yellow";
+                rows[w][i].style.color = "black";
+                tiedHoles = [];
+            } else {
+                tiedHoles.push(i);
+            }
+        }
+    });
+
+    rows.forEach(function(boxes, p) {
+        boxes[9].value = outStrokes[p] || "";
+        boxes[19].value = inStrokes[p] || "";
+        boxes[20].value = (outStrokes[p] + inStrokes[p]) || "";
+    });
+
+    [ptsA, ptsB, ptsC].forEach(function(cells, p) {
+        if (cells[9]) cells[9].value = outPts[p] || "";
+        if (cells[19]) cells[19].value = inPts[p] || "";
+        if (cells[20]) cells[20].value = (outPts[p] + inPts[p]) || "";
+    });
+}
 function saveRound() {
     const data = {
         name1: document.getElementById("name1").value,
@@ -1178,6 +1443,12 @@ function newRound() {
 }
 if (savedGames.some(g => g.includes('Nassau'))) {
     document.getElementById('nassauSection').style.display = 'block';
+}
+if (savedGames.some(g => g.includes('Game of 9'))) {
+    document.getElementById('gameOf9Section').style.display = 'block';
+    document.getElementById('mainScorecardCore').style.display = 'none';
+    updateG9Names();
+    updateGameOf9();
 }
       let selectedChipAmount = 0;
 
