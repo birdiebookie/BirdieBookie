@@ -422,7 +422,7 @@ One golfer's score must count every hole, making consistency the key to winning.
 document.querySelectorAll('.game-select input').forEach(box => {
   box.addEventListener('change', function() {
     const card = this.closest('.game-card');
-    const game = card.querySelector('h2').innerText.trim();
+    const game = card.querySelector('h2').textContent.replace(/^[^\w]+\s*/, '').trim();
     let selectedGames = JSON.parse(localStorage.getItem("selectedGames")) || [];
 
     if (this.checked) {
