@@ -1467,6 +1467,24 @@ function setChipAmount(val) {
     }
 }
   </script>
-<script src="voicescorekeeper.js"></script>
+<div id="quotaRulesModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:9999; align-items:center; justify-content:center;">
+  <div style="background:#111; border:3px solid #00ff99; border-radius:16px; padding:30px; max-width:500px; width:85%; color:#00ff99;">
+    <h2 style="margin-top:0;">📊 Quota Rules</h2>
+    <p style="color:white; line-height:1.5;">
+      Each player gets a personal Quota number based on handicap.<br><br>
+      Points per hole:<br>
+      • Double bogey or worse = 0 pts<br>
+      • Bogey = 1 pt<br>
+      • Par = 2 pts<br>
+      • Birdie = 4 pts<br>
+      • Eagle = 6 pts<br><br>
+      Add up your points for the round, then subtract your Quota.<br>
+      Positive = you beat your Quota (you win). Negative = you fell short.
+    </p>
+    <button onclick="document.getElementById('quotaRulesModal').style.display='none';" style="background:#00ff99; color:black; border:none; padding:12px 24px; border-radius:20px; font-weight:bold; font-size:16px; cursor:pointer; margin-top:10px;">Close</button>
+  </div>
+</div>
+
+    <script src="voicescorekeeper.js"></script>
 </body>
 </html>a
