@@ -413,7 +413,40 @@ One golfer's score must count every hole, making consistency the key to winning.
   
 
 
+<div id="bankerRulesModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,.85); z-index:9999; align-items:center; justify-content:center;">
 
+  <div style="background:#111; border:3px solid #00ff99; border-radius:16px; padding:30px; max-width:600px; width:90%; color:#00ff99;">
+
+    <h2 style="margin-top:0;">🏦 Banker Rules</h2>
+
+    <p style="color:white; line-height:1.6;">
+
+      • 2, 3 or 4 players.<br><br>
+
+      • Before the round begins, each player selects one Front 9 hole and one Back 9 hole as their Banker holes.<br><br>
+
+      • The group agrees on the wager before teeing off (Example: $1, $2, $5 or $10 per Banker hole).<br><br>
+
+      • When a player's Banker hole is played, all golfers compete on that hole.<br><br>
+
+      • The lowest score wins the Banker pot for that hole.<br><br>
+
+      • If two or more players tie for the low score, the group may split the pot or carry it over. Decide this before the round begins.<br><br>
+
+      • More than one player may choose the same Banker hole.<br><br>
+
+      • After all Banker holes have been played, the player who wins the most money wins the game.
+
+    </p>
+
+    <button onclick="document.getElementById('bankerRulesModal').style.display='none';"
+      style="background:#00ff99; color:black; border:none; padding:12px 24px; border-radius:20px; font-weight:bold; font-size:16px; cursor:pointer;">
+      Close
+    </button>
+
+  </div>
+
+</div>
 <script>
 
     localStorage.removeItem("selectedGames");
