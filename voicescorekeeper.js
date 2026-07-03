@@ -105,20 +105,52 @@
     return mic;
   }
 
+  function createDebugBox() {
+    const existing = document.getElementById('bb-debug-box');
+    if (existing) return existing;
+    const box = document.createElement('div');
+    box.id = 'bb-debug-box';
+    box.style.cssText = `
+      position:fixed; top:0; left:0; width:100%;
+      background:rgba(0,0,0,0.92); color:#00ff99;
+      font-size:16px; font-family:monospace; padding:10px 14px;
+      z-index:10000; display:none; max-height:35%; overflow-y:auto;
+      border-bottom:3px solid #00ff99; white-space:pre-wrap; line-height:1.4;
+    `;
+    document.body.appendChild(box);
+    return box;
+  }
+
+  let debugBox = null;
+  function debugLog(text) {
+    console.log(text);
+    if (!debugBox) debugBox = createDebugBox();
+    debugBox.style.display = 'block';
+    const line = document.createElement('div');
+    line.textContent = text;
+    debugBox.appendChild(line);
+    debugBox.scrollTop = debugBox.scrollHeight;
+    while (debugBox.children.length > 12) {
+      debugBox.removeChild(debugBox.firstChild);
+    }
+  }
+
   async function processText(text, micIcon) {
     const lower = text.toLowerCase();
     const names = getPlayerNames();
 
-    console.log('Processing:', lower);
+    debugLog('Processing: ' + lower);
 
     const holeMatch = lower.match(/(?:hole|whole|coal|roll|goal|all|old)\s+(\w+)/);
     if (!holeMatch) {
+      debugLog('❌ No hole number found in that phrase.');
       await speak('I did not catch the hole number. Please try again.');
       return;
     }
 
     const holeNum = parseNumber(holeMatch[1]);
     if (isNaN(holeNum) || holeNum < 1 || holeNum > 18) {
+      debugLog('❌ Hole number invalid: ' + holeMatch[1]);
       await speak('Invalid hole number. Please try again.');
       return;
     }
@@ -145,10 +177,12 @@
     }
 
     if (Object.keys(scores).length === 0) {
+      debugLog('❌ No player names matched. Names expected: ' + names.join(', '));
       await speak('I did not catch any scores. Please try again.');
       return;
     }
 
+    debugLog('✅ Hole ' + holeNum + ' — matched: ' + JSON.stringify(scores));
     fillScores(holeNum, scores);
 
     const displayNames = [
@@ -193,7 +227,7 @@
         transcripts.push(result[i].transcript.toLowerCase());
       }
       const transcript = transcripts[0];
-      console.log('Heard:', transcript);
+      debugLog('Heard: ' + transcript);
 
       const hasTrigger = transcripts.some(t =>
         t.includes('birdiebookie') ||
@@ -213,6 +247,16 @@
         buffer = transcript;
         processing = false;
         micIcon.style.display = 'block';
+        if (hasEnter) {
+          if (bufferTimer) clearTimeout(bufferTimer);
+          bufferTimer = null;
+          processing = true;
+          await processText(buffer, micIcon);
+          buffer = '';
+          processing = false;
+          micIcon.style.display = 'none';
+          return;
+        }
         if (bufferTimer) clearTimeout(bufferTimer);
         bufferTimer = setTimeout(async () => {
           if (buffer && !processing) {
@@ -253,7 +297,7 @@
     };
 
     r.onerror = function(e) {
-      console.warn('Voice error:', e.error);
+      debugLog('⚠️ Voice error: ' + e.error);
       buffer = '';
       processing = false;
       micIcon.style.display = 'none';
@@ -268,7 +312,7 @@
           if (userWantsListening) {
             try { recognition.start(); } catch(e) {}
           }
-        }, 800);
+        }, 2500);
       }
     };
 
@@ -296,6 +340,7 @@
     }
 
     if (!micIcon) micIcon = createMicIcon();
+    if (!debugBox) debugBox = createDebugBox();
 
     if (userWantsListening) {
       userWantsListening = false;
@@ -303,11 +348,12 @@
         try { recognition.stop(); } catch(e) {}
       }
       micIcon.style.display = 'none';
+      debugBox.style.display = 'none';
     } else {
       userWantsListening = true;
       recognition = buildRecognition();
       try { recognition.start(); } catch(e) {}
-      console.log('BirdieBookie Voice Scorekeeper is listening...');
+      debugLog('🎙️ Listening started...');
     }
     updateToggleButton();
   };
