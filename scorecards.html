@@ -843,7 +843,15 @@ DO NOT PLAY CARRYOVERS
 
 </div>
 </div>
-<div style="padding:30px;">
+<div style="text-align:center; margin-top:20px; font-family:monospace; font-size:14px; color:#26e35a;">
+  Views: <span id="bb-leftright-counter">...</span>
+</div>
+<script>
+  fetch('https://countapi.mileshilliard.com/api/v1/hit/birdiebookie_left_right')
+    .then(r => r.json())
+    .then(d => document.getElementById('bb-leftright-counter').textContent = d.value.toLocaleString());
+</script>
+    <div style="padding:30px;">
 
 <!-- CHIP AMOUNT SELECTOR -->
 <div id="chipSelector" style="margin-bottom:18px; padding:10px;">
