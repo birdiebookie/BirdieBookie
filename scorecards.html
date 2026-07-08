@@ -525,7 +525,15 @@ DO NOT PLAY CARRYOVERS
 
 </div>
 </div>
-<div id="gameOf9Section" style="display:none;">
+<div style="text-align:center; margin-top:20px; font-family:monospace; font-size:14px; color:#26e35a;">
+  Views: <span id="bb-nassau-counter">...</span>
+</div>
+<script>
+  fetch('https://countapi.mileshilliard.com/api/v1/hit/birdiebookie_nassau')
+    .then(r => r.json())
+    .then(d => document.getElementById('bb-nassau-counter').textContent = d.value.toLocaleString());
+</script>
+    <div id="gameOf9Section" style="display:none;">
 <h1 style="color:#00ff99; padding-left:30px;">9️⃣ GAME OF 9</h1>
 
 <div class="scorecard" id="gameOf9Scorecard">
