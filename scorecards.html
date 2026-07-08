@@ -1264,7 +1264,7 @@ function updateNassauTracker() {
     for (let i = 0; i <= 8; i++) {
         const a = parseInt(team12[i].value);
         const b = parseInt(team34[i].value);
-        if (!isNaN(a) && !isNaN(b)) { frontDiff += (b - a); frontPlayed++; }
+        if (!isNaN(a) && !isNaN(b)) { if (a < b) frontDiff += 1; else if (b < a) frontDiff -= 1; frontPlayed++; }
         colorHole(i);
     }
     setSegment(9, frontDiff, frontPlayed);
@@ -1273,7 +1273,7 @@ function updateNassauTracker() {
     for (let i = 10; i <= 18; i++) {
         const a = parseInt(team12[i].value);
         const b = parseInt(team34[i].value);
-        if (!isNaN(a) && !isNaN(b)) { backDiff += (b - a); backPlayed++; }
+        if (!isNaN(a) && !isNaN(b)) { if (a < b) backDiff += 1; else if (b < a) backDiff -= 1; backPlayed++; }
         colorHole(i);
     }
     setSegment(19, backDiff, backPlayed);
