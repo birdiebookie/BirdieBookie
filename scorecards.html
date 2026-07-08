@@ -1574,5 +1574,13 @@ function setChipAmount(val) {
 </div>
 
     <script src="voicescorekeeper.js"></script>
+<div style="text-align:center; margin-top:20px; font-family:monospace; font-size:14px; color:#888;">
+  Views: <span id="bb-main-counter">...</span>
+</div>
+<script>
+  fetch('https://countapi.mileshilliard.com/api/v1/hit/birdiebookie_main_scorecard')
+    .then(r => r.json())
+    .then(d => document.getElementById('bb-main-counter').textContent = d.value.toLocaleString());
+</script>
 </body>
 </html>a
