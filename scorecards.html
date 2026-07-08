@@ -750,7 +750,14 @@ DO NOT PLAY CARRYOVERS
 
 <div class="total-box">$0</div>
 </div>
-
+<div style="text-align:center; margin-top:20px; font-family:monospace; font-size:14px; color:#26e35a;">
+  Views: <span id="bb-banker-counter">...</span>
+</div>
+<script>
+  fetch('https://countapi.mileshilliard.com/api/v1/hit/birdiebookie_banker')
+    .then(r => r.json())
+    .then(d => document.getElementById('bb-banker-counter').textContent = d.value.toLocaleString());
+</script>
 </div>
 
 </div>
