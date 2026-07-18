@@ -1469,6 +1469,7 @@ const teamAName = [names[0], names[1]].filter(Boolean).join(" & ") || "Team 1&2"
     const nB = document.getElementById("nassauNameB");
     if (nA) nA.value = teamAName;
     if (nB) nB.value = teamBName;
+    updateLeaderboard();
 }
 
 document.querySelectorAll(".hole-box").forEach(function(box) {
@@ -1506,6 +1507,13 @@ document.querySelectorAll(".chipbox").forEach(function(box) {
         src.addEventListener('input', function() { dst.value = src.value; });
     }
 });
+
+    ["individualSkinValue","teamSkinValue"].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.addEventListener("input", updateLeaderboard);
+});
+var carryoverToggleEl = document.getElementById("carryoverToggle");
+if (carryoverToggleEl) carryoverToggleEl.addEventListener("change", updateLeaderboard);
 
 const saved = localStorage.getItem("birdiebookieScorecard");
 if (saved) {
