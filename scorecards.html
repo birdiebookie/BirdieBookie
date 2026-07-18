@@ -1179,6 +1179,118 @@ function updateLeftRightTotals() {
     });
 }
 
+function updateLeaderboard() {
+    const nameIds = ["name1","name2","name3","name4"];
+    const names = nameIds.map(function(id, idx) {
+        const el = document.getElementById(id);
+        return (el && el.value.trim()) || ("Player " + (idx + 1));
+    });
+
+    const money = [0, 0, 0, 0];
+
+    const indivEl = document.getElementById("individualSkinValue");
+    const teamEl = document.getElementById("teamSkinValue");
+    const individualVal = parseFloat(indivEl ? indivEl.value : 1) || 0;
+    const teamVal = parseFloat(teamEl ? teamEl.value : 1) || 0;
+
+    const carryoverToggle = document.getElementById("carryoverToggle");
+    const playCarryovers = !(carryoverToggle && carryoverToggle.checked);
+
+    if (playCarryovers) {
+        let tiedHoles = [];
+        for (let hole = 0; hole <= 18; hole++) {
+            if (hole === 9) continue;
+            const p1 = document.querySelectorAll("#player1 .hole-box")[hole];
+            const p2 = document.querySelectorAll("#player2 .hole-box")[hole];
+            const p3 = document.querySelectorAll("#player3 .hole-box")[hole];
+            const p4 = document.querySelectorAll("#player4 .hole-box")[hole];
+
+            const scores = [
+                { i: 0, score: parseInt(p1.value) },
+                { i: 1, score: parseInt(p2.value) },
+                { i: 2, score: parseInt(p3.value) },
+                { i: 3, score: parseInt(p4.value) }
+            ];
+            const validScores = scores.filter(function(s) { return !isNaN(s.score); });
+            if (validScores.length < 2) continue;
+
+            const minScore = Math.min.apply(null, validScores.map(function(s) { return s.score; }));
+            const winners = validScores.filter(function(s) { return s.score === minScore; });
+
+            if (winners.length === 1) {
+                const holesToPay = tiedHoles.concat([hole]);
+                const winnerIdx = winners[0].i;
+                holesToPay.forEach(function() {
+                    money[winnerIdx] += individualVal;
+                    validScores.forEach(function(s) {
+                        if (s.i !== winnerIdx) money[s.i] -= individualVal;
+                    });
+                });
+                tiedHoles = [];
+            } else {
+                tiedHoles.push(hole);
+            }
+        }
+    }
+
+    if (playCarryovers) {
+        let teamTiedHoles = [];
+        const team12boxes = document.querySelectorAll("#total12 .hole-box");
+        const team34boxes = document.querySelectorAll("#total34 .hole-box");
+        for (let hole = 0; hole <= 18; hole++) {
+            if (hole === 9) continue;
+            const t12 = parseInt(team12boxes[hole].value);
+            const t34 = parseInt(team34boxes[hole].value);
+            if (isNaN(t12) || isNaN(t34)) continue;
+
+            if (t12 !== t34) {
+                const holesToPay = teamTiedHoles.concat([hole]);
+                const team12Wins = t12 < t34;
+                holesToPay.forEach(function() {
+                    if (team12Wins) {
+                        money[0] += teamVal; money[1] += teamVal;
+                        money[2] -= teamVal; money[3] -= teamVal;
+                    } else {
+                        money[2] += teamVal; money[3] += teamVal;
+                        money[0] -= teamVal; money[1] -= teamVal;
+                    }
+                });
+                teamTiedHoles = [];
+            } else {
+                teamTiedHoles.push(hole);
+            }
+        }
+    }
+
+    const leftRightSection = document.getElementById("leftRightSection");
+    if (leftRightSection && leftRightSection.style.display !== "none") {
+        ["lr1","lr2","lr3","lr4"].forEach(function(id, idx) {
+            const boxes = document.querySelectorAll("#" + id + " .hole-box");
+            if (boxes.length === 21) {
+                money[idx] += parseFloat(boxes[20].value) || 0;
+            }
+        });
+    }
+
+    const players = names.map(function(name, idx) { return { name: name, total: money[idx] }; });
+    players.sort(function(a, b) { return b.total - a.total; });
+
+    function fmtMoney(n) {
+        const sign = n < 0 ? "-" : "";
+        const abs = Math.abs(n);
+        const str = (abs % 1 === 0) ? abs.toFixed(0) : abs.toFixed(2);
+        return sign + "$" + str;
+    }
+
+    const listEl = document.getElementById("leaderboardList");
+    if (listEl) {
+        listEl.innerHTML = players.map(function(p) {
+            const cls = p.total > 0.004 ? "leaderboard-win" : (p.total < -0.004 ? "leaderboard-lose" : "leaderboard-even");
+            return '<span class="leaderboard-item ' + cls + '">' + p.name + ' ' + fmtMoney(p.total) + '</span>';
+        }).join("");
+    }
+}
+    
 function updateChipsTotals() {
     ["chip1","chip2","chip3","chip4"].forEach(function(id) {
         const row = document.querySelector("#" + id);
