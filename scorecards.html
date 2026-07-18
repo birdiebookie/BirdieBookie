@@ -1229,8 +1229,9 @@ function updateLeaderboard() {
                 const holesToPay = tiedHoles.concat([hole]);
                 const winnerIdx = winners[0].i;
                 holesToPay.forEach(function() {
+                const numLosers = validScores.length - 1;
                     money[winnerIdx] += individualVal * numLosers;
-                    const numLosers = validScores.length - 1;
+                    
                     validScores.forEach(function(s) {
                         if (s.i !== winnerIdx) money[s.i] -= individualVal;
                     });
