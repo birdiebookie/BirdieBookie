@@ -1337,15 +1337,15 @@ function handlePress(holeNum) {
 function checkPressReminders() {
     const team12 = document.querySelectorAll("#total12 .hole-box");
     const team34 = document.querySelectorAll("#total34 .hole-box");
-    const hole7Done = team12[6].value !== "" && team34[6].value !== "";
-    const hole16Done = team12[15].value !== "" && team34[15].value !== "";
+    const hole6Done = team12[5].value !== "" && team34[5].value !== "";
+    const hole15Done = team12[14].value !== "" && team34[14].value !== "";
     const decided7 = localStorage.getItem("nassauPress7Decided") === "true";
     const decided16 = localStorage.getItem("nassauPress16Decided") === "true";
     const h7 = document.getElementById("nassauHole7");
     const h16 = document.getElementById("nassauHole16");
 
     if (h7) {
-        if (!decided7 && !hole7Done) {
+        if (!decided7) {
             h7.style.background = "#a020f0";
             h7.style.color = "white";
         } else {
@@ -1354,13 +1354,20 @@ function checkPressReminders() {
         }
     }
     if (h16) {
-        if (!decided16 && !hole16Done) {
+        if (!decided16) {
             h16.style.background = "#a020f0";
             h16.style.color = "white";
         } else {
             h16.style.background = "#00ff99";
             h16.style.color = "black";
         }
+    }
+
+    if (hole6Done && !decided7) {
+        handlePress(7);
+    }
+    if (hole15Done && !decided16) {
+        handlePress(16);
     }
 }
 
