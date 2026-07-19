@@ -1335,12 +1335,16 @@ function handlePress(holeNum) {
 }
 
 function checkPressReminders() {
-    const team12 = document.querySelectorAll("#total12 .hole-box");
-    const team34 = document.querySelectorAll("#total34 .hole-box");
-    const hole6Done = team12[5].value !== "" && team34[5].value !== "";
-    const hole15Done = team12[14].value !== "" && team34[14].value !== "";
+    const p1 = document.querySelectorAll("#player1 .hole-box");
+    const p2 = document.querySelectorAll("#player2 .hole-box");
+    const p3 = document.querySelectorAll("#player3 .hole-box");
+    const p4 = document.querySelectorAll("#player4 .hole-box");
+    const hole6Done = p1[5].value !== "" && p2[5].value !== "" && p3[5].value !== "" && p4[5].value !== "";
+    const hole15Done = p1[14].value !== "" && p2[14].value !== "" && p3[14].value !== "" && p4[14].value !== "";
     const decided7 = localStorage.getItem("nassauPress7Decided") === "true";
     const decided16 = localStorage.getItem("nassauPress16Decided") === "true";
+    const accepted7 = localStorage.getItem("nassauPress7Accepted") === "true";
+    const accepted16 = localStorage.getItem("nassauPress16Accepted") === "true";
     const h7 = document.getElementById("nassauHole7");
     const h16 = document.getElementById("nassauHole16");
 
@@ -1348,18 +1352,24 @@ function checkPressReminders() {
         if (!decided7) {
             h7.style.background = "#a020f0";
             h7.style.color = "white";
-        } else {
+        } else if (accepted7) {
             h7.style.background = "#00ff99";
             h7.style.color = "black";
+        } else {
+            h7.style.background = "#555";
+            h7.style.color = "white";
         }
     }
     if (h16) {
         if (!decided16) {
             h16.style.background = "#a020f0";
             h16.style.color = "white";
-        } else {
+        } else if (accepted16) {
             h16.style.background = "#00ff99";
             h16.style.color = "black";
+        } else {
+            h16.style.background = "#555";
+            h16.style.color = "white";
         }
     }
 
