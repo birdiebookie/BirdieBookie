@@ -1623,8 +1623,7 @@ function updateGameOf9() {
     g9boxes2.forEach(b => { b.style.backgroundColor = "#111"; b.style.color = "white"; });
     g9boxes3.forEach(b => { b.style.backgroundColor = "#111"; b.style.color = "white"; });
 
-    const toggle = document.getElementById("carryoverToggle");
-    let tiedHoles = [];
+   
 
     let outStrokes = [0, 0, 0];
     let inStrokes = [0, 0, 0];
@@ -1653,22 +1652,7 @@ function updateGameOf9() {
         if (pts[1] !== null) { if (isFront) outPts[1] += pts[1]; else inPts[1] += pts[1]; }
         if (pts[2] !== null) { if (isFront) outPts[2] += pts[2]; else inPts[2] += pts[2]; }
 
-        if (pts[0] !== null && (!toggle || !toggle.checked)) {
-            const scores = [s1, s2, s3];
-            const minScore = Math.min(s1, s2, s3);
-            const winners = [0, 1, 2].filter(k => scores[k] === minScore);
-            if (winners.length === 1) {
-                const w = winners[0];
-                tiedHoles.forEach(h => {
-                    rows[w][h].style.backgroundColor = "yellow";
-                    rows[w][h].style.color = "black";
-                });
-                rows[w][i].style.backgroundColor = "yellow";
-                rows[w][i].style.color = "black";
-                tiedHoles = [];
-            } else {
-                tiedHoles.push(i);
-            }
+       
         }
     });
 
