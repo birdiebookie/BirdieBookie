@@ -239,6 +239,11 @@ PLAY CARRYOVERS
         <input type="number" id="nassauValue" value="5" step="1" min="0" style="width:55px; margin-left:4px; background:black; color:#00ff99; border:1px solid #00ff99; border-radius:6px; text-align:center;">
       </label>
     </div>
+<div id="g9ValueBox" style="display:flex; align-items:center; gap:10px; background:#111; border:2px solid #00ff99; border-radius:20px; padding:6px 14px;">
+      <label style="color:#00ff99; font-size:14px; font-weight:bold;">$ G9 PT
+        <input type="number" id="g9PointValue" value="1" step="0.5" min="0" style="width:55px; margin-left:4px; background:black; color:#00ff99; border:1px solid #00ff99; border-radius:6px; text-align:center;">
+      </label>
+    </div>
     
     <div id="leaderboardBar">
       <span id="leaderboardLabel">🏆 LEADERBOARD:</span>
@@ -1182,6 +1187,11 @@ function updateLeftRightTotals() {
 }
 
 function updateLeaderboard() {
+    const g9SectionCheck = document.getElementById("gameOf9Section");
+    if (g9SectionCheck && g9SectionCheck.style.display === "block") {
+        updateLeaderboardForGameOf9();
+        return;
+    }
     const nameIds = ["name1","name2","name3","name4"];
     const names = nameIds.map(function(id, idx) {
         const el = document.getElementById(id);
@@ -1526,7 +1536,7 @@ document.querySelectorAll(".chipbox").forEach(function(box) {
     }
 });
 
-    ["individualSkinValue","teamSkinValue"].forEach(function(id) {
+    ["individualSkinValue","teamSkinValue","g9PointValue"].forEach(function(id) {
     var el = document.getElementById(id);
     if (el) el.addEventListener("input", updateLeaderboard);
 });
@@ -1651,9 +1661,6 @@ function updateGameOf9() {
         if (pts[0] !== null) { if (isFront) outPts[0] += pts[0]; else inPts[0] += pts[0]; }
         if (pts[1] !== null) { if (isFront) outPts[1] += pts[1]; else inPts[1] += pts[1]; }
         if (pts[2] !== null) { if (isFront) outPts[2] += pts[2]; else inPts[2] += pts[2]; }
-
-       
-        }
     });
 
     rows.forEach(function(boxes, p) {
@@ -1667,6 +1674,57 @@ function updateGameOf9() {
         if (cells[19]) cells[19].value = inPts[p] || "";
         if (cells[20]) cells[20].value = (outPts[p] + inPts[p]) || "";
     });
+
+    updateLeaderboardForGameOf9();
+}
+
+function updateLeaderboardForGameOf9() {
+    const g9Section = document.getElementById("gameOf9Section");
+    if (!g9Section || g9Section.style.display !== "block") return;
+
+    const pointValueEl = document.getElementById("g9PointValue");
+    const pointValue = parseFloat(pointValueEl ? pointValueEl.value : 1) || 0;
+
+    const names = ["g9name1","g9name2","g9name3"].map(function(id, idx) {
+        const el = document.getElementById(id);
+        return (el && el.value.trim()) || ("Player " + (idx + 1));
+    });
+
+    const ptsA = document.querySelectorAll(".g9ptsA");
+    const ptsB = document.querySelectorAll(".g9ptsB");
+    const ptsC = document.querySelectorAll(".g9ptsC");
+    if (ptsA.length < 21) return;
+
+    const totalPts = [
+        parseFloat(ptsA[20].value) || 0,
+        parseFloat(ptsB[20].value) || 0,
+        parseFloat(ptsC[20].value) || 0
+    ];
+
+    let holesPlayed = 0;
+    for (let i = 0; i <= 8; i++) { if (ptsA[i].value !== "") holesPlayed++; }
+    for (let i = 10; i <= 18; i++) { if (ptsA[i].value !== "") holesPlayed++; }
+
+    const avgPerHole = 3;
+    const money = totalPts.map(function(p) { return (p - avgPerHole * holesPlayed) * pointValue; });
+
+    const players = names.map(function(name, idx) { return { name: name, total: money[idx] }; });
+    players.sort(function(a, b) { return b.total - a.total; });
+
+    function fmtMoney(n) {
+        const sign = n < 0 ? "-" : "";
+        const abs = Math.abs(n);
+        const str = (abs % 1 === 0) ? abs.toFixed(0) : abs.toFixed(2);
+        return sign + "$" + str;
+    }
+
+    const listEl = document.getElementById("leaderboardList");
+    if (listEl) {
+        listEl.innerHTML = players.map(function(p) {
+            const cls = p.total > 0.004 ? "leaderboard-win" : (p.total < -0.004 ? "leaderboard-lose" : "leaderboard-even");
+            return '<span class="leaderboard-item ' + cls + '">' + p.name + ' ' + fmtMoney(p.total) + '</span>';
+        }).join("");
+    }
 }
 function saveRound() {
     const data = {
