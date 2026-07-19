@@ -1701,12 +1701,9 @@ function updateLeaderboardForGameOf9() {
         parseFloat(ptsC[20].value) || 0
     ];
 
-    let holesPlayed = 0;
-    for (let i = 0; i <= 8; i++) { if (ptsA[i].value !== "") holesPlayed++; }
-    for (let i = 10; i <= 18; i++) { if (ptsA[i].value !== "") holesPlayed++; }
-
-    const avgPerHole = 3;
-    const money = totalPts.map(function(p) { return (p - avgPerHole * holesPlayed) * pointValue; });
+    const numPlayers = totalPts.length;
+    const sumAllPts = totalPts.reduce(function(a, b) { return a + b; }, 0);
+    const money = totalPts.map(function(p) { return (numPlayers * p - sumAllPts) * pointValue; });
 
     const players = names.map(function(name, idx) { return { name: name, total: money[idx] }; });
     players.sort(function(a, b) { return b.total - a.total; });
