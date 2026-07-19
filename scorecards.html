@@ -114,6 +114,7 @@ GOLF IS ABOUT ONE THING AND ONE THING ONLY , TAKING YOUR FRIENDS MONEY 💰
 }
 input.player-name, #bankerName1, #bankerName2, #bankerName3, #bankerName4 {
     color:black !important;
+    background:#fff;
 }
     .hole-box{
     width:55px;
@@ -737,12 +738,7 @@ PLAY CARRYOVERS
 
 <div class="row">
 <div class="player-name">PLAYER</div>
-input.player-name{
-    color:#000;
-    background:#fff;
-    font-weight:bold;
-}
-    
+
 <div class="header-box">Front Hole</div>
 <div class="header-box">Front Winner</div>
 <div class="header-box">$</div>
@@ -930,7 +926,7 @@ input.player-name{
     </label>
 
     <label style="display:flex; flex-direction:column; align-items:center; cursor:pointer; gap:6px;">
-      <input type="radio" name="chipAmount" value="1.00" style="accent-color:#00ff99;" onchange="setChipAmount(this.value)">
+      <input type="radio" name="chipAmount" value="1.00" checked style="accent-color:#00ff99;" onchange="setChipAmount(this.value)">
       <div style="width:54px; height:54px; border-radius:50%; background:radial-gradient(circle at 35% 35%, #ff6b6b, #aa0000); border:5px dashed #fff; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:0.78em; color:#fff; box-shadow:0 3px 8px #0008;">$1</div>
     </label>
 
@@ -1005,7 +1001,7 @@ input.player-name{
 
 
 <div class="row" id="chip1">
-<input class="player-name" id="chipName1" readonly>
+<input class="player-name" id="chipName1" readonly style="background:#fff; color:#000; font-weight:bold;">
 <input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox">
 <input class="hole-box total-box chipOut" readonly>
 <input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox">
@@ -1014,7 +1010,7 @@ input.player-name{
 </div>
 
 <div class="row" id="chip2">
-<input class="player-name" id="chipName2" readonly>
+<input class="player-name" id="chipName2" readonly style="background:#fff; color:#000; font-weight:bold;">
 <input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox">
 <input class="hole-box total-box chipOut" readonly>
 <input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox">
@@ -1023,7 +1019,7 @@ input.player-name{
 </div>
 
 <div class="row" id="chip3">
-<input class="player-name" id="chipName3" readonly>
+<input class="player-name" id="chipName3" readonly style="background:#fff; color:#000; font-weight:bold;">
 <input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox">
 <input class="hole-box total-box chipOut" readonly>
 <input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox">
@@ -1032,7 +1028,7 @@ input.player-name{
 </div>
 
 <div class="row" id="chip4">
-<input class="player-name" id="chipName4" readonly>
+<input class="player-name" id="chipName4" readonly style="background:#fff; color:#000; font-weight:bold;">
 <input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox">
 <input class="hole-box total-box chipOut" readonly>
 <input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox"><input class="hole-box chipbox">
@@ -1491,6 +1487,10 @@ function updateNames() {
     document.getElementById("chipName2").value = names[1];
     document.getElementById("chipName3").value = names[2];
     document.getElementById("chipName4").value = names[3];
+    ["bankerName1","bankerName2","bankerName3","bankerName4"].forEach(function(id, idx) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = names[idx] || ("Player " + (idx + 1));
+    });
 const teamAName = [names[0], names[1]].filter(Boolean).join(" & ") || "Team 1&2";
     const teamBName = [names[2], names[3]].filter(Boolean).join(" & ") || "Team 3&4";
     const nA = document.getElementById("nassauNameA");
@@ -1786,7 +1786,8 @@ if (savedGames.some(g => g.includes('Banker'))) {
     updateG9Names();
     updateGameOf9();
 }
-      let selectedChipAmount = 0;
+      let selectedChipAmount = 1;
+document.getElementById('chipAmountDisplay').textContent = '✅ Chip value set: $' + selectedChipAmount.toFixed(2) + ' per junk game';
 
 function setChipAmount(val) {
   selectedChipAmount = parseFloat(val);
