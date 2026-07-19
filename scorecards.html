@@ -1195,74 +1195,69 @@ function updateLeaderboard() {
     const individualVal = parseFloat(indivEl ? indivEl.value : 1) || 0;
     const teamVal = parseFloat(teamEl ? teamEl.value : 1) || 0;
 
-    const carryoverToggle = document.getElementById("carryoverToggle");
-    const playCarryovers = !(carryoverToggle && carryoverToggle.checked);
+   const toggle = document.getElementById("carryoverToggle");
+    const playCarryovers = !!(toggle && toggle.checked);
 
-    if (playCarryovers) {
-        let tiedHoles = [];
-        for (let hole = 0; hole <= 18; hole++) {
-            if (hole === 9) continue;
-            const p1 = document.querySelectorAll("#player1 .hole-box")[hole];
-            const p2 = document.querySelectorAll("#player2 .hole-box")[hole];
-            const p3 = document.querySelectorAll("#player3 .hole-box")[hole];
-            const p4 = document.querySelectorAll("#player4 .hole-box")[hole];
+    let tiedHoles = [];
+    for (let hole = 0; hole <= 18; hole++) {
+        if (hole === 9) continue;
+        const p1 = document.querySelectorAll("#player1 .hole-box")[hole];
+        const p2 = document.querySelectorAll("#player2 .hole-box")[hole];
+        const p3 = document.querySelectorAll("#player3 .hole-box")[hole];
+        const p4 = document.querySelectorAll("#player4 .hole-box")[hole];
 
-            const scores = [
-                { i: 0, score: parseInt(p1.value) },
-                { i: 1, score: parseInt(p2.value) },
-                { i: 2, score: parseInt(p3.value) },
-                { i: 3, score: parseInt(p4.value) }
-            ];
-            const validScores = scores.filter(function(s) { return !isNaN(s.score); });
-            if (validScores.length < 2) continue;
+        const scores = [
+            { i: 0, score: parseInt(p1.value) },
+            { i: 1, score: parseInt(p2.value) },
+            { i: 2, score: parseInt(p3.value) },
+            { i: 3, score: parseInt(p4.value) }
+        ];
+        const validScores = scores.filter(function(s) { return !isNaN(s.score); });
+        if (validScores.length < 2) continue;
 
-            const minScore = Math.min.apply(null, validScores.map(function(s) { return s.score; }));
-            const winners = validScores.filter(function(s) { return s.score === minScore; });
+        const minScore = Math.min.apply(null, validScores.map(function(s) { return s.score; }));
+        const winners = validScores.filter(function(s) { return s.score === minScore; });
 
-            if (winners.length === 1) {
-                const holesToPay = tiedHoles.concat([hole]);
-                const winnerIdx = winners[0].i;
-                holesToPay.forEach(function() {
-                const numLosers = validScores.length - 1;
-                    money[winnerIdx] += individualVal * numLosers;
-                    
-                    validScores.forEach(function(s) {
-                        if (s.i !== winnerIdx) money[s.i] -= individualVal;
-                    });
+        if (winners.length === 1) {
+            const holesToPay = playCarryovers ? tiedHoles.concat([hole]) : [hole];
+            const winnerIdx = winners[0].i;
+            const numLosers = validScores.length - 1;
+            holesToPay.forEach(function() {
+                money[winnerIdx] += individualVal * numLosers;
+                validScores.forEach(function(s) {
+                    if (s.i !== winnerIdx) money[s.i] -= individualVal;
                 });
-                tiedHoles = [];
-            } else {
-                tiedHoles.push(hole);
-            }
+            });
+            tiedHoles = [];
+        } else {
+            if (playCarryovers) tiedHoles.push(hole);
         }
     }
 
-    if (playCarryovers) {
-        let teamTiedHoles = [];
-        const team12boxes = document.querySelectorAll("#total12 .hole-box");
-        const team34boxes = document.querySelectorAll("#total34 .hole-box");
-        for (let hole = 0; hole <= 18; hole++) {
-            if (hole === 9) continue;
-            const t12 = parseInt(team12boxes[hole].value);
-            const t34 = parseInt(team34boxes[hole].value);
-            if (isNaN(t12) || isNaN(t34)) continue;
+    let teamTiedHoles = [];
+    const team12boxes = document.querySelectorAll("#total12 .hole-box");
+    const team34boxes = document.querySelectorAll("#total34 .hole-box");
+    for (let hole = 0; hole <= 18; hole++) {
+        if (hole === 9) continue;
+        const t12 = parseInt(team12boxes[hole].value);
+        const t34 = parseInt(team34boxes[hole].value);
+        if (isNaN(t12) || isNaN(t34)) continue;
 
-            if (t12 !== t34) {
-                const holesToPay = teamTiedHoles.concat([hole]);
-                const team12Wins = t12 < t34;
-                holesToPay.forEach(function() {
-                    if (team12Wins) {
-                        money[0] += teamVal; money[1] += teamVal;
-                        money[2] -= teamVal; money[3] -= teamVal;
-                    } else {
-                        money[2] += teamVal; money[3] += teamVal;
-                        money[0] -= teamVal; money[1] -= teamVal;
-                    }
-                });
-                teamTiedHoles = [];
-            } else {
-                teamTiedHoles.push(hole);
-            }
+        if (t12 !== t34) {
+            const holesToPay = playCarryovers ? teamTiedHoles.concat([hole]) : [hole];
+            const team12Wins = t12 < t34;
+            holesToPay.forEach(function() {
+                if (team12Wins) {
+                    money[0] += teamVal; money[1] += teamVal;
+                    money[2] -= teamVal; money[3] -= teamVal;
+                } else {
+                    money[2] += teamVal; money[3] += teamVal;
+                    money[0] -= teamVal; money[1] -= teamVal;
+                }
+            });
+            teamTiedHoles = [];
+        } else {
+            if (playCarryovers) teamTiedHoles.push(hole);
         }
     }
 
