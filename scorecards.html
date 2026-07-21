@@ -1042,7 +1042,51 @@ PLAY CARRYOVERS
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
-function checkSkins() {
+function sanitizeScoreInput(box) {
+    const allowNegative = box.classList.contains("lrbox");
+    let val = box.value;
+    if (allowNegative) {
+        val = val.replace(/[^0-9-]/g, "");
+        val = val.replace(/(?!^)-/g, "");
+    } else {
+        val = val.replace(/[^0-9]/g, "");
+    }
+    if (box.value !== val) box.value = val;
+}
+
+function validateLeftRightZeroSum() {
+    const rows = ["lr1", "lr2", "lr3", "lr4"].map(function(id) {
+        return document.querySelectorAll("#" + id + " .lrbox");
+    });
+    if (rows.some(function(r) { return r.length === 0; })) return;
+
+    for (let i = 0; i < 18; i++) {
+        const boxes = rows.map(function(r) { return r[i]; });
+        const values = boxes.map(function(b) { return b.value.trim(); });
+        const anyFilled = values.some(function(v) { return v !== ""; });
+
+        if (!anyFilled) {
+            boxes.forEach(function(b) { b.style.borderColor = "#00ff99"; b.style.borderWidth = "2px"; });
+            continue;
+        }
+
+        let sum = 0;
+        let valid = true;
+        values.forEach(function(v) {
+            if (v === "") return;
+            const n = parseFloat(v);
+            if (isNaN(n)) valid = false;
+            else sum += n;
+        });
+
+        if (valid && sum !== 0) {
+            boxes.forEach(function(b) { b.style.borderColor = "red"; b.style.borderWidth = "3px"; });
+        } else {
+            boxes.forEach(function(b) { b.style.borderColor = "#00ff99"; b.style.borderWidth = "2px"; });
+        }
+    }
+}
+    function checkSkins() {
     document.querySelectorAll(".hole-box").forEach(box => {
         box.style.backgroundColor = "#111";
         box.style.color = "white";
@@ -1502,6 +1546,7 @@ const teamAName = [names[0], names[1]].filter(Boolean).join(" & ") || "Team 1&2"
 
 document.querySelectorAll(".hole-box").forEach(function(box) {
     box.addEventListener("input", function() {
+        sanitizeScoreInput(box);
         updatePlayerTotals();
         updateTeamTotals();
         checkSkins();
@@ -1509,6 +1554,7 @@ document.querySelectorAll(".hole-box").forEach(function(box) {
         updateLeftRightTotals();
         updateNassauTracker();
         updateLeaderboard();
+        validateLeftRightZeroSum();
     });
 });
 
@@ -1573,6 +1619,7 @@ if (saved) {
 updatePlayerTotals();
 updateTeamTotals();
 updateLeftRightTotals();
+    validateLeftRightZeroSum();
 updateChipsTotals();
     updateNassauTracker();
 checkSkins();
