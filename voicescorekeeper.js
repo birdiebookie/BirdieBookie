@@ -141,7 +141,7 @@
 
     debugLog('Processing: ' + lower);
 
-    const holeMatch = lower.match(/(?:hole|whole|coal|roll|goal|all|old)\s+(\w+)/);
+    const holeMatch = lower.match(/(?:hole|whole|coal|roll|goal|all|old|hold|hall|hull)\s+(\w+)/);
     if (!holeMatch) {
       debugLog('❌ No hole number found in that phrase.');
       await speak('I did not catch the hole number. Please try again.');
@@ -266,7 +266,7 @@
             processing = false;
             micIcon.style.display = 'none';
           }
-        }, 4000);
+        }, 7000);
         return;
       }
 
@@ -291,7 +291,7 @@
               processing = false;
               micIcon.style.display = 'none';
             }
-          }, 4000);
+          }, 7000);
         }
       }
     };
