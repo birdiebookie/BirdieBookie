@@ -1065,9 +1065,9 @@ function validateLeftRightZeroSum() {
     for (let i = 0; i < 18; i++) {
         const boxes = rows.map(function(r) { return r[i]; });
         const values = boxes.map(function(b) { return b.value.trim(); });
-        const anyFilled = values.some(function(v) { return v !== ""; });
+        const allFilled = values.every(function(v) { return v !== ""; });
 
-        if (!anyFilled) {
+        if (!allFilled) {
             lrAlertedHoles.delete(i);
             continue;
         }
