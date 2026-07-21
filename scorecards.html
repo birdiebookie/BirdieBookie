@@ -1054,6 +1054,8 @@ function sanitizeScoreInput(box) {
     if (box.value !== val) box.value = val;
 }
 
+const lrAlertedHoles = new Set();
+
 function validateLeftRightZeroSum() {
     const rows = ["lr1", "lr2", "lr3", "lr4"].map(function(id) {
         return document.querySelectorAll("#" + id + " .lrbox");
@@ -1066,7 +1068,7 @@ function validateLeftRightZeroSum() {
         const anyFilled = values.some(function(v) { return v !== ""; });
 
         if (!anyFilled) {
-            boxes.forEach(function(b) { b.style.borderColor = "#00ff99"; b.style.borderWidth = "2px"; });
+            lrAlertedHoles.delete(i);
             continue;
         }
 
@@ -1080,9 +1082,12 @@ function validateLeftRightZeroSum() {
         });
 
         if (valid && sum !== 0) {
-            boxes.forEach(function(b) { b.style.borderColor = "red"; b.style.borderWidth = "3px"; });
+            if (!lrAlertedHoles.has(i)) {
+                lrAlertedHoles.add(i);
+                alert("Left-Right hole " + (i + 1) + " doesn't add up to zero. Please check the scores.");
+            }
         } else {
-            boxes.forEach(function(b) { b.style.borderColor = "#00ff99"; b.style.borderWidth = "2px"; });
+            lrAlertedHoles.delete(i);
         }
     }
 }
