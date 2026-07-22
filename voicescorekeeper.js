@@ -3,13 +3,23 @@
   const wordToNum = {
     'zero':0,'one':1,'two':2,'three':3,'four':4,'five':5,
     'six':6,'seven':7,'eight':8,'nine':9,'ten':10,
-    'eleven':11,'twelve':12,'0':0,'1':1,'2':2,'3':3,'4':4,
+    'eleven':11,'twelve':12,
+    'for':4,'fore':4,'ford':4,'too':2,
+    '0':0,'1':1,'2':2,'3':3,'4':4,
     '5':5,'6':6,'7':7,'8':8,'9':9,'10':10,'11':11,'12':12
   };
 
-  function parseNumber(word) {
-    if (!word) return NaN;
-    return wordToNum[word.toLowerCase()] !== undefined ? wordToNum[word.toLowerCase()] : parseInt(word);
+  function parseSpokenNumber(text) {
+    if (!text) return NaN;
+    const t = text.toLowerCase();
+    const tokens = t.split(/\s+/);
+    for (const tok of tokens) {
+      const cleaned = tok.replace(/[^a-z0-9]/g, '');
+      if (wordToNum[cleaned] !== undefined) return wordToNum[cleaned];
+    }
+    const digitMatch = t.match(/\d+/);
+    if (digitMatch) return parseInt(digitMatch[0]);
+    return NaN;
   }
 
   function speak(text) {
@@ -45,19 +55,12 @@
     });
   }
 
-  async function playCachingTimes(n) {
-    for (let i = 0; i < n; i++) {
-      await playCaching();
-      await new Promise(r => setTimeout(r, 150));
-    }
-  }
-
   function getPlayerNames() {
     return [
-      document.getElementById('name1')?.value?.trim().toLowerCase() || 'player 1',
-      document.getElementById('name2')?.value?.trim().toLowerCase() || 'player 2',
-      document.getElementById('name3')?.value?.trim().toLowerCase() || 'player 3',
-      document.getElementById('name4')?.value?.trim().toLowerCase() || 'player 4',
+      document.getElementById('name1')?.value?.trim() || 'Player 1',
+      document.getElementById('name2')?.value?.trim() || 'Player 2',
+      document.getElementById('name3')?.value?.trim() || 'Player 3',
+      document.getElementById('name4')?.value?.trim() || 'Player 4',
     ];
   }
 
@@ -67,15 +70,39 @@
     return null;
   }
 
-  function fillScores(holeNum, scores) {
+  function getNextIncompleteHole() {
+    const playerIds = ['player1','player2','player3','player4'];
+    for (let holeNum = 1; holeNum <= 18; holeNum++) {
+      const idx = holeToIndex(holeNum);
+      let allFilled = true;
+      for (const pid of playerIds) {
+        const boxes = document.querySelectorAll('#' + pid + ' .hole-box');
+        if (!boxes[idx] || boxes[idx].value.trim() === '') { allFilled = false; break; }
+      }
+      if (!allFilled) return holeNum;
+    }
+    return null;
+  }
+
+  function fillScoresWithHighlight(holeNum, scores) {
     const playerIds = ['player1','player2','player3','player4'];
     const idx = holeToIndex(holeNum);
     if (idx === null) return;
-    for (const [i, score] of Object.entries(scores)) {
+
+    for (let i = 0; i < 4; i++) {
+      if (scores[i] === undefined) continue;
       const boxes = document.querySelectorAll('#' + playerIds[i] + ' .hole-box');
-      if (boxes[idx]) {
-        boxes[idx].value = score;
-        boxes[idx].dispatchEvent(new Event('input', { bubbles: true }));
+      if (!boxes[idx]) continue;
+      boxes[idx].value = scores[i];
+      boxes[idx].dispatchEvent(new Event('input', { bubbles: true }));
+    }
+
+    for (let i = 0; i < 4; i++) {
+      const boxes = document.querySelectorAll('#' + playerIds[i] + ' .hole-box');
+      if (!boxes[idx]) continue;
+      if (scores[i] === undefined) {
+        boxes[idx].style.backgroundColor = 'orange';
+        boxes[idx].style.color = 'black';
       }
     }
   }
@@ -135,74 +162,81 @@
     }
   }
 
-  async function processText(text, micIcon) {
-    const lower = text.toLowerCase();
-    const names = getPlayerNames();
-
-    debugLog('Processing: ' + lower);
-
-    const holeMatch = lower.match(/(?:hole|whole|coal|roll|goal|all|old|hold|hall|hull)\s+(\w+)/);
-    if (!holeMatch) {
-      debugLog('❌ No hole number found in that phrase.');
-      return;
-    }
-
-    const holeNum = parseNumber(holeMatch[1]);
-    if (isNaN(holeNum) || holeNum < 1 || holeNum > 18) {
-      debugLog('❌ Hole number invalid: ' + holeMatch[1]);
-      return;
-    }
-
-    const nameAliases = {
-      'sonny': ['sonny','sunny','sony','soni','sunni'],
-    };
-
-    const scores = {};
-    for (let i = 0; i < names.length; i++) {
-      const name = names[i];
-      const aliases = nameAliases[name] || [name];
-      let match = null;
-      for (const alias of aliases) {
-        const escaped = alias.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        const r = new RegExp(escaped + '[\\s,]+([\\w]+)', 'i');
-        match = lower.match(r);
-        if (match) break;
-      }
-      if (match) {
-        const score = parseNumber(match[1]);
-        if (!isNaN(score)) scores[i] = score;
-      }
-    }
-
-    if (Object.keys(scores).length === 0) {
-      debugLog('❌ No player names matched. Names expected: ' + names.join(', '));
-      return;
-    }
-
-    debugLog('✅ Hole ' + holeNum + ' — matched: ' + JSON.stringify(scores));
-    fillScores(holeNum, scores);
-    const displayNames = [
-      document.getElementById('name1')?.value?.trim() || 'Player 1',
-      document.getElementById('name2')?.value?.trim() || 'Player 2',
-      document.getElementById('name3')?.value?.trim() || 'Player 3',
-      document.getElementById('name4')?.value?.trim() || 'Player 4',
-    ];
-
-    const scoreText = Object.entries(scores)
-      .map(([i,s]) => `${displayNames[i]} ${s}`)
-      .join(', ');
-    await speak(`Hole ${holeNum} confirmed. ${scoreText}`);
-
-    const winner = getSkinWinner(scores, displayNames);
-    if (winner) {
-      await speak(winner);
-      await playCachingTimes(1);
-    }
-  }
-
   let recognition = null;
   let micIcon = null;
   let userWantsListening = false;
+  let qaActive = false;
+  let qaResolveAnswer = null;
+
+  function listenForAnswer(timeoutMs) {
+    return new Promise(resolve => {
+      let done = false;
+      const timer = setTimeout(() => {
+        if (!done) {
+          done = true;
+          qaResolveAnswer = null;
+          resolve(null);
+        }
+      }, timeoutMs);
+
+      qaResolveAnswer = function(transcript) {
+        if (done) return;
+        done = true;
+        clearTimeout(timer);
+        qaResolveAnswer = null;
+        resolve(transcript);
+      };
+    });
+  }
+
+  async function runScoreSession() {
+    if (qaActive) return;
+    qaActive = true;
+    micIcon.style.display = 'block';
+
+    const hole = getNextIncompleteHole();
+    if (hole === null) {
+      debugLog('✅ All 18 holes already complete.');
+      await speak('All holes are already filled in.');
+      qaActive = false;
+      micIcon.style.display = 'none';
+      return;
+    }
+
+    debugLog('🏌️ Starting score entry for hole ' + hole);
+    const names = getPlayerNames();
+    const scores = {};
+
+    for (let i = 0; i < 4; i++) {
+      await speak(`What was ${names[i]}'s score?`);
+      const answer = await listenForAnswer(6000);
+      if (answer === null) {
+        debugLog('⚠️ No answer heard for ' + names[i] + ' — leaving blank.');
+        continue;
+      }
+      debugLog('Heard answer for ' + names[i] + ': ' + answer);
+      const num = parseSpokenNumber(answer);
+      if (isNaN(num)) {
+        debugLog('⚠️ Could not understand answer for ' + names[i] + ': "' + answer + '" — leaving blank.');
+        continue;
+      }
+      scores[i] = num;
+    }
+
+    debugLog('✅ Hole ' + hole + ' — collected: ' + JSON.stringify(scores));
+    fillScoresWithHighlight(hole, scores);
+
+    await speak('Scores entered.');
+
+    const winner = getSkinWinner(scores, names);
+    if (winner) {
+      await speak(winner);
+      await playCaching();
+    }
+
+    qaActive = false;
+    micIcon.style.display = 'none';
+  }
 
   function buildRecognition() {
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -212,11 +246,7 @@
     r.lang = 'en-US';
     r.maxAlternatives = 3;
 
-    let buffer = '';
-    let bufferTimer = null;
-    let processing = false;
-
-    r.onresult = async function(event) {
+    r.onresult = function(event) {
       const result = event.results[event.results.length - 1];
       let transcripts = [];
       for (let i = 0; i < result.length; i++) {
@@ -224,6 +254,11 @@
       }
       const transcript = transcripts[0];
       debugLog('Heard: ' + transcript);
+
+      if (qaActive) {
+        if (qaResolveAnswer) qaResolveAnswer(transcript);
+        return;
+      }
 
       const hasTrigger = transcripts.some(t =>
         t.includes('birdiebookie') ||
@@ -233,82 +268,25 @@
         t.includes('birdie boogie')
       );
 
-      const hasEnter = transcripts.some(t =>
-        t.includes('enter scores') ||
-        t.includes('enter score') ||
-        t.includes('enter')
-      );
-
       if (hasTrigger) {
-        buffer = transcript;
-        processing = false;
-        micIcon.style.display = 'block';
-        if (hasEnter) {
-          if (bufferTimer) clearTimeout(bufferTimer);
-          bufferTimer = null;
-          processing = true;
-          await processText(buffer, micIcon);
-          buffer = '';
-          processing = false;
-          micIcon.style.display = 'none';
-          return;
-        }
-        if (bufferTimer) clearTimeout(bufferTimer);
-        bufferTimer = setTimeout(async () => {
-          if (buffer && !processing) {
-            processing = true;
-            await processText(buffer, micIcon);
-            buffer = '';
-            processing = false;
-            micIcon.style.display = 'none';
-          }
-        }, 7000);
-        return;
-      }
-
-      if (buffer && !processing) {
-        buffer += ' ' + transcript;
-        if (hasEnter) {
-          if (bufferTimer) clearTimeout(bufferTimer);
-          bufferTimer = null;
-          processing = true;
-          micIcon.style.display = 'block';
-          await processText(buffer, micIcon);
-          buffer = '';
-          processing = false;
-          micIcon.style.display = 'none';
-        } else {
-          if (bufferTimer) clearTimeout(bufferTimer);
-          bufferTimer = setTimeout(async () => {
-            if (buffer && !processing) {
-              processing = true;
-              await processText(buffer, micIcon);
-              buffer = '';
-              processing = false;
-              micIcon.style.display = 'none';
-            }
-          }, 7000);
-        }
+        runScoreSession();
       }
     };
 
     r.onerror = function(e) {
       debugLog('⚠️ Voice error: ' + e.error);
-      buffer = '';
-      processing = false;
-      micIcon.style.display = 'none';
+      if (qaActive) {
+        if (qaResolveAnswer) qaResolveAnswer(null);
+      }
     };
 
     r.onend = function() {
-      buffer = '';
-      processing = false;
-      micIcon.style.display = 'none';
       if (userWantsListening) {
         setTimeout(() => {
           if (userWantsListening) {
             try { recognition.start(); } catch(e) {}
           }
-        }, 2500);
+        }, 500);
       }
     };
 
@@ -340,6 +318,8 @@
 
     if (userWantsListening) {
       userWantsListening = false;
+      qaActive = false;
+      qaResolveAnswer = null;
       if (recognition) {
         try { recognition.stop(); } catch(e) {}
       }
@@ -349,7 +329,7 @@
       userWantsListening = true;
       recognition = buildRecognition();
       try { recognition.start(); } catch(e) {}
-      debugLog('🎙️ Listening started...');
+      debugLog('🎙️ Listening for "Hey BirdieBookie"...');
     }
     updateToggleButton();
   };
