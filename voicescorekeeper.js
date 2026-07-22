@@ -144,14 +144,12 @@
     const holeMatch = lower.match(/(?:hole|whole|coal|roll|goal|all|old|hold|hall|hull)\s+(\w+)/);
     if (!holeMatch) {
       debugLog('❌ No hole number found in that phrase.');
-      await speak('I did not catch the hole number. Please try again.');
       return;
     }
 
     const holeNum = parseNumber(holeMatch[1]);
     if (isNaN(holeNum) || holeNum < 1 || holeNum > 18) {
       debugLog('❌ Hole number invalid: ' + holeMatch[1]);
-      await speak('Invalid hole number. Please try again.');
       return;
     }
 
@@ -178,13 +176,11 @@
 
     if (Object.keys(scores).length === 0) {
       debugLog('❌ No player names matched. Names expected: ' + names.join(', '));
-      await speak('I did not catch any scores. Please try again.');
       return;
     }
 
     debugLog('✅ Hole ' + holeNum + ' — matched: ' + JSON.stringify(scores));
     fillScores(holeNum, scores);
-
     const displayNames = [
       document.getElementById('name1')?.value?.trim() || 'Player 1',
       document.getElementById('name2')?.value?.trim() || 'Player 2',
