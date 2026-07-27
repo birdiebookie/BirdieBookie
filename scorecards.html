@@ -1496,7 +1496,9 @@ function updateIndivTeamMoney(money) {
         });
     }
 
-   updateNassauMoney(money); const players = names.map(function(name, idx) { return { name: name, total: money[idx] }; });
+   updateNassauMoney(money);
+    updateIndivTeamMoney(money);
+    const players = names.map(function(name, idx) { return { name: name, total: money[idx] }; });
     players.sort(function(a, b) { return b.total - a.total; });
 
     function fmtMoney(n) {
@@ -1763,6 +1765,10 @@ document.querySelectorAll(".chipbox").forEach(function(box) {
 });
 var carryoverToggleEl = document.getElementById("carryoverToggle");
 if (carryoverToggleEl) carryoverToggleEl.addEventListener("change", updateLeaderboard);
+    ["indivNassauToggle","teamNassauToggle"].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.addEventListener("change", updateLeaderboard);
+});
 
 const saved = localStorage.getItem("birdiebookieScorecard");
 if (saved) {
