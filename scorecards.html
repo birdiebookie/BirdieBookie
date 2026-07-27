@@ -154,24 +154,24 @@ input.player-name, #bankerName1, #bankerName2, #bankerName3, #bankerName4 {
     width:70px;
 }
 #saveBtn{
-    width:105px;
-    height:105px;
+    width:140px;
+    height:140px;
     border-radius:50%;
     background:white;
     color:#00ff99;
-    font-size:29px;
+    font-size:38px;
     font-weight:bold;
     border:none;
     cursor:pointer;
 }
 
 #restartBtn{
-    width:105px;
-    height:105px;
+    width:140px;
+    height:140px;
     border-radius:50%;
     background:red;
     color:white;
-    font-size:29px;
+    font-size:30px;
     font-weight:bold;
     border:none;
     cursor:pointer;
@@ -179,12 +179,12 @@ input.player-name, #bankerName1, #bankerName2, #bankerName3, #bankerName4 {
 }
 
     #coursesBtn{
-    width:105px;
-    height:105px;
+    width:140px;
+    height:140px;
     border-radius:50%;
     background:#00ff99;
     color:black;
-    font-size:29px;
+    font-size:26px;
     font-weight:bold;
     border:none;
     cursor:pointer;
@@ -1731,8 +1731,7 @@ document.querySelectorAll(".hole-box").forEach(function(box) {
         updateLeftRightTotals();
         updateNassauTracker();
         updateLeaderboard();
-        
-    });
+        validateLeftRightZeroSum();
     });
 });
 
@@ -2062,3 +2061,4 @@ function setChipAmount(val) {
 </script>
 </body>
 </html>a
+        
