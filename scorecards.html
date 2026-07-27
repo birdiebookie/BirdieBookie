@@ -1735,11 +1735,7 @@ document.querySelectorAll(".hole-box").forEach(function(box) {
     });
     });
 });
-document.querySelectorAll(".lrbox").forEach(function(box) {
-    box.addEventListener("blur", function() {
-        validateLeftRightZeroSum();
-    });
-});
+
 document.querySelectorAll(".player-input").forEach(function(box) {
     box.addEventListener("input", updateNames);
 });
