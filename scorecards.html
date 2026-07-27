@@ -1484,11 +1484,11 @@ function checkPressReminders() {
         }
     }
 
-    if (hole6Done && !decided7) {
-        handlePress(7);
+  if (hole6Done && !decided7) {
+        setTimeout(function() { handlePress(7); }, 50);
     }
     if (hole15Done && !decided16) {
-        handlePress(16);
+        setTimeout(function() { handlePress(16); }, 50);
     }
 }
 
