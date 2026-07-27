@@ -953,34 +953,29 @@ PLAY CARRYOVERS
   <div style="display:flex; flex-wrap:wrap; gap:16px; align-items:center;">
 
     <label style="display:flex; flex-direction:column; align-items:center; cursor:pointer; gap:6px;">
-      <input type="radio" name="chipAmount" value="0.50" style="accent-color:#00ff99;" onchange="setChipAmount(this.value)">
-      <div style="width:54px; height:54px; border-radius:50%; background:radial-gradient(circle at 35% 35%, #fff, #aaa); border:5px dashed #555; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:0.72em; color:#222; box-shadow:0 3px 8px #0008;">50¢</div>
-    </label>
+  <input type="radio" name="chipAmount" value="1.00" checked style="accent-color:#00ff99;" onchange="setChipAmount(this.value)">
+  <div style="width:48px; height:48px; border-radius:50%; background:radial-gradient(circle at 35% 35%, #ffffff, #d9d9d9); border:4px dashed #000; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:0.75em; color:#000;">$1</div>
+</label>
 
-    <label style="display:flex; flex-direction:column; align-items:center; cursor:pointer; gap:6px;">
-      <input type="radio" name="chipAmount" value="1.00" checked style="accent-color:#00ff99;" onchange="setChipAmount(this.value)">
-      <div style="width:54px; height:54px; border-radius:50%; background:radial-gradient(circle at 35% 35%, #ff6b6b, #aa0000); border:5px dashed #fff; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:0.78em; color:#fff; box-shadow:0 3px 8px #0008;">$1</div>
-    </label>
+<label style="display:flex; flex-direction:column; align-items:center; cursor:pointer; gap:6px;">
+  <input type="radio" name="chipAmount" value="5.00" style="accent-color:#00ff99;" onchange="setChipAmount(this.value)">
+  <div style="width:48px; height:48px; border-radius:50%; background:radial-gradient(circle at 35% 35%, #ff6666, #aa0000); border:4px dashed #fff; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:0.75em; color:#fff;">$5</div>
+</label>
 
-    <label style="display:flex; flex-direction:column; align-items:center; cursor:pointer; gap:6px;">
-      <input type="radio" name="chipAmount" value="5.00" style="accent-color:#00ff99;" onchange="setChipAmount(this.value)">
-      <div style="width:54px; height:54px; border-radius:50%; background:radial-gradient(circle at 35% 35%, #66ee66, #006600); border:5px dashed #fff; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:0.78em; color:#fff; box-shadow:0 3px 8px #0008;">$5</div>
-    </label>
+<label style="display:flex; flex-direction:column; align-items:center; cursor:pointer; gap:6px;">
+  <input type="radio" name="chipAmount" value="10.00" style="accent-color:#00ff99;" onchange="setChipAmount(this.value)">
+  <div style="width:48px; height:48px; border-radius:50%; background:radial-gradient(circle at 35% 35%, #66aaff, #0033cc); border:4px dashed #fff; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:0.75em; color:#fff;">$10</div>
+</label>
 
-    <label style="display:flex; flex-direction:column; align-items:center; cursor:pointer; gap:6px;">
-      <input type="radio" name="chipAmount" value="10.00" style="accent-color:#00ff99;" onchange="setChipAmount(this.value)">
-      <div style="width:54px; height:54px; border-radius:50%; background:radial-gradient(circle at 35% 35%, #6699ff, #0000cc); border:5px dashed #fff; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:0.78em; color:#fff; box-shadow:0 3px 8px #0008;">$10</div>
-    </label>
+<label style="display:flex; flex-direction:column; align-items:center; cursor:pointer; gap:6px;">
+  <input type="radio" name="chipAmount" value="25.00" style="accent-color:#00ff99;" onchange="setChipAmount(this.value)">
+  <div style="width:48px; height:48px; border-radius:50%; background:radial-gradient(circle at 35% 35%, #66ff66, #006600); border:4px dashed #fff; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:0.75em; color:#fff;">$25</div>
+</label>
 
-    <label style="display:flex; flex-direction:column; align-items:center; cursor:pointer; gap:6px;">
-      <input type="radio" name="chipAmount" value="20.00" style="accent-color:#00ff99;" onchange="setChipAmount(this.value)">
-      <div style="width:54px; height:54px; border-radius:50%; background:radial-gradient(circle at 35% 35%, #cc66ff, #660099); border:5px dashed #fff; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:0.78em; color:#fff; box-shadow:0 3px 8px #0008;">$20</div>
-    </label>
-
-    <label style="display:flex; flex-direction:column; align-items:center; cursor:pointer; gap:6px;">
-      <input type="radio" name="chipAmount" value="100.00" style="accent-color:#00ff99;" onchange="setChipAmount(this.value)">
-      <div style="width:54px; height:54px; border-radius:50%; background:radial-gradient(circle at 35% 35%, #ffdd44, #aa7700); border:5px dashed #fff; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:0.78em; color:#222; box-shadow:0 3px 8px #0008;">$100</div>
-    </label>
+<label style="display:flex; flex-direction:column; align-items:center; cursor:pointer; gap:6px;">
+  <input type="radio" name="chipAmount" value="100.00" style="accent-color:#00ff99;" onchange="setChipAmount(this.value)">
+  <div style="width:48px; height:48px; border-radius:50%; background:radial-gradient(circle at 35% 35%, #666666, #000000); border:4px dashed #fff; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:0.75em; color:#fff;">$100</div>
+</label>
 
   </div>
   <div id="chipAmountDisplay" style="margin-top:10px; color:#ffdd44; font-size:1em; font-weight:bold; min-height:20px;"></div>
