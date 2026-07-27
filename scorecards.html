@@ -1231,8 +1231,75 @@ function updateLeftRightTotals() {
     });
 }
 
-function updateLeaderboard() {
+function computeNassauDiffs() {
+    const team12 = document.querySelectorAll("#total12 .hole-box");
+    const team34 = document.querySelectorAll("#total34 .hole-box");
+    if (team12.length === 0 || team34.length === 0) return null;
+
+    function diffForRange(start, end) {
+        let diff = 0, played = 0;
+        for (let i = start; i <= end; i++) {
+            const a = parseInt(team12[i].value);
+            const b = parseInt(team34[i].value);
+            if (!isNaN(a) && !isNaN(b)) {
+                if (a < b) diff += 1; else if (b < a) diff -= 1;
+                played++;
+            }
+        }
+        return { diff: diff, played: played };
+    }
+
+    return {
+        front: diffForRange(0, 8),
+        back: diffForRange(10, 18),
+        press7: diffForRange(6, 8),
+        press16: diffForRange(15, 17)
+    };
+}
+
+function updateNassauMoney(money) {
+    const nassauSection = document.getElementById("nassauSection");
+    if (!nassauSection || nassauSection.style.display === "none") return;
+
+    const nassauEl = document.getElementById("nassauValue");
+    const nassauVal = parseFloat(nassauEl ? nassauEl.value : 5) || 0;
+    if (nassauVal === 0) return;
+
+    const diffs = computeNassauDiffs();
+    if (!diffs) return;
+
+    function applyBet(diff) {
+        if (diff > 0) {
+            money[0] += nassauVal; money[1] += nassauVal;
+            money[2] -= nassauVal; money[3] -= nassauVal;
+        } else if (diff < 0) {
+            money[2] += nassauVal; money[3] += nassauVal;
+            money[0] -= nassauVal; money[1] -= nassauVal;
+        }
+    }
+
+    if (diffs.front.played === 9) applyBet(diffs.front.diff);
+    if (diffs.back.played === 9) applyBet(diffs.back.diff);
+    if (diffs.front.played === 9 && diffs.back.played === 9) {
+        applyBet(diffs.front.diff + diffs.back.diff);
+    }
+
+    const press7Decided = localStorage.getItem("nassauPress7Decided") === "true";
+    const press7Accepted = localStorage.getItem("nassauPress7Accepted") === "true";
+    if (press7Decided && press7Accepted && diffs.press7.played === 3) {
+        applyBet(diffs.press7.diff);
+    }
+
+    const press16Decided = localStorage.getItem("nassauPress16Decided") === "true";
+    const press16Accepted = localStorage.getItem("nassauPress16Accepted") === "true";
+    if (press16Decided && press16Accepted && diffs.press16.played === 3) {
+        applyBet(diffs.press16.diff);
+    }
+}
+
+    function updateLeaderboard() {
     const g9SectionCheck = document.getElementById("gameOf9Section");
+    
     if (g9SectionCheck && g9SectionCheck.style.display === "block") {
         updateLeaderboardForGameOf9();
         return;
@@ -1326,7 +1393,7 @@ function updateLeaderboard() {
         });
     }
 
-    const players = names.map(function(name, idx) { return { name: name, total: money[idx] }; });
+   updateNassauMoney(money); const players = names.map(function(name, idx) { return { name: name, total: money[idx] }; });
     players.sort(function(a, b) { return b.total - a.total; });
 
     function fmtMoney(n) {
@@ -1587,7 +1654,7 @@ document.querySelectorAll(".chipbox").forEach(function(box) {
     }
 });
 
-    ["individualSkinValue","teamSkinValue","g9PointValue"].forEach(function(id) {
+    ["individualSkinValue","teamSkinValue","g9PointValue","nassauValue"].forEach(function(id) {
     var el = document.getElementById(id);
     if (el) el.addEventListener("input", updateLeaderboard);
 });
