@@ -1323,6 +1323,83 @@ function updateNassauMoney(money) {
     }
 }
 
+function stepIndivTeamValue(id, dir) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    let v = parseInt(el.value) || 0;
+    v += dir;
+    if (v < 0) v = 0;
+    el.value = v;
+    updateLeaderboard();
+}
+
+function getPlayerSegmentTotals() {
+    return ["player1","player2","player3","player4"].map(function(id) {
+        const boxes = document.querySelectorAll("#" + id + " .hole-box");
+        return {
+            out: boxes[9].value === "" ? null : parseFloat(boxes[9].value),
+            inn: boxes[19].value === "" ? null : parseFloat(boxes[19].value),
+            tot: boxes[20].value === "" ? null : parseFloat(boxes[20].value)
+        };
+    });
+}
+
+function applyIndividualSegment(money, totals, key, indivVal) {
+    const vals = totals.map(function(t) { return t[key]; });
+    if (vals.some(function(v) { return v === null; })) return;
+    const min = Math.min.apply(null, vals);
+    const winners = vals.map(function(v, i) { return v === min ? i : -1; }).filter(function(i) { return i >= 0; });
+    if (winners.length !== 1) return;
+    const w = winners[0];
+    for (let i = 0; i < 4; i++) {
+        if (i === w) money[i] += indivVal * 3;
+        else money[i] -= indivVal;
+    }
+}
+
+function applyTeamSegment(money, teamVal, t12, t34) {
+    if (t12 === null || t34 === null) return;
+    if (t12 === t34) return;
+    if (t12 < t34) {
+        money[0] += teamVal; money[1] += teamVal;
+        money[2] -= teamVal; money[3] -= teamVal;
+    } else {
+        money[2] += teamVal; money[3] += teamVal;
+        money[0] -= teamVal; money[1] -= teamVal;
+    }
+}
+
+function updateIndivTeamMoney(money) {
+    const indivToggle = document.getElementById("indivNassauToggle");
+    const teamToggle = document.getElementById("teamNassauToggle");
+    const indivOn = !!(indivToggle && indivToggle.checked);
+    const teamOn = !!(teamToggle && teamToggle.checked);
+    if (!indivOn && !teamOn) return;
+
+    const indivValEl = document.getElementById("indivNassauValue");
+    const teamValEl = document.getElementById("teamNassauValue");
+    const indivVal = parseFloat(indivValEl ? indivValEl.value : 5) || 0;
+    const teamVal = parseFloat(teamValEl ? teamValEl.value : 5) || 0;
+
+    if (indivOn) {
+        const totals = getPlayerSegmentTotals();
+        applyIndividualSegment(money, totals, "out", indivVal);
+        applyIndividualSegment(money, totals, "inn", indivVal);
+        applyIndividualSegment(money, totals, "tot", indivVal);
+    }
+
+    if (teamOn) {
+        const team12 = document.querySelectorAll("#total12 .hole-box");
+        const team34 = document.querySelectorAll("#total34 .hole-box");
+        function val(boxes, idx) { return boxes[idx].value === "" ? null : parseFloat(boxes[idx].value); }
+        if (team12.length && team34.length) {
+            applyTeamSegment(money, teamVal, val(team12, 9), val(team34, 9));
+            applyTeamSegment(money, teamVal, val(team12, 19), val(team34, 19));
+            applyTeamSegment(money, teamVal, val(team12, 20), val(team34, 20));
+        }
+    }
+}
+    
     function updateLeaderboard() {
     const g9SectionCheck = document.getElementById("gameOf9Section");
     
