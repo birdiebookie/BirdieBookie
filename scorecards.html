@@ -76,6 +76,14 @@ GOLF IS ABOUT ONE THING AND ONE THING ONLY , TAKING YOUR FRIENDS MONEY 💰
 .leaderboard-win { color:#00ff66; border-color:#00ff66; }
 .leaderboard-lose { color:#ff4444; border-color:#ff4444; }
 .leaderboard-even { color:#ffffff; border-color:#666; }
+.stepper-wrap { display:flex; align-items:center; gap:4px; }
+.stepper-btn {
+    width:26px; height:26px;
+    background:#00ff99; color:black;
+    border:none; border-radius:6px;
+    font-weight:bold; font-size:16px;
+    cursor:pointer; line-height:1;
+}
     body{
     margin:0;
     background:black;
@@ -243,6 +251,24 @@ PLAY CARRYOVERS
 <div id="g9ValueBox" style="display:flex; align-items:center; gap:10px; background:#111; border:2px solid #00ff99; border-radius:20px; padding:6px 14px;">
       <label style="color:#00ff99; font-size:14px; font-weight:bold;">$ G9 PT
         <input type="number" id="g9PointValue" value="1" step="0.5" min="0" style="width:55px; margin-left:4px; background:black; color:#00ff99; border:1px solid #00ff99; border-radius:6px; text-align:center;">
+      </label>
+    </div>
+<div id="indivTeamValueBox" style="display:flex; align-items:center; gap:16px; background:#111; border:2px solid #00ff99; border-radius:20px; padding:6px 14px;">
+      <label style="color:#00ff99; font-size:14px; font-weight:bold; display:flex; align-items:center; gap:6px;">
+        <input type="checkbox" id="indivNassauToggle"> INDIVIDUAL
+        <span class="stepper-wrap">
+          <button type="button" class="stepper-btn" onclick="stepIndivTeamValue('indivNassauValue',-1)">−</button>
+          <input type="number" id="indivNassauValue" value="5" readonly style="width:40px; background:black; color:#00ff99; border:1px solid #00ff99; border-radius:6px; text-align:center;">
+          <button type="button" class="stepper-btn" onclick="stepIndivTeamValue('indivNassauValue',1)">+</button>
+        </span>
+      </label>
+      <label style="color:#00ff99; font-size:14px; font-weight:bold; display:flex; align-items:center; gap:6px;">
+        <input type="checkbox" id="teamNassauToggle"> TEAM
+        <span class="stepper-wrap">
+          <button type="button" class="stepper-btn" onclick="stepIndivTeamValue('teamNassauValue',-1)">−</button>
+          <input type="number" id="teamNassauValue" value="5" readonly style="width:40px; background:black; color:#00ff99; border:1px solid #00ff99; border-radius:6px; text-align:center;">
+          <button type="button" class="stepper-btn" onclick="stepIndivTeamValue('teamNassauValue',1)">+</button>
+        </span>
       </label>
     </div>
     
