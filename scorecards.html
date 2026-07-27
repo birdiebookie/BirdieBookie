@@ -243,7 +243,12 @@ input.player-name, #bankerName1, #bankerName2, #bankerName3, #bankerName4 {
 PLAY CARRYOVERS
 </label>
 </div>
-<div id="nassauValueBox" style="display:flex; align-items:center; gap:10px; background:#111; border:2px solid #00ff99; border-radius:20px; padding:6px 14px;">
+<div id="rabbitValueBox" style="display:flex; align-items:center; gap:10px; background:#111; border:2px solid #3399ff; border-radius:20px; padding:6px 14px;">
+      <label style="color:#3399ff; font-size:14px; font-weight:bold;">$ RABBIT
+        <input type="number" id="rabbitValue" value="2" step="0.5" min="0" style="width:55px; margin-left:4px; background:black; color:#3399ff; border:1px solid #3399ff; border-radius:6px; text-align:center;">
+      </label>
+    </div>
+ <div id="nassauValueBox" style="display:flex; align-items:center; gap:10px; background:#111; border:2px solid #00ff99; border-radius:20px; padding:6px 14px;">
       <label style="color:#00ff99; font-size:14px; font-weight:bold;">$ NASSAU
         <input type="number" id="nassauValue" value="5" step="1" min="0" style="width:55px; margin-left:4px; background:black; color:#00ff99; border:1px solid #00ff99; border-radius:6px; text-align:center;">
       </label>
@@ -275,6 +280,7 @@ PLAY CARRYOVERS
     <div id="leaderboardBar">
       <span id="leaderboardLabel">🏆 LEADERBOARD:</span>
       <span id="leaderboardList"></span>
+<span id="rabbitStatus" style="color:#3399ff; font-weight:bold; margin-left:10px;"></span>
     </div>
     <button id="changeCourseBtn" onclick="window.location.href='courses.html'">⛳ CHANGE COURSE</button>
 </div>
@@ -1369,7 +1375,70 @@ function applyTeamSegment(money, teamVal, t12, t34) {
     }
 }
 
-function updateIndivTeamMoney(money) {
+function updateRabbitMoney(money) {
+    const rabbitValEl = document.getElementById("rabbitValue");
+    const rabbitVal = parseFloat(rabbitValEl ? rabbitValEl.value : 2) || 0;
+
+    const p1 = document.querySelectorAll("#player1 .hole-box");
+    const p2 = document.querySelectorAll("#player2 .hole-box");
+    const p3 = document.querySelectorAll("#player3 .hole-box");
+    const p4 = document.querySelectorAll("#player4 .hole-box");
+    if (p1.length === 0) return;
+
+    const allBoxes = [p1, p2, p3, p4];
+    allBoxes.forEach(function(boxes) {
+        for (let i = 0; i <= 20; i++) {
+            if (boxes[i]) boxes[i].style.boxShadow = "none";
+        }
+    });
+
+    const nameIds = ["name1","name2","name3","name4"];
+    const names = nameIds.map(function(id, idx) {
+        const el = document.getElementById(id);
+        return (el && el.value.trim()) || ("Player " + (idx + 1));
+    });
+
+    let currentHolderName = null;
+
+    function processSegment(holeIndices) {
+        let holder = null;
+        holeIndices.forEach(function(hole) {
+            const scores = [0,1,2,3].map(function(i) {
+                return { i: i, score: parseInt(allBoxes[i][hole].value) };
+            });
+            const validScores = scores.filter(function(s) { return !isNaN(s.score); });
+            if (validScores.length < 2) return;
+
+            const minScore = Math.min.apply(null, validScores.map(function(s){ return s.score; }));
+            const winners = validScores.filter(function(s){ return s.score === minScore; });
+
+            if (winners.length === 1) {
+                holder = winners[0].i;
+            } else if (holder !== null) {
+                validScores.forEach(function(s) {
+                    if (s.i !== holder) {
+                        money[holder] += rabbitVal;
+                        money[s.i] -= rabbitVal;
+                    }
+                });
+            }
+
+            if (holder !== null) {
+                allBoxes[holder][hole].style.boxShadow = "inset 0 0 0 3px #3399ff";
+                currentHolderName = names[holder];
+            }
+        });
+    }
+
+    processSegment([0,1,2,3,4,5,6,7,8]);
+    processSegment([10,11,12,13,14,15,16,17,18]);
+
+    const statusEl = document.getElementById("rabbitStatus");
+    if (statusEl) {
+        statusEl.textContent = currentHolderName ? ("🐇 " + currentHolderName) : "🐇 unclaimed";
+    }
+}
+    function updateIndivTeamMoney(money) {
     const indivToggle = document.getElementById("indivNassauToggle");
     const teamToggle = document.getElementById("teamNassauToggle");
     const indivOn = !!(indivToggle && indivToggle.checked);
@@ -1498,6 +1567,7 @@ function updateIndivTeamMoney(money) {
 
    updateNassauMoney(money);
     updateIndivTeamMoney(money);
+        updateRabbitMoney(money);
     const players = names.map(function(name, idx) { return { name: name, total: money[idx] }; });
     players.sort(function(a, b) { return b.total - a.total; });
 
@@ -1759,7 +1829,7 @@ document.querySelectorAll(".chipbox").forEach(function(box) {
     }
 });
 
-    ["individualSkinValue","teamSkinValue","g9PointValue","nassauValue"].forEach(function(id) {
+    ["individualSkinValue","teamSkinValue","g9PointValue","nassauValue","rabbitValue"].forEach(function(id) {
     var el = document.getElementById(id);
     if (el) el.addEventListener("input", updateLeaderboard);
 });
