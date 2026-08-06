@@ -76,7 +76,12 @@ GOLF IS ABOUT ONE THING AND ONE THING ONLY , TAKING YOUR FRIENDS MONEY 💰
 .leaderboard-win { color:#00ff66; border-color:#00ff66; }
 .leaderboard-lose { color:#ff4444; border-color:#ff4444; }
 .leaderboard-even { color:#ffffff; border-color:#666; }
-.stepper-wrap { display:flex; align-items:center; gap:4px; }
+#heroLeaderboard { background:#111; border-bottom: 4px solid #ffdd44; padding: 20px; text-align: center; }
+#heroLeaderboardLabel { color:#ffdd44; font-weight:bold; font-size:22px; letter-spacing:2px; margin-bottom:14px; }
+.hero-leaderboard-list { display:flex; justify-content:center; flex-wrap:wrap; gap:14px; }
+.hero-leaderboard-list .leaderboard-item { font-size:22px; padding:10px 20px; }
+.hero-rabbit-status { color:#3399ff; font-weight:bold; margin-top:10px; font-size:16px; }
+    .stepper-wrap { display:flex; align-items:center; gap:4px; }
 .stepper-btn {
     width:26px; height:26px;
     background:#00ff99; color:black;
@@ -228,6 +233,11 @@ input.player-name, #bankerName1, #bankerName2, #bankerName3, #bankerName4 {
   </button>
 </div>
     <!-- COURSE INFO BAR -->
+    <div id="heroLeaderboard">
+    <div id="heroLeaderboardLabel">🏆 LEADERBOARD</div>
+    <div class="hero-leaderboard-list" id="heroLeaderboardList"></div>
+    <div class="hero-rabbit-status" id="heroRabbitStatus"></div>
+</div>
 <div id="courseInfoBar">
             <h2 id="courseNameDisplay">📍 No Course Selected</h2>
     <div id="gameTagsDisplay"></div>
@@ -2017,6 +2027,16 @@ function updateLeaderboardForGameOf9() {
             return '<span class="leaderboard-item ' + cls + '">' + p.name + ' ' + fmtMoney(p.total) + '</span>';
         }).join("");
     }
+const heroListEl = document.getElementById("heroLeaderboardList");
+    if (heroListEl) {
+        heroListEl.innerHTML = players.map(function(p) {
+            const cls = p.total > 0.004 ? "leaderboard-win" : (p.total < -0.004 ? "leaderboard-lose" : "leaderboard-even");
+            return '<span class="leaderboard-item ' + cls + '">' + p.name + ' ' + fmtMoney(p.total) + '</span>';
+        }).join("");
+    }
+    const heroRabbitEl = document.getElementById("heroRabbitStatus");
+    const rabbitStatusEl = document.getElementById("rabbitStatus");
+    if (heroRabbitEl && rabbitStatusEl) heroRabbitEl.textContent = rabbitStatusEl.textContent;
 }
 function saveRound() {
     const data = {
