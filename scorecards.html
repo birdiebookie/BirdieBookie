@@ -1082,6 +1082,7 @@ function sanitizeScoreInput(box) {
 }
 
 const lrAlertedHoles = new Set();
+let lrValidateTimer = null;
 
 function validateLeftRightZeroSum() {
     const rows = ["lr1", "lr2", "lr3", "lr4"].map(function(id) {
@@ -1796,7 +1797,8 @@ document.querySelectorAll(".hole-box").forEach(function(box) {
         updateLeftRightTotals();
         updateNassauTracker();
         updateLeaderboard();
-       validateLeftRightZeroSum(); 
+       clearTimeout(lrValidateTimer);
+            lrValidateTimer = setTimeout(validateLeftRightZeroSum, 800);
     });
 });
 
