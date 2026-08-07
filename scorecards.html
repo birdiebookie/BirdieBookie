@@ -54,14 +54,18 @@ GOLF IS ABOUT ONE THING AND ONE THING ONLY , TAKING YOUR FRIENDS MONEY 💰
 #leaderboardBar {
     display:flex;
     align-items:center;
+    justify-content:center;
     flex-wrap:wrap;
-    gap:10px;
-    margin-left:10px;
+    gap:14px;
+    padding:20px;
+    background:#111;
+    border-bottom:4px solid #ffdd44;
 }
 #leaderboardLabel {
     color:#ffdd44;
     font-weight:bold;
-    font-size:16px;
+    font-size:24px;
+    letter-spacing:2px;
     white-space:nowrap;
 }
 .leaderboard-item {
@@ -221,7 +225,12 @@ input.player-name, #bankerName1, #bankerName2, #bankerName3, #bankerName4 {
 </head>
 
 <body>
-<!-- VOICE SCORE ENTRY -->
+<div id="leaderboardBar">
+    <span id="leaderboardLabel">🏆 LEADERBOARD:</span>
+    <span id="leaderboardList"></span>
+<span id="rabbitStatus" style="color:#3399ff; font-weight:bold; margin-left:10px;"></span>
+    </div>
+    <!-- VOICE SCORE ENTRY -->
 <div style="background:#111; border-bottom:3px solid #00ff99; padding:12px 20px; text-align:center;">
   <button id="voiceToggleBtn" onclick="BBVoiceToggle()" style="background:#111; color:#00ff99; border:2px solid #00ff99; padding:10px 20px; border-radius:20px; font-size:16px; font-weight:bold; cursor:pointer;">
     🎙️ VOICE SCORE ENTRY: OFF (tap to start)
@@ -277,11 +286,7 @@ PLAY CARRYOVERS
       </label>
     </div>
   
-    <div id="leaderboardBar">
-      <span id="leaderboardLabel">🏆 LEADERBOARD:</span>
-      <span id="leaderboardList"></span>
-<span id="rabbitStatus" style="color:#3399ff; font-weight:bold; margin-left:10px;"></span>
-    </div>
+   
     <button id="changeCourseBtn" onclick="window.location.href='courses.html'">⛳ CHANGE COURSE</button>
 </div>
 <div class="scorecard">
