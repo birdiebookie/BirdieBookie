@@ -240,7 +240,7 @@ input.player-name, #bankerName1, #bankerName2, #bankerName3, #bankerName4 {
 <div id="courseInfoBar">
             <h2 id="courseNameDisplay">📍 No Course Selected</h2>
     <div id="gameTagsDisplay"></div>
-<div id="skinValueBox" style="display:flex; align-items:center; gap:10px; background:#111; border:2px solid #00ff99; border-radius:20px; padding:6px 14px;">
+<div id="skinValueBox" style="display:none; align-items:center; gap:10px; background:#111; border:2px solid #00ff99; border-radius:20px; padding:6px 14px;">
       <label style="color:#00ff99; font-size:14px; font-weight:bold;">$ SKIN
         <input type="number" id="individualSkinValue" value="1" step="0.5" min="0" style="width:55px; margin-left:4px; background:black; color:#00ff99; border:1px solid #00ff99; border-radius:6px; text-align:center;">
       </label>
@@ -252,22 +252,22 @@ input.player-name, #bankerName1, #bankerName2, #bankerName3, #bankerName4 {
 PLAY CARRYOVERS
 </label>
 </div>
-<div id="rabbitValueBox" style="display:flex; align-items:center; gap:10px; background:#111; border:2px solid #3399ff; border-radius:20px; padding:6px 14px;">
+<div id="rabbitValueBox" style="display:none; align-items:center; gap:10px; background:#111; border:2px solid #3399ff; border-radius:20px; padding:6px 14px;">
       <label style="color:#3399ff; font-size:14px; font-weight:bold;">$ RABBIT
         <input type="number" id="rabbitValue" value="2" step="0.5" min="0" style="width:55px; margin-left:4px; background:black; color:#3399ff; border:1px solid #3399ff; border-radius:6px; text-align:center;">
       </label>
     </div>
- <div id="nassauValueBox" style="display:flex; align-items:center; gap:10px; background:#111; border:2px solid #00ff99; border-radius:20px; padding:6px 14px;">
+<div id="nassauValueBox" style="display:none; align-items:center; gap:10px; background:#111; border:2px solid #00ff99; border-radius:20px; padding:6px 14px;">
       <label style="color:#00ff99; font-size:14px; font-weight:bold;">$ NASSAU
         <input type="number" id="nassauValue" value="5" step="1" min="0" style="width:55px; margin-left:4px; background:black; color:#00ff99; border:1px solid #00ff99; border-radius:6px; text-align:center;">
       </label>
     </div>
-<div id="g9ValueBox" style="display:flex; align-items:center; gap:10px; background:#111; border:2px solid #00ff99; border-radius:20px; padding:6px 14px;">
+<div id="g9ValueBox" style="display:none; align-items:center; gap:10px; background:#111; border:2px solid #00ff99; border-radius:20px; padding:6px 14px;">
       <label style="color:#00ff99; font-size:14px; font-weight:bold;">$ G9 PT
         <input type="number" id="g9PointValue" value="1" step="0.5" min="0" style="width:55px; margin-left:4px; background:black; color:#00ff99; border:1px solid #00ff99; border-radius:6px; text-align:center;">
       </label>
     </div>
-<div id="indivTeamValueBox" style="display:flex; align-items:center; gap:16px; background:#111; border:2px solid #00ff99; border-radius:20px; padding:6px 14px;">
+<div id="indivTeamValueBox" style="display:none; align-items:center; gap:16px; background:#111; border:2px solid #00ff99; border-radius:20px; padding:6px 14px;">
       <label style="color:#00ff99; font-size:14px; font-weight:bold; display:flex; align-items:center; gap:6px;">
         <input type="checkbox" id="indivNassauToggle"> INDIVIDUAL
         <span class="stepper-wrap">
@@ -2077,7 +2077,20 @@ function newRound() {
 if (savedGames.some(g => g.includes('Nassau'))) {
     document.getElementById('nassauSection').style.display = 'block';
 }
-if (savedGames.some(g => g.includes('Banker'))) {
+if (savedGames.some(g => g.includes('Skins'))) {
+    document.getElementById('skinValueBox').style.display = 'flex';
+}
+if (savedGames.some(g => g.includes('Rabbit'))) {
+    document.getElementById('rabbitValueBox').style.display = 'flex';
+}
+if (savedGames.some(g => g.includes('Nassau'))) {
+    document.getElementById('nassauValueBox').style.display = 'flex';
+    document.getElementById('indivTeamValueBox').style.display = 'flex';
+}
+if (savedGames.some(g => g.includes('Game of 9'))) {
+    document.getElementById('g9ValueBox').style.display = 'flex';
+}
+      if (savedGames.some(g => g.includes('Banker'))) {
     document.getElementById('bankerSection').style.display = 'block';
 }
       if (savedGames.some(g => g.includes('Game of 9'))) {
