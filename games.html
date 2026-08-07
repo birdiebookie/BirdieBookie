@@ -534,8 +534,8 @@ localStorage.setItem("selectedGames", JSON.stringify(selectedGames));
 document.getElementById("startRoundBtn").addEventListener("click", function() {
   let games = JSON.parse(localStorage.getItem("selectedGames")) || [];
 
-  if (games.length === 0) {
-    alert("Please select at least one game.");
+ if (games.length === 0) {
+    window.location.href = "scorecards.html";
     return;
   }
 
