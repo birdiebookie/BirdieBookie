@@ -238,7 +238,7 @@ input.player-name, #bankerName1, #bankerName2, #bankerName3, #bankerName4 {
 </div>
     <!-- COURSE INFO BAR -->
 <div id="courseInfoBar">
-            <h2 id="courseNameDisplay">📍 No Course Selected</h2>
+<button id="chooseGamesBtn" onclick="window.location.href='games.html'" style="background: transparent; color: #00ff99; border: 2px solid #00ff99; padding: 8px 18px; border-radius: 20px; font-size: 16px; font-weight: bold; cursor: pointer;">🎮 CHOOSE GAMES</button>
     <div id="gameTagsDisplay"></div>
 <div id="skinValueBox" style="display:none; align-items:center; gap:10px; background:#111; border:2px solid #00ff99; border-radius:20px; padding:6px 14px;">
       <label style="color:#00ff99; font-size:14px; font-weight:bold;">$ SKIN
@@ -287,7 +287,7 @@ PLAY CARRYOVERS
     </div>
   
    
-    <button id="changeCourseBtn" onclick="window.location.href='courses.html'">⛳ CHANGE COURSE</button>
+    <button id="changeCourseBtn" onclick="window.location.href='courses.html'">⛳ CHOOSE COURSE</button>
 </div>
 <div class="scorecard">
 
@@ -2052,10 +2052,7 @@ function newRound() {
 }
 </script>
   <script>
-    const savedCourse = localStorage.getItem('selectedCourse');
-    if (savedCourse) {
-        document.getElementById('courseNameDisplay').textContent = '📍 ' + savedCourse;
-    }
+   
 
     const savedGames = JSON.parse(localStorage.getItem('selectedGames') || '[]');
     const tagsDiv = document.getElementById('gameTagsDisplay');
