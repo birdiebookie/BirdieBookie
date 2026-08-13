@@ -288,6 +288,17 @@ input.player-name, #bankerName1, #bankerName2, #bankerName3, #bankerName4 {
 </div>
 <div class="scorecard">
 
+<div id="carryoverBar" style="display:flex; flex-wrap:wrap; gap:20px; align-items:center; justify-content:center; background:#111; border:3px solid #00ff99; border-radius:14px; padding:14px 20px; margin:0 0 20px 0;">
+  <label style="color:#00ff99; font-size:20px; font-weight:bold; display:flex; align-items:center; gap:10px; cursor:pointer;">
+    <input type="checkbox" id="carryoverToggleIndividual" style="width:28px; height:28px; cursor:pointer;">
+    INDIVIDUAL CARRYOVER
+  </label>
+  <label style="color:#00ff99; font-size:20px; font-weight:bold; display:flex; align-items:center; gap:10px; cursor:pointer;">
+    <input type="checkbox" id="carryoverToggleTeam" style="width:28px; height:28px; cursor:pointer;">
+    TEAM CARRYOVER
+  </label>
+</div>
+
 <div id="mainScorecardCore">
     <!-- HEADER -->
 <div class="row">
