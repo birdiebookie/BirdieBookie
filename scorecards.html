@@ -1869,11 +1869,72 @@ if (saved) {
         });
     });
 
-    updatePlayerTotals();
-    updateTeamTotals();
-    checkSkins();
-    colorLeftRight();
-    updateNassauTracker();
+    if (document.getElementById("g9name1")) document.getElementById("g9name1").value = data.g9name1 || "";
+    if (document.getElementById("g9name2")) document.getElementById("g9name2").value = data.g9name2 || "";
+    if (document.getElementById("g9name3")) document.getElementById("g9name3").value = data.g9name3 || "";
+    ["g9player1","g9player2","g9player3"].forEach(function(id) {
+        const boxes = document.querySelectorAll("#" + id + " .g9box");
+        (data[id] || []).forEach(function(value, index) {
+            if (boxes[index]) boxes[index].value = value;
+        });
+    });
+
+    ["lr1","lr2","lr3","lr4"].forEach(function(id) {
+        const boxes = document.querySelectorAll("#" + id + " .lrbox");
+        (data[id] || []).forEach(function(value, index) {
+            if (boxes[index]) boxes[index].value = value;
+        });
+    });
+
+    ["chip1","chip2","chip3","chip4"].forEach(function(id) {
+        const boxes = document.querySelectorAll("#" + id + " .chipbox");
+        (data[id] || []).forEach(function(value, index) {
+            if (boxes[index]) boxes[index].value = value;
+        });
+    });
+
+    const bankerBoxes = document.querySelectorAll("#bankerSection .score-box");
+    (data.banker || []).forEach(function(value, index) {
+        if (bankerBoxes[index]) bankerBoxes[index].value = value;
+    });
+
+    if (data.activeJunkGames) {
+        document.querySelectorAll(".junk-btn").forEach(function(btn) {
+            const shouldBeActive = data.activeJunkGames.indexOf(btn.getAttribute("data-game")) !== -1;
+            const isActive = btn.classList.contains("active-junk");
+            if (shouldBeActive && !isActive) {
+                btn.classList.add("active-junk");
+                btn.style.background = "#00ff99";
+                btn.style.color = "black";
+            } else if (!shouldBeActive && isActive) {
+                btn.classList.remove("active-junk");
+                btn.style.background = "#111";
+                btn.style.color = "#00ff99";
+            }
+        });
+    }
+    if (data.chipAmount) {
+        const chipRadio = document.querySelector('input[name="chipAmount"][value="' + data.chipAmount + '"]');
+        if (chipRadio) {
+            chipRadio.checked = true;
+            if (typeof setChipAmount === "function") setChipAmount(data.chipAmount);
+        }
+    }
+
+    if (document.getElementById("carryoverToggleIndividual")) document.getElementById("carryoverToggleIndividual").checked = !!data.carryoverIndividual;
+    if (document.getElementById("carryoverToggleTeam")) document.getElementById("carryoverToggleTeam").checked = !!data.carryoverTeam;
+
+    if (data.individualSkinValue && document.getElementById("individualSkinValue")) document.getElementById("individualSkinValue").value = data.individualSkinValue;
+    if (data.teamSkinValue && document.getElementById("teamSkinValue")) document.getElementById("teamSkinValue").value = data.teamSkinValue;
+    if (data.nassauValue && document.getElementById("nassauValue")) document.getElementById("nassauValue").value = data.nassauValue;
+    if (data.rabbitValue && document.getElementById("rabbitValue")) document.getElementById("rabbitValue").value = data.rabbitValue;
+    if (data.g9PointValue && document.getElementById("g9PointValue")) document.getElementById("g9PointValue").value = data.g9PointValue;
+
+    if (document.getElementById("indivNassauToggle")) document.getElementById("indivNassauToggle").checked = !!data.indivNassauToggle;
+    if (document.getElementById("teamNassauToggle")) document.getElementById("teamNassauToggle").checked = !!data.teamNassauToggle;
+    if (data.indivNassauValue && document.getElementById("indivNassauValue")) document.getElementById("indivNassauValue").value = data.indivNassauValue;
+    if (data.teamNassauValue && document.getElementById("teamNassauValue")) document.getElementById("teamNassauValue").value = data.teamNassauValue;
+
     updateNames();
 }
 
