@@ -2252,10 +2252,19 @@ function setChipAmount(val) {
   </div>
 </div>
 
-  <script>
+ <script>
 const SUPABASE_URL = "https://wcbsfanihwqibojxrqns.supabase.co";
 const SUPABASE_KEY = "sb_publishable_lY6_FWkAVwrbw7QPhyjEhQ_mDUeyQQ5";
 const sbClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const DEVICE_ID = (function() {
+    let id = localStorage.getItem("birdiebookieDeviceId");
+    if (!id) {
+        id = crypto.randomUUID();
+        localStorage.setItem("birdiebookieDeviceId", id);
+    }
+    return id;
+})();
 
 function generateRoomCode() {
     const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
@@ -2394,24 +2403,57 @@ function applyCloudRoundData(data) {
     if (typeof updateLeaderboard === "function") updateLeaderboard();
 }
 
+function setEditingLocked(locked) {
+    document.querySelectorAll(".hole-box, .player-input, .score-box, .lrbox, .g9box, .chipbox").forEach(function(el) {
+        el.readOnly = locked;
+        el.style.opacity = locked ? "0.6" : "1";
+    });
+    document.querySelectorAll('input[type="checkbox"], input[type="number"], input[type="radio"]').forEach(function(el) {
+        if (el.id === "joinCodeInput") return;
+        el.disabled = locked;
+    });
+    document.querySelectorAll(".junk-btn").forEach(function(el) {
+        el.style.pointerEvents = locked ? "none" : "auto";
+        el.style.opacity = locked ? "0.6" : "1";
+    });
+
+    const lockBanner = document.getElementById("lockBanner");
+    const saveBtn = document.getElementById("cloudSaveBtn");
+    const becomeBtn = document.getElementById("becomeScorekeeperBtn");
+    const releaseBtn = document.getElementById("releaseScorekeeperBtn");
+
+    if (lockBanner) lockBanner.style.display = locked ? "block" : "none";
+    if (saveBtn) saveBtn.style.display = locked ? "none" : "inline-block";
+    if (becomeBtn) becomeBtn.style.display = locked ? "inline-block" : "none";
+    if (releaseBtn) releaseBtn.style.display = locked ? "none" : "inline-block";
+}
+
 async function cloudSaveRound() {
     let code = localStorage.getItem("birdiebookieRoomCode");
+    const isNewRoom = !code;
     if (!code) {
         code = generateRoomCode();
         localStorage.setItem("birdiebookieRoomCode", code);
     }
 
     const data = collectRoundDataForCloud();
+    const payload = { room_code: code, data: data };
+
+    if (isNewRoom) {
+        payload.scorekeeper_device = DEVICE_ID;
+    }
 
     const { error } = await sbClient
         .from("birdiebookie_rounds")
-        .upsert({ room_code: code, data: data }, { onConflict: "room_code" });
+        .upsert(payload, { onConflict: "room_code" });
 
     if (error) {
         alert("Cloud save failed: " + error.message);
         return;
     }
 
+    localStorage.setItem("birdiebookieIsScorekeeper", "true");
+    setEditingLocked(false);
     document.getElementById("roomCodeDisplay").textContent = "Room Code: " + code;
     alert("Saved to cloud! Share this code with your group: " + code);
 }
@@ -2426,7 +2468,7 @@ async function joinRoundByCode() {
 
     const { data, error } = await sbClient
         .from("birdiebookie_rounds")
-        .select("data")
+        .select("data, scorekeeper_device")
         .eq("room_code", code)
         .single();
 
@@ -2436,9 +2478,14 @@ async function joinRoundByCode() {
     }
 
     localStorage.setItem("birdiebookieRoomCode", code);
+
+    const isScorekeeper = data.scorekeeper_device === DEVICE_ID;
+    localStorage.setItem("birdiebookieIsScorekeeper", isScorekeeper ? "true" : "false");
+
     applyCloudRoundData(data.data);
+    setEditingLocked(!isScorekeeper);
     document.getElementById("roomCodeDisplay").textContent = "Room Code: " + code;
-    alert("Joined round " + code + "!");
+    alert(isScorekeeper ? "Joined round " + code + " as Scorekeeper!" : "Joined round " + code + " (view only)!");
 }
 
 async function refreshFromCloud() {
@@ -2450,7 +2497,7 @@ async function refreshFromCloud() {
 
     const { data, error } = await sbClient
         .from("birdiebookie_rounds")
-        .select("data")
+        .select("data, scorekeeper_device")
         .eq("room_code", code)
         .single();
 
@@ -2459,13 +2506,48 @@ async function refreshFromCloud() {
         return;
     }
 
+    const isScorekeeper = data.scorekeeper_device === DEVICE_ID;
+    localStorage.setItem("birdiebookieIsScorekeeper", isScorekeeper ? "true" : "false");
+
     applyCloudRoundData(data.data);
+    setEditingLocked(!isScorekeeper);
+}
+
+async function becomeScorekeeper() {
+    const code = localStorage.getItem("birdiebookieRoomCode");
+    if (!code) {
+        alert("Join a round first.");
+        return;
+    }
+    if (!confirm("Become the scorekeeper for this round? You'll be able to enter scores.")) return;
+
+    const { error } = await sbClient
+        .from("birdiebookie_rounds")
+        .update({ scorekeeper_device: DEVICE_ID })
+        .eq("room_code", code);
+
+    if (error) {
+        alert("Couldn't take over scorekeeping. Try again.");
+        return;
+    }
+
+    localStorage.setItem("birdiebookieIsScorekeeper", "true");
+    setEditingLocked(false);
+    alert("You're now the scorekeeper!");
+}
+
+function releaseScorekeeper() {
+    if (!confirm("Release scorekeeper control? Someone else will need to tap 'Become Scorekeeper' to keep entering scores.")) return;
+    localStorage.setItem("birdiebookieIsScorekeeper", "false");
+    setEditingLocked(true);
 }
 
 document.addEventListener("DOMContentLoaded", function() {
     const savedCode = localStorage.getItem("birdiebookieRoomCode");
+    const isScorekeeper = localStorage.getItem("birdiebookieIsScorekeeper") === "true";
     if (savedCode && document.getElementById("roomCodeDisplay")) {
         document.getElementById("roomCodeDisplay").textContent = "Room Code: " + savedCode;
+        setEditingLocked(savedCode && !isScorekeeper);
     }
 });
 </script>
