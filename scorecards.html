@@ -1224,7 +1224,49 @@ function setupStrokePlayer(playerNumber) {
 strokePlayers.forEach(function(playerNumber) {
     setupStrokePlayer(playerNumber);
 });
-const lrAlertedHoles = new Set();
+    function validateStrokeAssignments() {
+    let valid = true;
+
+    strokePlayers.forEach(function(playerNumber) {
+        const strokeInput = document.getElementById("strokes" + playerNumber);
+        const playerRow = document.getElementById("player" + playerNumber);
+
+        if (!strokeInput || !playerRow) return;
+
+        const strokeCount = parseInt(strokeInput.value, 10) || 0;
+
+        const selectedCount = playerRow.querySelectorAll(
+            ".hole-box.stroke-hole"
+        ).length;
+
+        if (selectedCount !== strokeCount) {
+            const playerNameInput = document.getElementById("name" + playerNumber);
+
+            const playerName =
+                playerNameInput && playerNameInput.value.trim()
+                    ? playerNameInput.value.trim()
+                    : "Player " + playerNumber;
+
+            alert(
+                playerName +
+                " has " +
+                strokeCount +
+                " stroke" +
+                (strokeCount === 1 ? "" : "s") +
+                " but only " +
+                selectedCount +
+                " stroke hole" +
+                (selectedCount === 1 ? "" : "s") +
+                " selected."
+            );
+
+            valid = false;
+        }
+    });
+
+    return valid;
+}
+
 let lrValidateTimer = null;
 
 function validateLeftRightZeroSum() {
