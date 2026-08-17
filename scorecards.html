@@ -2251,7 +2251,224 @@ function setChipAmount(val) {
   </div>
 </div>
 
-    <script src="voicescorekeeper.js"></script>
+  <script>
+const SUPABASE_URL = "https://wcbsfanihwqibojxrqns.supabase.co";
+const SUPABASE_KEY = "sb_publishable_lY6_FWkAVwrbw7QPhyjEhQ_mDUeyQQ5";
+const sbClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+function generateRoomCode() {
+    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    let code = "";
+    for (let i = 0; i < 4; i++) code += chars.charAt(Math.floor(Math.random() * chars.length));
+    return code;
+}
+
+function collectRoundDataForCloud() {
+    return {
+        name1: document.getElementById("name1").value,
+        name2: document.getElementById("name2").value,
+        name3: document.getElementById("name3").value,
+        name4: document.getElementById("name4").value,
+        player1: Array.from(document.querySelectorAll("#player1 .hole-box")).map(x => x.value),
+        player2: Array.from(document.querySelectorAll("#player2 .hole-box")).map(x => x.value),
+        player3: Array.from(document.querySelectorAll("#player3 .hole-box")).map(x => x.value),
+        player4: Array.from(document.querySelectorAll("#player4 .hole-box")).map(x => x.value),
+        g9name1: document.getElementById("g9name1") ? document.getElementById("g9name1").value : "",
+        g9name2: document.getElementById("g9name2") ? document.getElementById("g9name2").value : "",
+        g9name3: document.getElementById("g9name3") ? document.getElementById("g9name3").value : "",
+        g9player1: Array.from(document.querySelectorAll("#g9player1 .g9box")).map(x => x.value),
+        g9player2: Array.from(document.querySelectorAll("#g9player2 .g9box")).map(x => x.value),
+        g9player3: Array.from(document.querySelectorAll("#g9player3 .g9box")).map(x => x.value),
+        lr1: Array.from(document.querySelectorAll("#lr1 .lrbox")).map(x => x.value),
+        lr2: Array.from(document.querySelectorAll("#lr2 .lrbox")).map(x => x.value),
+        lr3: Array.from(document.querySelectorAll("#lr3 .lrbox")).map(x => x.value),
+        lr4: Array.from(document.querySelectorAll("#lr4 .lrbox")).map(x => x.value),
+        chip1: Array.from(document.querySelectorAll("#chip1 .chipbox")).map(x => x.value),
+        chip2: Array.from(document.querySelectorAll("#chip2 .chipbox")).map(x => x.value),
+        chip3: Array.from(document.querySelectorAll("#chip3 .chipbox")).map(x => x.value),
+        chip4: Array.from(document.querySelectorAll("#chip4 .chipbox")).map(x => x.value),
+        banker: Array.from(document.querySelectorAll("#bankerSection .score-box")).map(x => x.value),
+        activeJunkGames: Array.from(document.querySelectorAll(".junk-btn.active-junk")).map(x => x.getAttribute("data-game")),
+        chipAmount: (document.querySelector('input[name="chipAmount"]:checked') || {}).value || "1.00",
+        carryoverIndividual: !!(document.getElementById("carryoverToggleIndividual") && document.getElementById("carryoverToggleIndividual").checked),
+        carryoverTeam: !!(document.getElementById("carryoverToggleTeam") && document.getElementById("carryoverToggleTeam").checked),
+        individualSkinValue: document.getElementById("individualSkinValue") ? document.getElementById("individualSkinValue").value : "",
+        teamSkinValue: document.getElementById("teamSkinValue") ? document.getElementById("teamSkinValue").value : "",
+        nassauValue: document.getElementById("nassauValue") ? document.getElementById("nassauValue").value : "",
+        rabbitValue: document.getElementById("rabbitValue") ? document.getElementById("rabbitValue").value : "",
+        g9PointValue: document.getElementById("g9PointValue") ? document.getElementById("g9PointValue").value : "",
+        indivNassauToggle: !!(document.getElementById("indivNassauToggle") && document.getElementById("indivNassauToggle").checked),
+        teamNassauToggle: !!(document.getElementById("teamNassauToggle") && document.getElementById("teamNassauToggle").checked),
+        indivNassauValue: document.getElementById("indivNassauValue") ? document.getElementById("indivNassauValue").value : "",
+        teamNassauValue: document.getElementById("teamNassauValue") ? document.getElementById("teamNassauValue").value : ""
+    };
+}
+
+function applyCloudRoundData(data) {
+    document.getElementById("name1").value = data.name1 || "";
+    document.getElementById("name2").value = data.name2 || "";
+    document.getElementById("name3").value = data.name3 || "";
+    document.getElementById("name4").value = data.name4 || "";
+    document.getElementById("lrName1").value = data.name1 || "";
+    document.getElementById("lrName2").value = data.name2 || "";
+    document.getElementById("lrName3").value = data.name3 || "";
+    document.getElementById("lrName4").value = data.name4 || "";
+
+    ["player1","player2","player3","player4"].forEach(function(id) {
+        const boxes = document.querySelectorAll("#" + id + " .hole-box");
+        (data[id] || []).forEach(function(value, index) {
+            if (boxes[index]) boxes[index].value = value;
+        });
+    });
+
+    if (document.getElementById("g9name1")) document.getElementById("g9name1").value = data.g9name1 || "";
+    if (document.getElementById("g9name2")) document.getElementById("g9name2").value = data.g9name2 || "";
+    if (document.getElementById("g9name3")) document.getElementById("g9name3").value = data.g9name3 || "";
+    ["g9player1","g9player2","g9player3"].forEach(function(id) {
+        const boxes = document.querySelectorAll("#" + id + " .g9box");
+        (data[id] || []).forEach(function(value, index) {
+            if (boxes[index]) boxes[index].value = value;
+        });
+    });
+
+    ["lr1","lr2","lr3","lr4"].forEach(function(id) {
+        const boxes = document.querySelectorAll("#" + id + " .lrbox");
+        (data[id] || []).forEach(function(value, index) {
+            if (boxes[index]) boxes[index].value = value;
+        });
+    });
+
+    ["chip1","chip2","chip3","chip4"].forEach(function(id) {
+        const boxes = document.querySelectorAll("#" + id + " .chipbox");
+        (data[id] || []).forEach(function(value, index) {
+            if (boxes[index]) boxes[index].value = value;
+        });
+    });
+
+    const bankerBoxes = document.querySelectorAll("#bankerSection .score-box");
+    (data.banker || []).forEach(function(value, index) {
+        if (bankerBoxes[index]) bankerBoxes[index].value = value;
+    });
+
+    if (data.activeJunkGames) {
+        document.querySelectorAll(".junk-btn").forEach(function(btn) {
+            const shouldBeActive = data.activeJunkGames.indexOf(btn.getAttribute("data-game")) !== -1;
+            const isActive = btn.classList.contains("active-junk");
+            if (shouldBeActive && !isActive) {
+                btn.classList.add("active-junk");
+                btn.style.background = "#00ff99";
+                btn.style.color = "black";
+            } else if (!shouldBeActive && isActive) {
+                btn.classList.remove("active-junk");
+                btn.style.background = "#111";
+                btn.style.color = "#00ff99";
+            }
+        });
+    }
+
+    if (document.getElementById("carryoverToggleIndividual")) document.getElementById("carryoverToggleIndividual").checked = !!data.carryoverIndividual;
+    if (document.getElementById("carryoverToggleTeam")) document.getElementById("carryoverToggleTeam").checked = !!data.carryoverTeam;
+
+    if (data.individualSkinValue && document.getElementById("individualSkinValue")) document.getElementById("individualSkinValue").value = data.individualSkinValue;
+    if (data.teamSkinValue && document.getElementById("teamSkinValue")) document.getElementById("teamSkinValue").value = data.teamSkinValue;
+    if (data.nassauValue && document.getElementById("nassauValue")) document.getElementById("nassauValue").value = data.nassauValue;
+    if (data.rabbitValue && document.getElementById("rabbitValue")) document.getElementById("rabbitValue").value = data.rabbitValue;
+    if (data.g9PointValue && document.getElementById("g9PointValue")) document.getElementById("g9PointValue").value = data.g9PointValue;
+
+    if (document.getElementById("indivNassauToggle")) document.getElementById("indivNassauToggle").checked = !!data.indivNassauToggle;
+    if (document.getElementById("teamNassauToggle")) document.getElementById("teamNassauToggle").checked = !!data.teamNassauToggle;
+    if (data.indivNassauValue && document.getElementById("indivNassauValue")) document.getElementById("indivNassauValue").value = data.indivNassauValue;
+    if (data.teamNassauValue && document.getElementById("teamNassauValue")) document.getElementById("teamNassauValue").value = data.teamNassauValue;
+
+    if (typeof updatePlayerTotals === "function") updatePlayerTotals();
+    if (typeof updateTeamTotals === "function") updateTeamTotals();
+    if (typeof checkSkins === "function") checkSkins();
+    if (typeof colorLeftRight === "function") colorLeftRight();
+    if (typeof updateLeftRightTotals === "function") updateLeftRightTotals();
+    if (typeof updateNassauTracker === "function") updateNassauTracker();
+    if (typeof updateChipsTotals === "function") updateChipsTotals();
+    if (typeof updateG9Names === "function") updateG9Names();
+    if (typeof updateGameOf9 === "function") updateGameOf9();
+    if (typeof updateNames === "function") updateNames();
+    if (typeof updateLeaderboard === "function") updateLeaderboard();
+}
+
+async function cloudSaveRound() {
+    let code = localStorage.getItem("birdiebookieRoomCode");
+    if (!code) {
+        code = generateRoomCode();
+        localStorage.setItem("birdiebookieRoomCode", code);
+    }
+
+    const data = collectRoundDataForCloud();
+
+    const { error } = await sbClient
+        .from("birdiebookie_rounds")
+        .upsert({ room_code: code, data: data }, { onConflict: "room_code" });
+
+    if (error) {
+        alert("Cloud save failed: " + error.message);
+        return;
+    }
+
+    document.getElementById("roomCodeDisplay").textContent = "Room Code: " + code;
+    alert("Saved to cloud! Share this code with your group: " + code);
+}
+
+async function joinRoundByCode() {
+    const input = document.getElementById("joinCodeInput");
+    const code = input.value.trim().toUpperCase();
+    if (!code) {
+        alert("Enter a room code first.");
+        return;
+    }
+
+    const { data, error } = await sbClient
+        .from("birdiebookie_rounds")
+        .select("data")
+        .eq("room_code", code)
+        .single();
+
+    if (error || !data) {
+        alert("Couldn't find that room code. Double check it and try again.");
+        return;
+    }
+
+    localStorage.setItem("birdiebookieRoomCode", code);
+    applyCloudRoundData(data.data);
+    document.getElementById("roomCodeDisplay").textContent = "Room Code: " + code;
+    alert("Joined round " + code + "!");
+}
+
+async function refreshFromCloud() {
+    const code = localStorage.getItem("birdiebookieRoomCode");
+    if (!code) {
+        alert("No room code yet. Save to cloud or join a round first.");
+        return;
+    }
+
+    const { data, error } = await sbClient
+        .from("birdiebookie_rounds")
+        .select("data")
+        .eq("room_code", code)
+        .single();
+
+    if (error || !data) {
+        alert("Couldn't refresh. Try again in a moment.");
+        return;
+    }
+
+    applyCloudRoundData(data.data);
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    const savedCode = localStorage.getItem("birdiebookieRoomCode");
+    if (savedCode && document.getElementById("roomCodeDisplay")) {
+        document.getElementById("roomCodeDisplay").textContent = "Room Code: " + savedCode;
+    }
+});
+</script>
+        <script src="voicescorekeeper.js"></script>
 <div style="text-align:center; margin-top:20px; font-family:monospace; font-size:14px; color:#26e35a;">
   Views: <span id="bb-main-counter">...</span>
 </div>
