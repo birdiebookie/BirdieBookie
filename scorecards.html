@@ -121,7 +121,24 @@ GOLF IS ABOUT ONE THING AND ONE THING ONLY , TAKING YOUR FRIENDS MONEY 💰
     color:#00ff99;
     font-weight:bold;
 }
-.player-input{
+.player-name-area{
+    display:flex;
+    align-items:center;
+    gap:6px;
+}
+
+.stroke-count{
+    width:28px;
+    height:28px;
+    border:2px solid #00ff99;
+    border-radius:6px;
+    background:#111;
+    color:#00ff99;
+    text-align:center;
+    font-size:16px;
+    font-weight:bold;
+}
+    .player-input{
     color:black !important;
 }
 input.player-name, #bankerName1, #bankerName2, #bankerName3, #bankerName4 {
@@ -139,7 +156,11 @@ input.player-name, #bankerName1, #bankerName2, #bankerName3, #bankerName4 {
     text-align:center;
     font-size:22px;
 }
-
+.stroke-hole{
+    background:#7a263a !important;
+    border-color:#b84d68 !important;
+}
+    
 .header-box{
     width:55px;
     height:55px;
@@ -1118,7 +1139,91 @@ function sanitizeScoreInput(box) {
     }
     if (box.value !== val) box.value = val;
 }
+// ================= STROKE HOLE SELECTION =================
 
+const strokePlayers = [1, 2, 3, 4];
+
+function updateStrokeHoleStatus(playerNumber) {
+    const strokeInput = document.getElementById("strokes" + playerNumber);
+    const playerRow = document.getElementById("player" + playerNumber);
+
+    if (!strokeInput || !playerRow) return;
+
+    const strokeCount = parseInt(strokeInput.value, 10) || 0;
+
+    const holes = Array.from(
+        playerRow.querySelectorAll(".hole-box:not(.total-box)")
+    );
+
+    const selectedHoles = holes.filter(function(hole) {
+        return hole.classList.contains("stroke-hole");
+    });
+
+    // Prevent more stroke holes than the player is entitled to.
+    if (selectedHoles.length > strokeCount) {
+        const extraHoles = selectedHoles.slice(strokeCount);
+
+        extraHoles.forEach(function(hole) {
+            hole.classList.remove("stroke-hole");
+        });
+    }
+}
+
+function setupStrokePlayer(playerNumber) {
+    const strokeInput = document.getElementById("strokes" + playerNumber);
+    const playerRow = document.getElementById("player" + playerNumber);
+
+    if (!strokeInput || !playerRow) return;
+
+    const holes = Array.from(
+        playerRow.querySelectorAll(".hole-box:not(.total-box)")
+    );
+
+    holes.forEach(function(hole) {
+
+        hole.addEventListener("click", function() {
+
+            const strokeCount = parseInt(strokeInput.value, 10) || 0;
+
+            if (strokeCount <= 0) {
+                return;
+            }
+
+            // If already selected, allow the Master Scorekeeper
+            // to unselect it.
+            if (hole.classList.contains("stroke-hole")) {
+                hole.classList.remove("stroke-hole");
+                return;
+            }
+
+            const selectedCount = holes.filter(function(h) {
+                return h.classList.contains("stroke-hole");
+            }).length;
+
+            // Do not allow more holes than the player's strokes.
+            if (selectedCount >= strokeCount) {
+                alert(
+                    "This player has " +
+                    strokeCount +
+                    " stroke" +
+                    (strokeCount === 1 ? "" : "s") +
+                    ". You cannot select another hole."
+                );
+                return;
+            }
+
+            hole.classList.add("stroke-hole");
+        });
+    });
+
+    strokeInput.addEventListener("change", function() {
+        updateStrokeHoleStatus(playerNumber);
+    });
+}
+
+strokePlayers.forEach(function(playerNumber) {
+    setupStrokePlayer(playerNumber);
+});
 const lrAlertedHoles = new Set();
 let lrValidateTimer = null;
 
