@@ -540,7 +540,18 @@ input.player-name, #bankerName1, #bankerName2, #bankerName3, #bankerName4 {
     
     <br><br>
  <button id="resultsBtn" onclick="window.location.href='results.html'">RESULTS 💰</button>
-
+<div style="text-align:center; margin-top:20px;">
+  <div style="background:#111; border:2px solid #00ff99; border-radius:20px; padding:16px; display:inline-block;">
+    <div style="color:#00ff99; font-weight:bold; margin-bottom:10px;">☁️ SHARE THIS ROUND</div>
+    <button onclick="cloudSaveRound()" style="background:#00ff99; color:black; border:none; padding:12px 20px; border-radius:16px; font-weight:bold; font-size:16px; cursor:pointer;">SAVE TO CLOUD</button>
+    <div id="roomCodeDisplay" style="color:#ffdd44; font-size:22px; font-weight:bold; margin-top:10px;"></div>
+    <br><br>
+    <input id="joinCodeInput" placeholder="Enter Code" style="width:120px; padding:10px; text-align:center; border-radius:10px; border:1px solid #00ff99; background:black; color:#00ff99; font-size:16px; text-transform:uppercase;">
+    <button onclick="joinRoundByCode()" style="background:transparent; color:#00ff99; border:2px solid #00ff99; padding:10px 16px; border-radius:16px; font-weight:bold; cursor:pointer;">JOIN ROUND</button>
+    <br><br>
+    <button onclick="refreshFromCloud()" style="background:transparent; color:#ffdd44; border:2px solid #ffdd44; padding:10px 16px; border-radius:16px; font-weight:bold; cursor:pointer;">🔄 REFRESH SCORES</button>
+  </div>
+</div>
 
 
 </div>
