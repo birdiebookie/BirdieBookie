@@ -1197,9 +1197,7 @@ function setupStrokePlayer(playerNumber) {
    holes.forEach(function(hole) {
     hole.addEventListener("click", function(event) {
         // Let score boxes work normally for typing scores.
-        if (event.target.tagName === "INPUT") {
-            return;
-        }
+        
 
         const strokeCount = parseInt(strokeInput.value, 10) || 0;
 
