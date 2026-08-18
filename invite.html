@@ -185,6 +185,18 @@ button{
 <h2>GAMES</h2>
 <label>Selected Games</label>
 <select id="selectedGames" multiple size="4">
+<option value="Nassau">Nassau</option>
+<option value="Skins">Skins</option>
+<option value="Wolf">Wolf</option>
+<option value="Left Right">Left Right</option>
+<option value="Vegas">Vegas</option>
+<option value="Quota">Quota</option>
+<option value="Rabbit">Rabbit</option>
+<option value="Stableford">Stableford</option>
+<option value="Bingo Bango Bongo">Bingo Bango Bongo</option>
+<option value="Game of 9">Game of 9</option>
+<option value="Chairman">Chairman</option>
+<option value="Press">Press</option>
 </select>
 <label style="margin-top:12px;">Round / Room Number</label>
 <input type="text" id="roomCode" readonly>
@@ -254,10 +266,7 @@ button{
 
 <script>
 // Auto-populate Selected Games from localStorage
-window.addEventListener("DOMContentLoaded", function() {
-    const savedGames = JSON.parse(localStorage.getItem("selectedGames") || "[]");
-    if (savedGames.length > 0) {
-        document.getElementById("selectedGames").value = savedGames.join(", ");
+
     }
 
     const savedCourse = localStorage.getItem("selectedCourse");
