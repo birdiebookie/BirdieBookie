@@ -60,6 +60,22 @@ input[type="text"]{
     box-sizing:border-box;
 }
 
+select{
+    width:100%;
+    padding:12px;
+    border-radius:8px;
+    border:2px solid #00ff99;
+    background:#111;
+    color:#fff;
+    font-size:18px;
+    box-sizing:border-box;
+}
+
+#selectedGames{
+    height:auto;
+    min-height:150px;
+}
+
 .playerRow{
     display:grid;
     grid-template-columns:180px 1fr 1fr;
@@ -77,8 +93,7 @@ input[type="text"]{
     font-weight:bold;
 }
 
-/* TOGGLE BUTTON STYLES */
-.toggle-row {
+.toggle-row{
     display:flex;
     align-items:center;
     gap:18px;
@@ -86,7 +101,7 @@ input[type="text"]{
     cursor:pointer;
 }
 
-.toggle-box {
+.toggle-box{
     width:60px;
     height:60px;
     border-radius:12px;
@@ -97,15 +112,15 @@ input[type="text"]{
     justify-content:center;
     font-size:32px;
     flex-shrink:0;
-    transition: background 0.2s;
+    transition:background 0.2s;
 }
 
-.toggle-box.on {
+.toggle-box.on{
     background:#00ff99;
     color:#000;
 }
 
-.toggle-label {
+.toggle-label{
     font-size:28px;
     font-weight:bold;
     color:#00ff99;
@@ -127,28 +142,42 @@ button{
     cursor:pointer;
     margin-top:10px;
 }
+
+button:disabled{
+    opacity:.6;
+    cursor:wait;
+}
+
 @media (max-width:700px){
+
     .grid3{
         grid-template-columns:1fr;
     }
+
     .playerRow{
         grid-template-columns:1fr;
         gap:10px;
         padding:14px;
     }
+
     .playerTitle{
         font-size:24px;
     }
+
     h1{
         font-size:36px;
     }
-    input[type="text"]{
+
+    input[type="text"],
+    select{
         font-size:16px;
         padding:10px;
     }
+
     .toggle-label{
         font-size:20px;
     }
+
     .toggle-box{
         width:44px;
         height:44px;
@@ -156,7 +185,6 @@ button{
     }
 }
 </style>
-
 </head>
 
 <body>
@@ -183,78 +211,124 @@ button{
 
 <div class="panel">
 <h2>GAMES</h2>
+
 <label>Selected Games</label>
+
 <select id="selectedGames" multiple size="4">
-<option value="Nassau">Nassau</option>
-<option value="Skins">Skins</option>
-<option value="Wolf">Wolf</option>
-<option value="Left Right">Left Right</option>
-<option value="Vegas">Vegas</option>
-<option value="Quota">Quota</option>
-<option value="Rabbit">Rabbit</option>
-<option value="Stableford">Stableford</option>
-<option value="Bingo Bango Bongo">Bingo Bango Bongo</option>
-<option value="Game of 9">Game of 9</option>
-<option value="Chairman">Chairman</option>
-<option value="Press">Press</option>
+    <option value="Nassau">Nassau</option>
+    <option value="Skins">Skins</option>
+    <option value="Wolf">Wolf</option>
+    <option value="Left Right">Left Right</option>
+    <option value="Vegas">Vegas</option>
+    <option value="Quota">Quota</option>
+    <option value="Rabbit">Rabbit</option>
+    <option value="Stableford">Stableford</option>
+    <option value="Bingo Bango Bongo">Bingo Bango Bongo</option>
+    <option value="Game of 9">Game of 9</option>
+    <option value="Chairman">Chairman</option>
+    <option value="Press">Press</option>
 </select>
+
 <label style="margin-top:12px;">Round / Room Number</label>
 <input type="text" id="roomCode" readonly>
+
 </div>
 
 </div>
 
 <div class="playerRow">
 <div class="playerTitle">PLAYER 1</div>
-<div><label>Name</label><input type="text"></div>
-<div><label>Phone Number</label><input type="text"></div>
+<div>
+    <label>Name</label>
+    <input type="text">
+</div>
+<div>
+    <label>Phone Number</label>
+    <input type="text">
+</div>
 </div>
 
 <div class="playerRow">
 <div class="playerTitle">PLAYER 2</div>
-<div><label>Name</label><input type="text"></div>
-<div><label>Phone Number</label><input type="text"></div>
+<div>
+    <label>Name</label>
+    <input type="text">
+</div>
+<div>
+    <label>Phone Number</label>
+    <input type="text">
+</div>
 </div>
 
 <div class="playerRow">
 <div class="playerTitle">PLAYER 3</div>
-<div><label>Name</label><input type="text"></div>
-<div><label>Phone Number</label><input type="text"></div>
+<div>
+    <label>Name</label>
+    <input type="text">
+</div>
+<div>
+    <label>Phone Number</label>
+    <input type="text">
+</div>
 </div>
 
-<!-- ADD GOLFERS TOGGLE -->
 <div class="toggle-row" onclick="toggleExtra()">
     <div class="toggle-box" id="extraBox">＋</div>
     <div class="toggle-label">Add Golfers 4–7</div>
 </div>
 
 <div id="extra">
+
 <div class="playerRow">
 <div class="playerTitle">PLAYER 4</div>
-<div><label>Name</label><input type="text"></div>
-<div><label>Phone Number</label><input type="text"></div>
+<div>
+    <label>Name</label>
+    <input type="text">
+</div>
+<div>
+    <label>Phone Number</label>
+    <input type="text">
+</div>
 </div>
 
 <div class="playerRow">
 <div class="playerTitle">PLAYER 5</div>
-<div><label>Name</label><input type="text"></div>
-<div><label>Phone Number</label><input type="text"></div>
+<div>
+    <label>Name</label>
+    <input type="text">
+</div>
+<div>
+    <label>Phone Number</label>
+    <input type="text">
+</div>
 </div>
 
 <div class="playerRow">
 <div class="playerTitle">PLAYER 6</div>
-<div><label>Name</label><input type="text"></div>
-<div><label>Phone Number</label><input type="text"></div>
+<div>
+    <label>Name</label>
+    <input type="text">
+</div>
+<div>
+    <label>Phone Number</label>
+    <input type="text">
+</div>
 </div>
 
 <div class="playerRow">
 <div class="playerTitle">PLAYER 7</div>
-<div><label>Name</label><input type="text"></div>
-<div><label>Phone Number</label><input type="text"></div>
+<div>
+    <label>Name</label>
+    <input type="text">
+</div>
+<div>
+    <label>Phone Number</label>
+    <input type="text">
 </div>
 </div>
 
-<!-- REMEMBER GOLFERS TOGGLE -->
+</div>
+
 <div class="toggle-row" onclick="toggleRemember()">
     <div class="toggle-box" id="rememberBox">＋</div>
     <div class="toggle-label">Remember These Golfers</div>
@@ -265,104 +339,388 @@ button{
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
 
-    // LOAD COURSE FROM THE CURRENT ROUND
-    const savedCourse = localStorage.getItem("selectedCourse");
+const SUPABASE_URL =
+    "https://wchbsfanjhwgibojxqns.supabase.co";
 
-    if (savedCourse) {
-        const courseSelect = document.getElementById("courseName");
+const SUPABASE_KEY =
+    "sb_publishable_IY6_FwkAvwrbn7QphyjEhQ_mDUEyQ05";
 
-        const option = document.createElement("option");
+
+/* ==========================================
+   LOAD PAGE
+   ========================================== */
+
+document.addEventListener("DOMContentLoaded", async function(){
+
+    loadHost();
+
+    loadCourse();
+
+    loadGames();
+
+    await loadRoomNumber();
+
+});
+
+
+/* ==========================================
+   HOST
+   ========================================== */
+
+function loadHost(){
+
+    const host =
+        localStorage.getItem("hostName");
+
+    if(host){
+        document.getElementById("hostName").value = host;
+    }
+}
+
+
+/* ==========================================
+   COURSE
+   ========================================== */
+
+function loadCourse(){
+
+    const courseSelect =
+        document.getElementById("courseName");
+
+    const savedCourse =
+        localStorage.getItem("selectedCourse");
+
+    if(savedCourse){
+
+        const option =
+            document.createElement("option");
+
         option.value = savedCourse;
         option.textContent = savedCourse;
         option.selected = true;
 
         courseSelect.appendChild(option);
     }
+}
 
-    // LOAD GAMES FROM THE CURRENT ROUND
-    const savedGames = JSON.parse(localStorage.getItem("bb_games") || "[]");
-    const gameSelect = document.getElementById("selectedGames");
 
-    savedGames.forEach(function(game) {
-        Array.from(gameSelect.options).forEach(function(option) {
-            if (option.value === game) {
-                option.selected = true;
-            }
-        });
-    });
+/* ==========================================
+   GAMES
+   ========================================== */
 
-    // LIMIT TO 2 GAMES
-    gameSelect.addEventListener("change", function() {
-        const selected = Array.from(gameSelect.selectedOptions);
+function loadGames(){
 
-        if (selected.length > 2) {
-            selected[selected.length - 1].selected = false;
-            alert("You can select a maximum of 2 games.");
-        }
-    });
+    const gameSelect =
+        document.getElementById("selectedGames");
 
-    // LOAD ROUND / ROOM NUMBER
-    const savedRoomCode = localStorage.getItem("birdiebookieRoomCode");
+    let savedGames = [];
 
-    if (savedRoomCode) {
-        document.getElementById("roomCode").value = savedRoomCode;
+    try{
+        savedGames =
+            JSON.parse(
+                localStorage.getItem("bb_games") || "[]"
+            );
+    }
+    catch(error){
+        savedGames = [];
     }
 
-    // SEND INVITES
-    document.getElementById("sendInvitesBtn").addEventListener("click", async function() {
+    savedGames.forEach(function(game){
 
-        const course = document.getElementById("courseName").value || "Golf Course";
+        Array.from(gameSelect.options).forEach(function(option){
 
-        const games = Array.from(
-            document.getElementById("selectedGames").selectedOptions
-        ).map(option => option.value).join(", ") || "Golf";
-
-        const room = document.getElementById("roomCode").value || "Not available";
-
-        const message =
-            "🏌️ BirdieBookie Golf Invitation\n\n" +
-            "Course: " + course + "\n" +
-            "Games: " + games + "\n" +
-            "Round / Room Number: " + room + "\n\n" +
-            "Join the round on BirdieBookie and use the Room Number above.";
-
-        if (navigator.share) {
-            try {
-                await navigator.share({
-                    title: "BirdieBookie Golf Invitation",
-                    text: message
-                });
-            } catch (error) {
-                if (error.name !== "AbortError") {
-                    alert("Unable to open the share menu.");
-                }
+            if(option.value === game){
+                option.selected = true;
             }
-        } else {
-            try {
-                await navigator.clipboard.writeText(message);
-                alert("INVITATION COPIED!\n\nPaste it into a text, email, or Messenger.");
-            } catch (error) {
-                alert(message);
-            }
-        }
+
+        });
+
     });
+
+
+    gameSelect.addEventListener("change", function(){
+
+        const selected =
+            Array.from(gameSelect.selectedOptions);
+
+        if(selected.length > 2){
+
+            selected[selected.length - 1].selected = false;
+
+            alert("You can select a maximum of 2 games.");
+        }
+
+    });
+
+}
+
+
+/* ==========================================
+   ROOM NUMBER
+   ========================================== */
+
+async function loadRoomNumber(){
+
+    const roomInput =
+        document.getElementById("roomCode");
+
+
+    /* FIRST: USE LOCAL ROOM NUMBER */
+
+    let roomCode =
+        localStorage.getItem("birdiebookieRoomCode");
+
+
+    if(roomCode){
+
+        roomInput.value = roomCode;
+
+        return;
+    }
+
+
+    /* SECOND: FIND ROOM IN SUPABASE */
+
+    const deviceId =
+        localStorage.getItem("birdiebookieDeviceId");
+
+
+    if(!deviceId){
+
+        console.log(
+            "No BirdieBookie device ID found."
+        );
+
+        return;
+    }
+
+
+    try{
+
+        const url =
+            SUPABASE_URL +
+            "/rest/v1/birdiebookie_rounds" +
+            "?select=room_code" +
+            "&scorekeeper_device=eq." +
+            encodeURIComponent(deviceId) +
+            "&limit=1";
+
+
+        const response =
+            await fetch(url, {
+
+                method:"GET",
+
+                headers:{
+                    "apikey":SUPABASE_KEY,
+                    "Authorization":
+                        "Bearer " + SUPABASE_KEY
+                }
+
+            });
+
+
+        if(!response.ok){
+
+            console.log(
+                "Supabase room lookup failed:",
+                response.status
+            );
+
+            return;
+        }
+
+
+        const rows =
+            await response.json();
+
+
+        if(rows.length > 0 &&
+           rows[0].room_code){
+
+            roomCode =
+                rows[0].room_code;
+
+
+            localStorage.setItem(
+                "birdiebookieRoomCode",
+                roomCode
+            );
+
+
+            roomInput.value =
+                roomCode;
+
+        }
+
+    }
+    catch(error){
+
+        console.log(
+            "Room lookup error:",
+            error
+        );
+
+    }
+
+}
+
+
+/* ==========================================
+   SEND INVITES
+   ========================================== */
+
+document
+.getElementById("sendInvitesBtn")
+.addEventListener("click", async function(){
+
+    const button =
+        document.getElementById("sendInvitesBtn");
+
+
+    const course =
+        document.getElementById("courseName").value ||
+        "Golf Course";
+
+
+    const games =
+        Array.from(
+            document
+            .getElementById("selectedGames")
+            .selectedOptions
+        )
+        .map(option => option.value)
+        .join(", ") || "Golf";
+
+
+    const room =
+        document
+        .getElementById("roomCode")
+        .value ||
+        "Not available";
+
+
+    const message =
+        "🏌️ BirdieBookie Golf Invitation\n\n" +
+        "Course: " + course + "\n" +
+        "Games: " + games + "\n" +
+        "Round / Room Number: " + room + "\n\n" +
+        "Join the round on BirdieBookie and use the Room Number above.";
+
+
+    button.disabled = true;
+
+
+    try{
+
+        if(navigator.share){
+
+            await navigator.share({
+
+                title:
+                    "BirdieBookie Golf Invitation",
+
+                text:
+                    message
+
+            });
+
+        }
+        else{
+
+            await navigator.clipboard.writeText(
+                message
+            );
+
+            alert(
+                "INVITATION COPIED!\n\n" +
+                "Paste it into a text, email, or Messenger."
+            );
+
+        }
+
+    }
+    catch(error){
+
+        if(error.name !== "AbortError"){
+
+            try{
+
+                await navigator.clipboard.writeText(
+                    message
+                );
+
+                alert(
+                    "INVITATION COPIED!\n\n" +
+                    "Paste it into a text, email, or Messenger."
+                );
+
+            }
+            catch(copyError){
+
+                alert(message);
+
+            }
+
+        }
+
+    }
+    finally{
+
+        button.disabled = false;
+
+    }
+
 });
 
-function toggleExtra() {
-    const box = document.getElementById("extraBox");
-    const extra = document.getElementById("extra");
-    const isOn = box.classList.toggle("on");
-    box.textContent = isOn ? "✓" : "＋";
-    extra.style.display = isOn ? "block" : "none";
+
+/* ==========================================
+   ADD GOLFERS
+   ========================================== */
+
+function toggleExtra(){
+
+    const box =
+        document.getElementById("extraBox");
+
+    const extra =
+        document.getElementById("extra");
+
+
+    const isOn =
+        box.classList.toggle("on");
+
+
+    box.textContent =
+        isOn ? "✓" : "＋";
+
+
+    extra.style.display =
+        isOn ? "block" : "none";
+
 }
 
-function toggleRemember() {
-    const box = document.getElementById("rememberBox");
-    const isOn = box.classList.toggle("on");
-    box.textContent = isOn ? "✓" : "＋";
+
+/* ==========================================
+   REMEMBER GOLFERS
+   ========================================== */
+
+function toggleRemember(){
+
+    const box =
+        document.getElementById("rememberBox");
+
+
+    const isOn =
+        box.classList.toggle("on");
+
+
+    box.textContent =
+        isOn ? "✓" : "＋";
+
 }
+
 </script>
 
 </body>
