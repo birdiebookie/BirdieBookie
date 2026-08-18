@@ -2322,7 +2322,7 @@ function saveRound() {
         chip4: Array.from(document.querySelectorAll("#chip4 .chipbox")).map(x => x.value),
 
         banker: Array.from(document.querySelectorAll("#bankerSection .score-box")).map(x => x.value),
-
+        selectedGames: JSON.parse(localStorage.getItem("selectedGames") || "[]"),
         activeJunkGames: Array.from(document.querySelectorAll(".junk-btn.active-junk")).map(x => x.getAttribute("data-game")),
         chipAmount: (document.querySelector('input[name="chipAmount"]:checked') || {}).value || "1.00",
 
