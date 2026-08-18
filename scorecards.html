@@ -1194,42 +1194,35 @@ function setupStrokePlayer(playerNumber) {
         playerRow.querySelectorAll(".hole-box:not(.total-box)")
     );
 
-    holes.forEach(function(hole) {
+   holes.forEach(function(hole) {
+    hole.addEventListener("click", function(event) {
+        // Let score boxes work normally for typing scores.
+        if (event.target.tagName === "INPUT") {
+            return;
+        }
 
-        hole.addEventListener("click", function() {
+        const strokeCount = parseInt(strokeInput.value, 10) || 0;
 
-            const strokeCount = parseInt(strokeInput.value, 10) || 0;
+        if (strokeCount <= 0) {
+            return;
+        }
 
-            if (strokeCount <= 0) {
-                return;
-            }
+        if (hole.classList.contains("stroke-hole")) {
+            hole.classList.remove("stroke-hole");
+            return;
+        }
 
-            // If already selected, allow the Master Scorekeeper
-            // to unselect it.
-            if (hole.classList.contains("stroke-hole")) {
-                hole.classList.remove("stroke-hole");
-                return;
-            }
+        const selectedCount = holes.filter(function(h) {
+            return h.classList.contains("stroke-hole");
+        }).length;
 
-            const selectedCount = holes.filter(function(h) {
-                return h.classList.contains("stroke-hole");
-            }).length;
+        if (selectedCount >= strokeCount) {
+            return;
+        }
 
-            // Do not allow more holes than the player's strokes.
-            if (selectedCount >= strokeCount) {
-                alert(
-                    "This player has " +
-                    strokeCount +
-                    " stroke" +
-                    (strokeCount === 1 ? "" : "s") +
-                    ". You cannot select another hole."
-                );
-                return;
-            }
-
-            hole.classList.add("stroke-hole");
-        });
+        hole.classList.add("stroke-hole");
     });
+});
 function normalizeStrokeHoleSelection() {
     const strokeCount = parseInt(strokeInput.value, 10) || 0;
 
