@@ -193,22 +193,7 @@ button:disabled{
         <input type="text" id="hostName">
     </div>
 
-    <!-- COURSE -->
-    <div class="panel">
-        <h2>ROUND INFORMATION</h2>
-
-       <label>State</label>
-
-<select id="stateName">
-    <option value="">Select State</option>
-</select>
-
-<label style="margin-top:12px;">Course</label>
-
-<select id="courseName">
-    <option value="">Select Course</option>
-</select>
-    </div>
+   
 
     <!-- GAMES -->
     <div class="panel">
@@ -474,71 +459,6 @@ function loadHost(){
    COURSE
    ========================================================= */
 
-function loadCourse(){
-
-
-const courseData = {
-    OH: [
-        "Beckett Ridge",
-        "Sharon Woods"
-    ]
-};
-
-const stateSelect = document.getElementById("stateName");
-const courseSelect = document.getElementById("courseName");
-
-const states = {
-    OH: "Ohio"
-};
-
-Object.keys(states).forEach(function(stateCode) {
-    const option = document.createElement("option");
-    option.value = stateCode;
-    option.textContent = states[stateCode];
-    stateSelect.appendChild(option);
-});
-
-stateSelect.addEventListener("change", function() {
-    courseSelect.innerHTML = '<option value="">Select Course</option>';
-
-    const courses = courseData[this.value] || [];
-
-    courses.forEach(function(course) {
-        const option = document.createElement("option");
-        option.value = course;
-        option.textContent = course;
-        courseSelect.appendChild(option);
-    });
-});
-
-const savedCourse = localStorage.getItem("selectedCourse");
-
-if (savedCourse) {
-    courseSelect.innerHTML = '<option value="">Select Course</option>';
-
-    const option = document.createElement("option");
-    option.value = savedCourse;
-    option.textContent = savedCourse;
-    option.selected = true;
-    courseSelect.appendChild(option);
-
-    const savedState = localStorage.getItem("selectedState");
-
-    if (savedState && states[savedState]) {
-        stateSelect.value = savedState;
-    }
-}
-
-courseSelect.addEventListener("change", function() {
-    if (this.value) {
-        localStorage.setItem("selectedCourse", this.value);
-    }
-});
-
-stateSelect.addEventListener("change", function() {
-    localStorage.setItem("selectedState", this.value);
-});
-}</script>
 
 /* =========================================================
    GAMES
