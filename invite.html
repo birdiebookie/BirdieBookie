@@ -49,7 +49,8 @@ label{
     margin-bottom:6px;
 }
 
-input[type="text"]{
+input[type="text"],
+select{
     width:100%;
     padding:12px;
     border-radius:8px;
@@ -60,6 +61,17 @@ input[type="text"]{
     box-sizing:border-box;
 }
 
+/* GAMES BOX */
+#selectedGames{
+    height:150px;
+    cursor:pointer;
+}
+
+#selectedGames option{
+    padding:6px;
+}
+
+/* PLAYER ROWS */
 .playerRow{
     display:grid;
     grid-template-columns:180px 1fr 1fr;
@@ -78,7 +90,7 @@ input[type="text"]{
 }
 
 /* TOGGLE BUTTON STYLES */
-.toggle-row {
+.toggle-row{
     display:flex;
     align-items:center;
     gap:18px;
@@ -86,7 +98,7 @@ input[type="text"]{
     cursor:pointer;
 }
 
-.toggle-box {
+.toggle-box{
     width:60px;
     height:60px;
     border-radius:12px;
@@ -97,15 +109,15 @@ input[type="text"]{
     justify-content:center;
     font-size:32px;
     flex-shrink:0;
-    transition: background 0.2s;
+    transition:background 0.2s;
 }
 
-.toggle-box.on {
+.toggle-box.on{
     background:#00ff99;
     color:#000;
 }
 
-.toggle-label {
+.toggle-label{
     font-size:28px;
     font-weight:bold;
     color:#00ff99;
@@ -127,28 +139,44 @@ button{
     cursor:pointer;
     margin-top:10px;
 }
+
+.game-help{
+    color:#aaa;
+    font-size:14px;
+    margin-top:8px;
+}
+
+/* MOBILE */
 @media (max-width:700px){
+
     .grid3{
         grid-template-columns:1fr;
     }
+
     .playerRow{
         grid-template-columns:1fr;
         gap:10px;
         padding:14px;
     }
+
     .playerTitle{
         font-size:24px;
     }
+
     h1{
         font-size:36px;
     }
-    input[type="text"]{
+
+    input[type="text"],
+    select{
         font-size:16px;
         padding:10px;
     }
+
     .toggle-label{
         font-size:20px;
     }
+
     .toggle-box{
         width:44px;
         height:44px;
@@ -165,204 +193,863 @@ button{
 
 <h1>🏌️ Invite Players</h1>
 
+<!-- TOP INFORMATION -->
+
 <div class="grid3">
 
-<div class="panel">
-<h2>HOST INFORMATION</h2>
-<label>Host Name</label>
-<input type="text" id="hostName">
+    <!-- HOST -->
+    <div class="panel">
+        <h2>HOST INFORMATION</h2>
+
+        <label>Host Name</label>
+        <input type="text" id="hostName">
+    </div>
+
+    <!-- ROUND -->
+    <div class="panel">
+        <h2>ROUND INFORMATION</h2>
+
+        <label>Course</label>
+        <select id="courseName">
+            <option value="">Select Course</option>
+        </select>
+    </div>
+
+    <!-- GAMES -->
+    <div class="panel">
+        <h2>GAMES</h2>
+
+        <label>Selected Games</label>
+
+        <select id="selectedGames" multiple size="8">
+
+            <option value="Nassau">Nassau</option>
+            <option value="Skins">Skins</option>
+            <option value="Wolf">Wolf</option>
+            <option value="Left Right">Left Right</option>
+            <option value="Vegas">Vegas</option>
+            <option value="Quota">Quota</option>
+            <option value="Rabbit">Rabbit</option>
+            <option value="Stableford">Stableford</option>
+            <option value="Bingo Bango Bongo">Bingo Bango Bongo</option>
+            <option value="Game of 9">Game of 9</option>
+            <option value="Chairman">Chairman</option>
+            <option value="Press">Press</option>
+
+        </select>
+
+        <div class="game-help">
+            Tap/click a game to turn it on or off.
+        </div>
+
+        <label style="margin-top:12px;">
+            Round / Room Number
+        </label>
+
+        <input type="text" id="roomCode" readonly>
+    </div>
+
 </div>
 
-<div class="panel">
-<h2>ROUND INFORMATION</h2>
-<label>Course</label>
-<select id="courseName">
-    <option value="">Select Course</option>
-</select>
-</div>
 
-<div class="panel">
-<h2>GAMES</h2>
-<label>Selected Games</label>
-<select id="selectedGames" multiple size="4">
-<option value="Nassau">Nassau</option>
-<option value="Skins">Skins</option>
-<option value="Wolf">Wolf</option>
-<option value="Left Right">Left Right</option>
-<option value="Vegas">Vegas</option>
-<option value="Quota">Quota</option>
-<option value="Rabbit">Rabbit</option>
-<option value="Stableford">Stableford</option>
-<option value="Bingo Bango Bongo">Bingo Bango Bongo</option>
-<option value="Game of 9">Game of 9</option>
-<option value="Chairman">Chairman</option>
-<option value="Press">Press</option>
-</select>
-<label style="margin-top:12px;">Round / Room Number</label>
-<input type="text" id="roomCode" readonly>
-</div>
-
-</div>
+<!-- PLAYER 1 -->
 
 <div class="playerRow">
-<div class="playerTitle">PLAYER 1</div>
-<div><label>Name</label><input type="text"></div>
-<div><label>Phone Number</label><input type="text"></div>
+
+    <div class="playerTitle">
+        PLAYER 1
+    </div>
+
+    <div>
+        <label>Name</label>
+        <input type="text" id="player1Name">
+    </div>
+
+    <div>
+        <label>Phone Number</label>
+        <input type="text" id="player1Phone">
+    </div>
+
 </div>
+
+
+<!-- PLAYER 2 -->
 
 <div class="playerRow">
-<div class="playerTitle">PLAYER 2</div>
-<div><label>Name</label><input type="text"></div>
-<div><label>Phone Number</label><input type="text"></div>
+
+    <div class="playerTitle">
+        PLAYER 2
+    </div>
+
+    <div>
+        <label>Name</label>
+        <input type="text" id="player2Name">
+    </div>
+
+    <div>
+        <label>Phone Number</label>
+        <input type="text" id="player2Phone">
+    </div>
+
 </div>
+
+
+<!-- PLAYER 3 -->
 
 <div class="playerRow">
-<div class="playerTitle">PLAYER 3</div>
-<div><label>Name</label><input type="text"></div>
-<div><label>Phone Number</label><input type="text"></div>
+
+    <div class="playerTitle">
+        PLAYER 3
+    </div>
+
+    <div>
+        <label>Name</label>
+        <input type="text" id="player3Name">
+    </div>
+
+    <div>
+        <label>Phone Number</label>
+        <input type="text" id="player3Phone">
+    </div>
+
 </div>
 
-<!-- ADD GOLFERS TOGGLE -->
+
+<!-- ADD GOLFERS -->
+
 <div class="toggle-row" onclick="toggleExtra()">
-    <div class="toggle-box" id="extraBox">＋</div>
-    <div class="toggle-label">Add Golfers 4–7</div>
+
+    <div class="toggle-box" id="extraBox">
+        ＋
+    </div>
+
+    <div class="toggle-label">
+        Add Golfers 4–7
+    </div>
+
 </div>
+
 
 <div id="extra">
-<div class="playerRow">
-<div class="playerTitle">PLAYER 4</div>
-<div><label>Name</label><input type="text"></div>
-<div><label>Phone Number</label><input type="text"></div>
+
+    <!-- PLAYER 4 -->
+
+    <div class="playerRow">
+
+        <div class="playerTitle">
+            PLAYER 4
+        </div>
+
+        <div>
+            <label>Name</label>
+            <input type="text" id="player4Name">
+        </div>
+
+        <div>
+            <label>Phone Number</label>
+            <input type="text" id="player4Phone">
+        </div>
+
+    </div>
+
+
+    <!-- PLAYER 5 -->
+
+    <div class="playerRow">
+
+        <div class="playerTitle">
+            PLAYER 5
+        </div>
+
+        <div>
+            <label>Name</label>
+            <input type="text" id="player5Name">
+        </div>
+
+        <div>
+            <label>Phone Number</label>
+            <input type="text" id="player5Phone">
+        </div>
+
+    </div>
+
+
+    <!-- PLAYER 6 -->
+
+    <div class="playerRow">
+
+        <div class="playerTitle">
+            PLAYER 6
+        </div>
+
+        <div>
+            <label>Name</label>
+            <input type="text" id="player6Name">
+        </div>
+
+        <div>
+            <label>Phone Number</label>
+            <input type="text" id="player6Phone">
+        </div>
+
+    </div>
+
+
+    <!-- PLAYER 7 -->
+
+    <div class="playerRow">
+
+        <div class="playerTitle">
+            PLAYER 7
+        </div>
+
+        <div>
+            <label>Name</label>
+            <input type="text" id="player7Name">
+        </div>
+
+        <div>
+            <label>Phone Number</label>
+            <input type="text" id="player7Phone">
+        </div>
+
+    </div>
+
 </div>
 
-<div class="playerRow">
-<div class="playerTitle">PLAYER 5</div>
-<div><label>Name</label><input type="text"></div>
-<div><label>Phone Number</label><input type="text"></div>
-</div>
 
-<div class="playerRow">
-<div class="playerTitle">PLAYER 6</div>
-<div><label>Name</label><input type="text"></div>
-<div><label>Phone Number</label><input type="text"></div>
-</div>
+<!-- REMEMBER GOLFERS -->
 
-<div class="playerRow">
-<div class="playerTitle">PLAYER 7</div>
-<div><label>Name</label><input type="text"></div>
-<div><label>Phone Number</label><input type="text"></div>
-</div>
-</div>
-
-<!-- REMEMBER GOLFERS TOGGLE -->
 <div class="toggle-row" onclick="toggleRemember()">
-    <div class="toggle-box" id="rememberBox">＋</div>
-    <div class="toggle-label">Remember These Golfers</div>
+
+    <div class="toggle-box" id="rememberBox">
+        ＋
+    </div>
+
+    <div class="toggle-label">
+        Remember These Golfers
+    </div>
+
 </div>
 
-<button id="sendInvitesBtn">SEND INVITES</button>
+
+<!-- SEND -->
+
+<button id="sendInvitesBtn">
+    SEND INVITES
+</button>
+
 
 </div>
+
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
 
-    // LOAD COURSE FROM THE CURRENT ROUND
-    const savedCourse = localStorage.getItem("selectedCourse");
+/* =========================================================
+   BIRDIEBOOKIE INVITE PAGE
+   ========================================================= */
 
-    if (savedCourse) {
-        const courseSelect = document.getElementById("courseName");
 
-        const option = document.createElement("option");
-        option.value = savedCourse;
-        option.textContent = savedCourse;
-        option.selected = true;
+/* ---------------------------------------------------------
+   LOAD SAVED ROUND INFORMATION
+   --------------------------------------------------------- */
 
-        courseSelect.appendChild(option);
+document.addEventListener("DOMContentLoaded", function(){
+
+    /* HOST NAME */
+
+    const savedHostName =
+        localStorage.getItem("birdiebookieHostName");
+
+    if(savedHostName){
+
+        document.getElementById("hostName").value =
+            savedHostName;
+
     }
 
-    // LOAD GAMES FROM THE CURRENT ROUND
-    const savedGames = JSON.parse(localStorage.getItem("bb_games") || "[]");
-    const gameSelect = document.getElementById("selectedGames");
 
-    savedGames.forEach(function(game) {
-        Array.from(gameSelect.options).forEach(function(option) {
-            if (option.value === game) {
-                option.selected = true;
-            }
-        });
-    });
+    /* -----------------------------------------------------
+       COURSE
+       ----------------------------------------------------- */
 
-    // LIMIT TO 2 GAMES
-    gameSelect.addEventListener("change", function() {
-        const selected = Array.from(gameSelect.selectedOptions);
+    const courseSelect =
+        document.getElementById("courseName");
 
-        if (selected.length > 2) {
-            selected[selected.length - 1].selected = false;
-            alert("You can select a maximum of 2 games.");
+    const savedCourse =
+        localStorage.getItem("selectedCourse");
+
+    /*
+       If the saved course is not already in this dropdown,
+       add it automatically.
+
+       This is important because the course list is maintained
+       elsewhere in BirdieBookie.
+    */
+
+    if(savedCourse){
+
+        let courseOption =
+            Array.from(courseSelect.options)
+            .find(option => option.value === savedCourse);
+
+        if(!courseOption){
+
+            courseOption =
+                document.createElement("option");
+
+            courseOption.value = savedCourse;
+            courseOption.textContent = savedCourse;
+
+            courseSelect.appendChild(courseOption);
         }
-    });
 
-    // LOAD ROUND / ROOM NUMBER
-    const savedRoomCode = localStorage.getItem("birdiebookieRoomCode");
-
-    if (savedRoomCode) {
-        document.getElementById("roomCode").value = savedRoomCode;
+        courseSelect.value = savedCourse;
     }
 
-    // SEND INVITES
-    document.getElementById("sendInvitesBtn").addEventListener("click", async function() {
 
-        const course = document.getElementById("courseName").value || "Golf Course";
+    /* -----------------------------------------------------
+       ROOM NUMBER
+       ----------------------------------------------------- */
 
-        const games = Array.from(
-            document.getElementById("selectedGames").selectedOptions
-        ).map(option => option.value).join(", ") || "Golf";
+    const savedRoomCode =
+        localStorage.getItem("birdiebookieRoomCode");
 
-        const room = document.getElementById("roomCode").value || "Not available";
+    if(savedRoomCode){
 
-        const message =
-            "🏌️ BirdieBookie Golf Invitation\n\n" +
-            "Course: " + course + "\n" +
-            "Games: " + games + "\n" +
-            "Round / Room Number: " + room + "\n\n" +
-            "Join the round on BirdieBookie and use the Room Number above.";
+        document.getElementById("roomCode").value =
+            savedRoomCode;
 
-        if (navigator.share) {
-            try {
-                await navigator.share({
-                    title: "BirdieBookie Golf Invitation",
-                    text: message
-                });
-            } catch (error) {
-                if (error.name !== "AbortError") {
-                    alert("Unable to open the share menu.");
+    }
+
+
+    /* -----------------------------------------------------
+       SELECTED GAMES
+       ----------------------------------------------------- */
+
+    const gamesSelect =
+        document.getElementById("selectedGames");
+
+    let savedGames = [];
+
+
+    /*
+       First try the key used by courses.html.
+    */
+
+    const bbGames =
+        localStorage.getItem("bb_games");
+
+    if(bbGames){
+
+        try{
+
+            const parsedGames =
+                JSON.parse(bbGames);
+
+            if(Array.isArray(parsedGames)){
+
+                savedGames = parsedGames;
+
+            }
+
+        }catch(error){
+
+            console.log("Could not read bb_games:", error);
+
+        }
+
+    }
+
+
+    /*
+       If bb_games was not available, also support
+       the older selectedGames key.
+    */
+
+    if(savedGames.length === 0){
+
+        const oldGames =
+            localStorage.getItem("selectedGames");
+
+        if(oldGames){
+
+            try{
+
+                const parsedOldGames =
+                    JSON.parse(oldGames);
+
+                if(Array.isArray(parsedOldGames)){
+
+                    savedGames = parsedOldGames;
+
                 }
+
+            }catch(error){
+
+                console.log(
+                    "Could not read selectedGames:",
+                    error
+                );
+
             }
-        } else {
-            try {
-                await navigator.clipboard.writeText(message);
-                alert("INVITATION COPIED!\n\nPaste it into a text, email, or Messenger.");
-            } catch (error) {
-                alert(message);
-            }
+
         }
+
+    }
+
+
+    /*
+       Select ALL saved games.
+    */
+
+    savedGames.forEach(function(game){
+
+        const option =
+            Array.from(gamesSelect.options)
+            .find(option => option.value === game);
+
+        if(option){
+
+            option.selected = true;
+
+        }
+
     });
+
+
+    /* -----------------------------------------------------
+       REMEMBER GOLFERS
+       ----------------------------------------------------- */
+
+    const rememberSetting =
+        localStorage.getItem("birdiebookieRememberGolfers");
+
+    if(rememberSetting === "true"){
+
+        const box =
+            document.getElementById("rememberBox");
+
+        box.classList.add("on");
+
+        box.textContent = "✓";
+
+        loadRememberedGolfers();
+
+    }
+
 });
 
-function toggleExtra() {
-    const box = document.getElementById("extraBox");
-    const extra = document.getElementById("extra");
-    const isOn = box.classList.toggle("on");
-    box.textContent = isOn ? "✓" : "＋";
-    extra.style.display = isOn ? "block" : "none";
+
+/* =========================================================
+   GAME SELECTION
+   ========================================================= */
+
+/*
+   Normally a multiple-select requires Ctrl-click on a desktop
+   to select multiple games.
+
+   We don't want that.
+
+   This makes a normal click toggle a game without removing
+   the other selected games.
+*/
+
+document
+.getElementById("selectedGames")
+.addEventListener("mousedown", function(event){
+
+    event.preventDefault();
+
+    const option =
+        event.target.closest("option");
+
+    if(!option){
+
+        return;
+
+    }
+
+    option.selected =
+        !option.selected;
+
+});
+
+
+/* ---------------------------------------------------------
+   SAVE GAMES WHEN THEY CHANGE
+   --------------------------------------------------------- */
+
+document
+.getElementById("selectedGames")
+.addEventListener("change", function(){
+
+    saveSelectedGames();
+
+});
+
+
+function saveSelectedGames(){
+
+    const gamesSelect =
+        document.getElementById("selectedGames");
+
+    const games =
+        Array.from(gamesSelect.selectedOptions)
+        .map(option => option.value);
+
+    localStorage.setItem(
+        "selectedGames",
+        JSON.stringify(games)
+    );
+
+    localStorage.setItem(
+        "bb_games",
+        JSON.stringify(games)
+    );
+
 }
 
-function toggleRemember() {
-    const box = document.getElementById("rememberBox");
-    const isOn = box.classList.toggle("on");
-    box.textContent = isOn ? "✓" : "＋";
+
+/* =========================================================
+   EXTRA GOLFERS
+   ========================================================= */
+
+function toggleExtra(){
+
+    const box =
+        document.getElementById("extraBox");
+
+    const extra =
+        document.getElementById("extra");
+
+    const isOn =
+        box.classList.toggle("on");
+
+    box.textContent =
+        isOn ? "✓" : "＋";
+
+    extra.style.display =
+        isOn ? "block" : "none";
+
 }
+
+
+/* =========================================================
+   REMEMBER GOLFERS
+   ========================================================= */
+
+function toggleRemember(){
+
+    const box =
+        document.getElementById("rememberBox");
+
+    const isOn =
+        box.classList.toggle("on");
+
+    box.textContent =
+        isOn ? "✓" : "＋";
+
+    localStorage.setItem(
+        "birdiebookieRememberGolfers",
+        isOn ? "true" : "false"
+    );
+
+
+    if(isOn){
+
+        saveGolfers();
+
+    }
+
+}
+
+
+/* ---------------------------------------------------------
+   SAVE GOLFERS
+   --------------------------------------------------------- */
+
+function saveGolfers(){
+
+    const golfers = [];
+
+    for(let i = 1; i <= 7; i++){
+
+        const nameElement =
+            document.getElementById(
+                "player" + i + "Name"
+            );
+
+        const phoneElement =
+            document.getElementById(
+                "player" + i + "Phone"
+            );
+
+        if(!nameElement){
+
+            continue;
+
+        }
+
+        const name =
+            nameElement.value.trim();
+
+        const phone =
+            phoneElement.value.trim();
+
+        if(name || phone){
+
+            golfers.push({
+
+                name:name,
+
+                phone:phone
+
+            });
+
+        }
+
+    }
+
+    localStorage.setItem(
+        "birdiebookieRememberedGolfers",
+        JSON.stringify(golfers)
+    );
+
+}
+
+
+/* ---------------------------------------------------------
+   LOAD REMEMBERED GOLFERS
+   --------------------------------------------------------- */
+
+function loadRememberedGolfers(){
+
+    const saved =
+        localStorage.getItem(
+            "birdiebookieRememberedGolfers"
+        );
+
+    if(!saved){
+
+        return;
+
+    }
+
+    try{
+
+        const golfers =
+            JSON.parse(saved);
+
+        if(!Array.isArray(golfers)){
+
+            return;
+
+        }
+
+        golfers.forEach(function(golfer,index){
+
+            const playerNumber =
+                index + 1;
+
+            if(playerNumber > 7){
+
+                return;
+
+            }
+
+            const nameElement =
+                document.getElementById(
+                    "player" +
+                    playerNumber +
+                    "Name"
+                );
+
+            const phoneElement =
+                document.getElementById(
+                    "player" +
+                    playerNumber +
+                    "Phone"
+                );
+
+            if(nameElement){
+
+                nameElement.value =
+                    golfer.name || "";
+
+            }
+
+            if(phoneElement){
+
+                phoneElement.value =
+                    golfer.phone || "";
+
+            }
+
+        });
+
+    }catch(error){
+
+        console.log(
+            "Could not load remembered golfers:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   SEND INVITES
+   ========================================================= */
+
+document
+.getElementById("sendInvitesBtn")
+.addEventListener("click", async function(){
+
+    /* HOST */
+
+    const host =
+        document.getElementById("hostName")
+        .value
+        .trim();
+
+
+    /* COURSE */
+
+    const course =
+        document.getElementById("courseName")
+        .value
+        .trim() ||
+        "Golf Course";
+
+
+    /* GAMES */
+
+    const gamesSelect =
+        document.getElementById("selectedGames");
+
+    const games =
+        Array.from(gamesSelect.selectedOptions)
+        .map(option => option.value);
+
+
+    /* ROOM */
+
+    const room =
+        document.getElementById("roomCode")
+        .value
+        .trim() ||
+        "Not available";
+
+
+    /* SAVE CURRENT GAMES */
+
+    saveSelectedGames();
+
+
+    /* SAVE GOLFERS IF REMEMBER IS ON */
+
+    const rememberOn =
+        document
+        .getElementById("rememberBox")
+        .classList
+        .contains("on");
+
+    if(rememberOn){
+
+        saveGolfers();
+
+    }
+
+
+    /* GAME TEXT */
+
+    const gameText =
+        games.length > 0
+        ? games.join(", ")
+        : "No games selected";
+
+
+    /* INVITATION */
+
+    const message =
+
+        "🏌️ BirdieBookie Golf Invitation\n\n" +
+
+        (host
+            ? "Host: " + host + "\n"
+            : "") +
+
+        "Course: " +
+        course +
+        "\n" +
+
+        "Games: " +
+        gameText +
+        "\n" +
+
+        "Round / Room Number: " +
+        room +
+        "\n\n" +
+
+        "Join the round on BirdieBookie " +
+        "and use the Room Number above.";
+
+
+    /* SHARE */
+
+    if(navigator.share){
+
+        try{
+
+            await navigator.share({
+
+                title:
+                    "BirdieBookie Golf Invitation",
+
+                text:
+                    message
+
+            });
+
+        }catch(error){
+
+            if(error.name !== "AbortError"){
+
+                alert(
+                    "Unable to open the share menu."
+                );
+
+            }
+
+        }
+
+    }else{
+
+        try{
+
+            await navigator.clipboard.writeText(
+                message
+            );
+
+            alert(
+                "INVITATION COPIED!\n\n" +
+                "Paste it into a text, email, " +
+                "or Messenger."
+            );
+
+        }catch(error){
+
+            alert(message);
+
+        }
+
+    }
+
+});
+
 </script>
 
 </body>
