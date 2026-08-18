@@ -197,11 +197,17 @@ button:disabled{
     <div class="panel">
         <h2>ROUND INFORMATION</h2>
 
-        <label>Course</label>
+       <label>State</label>
 
-        <select id="courseName">
-            <option value="">Select Course</option>
-        </select>
+<select id="stateName">
+    <option value="">Select State</option>
+</select>
+
+<label style="margin-top:12px;">Course</label>
+
+<select id="courseName">
+    <option value="">Select Course</option>
+</select>
     </div>
 
     <!-- GAMES -->
@@ -470,32 +476,69 @@ function loadHost(){
 
 function loadCourse(){
 
-    const courseSelect =
-        document.getElementById("courseName");
 
-    const savedCourse =
-        localStorage.getItem("selectedCourse");
+const courseData = {
+    OH: [
+        "Beckett Ridge",
+        "Sharon Woods"
+    ]
+};
 
-    if(savedCourse){
+const stateSelect = document.getElementById("stateName");
+const courseSelect = document.getElementById("courseName");
 
-        const option =
-            document.createElement("option");
+const states = {
+    OH: "Ohio"
+};
 
-        option.value =
-            savedCourse;
+Object.keys(states).forEach(function(stateCode) {
+    const option = document.createElement("option");
+    option.value = stateCode;
+    option.textContent = states[stateCode];
+    stateSelect.appendChild(option);
+});
 
-        option.textContent =
-            savedCourse;
+stateSelect.addEventListener("change", function() {
+    courseSelect.innerHTML = '<option value="">Select Course</option>';
 
-        option.selected =
-            true;
+    const courses = courseData[this.value] || [];
 
+    courses.forEach(function(course) {
+        const option = document.createElement("option");
+        option.value = course;
+        option.textContent = course;
         courseSelect.appendChild(option);
+    });
+});
 
+const savedCourse = localStorage.getItem("selectedCourse");
+
+if (savedCourse) {
+    courseSelect.innerHTML = '<option value="">Select Course</option>';
+
+    const option = document.createElement("option");
+    option.value = savedCourse;
+    option.textContent = savedCourse;
+    option.selected = true;
+    courseSelect.appendChild(option);
+
+    const savedState = localStorage.getItem("selectedState");
+
+    if (savedState && states[savedState]) {
+        stateSelect.value = savedState;
     }
-
 }
 
+courseSelect.addEventListener("change", function() {
+    if (this.value) {
+        localStorage.setItem("selectedCourse", this.value);
+    }
+});
+
+stateSelect.addEventListener("change", function() {
+    localStorage.setItem("selectedState", this.value);
+});
+}</script>
 
 /* =========================================================
    GAMES
