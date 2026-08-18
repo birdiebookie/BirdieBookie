@@ -1194,10 +1194,14 @@ function setupStrokePlayer(playerNumber) {
         playerRow.querySelectorAll(".hole-box:not(.total-box)")
     );
 
-   holes.forEach(function(hole) {
+ let strokeSelectionLocked = false;
+
+holes.forEach(function(hole) {
     hole.addEventListener("click", function(event) {
-        // Let score boxes work normally for typing scores.
-        
+
+        if (strokeSelectionLocked) {
+            return;
+        }
 
         const strokeCount = parseInt(strokeInput.value, 10) || 0;
 
@@ -1219,6 +1223,10 @@ function setupStrokePlayer(playerNumber) {
         }
 
         hole.classList.add("stroke-hole");
+
+        if (selectedCount + 1 >= strokeCount) {
+            strokeSelectionLocked = true;
+        }
     });
 });
 function normalizeStrokeHoleSelection() {
