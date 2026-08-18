@@ -265,23 +265,60 @@ button{
 </div>
 
 <script>
-// Auto-populate Selected Games from localStorage
+document.addEventListener("DOMContentLoaded", function() {
 
-    }
-
+    // LOAD COURSE FROM THE CURRENT ROUND
     const savedCourse = localStorage.getItem("selectedCourse");
+
     if (savedCourse) {
-        document.getElementById("courseName").value = savedCourse;
+        const courseSelect = document.getElementById("courseName");
+
+        const option = document.createElement("option");
+        option.value = savedCourse;
+        option.textContent = savedCourse;
+        option.selected = true;
+
+        courseSelect.appendChild(option);
     }
+
+    // LOAD GAMES FROM THE CURRENT ROUND
+    const savedGames = JSON.parse(localStorage.getItem("bb_games") || "[]");
+    const gameSelect = document.getElementById("selectedGames");
+
+    savedGames.forEach(function(game) {
+        Array.from(gameSelect.options).forEach(function(option) {
+            if (option.value === game) {
+                option.selected = true;
+            }
+        });
+    });
+
+    // LIMIT TO 2 GAMES
+    gameSelect.addEventListener("change", function() {
+        const selected = Array.from(gameSelect.selectedOptions);
+
+        if (selected.length > 2) {
+            selected[selected.length - 1].selected = false;
+            alert("You can select a maximum of 2 games.");
+        }
+    });
+
+    // LOAD ROUND / ROOM NUMBER
     const savedRoomCode = localStorage.getItem("birdiebookieRoomCode");
+
     if (savedRoomCode) {
         document.getElementById("roomCode").value = savedRoomCode;
     }
 
+    // SEND INVITES
     document.getElementById("sendInvitesBtn").addEventListener("click", async function() {
 
         const course = document.getElementById("courseName").value || "Golf Course";
-        const games = document.getElementById("selectedGames").value || "Golf";
+
+        const games = Array.from(
+            document.getElementById("selectedGames").selectedOptions
+        ).map(option => option.value).join(", ") || "Golf";
+
         const room = document.getElementById("roomCode").value || "Not available";
 
         const message =
