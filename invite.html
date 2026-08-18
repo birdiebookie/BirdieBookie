@@ -245,7 +245,7 @@ button{
     <div class="toggle-label">Remember These Golfers</div>
 </div>
 
-<button>SEND INVITES</button>
+<button id="sendInvitesBtn">SEND INVITES</button>
 
 </div>
 
@@ -261,6 +261,44 @@ window.addEventListener("DOMContentLoaded", function() {
     if (savedCourse) {
         document.getElementById("courseName").value = savedCourse;
     }
+    const savedRoomCode = localStorage.getItem("birdiebookieRoomCode");
+    if (savedRoomCode) {
+        document.getElementById("roomCode").value = savedRoomCode;
+    }
+
+    document.getElementById("sendInvitesBtn").addEventListener("click", async function() {
+
+        const course = document.getElementById("courseName").value || "Golf Course";
+        const games = document.getElementById("selectedGames").value || "Golf";
+        const room = document.getElementById("roomCode").value || "Not available";
+
+        const message =
+            "🏌️ BirdieBookie Golf Invitation\n\n" +
+            "Course: " + course + "\n" +
+            "Games: " + games + "\n" +
+            "Round / Room Number: " + room + "\n\n" +
+            "Join the round on BirdieBookie and use the Room Number above.";
+
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title: "BirdieBookie Golf Invitation",
+                    text: message
+                });
+            } catch (error) {
+                if (error.name !== "AbortError") {
+                    alert("Unable to open the share menu.");
+                }
+            }
+        } else {
+            try {
+                await navigator.clipboard.writeText(message);
+                alert("INVITATION COPIED!\n\nPaste it into a text, email, or Messenger.");
+            } catch (error) {
+                alert(message);
+            }
+        }
+    });
 });
 
 function toggleExtra() {
