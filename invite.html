@@ -49,17 +49,7 @@ label{
     margin-bottom:6px;
 }
 
-input[type="text"]{
-    width:100%;
-    padding:12px;
-    border-radius:8px;
-    border:2px solid #00ff99;
-    background:#111;
-    color:#fff;
-    font-size:18px;
-    box-sizing:border-box;
-}
-
+input[type="text"],
 select{
     width:100%;
     padding:12px;
@@ -195,150 +185,241 @@ button:disabled{
 
 <div class="grid3">
 
-<div class="panel">
-<h2>HOST INFORMATION</h2>
-<label>Host Name</label>
-<input type="text" id="hostName">
+    <!-- HOST -->
+    <div class="panel">
+        <h2>HOST INFORMATION</h2>
+
+        <label>Host Name</label>
+        <input type="text" id="hostName">
+    </div>
+
+    <!-- COURSE -->
+    <div class="panel">
+        <h2>ROUND INFORMATION</h2>
+
+        <label>Course</label>
+
+        <select id="courseName">
+            <option value="">Select Course</option>
+        </select>
+    </div>
+
+    <!-- GAMES -->
+    <div class="panel">
+        <h2>GAMES</h2>
+
+        <label>Selected Games</label>
+
+        <select id="selectedGames" multiple size="4">
+            <option value="Nassau">Nassau</option>
+            <option value="Skins">Skins</option>
+            <option value="Wolf">Wolf</option>
+            <option value="Left Right">Left Right</option>
+            <option value="Vegas">Vegas</option>
+            <option value="Quota">Quota</option>
+            <option value="Rabbit">Rabbit</option>
+            <option value="Stableford">Stableford</option>
+            <option value="Bingo Bango Bongo">Bingo Bango Bongo</option>
+            <option value="Game of 9">Game of 9</option>
+            <option value="Chairman">Chairman</option>
+            <option value="Press">Press</option>
+        </select>
+
+        <label style="margin-top:12px;">
+            Round / Room Number
+        </label>
+
+        <input type="text" id="roomCode" readonly>
+    </div>
+
 </div>
 
-<div class="panel">
-<h2>ROUND INFORMATION</h2>
-<label>Course</label>
-<select id="courseName">
-    <option value="">Select Course</option>
-</select>
-</div>
 
-<div class="panel">
-<h2>GAMES</h2>
-
-<label>Selected Games</label>
-
-<select id="selectedGames" multiple size="4">
-    <option value="Nassau">Nassau</option>
-    <option value="Skins">Skins</option>
-    <option value="Wolf">Wolf</option>
-    <option value="Left Right">Left Right</option>
-    <option value="Vegas">Vegas</option>
-    <option value="Quota">Quota</option>
-    <option value="Rabbit">Rabbit</option>
-    <option value="Stableford">Stableford</option>
-    <option value="Bingo Bango Bongo">Bingo Bango Bongo</option>
-    <option value="Game of 9">Game of 9</option>
-    <option value="Chairman">Chairman</option>
-    <option value="Press">Press</option>
-</select>
-
-<label style="margin-top:12px;">Round / Room Number</label>
-<input type="text" id="roomCode" readonly>
-
-</div>
-
-</div>
-
+<!-- PLAYER 1 -->
 <div class="playerRow">
-<div class="playerTitle">PLAYER 1</div>
-<div>
-    <label>Name</label>
-    <input type="text">
-</div>
-<div>
-    <label>Phone Number</label>
-    <input type="text">
-</div>
+
+    <div class="playerTitle">
+        PLAYER 1
+    </div>
+
+    <div>
+        <label>Name</label>
+        <input type="text" class="playerName">
+    </div>
+
+    <div>
+        <label>Phone Number</label>
+        <input type="text" class="playerPhone">
+    </div>
+
 </div>
 
+
+<!-- PLAYER 2 -->
 <div class="playerRow">
-<div class="playerTitle">PLAYER 2</div>
-<div>
-    <label>Name</label>
-    <input type="text">
-</div>
-<div>
-    <label>Phone Number</label>
-    <input type="text">
-</div>
+
+    <div class="playerTitle">
+        PLAYER 2
+    </div>
+
+    <div>
+        <label>Name</label>
+        <input type="text" class="playerName">
+    </div>
+
+    <div>
+        <label>Phone Number</label>
+        <input type="text" class="playerPhone">
+    </div>
+
 </div>
 
+
+<!-- PLAYER 3 -->
 <div class="playerRow">
-<div class="playerTitle">PLAYER 3</div>
-<div>
-    <label>Name</label>
-    <input type="text">
-</div>
-<div>
-    <label>Phone Number</label>
-    <input type="text">
-</div>
+
+    <div class="playerTitle">
+        PLAYER 3
+    </div>
+
+    <div>
+        <label>Name</label>
+        <input type="text" class="playerName">
+    </div>
+
+    <div>
+        <label>Phone Number</label>
+        <input type="text" class="playerPhone">
+    </div>
+
 </div>
 
+
+<!-- ADD GOLFERS -->
 <div class="toggle-row" onclick="toggleExtra()">
-    <div class="toggle-box" id="extraBox">＋</div>
-    <div class="toggle-label">Add Golfers 4–7</div>
+
+    <div class="toggle-box" id="extraBox">
+        ＋
+    </div>
+
+    <div class="toggle-label">
+        Add Golfers 4–7
+    </div>
+
 </div>
+
 
 <div id="extra">
 
-<div class="playerRow">
-<div class="playerTitle">PLAYER 4</div>
-<div>
-    <label>Name</label>
-    <input type="text">
-</div>
-<div>
-    <label>Phone Number</label>
-    <input type="text">
-</div>
+    <!-- PLAYER 4 -->
+    <div class="playerRow">
+
+        <div class="playerTitle">
+            PLAYER 4
+        </div>
+
+        <div>
+            <label>Name</label>
+            <input type="text" class="playerName">
+        </div>
+
+        <div>
+            <label>Phone Number</label>
+            <input type="text" class="playerPhone">
+        </div>
+
+    </div>
+
+
+    <!-- PLAYER 5 -->
+    <div class="playerRow">
+
+        <div class="playerTitle">
+            PLAYER 5
+        </div>
+
+        <div>
+            <label>Name</label>
+            <input type="text" class="playerName">
+        </div>
+
+        <div>
+            <label>Phone Number</label>
+            <input type="text" class="playerPhone">
+        </div>
+
+    </div>
+
+
+    <!-- PLAYER 6 -->
+    <div class="playerRow">
+
+        <div class="playerTitle">
+            PLAYER 6
+        </div>
+
+        <div>
+            <label>Name</label>
+            <input type="text" class="playerName">
+        </div>
+
+        <div>
+            <label>Phone Number</label>
+            <input type="text" class="playerPhone">
+        </div>
+
+    </div>
+
+
+    <!-- PLAYER 7 -->
+    <div class="playerRow">
+
+        <div class="playerTitle">
+            PLAYER 7
+        </div>
+
+        <div>
+            <label>Name</label>
+            <input type="text" class="playerName">
+        </div>
+
+        <div>
+            <label>Phone Number</label>
+            <input type="text" class="playerPhone">
+        </div>
+
+    </div>
+
 </div>
 
-<div class="playerRow">
-<div class="playerTitle">PLAYER 5</div>
-<div>
-    <label>Name</label>
-    <input type="text">
-</div>
-<div>
-    <label>Phone Number</label>
-    <input type="text">
-</div>
-</div>
 
-<div class="playerRow">
-<div class="playerTitle">PLAYER 6</div>
-<div>
-    <label>Name</label>
-    <input type="text">
-</div>
-<div>
-    <label>Phone Number</label>
-    <input type="text">
-</div>
-</div>
-
-<div class="playerRow">
-<div class="playerTitle">PLAYER 7</div>
-<div>
-    <label>Name</label>
-    <input type="text">
-</div>
-<div>
-    <label>Phone Number</label>
-    <input type="text">
-</div>
-</div>
-
-</div>
-
+<!-- REMEMBER GOLFERS -->
 <div class="toggle-row" onclick="toggleRemember()">
-    <div class="toggle-box" id="rememberBox">＋</div>
-    <div class="toggle-label">Remember These Golfers</div>
+
+    <div class="toggle-box" id="rememberBox">
+        ＋
+    </div>
+
+    <div class="toggle-label">
+        Remember These Golfers
+    </div>
+
 </div>
 
-<button id="sendInvitesBtn">SEND INVITES</button>
+
+<!-- SEND -->
+<button id="sendInvitesBtn">
+    SEND INVITES
+</button>
 
 </div>
+
 
 <script>
+
+/* =========================================================
+   SUPABASE
+   ========================================================= */
 
 const SUPABASE_URL =
     "https://wchbsfanjhwgibojxqns.supabase.co";
@@ -347,9 +428,9 @@ const SUPABASE_KEY =
     "sb_publishable_IY6_FwkAvwrbn7QphyjEhQ_mDUEyQ05";
 
 
-/* ==========================================
-   LOAD PAGE
-   ========================================== */
+/* =========================================================
+   PAGE LOAD
+   ========================================================= */
 
 document.addEventListener("DOMContentLoaded", async function(){
 
@@ -364,9 +445,9 @@ document.addEventListener("DOMContentLoaded", async function(){
 });
 
 
-/* ==========================================
+/* =========================================================
    HOST
-   ========================================== */
+   ========================================================= */
 
 function loadHost(){
 
@@ -374,14 +455,18 @@ function loadHost(){
         localStorage.getItem("hostName");
 
     if(host){
-        document.getElementById("hostName").value = host;
+
+        document.getElementById("hostName").value =
+            host;
+
     }
+
 }
 
 
-/* ==========================================
+/* =========================================================
    COURSE
-   ========================================== */
+   ========================================================= */
 
 function loadCourse(){
 
@@ -396,18 +481,25 @@ function loadCourse(){
         const option =
             document.createElement("option");
 
-        option.value = savedCourse;
-        option.textContent = savedCourse;
-        option.selected = true;
+        option.value =
+            savedCourse;
+
+        option.textContent =
+            savedCourse;
+
+        option.selected =
+            true;
 
         courseSelect.appendChild(option);
+
     }
+
 }
 
 
-/* ==========================================
+/* =========================================================
    GAMES
-   ========================================== */
+   ========================================================= */
 
 function loadGames(){
 
@@ -417,21 +509,28 @@ function loadGames(){
     let savedGames = [];
 
     try{
+
         savedGames =
             JSON.parse(
                 localStorage.getItem("bb_games") || "[]"
             );
+
     }
     catch(error){
+
         savedGames = [];
+
     }
+
 
     savedGames.forEach(function(game){
 
         Array.from(gameSelect.options).forEach(function(option){
 
             if(option.value === game){
+
                 option.selected = true;
+
             }
 
         });
@@ -446,9 +545,13 @@ function loadGames(){
 
         if(selected.length > 2){
 
-            selected[selected.length - 1].selected = false;
+            selected[selected.length - 1].selected =
+                false;
 
-            alert("You can select a maximum of 2 games.");
+            alert(
+                "You can select a maximum of 2 games."
+            );
+
         }
 
     });
@@ -456,9 +559,9 @@ function loadGames(){
 }
 
 
-/* ==========================================
+/* =========================================================
    ROOM NUMBER
-   ========================================== */
+   ========================================================= */
 
 async function loadRoomNumber(){
 
@@ -466,110 +569,116 @@ async function loadRoomNumber(){
         document.getElementById("roomCode");
 
 
-    /* FIRST: USE LOCAL ROOM NUMBER */
+    /*
+       FIRST TRY SUPABASE.
 
-    let roomCode =
-        localStorage.getItem("birdiebookieRoomCode");
-
-
-    if(roomCode){
-
-        roomInput.value = roomCode;
-
-        return;
-    }
-
-
-    /* SECOND: FIND ROOM IN SUPABASE */
+       This is the important part because the
+       room belongs to the current scorekeeper
+       device and is stored in birdiebookie_rounds.
+    */
 
     const deviceId =
-        localStorage.getItem("birdiebookieDeviceId");
-
-
-    if(!deviceId){
-
-        console.log(
-            "No BirdieBookie device ID found."
+        localStorage.getItem(
+            "birdiebookieDeviceId"
         );
 
-        return;
-    }
+
+    if(deviceId){
+
+        try{
+
+            const url =
+                SUPABASE_URL +
+                "/rest/v1/birdiebookie_rounds" +
+                "?select=room_code" +
+                "&scorekeeper_device=eq." +
+                encodeURIComponent(deviceId) +
+                "&limit=1";
 
 
-    try{
+            const response =
+                await fetch(url, {
 
-        const url =
-            SUPABASE_URL +
-            "/rest/v1/birdiebookie_rounds" +
-            "?select=room_code" +
-            "&scorekeeper_device=eq." +
-            encodeURIComponent(deviceId) +
-            "&limit=1";
+                    method:"GET",
+
+                    headers:{
+                        "apikey":SUPABASE_KEY,
+                        "Authorization":
+                            "Bearer " + SUPABASE_KEY
+                    }
+
+                });
 
 
-        const response =
-            await fetch(url, {
+            if(response.ok){
 
-                method:"GET",
+                const rows =
+                    await response.json();
 
-                headers:{
-                    "apikey":SUPABASE_KEY,
-                    "Authorization":
-                        "Bearer " + SUPABASE_KEY
+
+                if(
+                    rows.length > 0 &&
+                    rows[0].room_code
+                ){
+
+                    const roomCode =
+                        rows[0].room_code;
+
+
+                    localStorage.setItem(
+                        "birdiebookieRoomCode",
+                        roomCode
+                    );
+
+
+                    roomInput.value =
+                        roomCode;
+
+
+                    return;
+
                 }
 
-            });
+            }
 
-
-        if(!response.ok){
+        }
+        catch(error){
 
             console.log(
-                "Supabase room lookup failed:",
-                response.status
+                "Supabase room lookup error:",
+                error
             );
-
-            return;
-        }
-
-
-        const rows =
-            await response.json();
-
-
-        if(rows.length > 0 &&
-           rows[0].room_code){
-
-            roomCode =
-                rows[0].room_code;
-
-
-            localStorage.setItem(
-                "birdiebookieRoomCode",
-                roomCode
-            );
-
-
-            roomInput.value =
-                roomCode;
 
         }
 
     }
-    catch(error){
 
-        console.log(
-            "Room lookup error:",
-            error
+
+    /*
+       FALLBACK:
+       Use the locally saved room number if
+       Supabase did not return one.
+    */
+
+    const savedRoom =
+        localStorage.getItem(
+            "birdiebookieRoomCode"
         );
+
+
+    if(savedRoom){
+
+        roomInput.value =
+            savedRoom;
 
     }
 
 }
 
 
-/* ==========================================
-   SEND INVITES
-   ========================================== */
+/* =========================================================
+   SEND INVITE
+   ========================================================= */
 
 document
 .getElementById("sendInvitesBtn")
@@ -579,10 +688,20 @@ document
         document.getElementById("sendInvitesBtn");
 
 
+    /* -----------------------------------------
+       COURSE
+       ----------------------------------------- */
+
     const course =
-        document.getElementById("courseName").value ||
+        document
+        .getElementById("courseName")
+        .value ||
         "Golf Course";
 
+
+    /* -----------------------------------------
+       GAMES
+       ----------------------------------------- */
 
     const games =
         Array.from(
@@ -591,22 +710,111 @@ document
             .selectedOptions
         )
         .map(option => option.value)
-        .join(", ") || "Golf";
+        .join(", ") ||
+        "Golf";
 
+
+    /* -----------------------------------------
+       ROOM
+       ----------------------------------------- */
 
     const room =
         document
         .getElementById("roomCode")
         .value ||
-        "Not available";
+        "";
+
+
+    if(!room){
+
+        alert(
+            "The Room Number has not loaded yet.\n\n" +
+            "Please wait a moment and try again."
+        );
+
+        return;
+
+    }
+
+
+    /* -----------------------------------------
+       FIND FIRST ENTERED PLAYER
+       ----------------------------------------- */
+
+    const phoneInputs =
+        Array.from(
+            document.querySelectorAll(".playerPhone")
+        );
+
+
+    const nameInputs =
+        Array.from(
+            document.querySelectorAll(".playerName")
+        );
+
+
+    let playerPhone = "";
+
+    let playerName = "";
+
+
+    for(let i = 0; i < phoneInputs.length; i++){
+
+        const phone =
+            phoneInputs[i].value.trim();
+
+        if(phone){
+
+            playerPhone =
+                phone.replace(/\D/g,"");
+
+            if(nameInputs[i]){
+
+                playerName =
+                    nameInputs[i].value.trim();
+
+            }
+
+            break;
+
+        }
+
+    }
+
+
+    if(!playerPhone){
+
+        alert(
+            "Please enter a player's phone number first."
+        );
+
+        return;
+
+    }
+
+
+    /* -----------------------------------------
+       INVITATION TEXT
+       ----------------------------------------- */
+
+    let greeting =
+        "Hi";
+
+    if(playerName){
+
+        greeting =
+            "Hi " + playerName;
+
+    }
 
 
     const message =
+        greeting + "!\n\n" +
         "🏌️ BirdieBookie Golf Invitation\n\n" +
         "Course: " + course + "\n" +
         "Games: " + games + "\n" +
         "Round / Room Number: " + room + "\n\n" +
-        "Join the round on BirdieBookie and use the Room Number above.";
+        "Open BirdieBookie and use the Room Number above to join the round.";
 
 
     button.disabled = true;
@@ -614,7 +822,37 @@ document
 
     try{
 
-        if(navigator.share){
+        /*
+           MOBILE:
+           Open the phone's SMS app directly with
+           the phone number already entered and the
+           complete invitation already filled in.
+        */
+
+        if(
+            /Android|iPhone|iPad|iPod/i.test(
+                navigator.userAgent
+            )
+        ){
+
+            const smsUrl =
+                "sms:" +
+                playerPhone +
+                "?body=" +
+                encodeURIComponent(message);
+
+
+            window.location.href =
+                smsUrl;
+
+        }
+
+        /*
+           DESKTOP:
+           Keep the normal share/clipboard behavior.
+        */
+
+        else if(navigator.share){
 
             await navigator.share({
 
@@ -627,6 +865,7 @@ document
             });
 
         }
+
         else{
 
             await navigator.clipboard.writeText(
@@ -643,41 +882,44 @@ document
     }
     catch(error){
 
-        if(error.name !== "AbortError"){
+        console.log(
+            "Invite error:",
+            error
+        );
 
-            try{
 
-                await navigator.clipboard.writeText(
-                    message
-                );
+        try{
 
-                alert(
-                    "INVITATION COPIED!\n\n" +
-                    "Paste it into a text, email, or Messenger."
-                );
+            await navigator.clipboard.writeText(
+                message
+            );
 
-            }
-            catch(copyError){
+            alert(
+                "INVITATION COPIED!\n\n" +
+                "Paste it into a text message."
+            );
 
-                alert(message);
+        }
+        catch(copyError){
 
-            }
+            alert(message);
 
         }
 
     }
     finally{
 
-        button.disabled = false;
+        button.disabled =
+            false;
 
     }
 
 });
 
 
-/* ==========================================
+/* =========================================================
    ADD GOLFERS
-   ========================================== */
+   ========================================================= */
 
 function toggleExtra(){
 
@@ -702,9 +944,9 @@ function toggleExtra(){
 }
 
 
-/* ==========================================
+/* =========================================================
    REMEMBER GOLFERS
-   ========================================== */
+   ========================================================= */
 
 function toggleRemember(){
 
