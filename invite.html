@@ -1,18 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>BirdieBookie - Invite Players</title>
 
 <style>
-
-*{
-    box-sizing:border-box;
-}
-
 body{
     margin:0;
     background:#000;
@@ -30,7 +23,6 @@ h1{
     color:#00ff99;
     text-align:center;
     font-size:52px;
-    margin:20px 0 35px;
 }
 
 .panel{
@@ -57,8 +49,7 @@ label{
     margin-bottom:6px;
 }
 
-input[type="text"],
-select{
+input[type="text"]{
     width:100%;
     padding:12px;
     border-radius:8px;
@@ -66,49 +57,16 @@ select{
     background:#111;
     color:#fff;
     font-size:18px;
+    box-sizing:border-box;
 }
-
-select option{
-    background:#111;
-    color:#fff;
-}
-
-/* COURSE AREA */
-
-.course-help{
-    color:#888;
-    font-size:14px;
-    margin-top:8px;
-}
-
-/* GAMES */
-
-#selectedGames{
-    height:170px;
-    cursor:pointer;
-}
-
-#selectedGames option{
-    padding:7px;
-}
-
-.game-help{
-    color:#888;
-    font-size:14px;
-    margin-top:8px;
-}
-
-/* PLAYERS */
 
 .playerRow{
     display:grid;
     grid-template-columns:180px 1fr 1fr;
     gap:18px;
     align-items:center;
-
     border:2px solid #00ff99;
     border-radius:12px;
-
     padding:18px;
     margin:16px 0;
 }
@@ -119,41 +77,35 @@ select option{
     font-weight:bold;
 }
 
-/* TOGGLES */
-
-.toggle-row{
+/* TOGGLE BUTTON STYLES */
+.toggle-row {
     display:flex;
     align-items:center;
     gap:18px;
-
     margin:24px 0;
     cursor:pointer;
 }
 
-.toggle-box{
+.toggle-box {
     width:60px;
     height:60px;
-
     border-radius:12px;
     border:3px solid #00ff99;
-
     background:#111;
-
     display:flex;
     align-items:center;
     justify-content:center;
-
     font-size:32px;
-
     flex-shrink:0;
+    transition: background 0.2s;
 }
 
-.toggle-box.on{
+.toggle-box.on {
     background:#00ff99;
     color:#000;
 }
 
-.toggle-label{
+.toggle-label {
     font-size:28px;
     font-weight:bold;
     color:#00ff99;
@@ -163,64 +115,46 @@ select option{
     display:none;
 }
 
-/* BUTTON */
-
 button{
     width:100%;
     padding:18px;
-
     font-size:30px;
     font-weight:bold;
-
     background:#00ff99;
     color:#000;
-
     border:none;
     border-radius:12px;
-
     cursor:pointer;
-
     margin-top:10px;
 }
-
-@media(max-width:700px){
-
+@media (max-width:700px){
     .grid3{
         grid-template-columns:1fr;
     }
-
     .playerRow{
         grid-template-columns:1fr;
         gap:10px;
         padding:14px;
     }
-
     .playerTitle{
         font-size:24px;
     }
-
     h1{
         font-size:36px;
     }
-
-    input[type="text"],
-    select{
+    input[type="text"]{
         font-size:16px;
         padding:10px;
     }
-
     .toggle-label{
         font-size:20px;
     }
-
     .toggle-box{
         width:44px;
         height:44px;
         font-size:24px;
     }
-
 }
-
 </style>
 
 </head>
@@ -231,1352 +165,204 @@ button{
 
 <h1>🏌️ Invite Players</h1>
 
-
-<!-- =====================================================
-     TOP INFORMATION
-     ===================================================== -->
-
 <div class="grid3">
 
-
-<!-- HOST -->
-
 <div class="panel">
-
 <h2>HOST INFORMATION</h2>
-
 <label>Host Name</label>
-
-<input
-    type="text"
-    id="hostName"
->
-
+<input type="text" id="hostName">
 </div>
 
-
-<!-- ROUND -->
-
 <div class="panel">
-
 <h2>ROUND INFORMATION</h2>
-
-<label>State</label>
-
-<select id="stateSelect">
-    <option value="">Select State</option>
-    <option value="OH">Ohio (OH)</option>
-    <option value="SC">South Carolina (SC)</option>
-</select>
-
-
-<label style="margin-top:14px;">
-Course
-</label>
-
+<label>Course</label>
 <select id="courseName">
-
-    <option value="">
-        Select Course
-    </option>
-
+    <option value="">Select Course</option>
 </select>
-
-<div class="course-help">
-    Select a state first, then select your course.
 </div>
-
-</div>
-
-
-<!-- GAMES -->
 
 <div class="panel">
-
 <h2>GAMES</h2>
-
-<label>
-Selected Games
-</label>
-
-<select
-    id="selectedGames"
-    multiple
-    size="8"
->
-
-<option value="Nassau">
-    Nassau
-</option>
-
-<option value="Skins">
-    Skins
-</option>
-
-<option value="Wolf">
-    Wolf
-</option>
-
-<option value="Left Right">
-    Left Right
-</option>
-
-<option value="Vegas">
-    Vegas
-</option>
-
-<option value="Quota">
-    Quota
-</option>
-
-<option value="Rabbit">
-    Rabbit
-</option>
-
-<option value="Stableford">
-    Stableford
-</option>
-
-<option value="Bingo Bango Bongo">
-    Bingo Bango Bongo
-</option>
-
-<option value="Game of 9">
-    Game of 9
-</option>
-
-<option value="Chairman">
-    Chairman
-</option>
-
-<option value="Press">
-    Press
-</option>
-
+<label>Selected Games</label>
+<select id="selectedGames" multiple size="4">
+<option value="Nassau">Nassau</option>
+<option value="Skins">Skins</option>
+<option value="Wolf">Wolf</option>
+<option value="Left Right">Left Right</option>
+<option value="Vegas">Vegas</option>
+<option value="Quota">Quota</option>
+<option value="Rabbit">Rabbit</option>
+<option value="Stableford">Stableford</option>
+<option value="Bingo Bango Bongo">Bingo Bango Bongo</option>
+<option value="Game of 9">Game of 9</option>
+<option value="Chairman">Chairman</option>
+<option value="Press">Press</option>
 </select>
-
-<div class="game-help">
-    Click a game to turn it on or off.
-</div>
-
-
-<label style="margin-top:14px;">
-Round / Room Number
-</label>
-
-<input
-    type="text"
-    id="roomCode"
-    readonly
->
-
+<label style="margin-top:12px;">Round / Room Number</label>
+<input type="text" id="roomCode" readonly>
 </div>
 
 </div>
-
-
-<!-- =====================================================
-     PLAYER 1
-     ===================================================== -->
 
 <div class="playerRow">
-
-<div class="playerTitle">
-PLAYER 1
+<div class="playerTitle">PLAYER 1</div>
+<div><label>Name</label><input type="text"></div>
+<div><label>Phone Number</label><input type="text"></div>
 </div>
-
-<div>
-
-<label>Name</label>
-
-<input
-    type="text"
-    id="player1Name"
->
-
-</div>
-
-<div>
-
-<label>Phone Number</label>
-
-<input
-    type="text"
-    id="player1Phone"
->
-
-</div>
-
-</div>
-
-
-<!-- PLAYER 2 -->
 
 <div class="playerRow">
-
-<div class="playerTitle">
-PLAYER 2
+<div class="playerTitle">PLAYER 2</div>
+<div><label>Name</label><input type="text"></div>
+<div><label>Phone Number</label><input type="text"></div>
 </div>
-
-<div>
-
-<label>Name</label>
-
-<input
-    type="text"
-    id="player2Name"
->
-
-</div>
-
-<div>
-
-<label>Phone Number</label>
-
-<input
-    type="text"
-    id="player2Phone"
->
-
-</div>
-
-</div>
-
-
-<!-- PLAYER 3 -->
 
 <div class="playerRow">
-
-<div class="playerTitle">
-PLAYER 3
+<div class="playerTitle">PLAYER 3</div>
+<div><label>Name</label><input type="text"></div>
+<div><label>Phone Number</label><input type="text"></div>
 </div>
 
-<div>
-
-<label>Name</label>
-
-<input
-    type="text"
-    id="player3Name"
->
-
+<!-- ADD GOLFERS TOGGLE -->
+<div class="toggle-row" onclick="toggleExtra()">
+    <div class="toggle-box" id="extraBox">＋</div>
+    <div class="toggle-label">Add Golfers 4–7</div>
 </div>
-
-<div>
-
-<label>Phone Number</label>
-
-<input
-    type="text"
-    id="player3Phone"
->
-
-</div>
-
-</div>
-
-
-<!-- =====================================================
-     ADD GOLFERS
-     ===================================================== -->
-
-<div
-    class="toggle-row"
-    onclick="toggleExtra()"
->
-
-<div
-    class="toggle-box"
-    id="extraBox"
->
-＋
-</div>
-
-<div class="toggle-label">
-Add Golfers 4–7
-</div>
-
-</div>
-
 
 <div id="extra">
-
-
-<!-- PLAYER 4 -->
+<div class="playerRow">
+<div class="playerTitle">PLAYER 4</div>
+<div><label>Name</label><input type="text"></div>
+<div><label>Phone Number</label><input type="text"></div>
+</div>
 
 <div class="playerRow">
-
-<div class="playerTitle">
-PLAYER 4
+<div class="playerTitle">PLAYER 5</div>
+<div><label>Name</label><input type="text"></div>
+<div><label>Phone Number</label><input type="text"></div>
 </div>
-
-<div>
-
-<label>Name</label>
-
-<input
-    type="text"
-    id="player4Name"
->
-
-</div>
-
-<div>
-
-<label>Phone Number</label>
-
-<input
-    type="text"
-    id="player4Phone"
->
-
-</div>
-
-</div>
-
-
-<!-- PLAYER 5 -->
 
 <div class="playerRow">
-
-<div class="playerTitle">
-PLAYER 5
+<div class="playerTitle">PLAYER 6</div>
+<div><label>Name</label><input type="text"></div>
+<div><label>Phone Number</label><input type="text"></div>
 </div>
-
-<div>
-
-<label>Name</label>
-
-<input
-    type="text"
-    id="player5Name"
->
-
-</div>
-
-<div>
-
-<label>Phone Number</label>
-
-<input
-    type="text"
-    id="player5Phone"
->
-
-</div>
-
-</div>
-
-
-<!-- PLAYER 6 -->
 
 <div class="playerRow">
-
-<div class="playerTitle">
-PLAYER 6
+<div class="playerTitle">PLAYER 7</div>
+<div><label>Name</label><input type="text"></div>
+<div><label>Phone Number</label><input type="text"></div>
+</div>
 </div>
 
-<div>
-
-<label>Name</label>
-
-<input
-    type="text"
-    id="player6Name"
->
-
+<!-- REMEMBER GOLFERS TOGGLE -->
+<div class="toggle-row" onclick="toggleRemember()">
+    <div class="toggle-box" id="rememberBox">＋</div>
+    <div class="toggle-label">Remember These Golfers</div>
 </div>
 
-<div>
-
-<label>Phone Number</label>
-
-<input
-    type="text"
-    id="player6Phone"
->
+<button id="sendInvitesBtn">SEND INVITES</button>
 
 </div>
-
-</div>
-
-
-<!-- PLAYER 7 -->
-
-<div class="playerRow">
-
-<div class="playerTitle">
-PLAYER 7
-</div>
-
-<div>
-
-<label>Name</label>
-
-<input
-    type="text"
-    id="player7Name"
->
-
-</div>
-
-<div>
-
-<label>Phone Number</label>
-
-<input
-    type="text"
-    id="player7Phone"
->
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- =====================================================
-     REMEMBER GOLFERS
-     ===================================================== -->
-
-<div
-    class="toggle-row"
-    onclick="toggleRemember()"
->
-
-<div
-    class="toggle-box"
-    id="rememberBox"
->
-＋
-</div>
-
-<div class="toggle-label">
-Remember These Golfers
-</div>
-
-</div>
-
-
-<!-- SEND -->
-
-<button id="sendInvitesBtn">
-SEND INVITES
-</button>
-
-
-</div>
-
 
 <script>
+document.addEventListener("DOMContentLoaded", function() {
 
-/* =====================================================
-   BIRDIEBOOKIE INVITE
-   ===================================================== */
+    // LOAD COURSE FROM THE CURRENT ROUND
+    const savedCourse = localStorage.getItem("selectedCourse");
 
+    if (savedCourse) {
+        const courseSelect = document.getElementById("courseName");
 
-/* =====================================================
-   COURSE DATABASE
-   ===================================================== */
+        const option = document.createElement("option");
+        option.value = savedCourse;
+        option.textContent = savedCourse;
+        option.selected = true;
 
-const courseData = {
-
-    OH: [
-
-        "Sharon Woods Golf Course",
-        "Mill Golf Course",
-        "Oasis Golf Club",
-        "Beckett Ridge",
-        "Blue Ash Golf Course",
-        "Mason Golf Center",
-        "Walden Ponds Golf Course",
-        "Hickory Woods Golf Course",
-        "Stonelick Hills Golf Course",
-        "Elks Run Golf Club",
-        "Cedar Trace Golf Club"
-
-    ],
-
-    SC: [
-
-        "Dunes Golf & Beach Club",
-        "Caledonia Golf & Fish Club",
-        "True Blue Golf Club",
-        "Tidewater Golf Club",
-        "TPC Myrtle Beach",
-        "Grande Dunes Resort Course",
-        "Barefoot Resort Dye Course",
-        "Barefoot Resort Love Course",
-        "Barefoot Resort Fazio Course",
-        "Barefoot Resort Norman Course",
-        "King's North at Myrtle Beach National",
-        "Prestwick Country Club",
-        "Pine Lakes Country Club",
-        "Pawleys Plantation Golf & Country Club",
-        "River Club",
-        "Thistle Golf Club",
-        "Long Bay Club",
-        "Rivers Edge Golf Club",
-        "World Tour Golf Links",
-        "Arcadian Shores Golf Club",
-        "Willbrook Plantation Golf Club",
-        "Heritage Club",
-        "Tradition Golf Club",
-        "Arrowhead Country Club",
-        "River Hills Golf Club",
-        "Legends Moorland Course",
-        "Oyster Bay Golf Links",
-        "Glen Dornoch Waterway Golf Links",
-        "Wild Wing Avocet Course",
-        "Myrtlewood Palmetto Course"
-
-    ]
-
-};
-
-
-/* =====================================================
-   START PAGE
-   ===================================================== */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function(){
-
-        loadHost();
-
-        loadRoom();
-
-        loadRememberedGolfers();
-
-        setupStateAndCourse();
-
-        setupGames();
-
-    }
-);
-
-
-/* =====================================================
-   HOST
-   ===================================================== */
-
-function loadHost(){
-
-    const savedHost =
-        localStorage.getItem(
-            "birdiebookieHostName"
-        );
-
-    if(savedHost){
-
-        document.getElementById(
-            "hostName"
-        ).value = savedHost;
-
+        courseSelect.appendChild(option);
     }
 
-}
+    // LOAD GAMES FROM THE CURRENT ROUND
+    const savedGames = JSON.parse(localStorage.getItem("bb_games") || "[]");
+    const gameSelect = document.getElementById("selectedGames");
 
-
-/* =====================================================
-   ROOM NUMBER
-   ===================================================== */
-
-function loadRoom(){
-
-    const savedRoom =
-        localStorage.getItem(
-            "birdiebookieRoomCode"
-        );
-
-    if(savedRoom){
-
-        document.getElementById(
-            "roomCode"
-        ).value = savedRoom;
-
-    }
-
-}
-
-
-/* =====================================================
-   STATE + COURSE
-   ===================================================== */
-
-function setupStateAndCourse(){
-
-    const stateSelect =
-        document.getElementById(
-            "stateSelect"
-        );
-
-    const courseSelect =
-        document.getElementById(
-            "courseName"
-        );
-
-
-    /*
-       When state changes, rebuild the course list.
-    */
-
-    stateSelect.addEventListener(
-        "change",
-        function(){
-
-            buildCourseList(
-                stateSelect.value
-            );
-
-        }
-    );
-
-
-    /*
-       Look for the course saved by the
-       Courses / Scorecard system.
-    */
-
-    const savedCourse =
-        localStorage.getItem(
-            "selectedCourse"
-        );
-
-
-    /*
-       If we have a saved course, find its state.
-    */
-
-    if(savedCourse){
-
-        let foundState = "";
-
-        for(
-            const state in courseData
-        ){
-
-            if(
-                courseData[state]
-                .includes(savedCourse)
-            ){
-
-                foundState = state;
-
-                break;
-
+    savedGames.forEach(function(game) {
+        Array.from(gameSelect.options).forEach(function(option) {
+            if (option.value === game) {
+                option.selected = true;
             }
+        });
+    });
 
+    // LIMIT TO 2 GAMES
+    gameSelect.addEventListener("change", function() {
+        const selected = Array.from(gameSelect.selectedOptions);
+
+        if (selected.length > 2) {
+            selected[selected.length - 1].selected = false;
+            alert("You can select a maximum of 2 games.");
         }
+    });
 
+    // LOAD ROUND / ROOM NUMBER
+    const savedRoomCode = localStorage.getItem("birdiebookieRoomCode");
 
-        /*
-           If the saved course is known,
-           select its state and course.
-        */
-
-        if(foundState){
-
-            stateSelect.value =
-                foundState;
-
-            buildCourseList(
-                foundState
-            );
-
-            courseSelect.value =
-                savedCourse;
-
-        }
-
+    if (savedRoomCode) {
+        document.getElementById("roomCode").value = savedRoomCode;
     }
 
-}
+    // SEND INVITES
+    document.getElementById("sendInvitesBtn").addEventListener("click", async function() {
 
+        const course = document.getElementById("courseName").value || "Golf Course";
 
-/* =====================================================
-   BUILD COURSE LIST
-   ===================================================== */
+        const games = Array.from(
+            document.getElementById("selectedGames").selectedOptions
+        ).map(option => option.value).join(", ") || "Golf";
 
-function buildCourseList(state){
-
-    const courseSelect =
-        document.getElementById(
-            "courseName"
-        );
-
-
-    courseSelect.innerHTML =
-        '<option value="">Select Course</option>';
-
-
-    if(!state){
-
-        return;
-
-    }
-
-
-    const courses =
-        courseData[state] || [];
-
-
-    courses.forEach(
-        function(course){
-
-            const option =
-                document.createElement(
-                    "option"
-                );
-
-            option.value =
-                course;
-
-            option.textContent =
-                course;
-
-            courseSelect.appendChild(
-                option
-            );
-
-        }
-    );
-
-
-    /*
-       Save selected course when changed.
-    */
-
-    courseSelect.onchange =
-        function(){
-
-            if(this.value){
-
-                localStorage.setItem(
-                    "selectedCourse",
-                    this.value
-                );
-
-            }
-
-        };
-
-}
-
-
-/* =====================================================
-   GAMES
-   ===================================================== */
-
-function setupGames(){
-
-    const gamesSelect =
-        document.getElementById(
-            "selectedGames"
-        );
-
-
-    /*
-       Load the games selected on the
-       previous page.
-    */
-
-    let savedGames = [];
-
-
-    const bbGames =
-        localStorage.getItem(
-            "bb_games"
-        );
-
-
-    if(bbGames){
-
-        try{
-
-            const parsed =
-                JSON.parse(
-                    bbGames
-                );
-
-            if(
-                Array.isArray(parsed)
-            ){
-
-                savedGames =
-                    parsed;
-
-            }
-
-        }
-        catch(error){
-
-            console.log(
-                "Could not read bb_games"
-            );
-
-        }
-
-    }
-
-
-    /*
-       Also support the older key.
-    */
-
-    if(
-        savedGames.length === 0
-    ){
-
-        const oldGames =
-            localStorage.getItem(
-                "selectedGames"
-            );
-
-        if(oldGames){
-
-            try{
-
-                const parsed =
-                    JSON.parse(
-                        oldGames
-                    );
-
-                if(
-                    Array.isArray(parsed)
-                ){
-
-                    savedGames =
-                        parsed;
-
-                }
-
-            }
-            catch(error){
-
-                console.log(
-                    "Could not read selectedGames"
-                );
-
-            }
-
-        }
-
-    }
-
-
-    /*
-       Select every saved game.
-    */
-
-    savedGames.forEach(
-        function(game){
-
-            const option =
-                Array.from(
-                    gamesSelect.options
-                ).find(
-                    function(option){
-
-                        return (
-                            option.value ===
-                            game
-                        );
-
-                    }
-                );
-
-
-            if(option){
-
-                option.selected =
-                    true;
-
-            }
-
-        }
-    );
-
-
-    /*
-       Normal click toggles games.
-       No Ctrl key required.
-    */
-
-    gamesSelect.addEventListener(
-        "mousedown",
-        function(event){
-
-            const option =
-                event.target.closest(
-                    "option"
-                );
-
-
-            if(!option){
-
-                return;
-
-            }
-
-
-            event.preventDefault();
-
-
-            option.selected =
-                !option.selected;
-
-
-            saveGames();
-
-        }
-    );
-
-
-    gamesSelect.addEventListener(
-        "change",
-        saveGames
-    );
-
-}
-
-
-/* =====================================================
-   SAVE GAMES
-   ===================================================== */
-
-function saveGames(){
-
-    const gamesSelect =
-        document.getElementById(
-            "selectedGames"
-        );
-
-
-    const games =
-        Array.from(
-            gamesSelect.selectedOptions
-        ).map(
-            function(option){
-
-                return option.value;
-
-            }
-        );
-
-
-    localStorage.setItem(
-        "selectedGames",
-        JSON.stringify(games)
-    );
-
-
-    localStorage.setItem(
-        "bb_games",
-        JSON.stringify(games)
-    );
-
-}
-
-
-/* =====================================================
-   ADD GOLFERS
-   ===================================================== */
-
-function toggleExtra(){
-
-    const box =
-        document.getElementById(
-            "extraBox"
-        );
-
-    const extra =
-        document.getElementById(
-            "extra"
-        );
-
-
-    const isOn =
-        box.classList.toggle(
-            "on"
-        );
-
-
-    box.textContent =
-        isOn ? "✓" : "＋";
-
-
-    extra.style.display =
-        isOn
-        ? "block"
-        : "none";
-
-}
-
-
-/* =====================================================
-   REMEMBER GOLFERS
-   ===================================================== */
-
-function toggleRemember(){
-
-    const box =
-        document.getElementById(
-            "rememberBox"
-        );
-
-
-    const isOn =
-        box.classList.toggle(
-            "on"
-        );
-
-
-    box.textContent =
-        isOn ? "✓" : "＋";
-
-
-    if(isOn){
-
-        saveGolfers();
-
-    }
-
-}
-
-
-/* =====================================================
-   SAVE GOLFERS
-   ===================================================== */
-
-function saveGolfers(){
-
-    const golfers = [];
-
-
-    for(
-        let i = 1;
-        i <= 7;
-        i++
-    ){
-
-        const name =
-            document.getElementById(
-                "player" +
-                i +
-                "Name"
-            );
-
-        const phone =
-            document.getElementById(
-                "player" +
-                i +
-                "Phone"
-            );
-
-
-        if(!name){
-
-            continue;
-
-        }
-
-
-        if(
-            name.value.trim() ||
-            phone.value.trim()
-        ){
-
-            golfers.push({
-
-                name:
-                    name.value.trim(),
-
-                phone:
-                    phone.value.trim()
-
-            });
-
-        }
-
-    }
-
-
-    localStorage.setItem(
-        "birdiebookieRememberedGolfers",
-        JSON.stringify(golfers)
-    );
-
-}
-
-
-/* =====================================================
-   LOAD GOLFERS
-   ===================================================== */
-
-function loadRememberedGolfers(){
-
-    const saved =
-        localStorage.getItem(
-            "birdiebookieRememberedGolfers"
-        );
-
-
-    if(!saved){
-
-        return;
-
-    }
-
-
-    try{
-
-        const golfers =
-            JSON.parse(saved);
-
-
-        if(
-            !Array.isArray(golfers)
-        ){
-
-            return;
-
-        }
-
-
-        golfers.forEach(
-            function(golfer,index){
-
-                const number =
-                    index + 1;
-
-
-                if(number > 7){
-
-                    return;
-
-                }
-
-
-                const name =
-                    document.getElementById(
-                        "player" +
-                        number +
-                        "Name"
-                    );
-
-
-                const phone =
-                    document.getElementById(
-                        "player" +
-                        number +
-                        "Phone"
-                    );
-
-
-                if(name){
-
-                    name.value =
-                        golfer.name || "";
-
-                }
-
-
-                if(phone){
-
-                    phone.value =
-                        golfer.phone || "";
-
-                }
-
-            }
-        );
-
-
-    }
-    catch(error){
-
-        console.log(
-            "Could not load golfers"
-        );
-
-    }
-
-}
-
-
-/* =====================================================
-   SEND INVITES
-   ===================================================== */
-
-document
-.getElementById(
-    "sendInvitesBtn"
-)
-.addEventListener(
-    "click",
-    async function(){
-
-        const host =
-            document.getElementById(
-                "hostName"
-            ).value.trim();
-
-
-        const state =
-            document.getElementById(
-                "stateSelect"
-            ).value;
-
-
-        const course =
-            document.getElementById(
-                "courseName"
-            ).value;
-
-
-        const gamesSelect =
-            document.getElementById(
-                "selectedGames"
-            );
-
-
-        const games =
-            Array.from(
-                gamesSelect.selectedOptions
-            ).map(
-                function(option){
-
-                    return option.value;
-
-                }
-            );
-
-
-        const room =
-            document.getElementById(
-                "roomCode"
-            ).value;
-
-
-        saveGames();
-
-
-        if(
-            document
-            .getElementById(
-                "rememberBox"
-            )
-            .classList
-            .contains("on")
-        ){
-
-            saveGolfers();
-
-        }
-
+        const room = document.getElementById("roomCode").value || "Not available";
 
         const message =
-
             "🏌️ BirdieBookie Golf Invitation\n\n" +
+            "Course: " + course + "\n" +
+            "Games: " + games + "\n" +
+            "Round / Room Number: " + room + "\n\n" +
+            "Join the round on BirdieBookie and use the Room Number above.";
 
-            (
-                host
-                ? "Host: " +
-                  host +
-                  "\n"
-                : ""
-            ) +
-
-            "State: " +
-            (
-                state || "Not selected"
-            ) +
-            "\n" +
-
-            "Course: " +
-            (
-                course || "Not selected"
-            ) +
-            "\n" +
-
-            "Games: " +
-            (
-                games.length
-                ? games.join(", ")
-                : "No games selected"
-            ) +
-            "\n" +
-
-            "Round / Room Number: " +
-            (
-                room || "Not available"
-            ) +
-            "\n\n" +
-
-            "Join the round on BirdieBookie " +
-            "and use the Room Number above.";
-
-
-        if(navigator.share){
-
-            try{
-
+        if (navigator.share) {
+            try {
                 await navigator.share({
-
-                    title:
-                        "BirdieBookie Golf Invitation",
-
-                    text:
-                        message
-
+                    title: "BirdieBookie Golf Invitation",
+                    text: message
                 });
-
-            }
-            catch(error){
-
-                if(
-                    error.name !==
-                    "AbortError"
-                ){
-
-                    alert(
-                        "Unable to open the share menu."
-                    );
-
+            } catch (error) {
+                if (error.name !== "AbortError") {
+                    alert("Unable to open the share menu.");
                 }
-
             }
-
-        }
-        else{
-
-            try{
-
-                await navigator.clipboard.writeText(
-                    message
-                );
-
-                alert(
-                    "INVITATION COPIED!\n\n" +
-                    "Paste it into a text, email, " +
-                    "or Messenger."
-                );
-
-            }
-            catch(error){
-
+        } else {
+            try {
+                await navigator.clipboard.writeText(message);
+                alert("INVITATION COPIED!\n\nPaste it into a text, email, or Messenger.");
+            } catch (error) {
                 alert(message);
-
             }
-
         }
+    });
+});
 
-    }
-);
+function toggleExtra() {
+    const box = document.getElementById("extraBox");
+    const extra = document.getElementById("extra");
+    const isOn = box.classList.toggle("on");
+    box.textContent = isOn ? "✓" : "＋";
+    extra.style.display = isOn ? "block" : "none";
+}
 
+function toggleRemember() {
+    const box = document.getElementById("rememberBox");
+    const isOn = box.classList.toggle("on");
+    box.textContent = isOn ? "✓" : "＋";
+}
 </script>
 
 </body>
