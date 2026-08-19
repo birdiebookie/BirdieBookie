@@ -2625,7 +2625,7 @@ async function cloudSaveRound() {
     }
 
     const data = collectRoundDataForCloud();
-    const payload = { room_code: code, data: data };
+    const payload = { room_code: code, data: { ...data, played_at: new Date().toISOString() } };
 
     if (isNewRoom) {
         payload.scorekeeper_device = DEVICE_ID;
