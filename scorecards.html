@@ -1160,105 +1160,94 @@ function sanitizeScoreInput(box) {
     }
     if (box.value !== val) box.value = val;
 }
+
 // ================= STROKE HOLE SELECTION =================
 
 const strokePlayers = [1, 2, 3, 4];
+const LONG_PRESS_MS = 450;
+const MOVE_CANCEL_PX = 12;
 
-function updateStrokeHoleStatus(playerNumber) {
-    const strokeInput = document.getElementById("strokes" + playerNumber);
+function getPlayerHoles(playerNumber) {
     const playerRow = document.getElementById("player" + playerNumber);
+    if (!playerRow) return [];
+    return Array.from(playerRow.querySelectorAll(".hole-box:not(.total-box)"));
+}
 
-    if (!strokeInput || !playerRow) return;
+function toggleStrokeHole(playerNumber, hole) {
+    const strokeInput = document.getElementById("strokes" + playerNumber);
+    if (!strokeInput) return;
 
     const strokeCount = parseInt(strokeInput.value, 10) || 0;
+    if (strokeCount <= 0) return;
 
-    const holes = Array.from(
-        playerRow.querySelectorAll(".hole-box:not(.total-box)")
-    );
+    const holes = getPlayerHoles(playerNumber);
 
-    const selectedHoles = holes.filter(function(hole) {
-        return hole.classList.contains("stroke-hole");
-    });
-
-    // Prevent more stroke holes than the player is entitled to.
-    if (selectedHoles.length > strokeCount) {
-        const extraHoles = selectedHoles.slice(strokeCount);
-
-        extraHoles.forEach(function(hole) {
-            hole.classList.remove("stroke-hole");
-        });
+    if (hole.classList.contains("stroke-hole")) {
+        hole.classList.remove("stroke-hole");
+        return;
     }
+
+    const selectedCount = holes.filter(function(h) {
+        return h.classList.contains("stroke-hole");
+    }).length;
+
+    if (selectedCount >= strokeCount) {
+        alert("All " + strokeCount + " stroke hole" + (strokeCount === 1 ? "" : "s") + " are already set. Long-press a maroon hole to remove one first.");
+        return;
+    }
+
+    hole.classList.add("stroke-hole");
 }
 
 function setupStrokePlayer(playerNumber) {
-    const strokeInput = document.getElementById("strokes" + playerNumber);
-    const playerRow = document.getElementById("player" + playerNumber);
+    const holes = getPlayerHoles(playerNumber);
 
-    if (!strokeInput || !playerRow) return;
+    holes.forEach(function(hole) {
+        let pressTimer = null;
+        let startX = 0;
+        let startY = 0;
 
-    const holes = Array.from(
-        playerRow.querySelectorAll(".hole-box:not(.total-box)")
-    );
-
- let strokeSelectionLocked = false;
-
-holes.forEach(function(hole) {
-    hole.addEventListener("click", function(event) {
-
-        if (strokeSelectionLocked) {
-            return;
+        function clearPressTimer() {
+            if (pressTimer) {
+                clearTimeout(pressTimer);
+                pressTimer = null;
+            }
         }
 
-        const strokeCount = parseInt(strokeInput.value, 10) || 0;
+        hole.addEventListener("pointerdown", function(event) {
+            startX = event.clientX;
+            startY = event.clientY;
+            clearPressTimer();
+            pressTimer = setTimeout(function() {
+                toggleStrokeHole(playerNumber, hole);
+                if (navigator.vibrate) navigator.vibrate(30);
+            }, LONG_PRESS_MS);
+        });
 
-        if (strokeCount <= 0) {
-            return;
-        }
+        hole.addEventListener("pointermove", function(event) {
+            if (!pressTimer) return;
+            const dx = Math.abs(event.clientX - startX);
+            const dy = Math.abs(event.clientY - startY);
+            if (dx > MOVE_CANCEL_PX || dy > MOVE_CANCEL_PX) {
+                clearPressTimer();
+            }
+        });
 
-        if (hole.classList.contains("stroke-hole")) {
-            hole.classList.remove("stroke-hole");
-            return;
-        }
-
-        const selectedCount = holes.filter(function(h) {
-            return h.classList.contains("stroke-hole");
-        }).length;
-
-        if (selectedCount >= strokeCount) {
-            return;
-        }
-
-        hole.classList.add("stroke-hole");
-
-        if (selectedCount + 1 >= strokeCount) {
-            strokeSelectionLocked = true;
-        }
+        hole.addEventListener("pointerup", clearPressTimer);
+        hole.addEventListener("pointercancel", clearPressTimer);
+        hole.addEventListener("pointerleave", clearPressTimer);
     });
-});
-function normalizeStrokeHoleSelection() {
-    const strokeCount = parseInt(strokeInput.value, 10) || 0;
-
-    const selectedHoles = holes.filter(function(hole) {
-        return hole.classList.contains("stroke-hole");
-    });
-
-    while (selectedHoles.length > strokeCount) {
-        const holeToRemove = selectedHoles.pop();
-        holeToRemove.classList.remove("stroke-hole");
-    }
-}
-    strokeInput.addEventListener("change", function() {
-    normalizeStrokeHoleSelection();
-    updateStrokeHoleStatus(playerNumber);
-});
-
-normalizeStrokeHoleSelection();
 }
 
 strokePlayers.forEach(function(playerNumber) {
     setupStrokePlayer(playerNumber);
 });
-    function validateStrokeAssignments() {
+
+document.querySelectorAll(".stroke-count").forEach(function(el) {
+    el.addEventListener("wheel", function(e) { e.preventDefault(); }, { passive: false });
+});
+
+function validateStrokeAssignments() {
     let valid = true;
 
     strokePlayers.forEach(function(playerNumber) {
@@ -1291,7 +1280,7 @@ strokePlayers.forEach(function(playerNumber) {
                 selectedCount +
                 " stroke hole" +
                 (selectedCount === 1 ? "" : "s") +
-                " selected."
+                " marked. Long-press the holes on their row to mark or unmark them."
             );
 
             valid = false;
