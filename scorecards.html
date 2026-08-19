@@ -2058,9 +2058,22 @@ if (saved) {
     document.getElementById("lrName4").value = data.name4 || "";
 
     ["player1","player2","player3","player4"].forEach(function(id) {
+
         const boxes = document.querySelectorAll("#" + id + " .hole-box");
         (data[id] || []).forEach(function(value, index) {
             if (boxes[index]) boxes[index].value = value;
+        });
+    });
+        ["1","2","3","4"].forEach(function(n) {
+        const strokeInput = document.getElementById("strokes" + n);
+        if (strokeInput) strokeInput.value = data["strokes" + n] || "";
+
+        const strokeBoxes = document.querySelectorAll("#player" + n + " .hole-box:not(.total-box)");
+        (data["strokeHoles" + n] || []).forEach(function(flag, index) {
+            if (strokeBoxes[index]) {
+                if (flag) strokeBoxes[index].classList.add("stroke-hole");
+                else strokeBoxes[index].classList.remove("stroke-hole");
+            }
         });
     });
 
