@@ -2563,6 +2563,18 @@ function applyCloudRoundData(data) {
             if (boxes[index]) boxes[index].value = value;
         });
     });
+        ["1","2","3","4"].forEach(function(n) {
+        const strokeInput = document.getElementById("strokes" + n);
+        if (strokeInput) strokeInput.value = data["strokes" + n] || "";
+
+        const strokeBoxes = document.querySelectorAll("#player" + n + " .hole-box:not(.total-box)");
+        (data["strokeHoles" + n] || []).forEach(function(flag, index) {
+            if (strokeBoxes[index]) {
+                if (flag) strokeBoxes[index].classList.add("stroke-hole");
+                else strokeBoxes[index].classList.remove("stroke-hole");
+            }
+        });
+    });
 
     if (document.getElementById("g9name1")) document.getElementById("g9name1").value = data.g9name1 || "";
     if (document.getElementById("g9name2")) document.getElementById("g9name2").value = data.g9name2 || "";
