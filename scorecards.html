@@ -2339,7 +2339,28 @@ function saveRound() {
         indivNassauValue: document.getElementById("indivNassauValue") ? document.getElementById("indivNassauValue").value : "",
         teamNassauValue: document.getElementById("teamNassauValue") ? document.getElementById("teamNassauValue").value : ""
     };
-    localStorage.setItem("birdiebookieScorecard", JSON.stringify(data));
+   /* =========================================
+   SAVE ROUND TO SCORE HISTORY
+========================================= */
+
+const roundHistory =
+    JSON.parse(localStorage.getItem("birdiebookieScoreHistory") || "[]");
+
+data.roundId = Date.now().toString();
+data.savedAt = new Date().toISOString();
+
+roundHistory.push(data);
+
+localStorage.setItem(
+    "birdiebookieScoreHistory",
+    JSON.stringify(roundHistory)
+);
+
+/* Keep the existing current-round save */
+localStorage.setItem(
+    "birdiebookieScorecard",
+    JSON.stringify(data)
+);
     alert("ROUND SAVED");
 }
 
