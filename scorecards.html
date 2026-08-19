@@ -2621,7 +2621,7 @@ async function cloudSaveRound() {
     const isNewRoom = !code;
     if (!code) {
         code = generateRoomCode();
-        localStorage.setItem("birdiebookieRoomCode", code);
+        sessionStorage.setItem("birdiebookieRoomCode", code);
     }
 
     const data = collectRoundDataForCloud();
@@ -2640,7 +2640,7 @@ async function cloudSaveRound() {
         return;
     }
 
-    localStorage.setItem("birdiebookieIsScorekeeper", "true");
+    sessionStorage.setItem("birdiebookieIsScorekeeper", "true");
     setEditingLocked(false);
     document.getElementById("roomCodeDisplay").textContent = "Room Code: " + code;
     alert("Saved to cloud! Share this code with your group: " + code);
@@ -2731,12 +2731,25 @@ function releaseScorekeeper() {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-    const savedCode = localStorage.getItem("birdiebookieRoomCode");
-    const isScorekeeper = localStorage.getItem("birdiebookieIsScorekeeper") === "true";
-    if (savedCode && document.getElementById("roomCodeDisplay")) {
-        document.getElementById("roomCodeDisplay").textContent = "Room Code: " + savedCode;
-        setEditingLocked(savedCode && !isScorekeeper);
+
+    const activeCode = sessionStorage.getItem("birdiebookieRoomCode");
+    const isScorekeeper =
+        sessionStorage.getItem("birdiebookieIsScorekeeper") === "true";
+
+    if (activeCode && document.getElementById("roomCodeDisplay")) {
+
+        document.getElementById("roomCodeDisplay").textContent =
+            "Room Code: " + activeCode;
+
+        setEditingLocked(activeCode && isScorekeeper);
+
+    } else {
+
+        localStorage.removeItem("birdiebookieRoomCode");
+        localStorage.removeItem("birdiebookieIsScorekeeper");
+
     }
+
 });
 </script>
         <script src="voicescorekeeper.js"></script>
