@@ -1777,7 +1777,7 @@ function updateRabbitMoney(money) {
 
    updateNassauMoney(money);
     updateIndivTeamMoney(money);
-        updateRabbitMoney(money);
+            if (JSON.parse(localStorage.getItem("selectedGames") || "[]").some(g => g.includes("Rabbit"))) updateRabbitMoney(money);
     const players = names.map(function(name, idx) { return { name: name, total: money[idx] }; });
     players.sort(function(a, b) { return b.total - a.total; });
 
