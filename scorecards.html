@@ -1333,8 +1333,14 @@ function validateLeftRightZeroSum() {
         box.style.color = "white";
     });
 
-    const toggle = document.getElementById("carryoverToggle");
-    const playCarryovers = !!(toggle && toggle.checked);
+    const individualToggle = document.getElementById("carryoverToggleIndividual");
+const teamToggle = document.getElementById("carryoverToggleTeam");
+
+const playIndividualCarryovers =
+    !!(individualToggle && individualToggle.checked);
+
+const playTeamCarryovers =
+    !!(teamToggle && teamToggle.checked);
 
     let tiedHoles = [];
     for (let hole = 0; hole <= 18; hole++) {
@@ -1358,7 +1364,7 @@ function validateLeftRightZeroSum() {
         const winners = validScores.filter(s => s.score === minScore);
 
         if (winners.length === 1) {
-            if (playCarryovers) {
+          if (playIndividualCarryovers) {
                 tiedHoles.forEach(h => {
                     winners[0].box.parentElement.querySelectorAll(".hole-box")[h].style.backgroundColor = "yellow";
                     winners[0].box.parentElement.querySelectorAll(".hole-box")[h].style.color = "black";
@@ -1368,7 +1374,7 @@ function validateLeftRightZeroSum() {
             winners[0].box.style.color = "black";
             tiedHoles = [];
         } else {
-            if (playCarryovers) tiedHoles.push(hole);
+          if (playIndividualCarryovers) tiedHoles.push(hole);
         }
     }
 
