@@ -1392,7 +1392,7 @@ const playTeamCarryovers =
         if (t12 !== t34) {
             const winnerBoxes = t12 < t34 ? team12boxes : team34boxes;
 
-            if (playCarryovers) {
+            if (playTeamCarryovers) {
                 teamTiedHoles.forEach(h => {
                     winnerBoxes[h].style.backgroundColor = "yellow";
                     winnerBoxes[h].style.color = "black";
@@ -1403,7 +1403,7 @@ const playTeamCarryovers =
 
             teamTiedHoles = [];
         } else {
-            if (playCarryovers) teamTiedHoles.push(hole);
+            if (playTeamCarryovers) teamTiedHoles.push(hole);
         }
     }
 }
