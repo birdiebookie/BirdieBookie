@@ -6,30 +6,29 @@
 <title>Bingo Bango Bongo - BirdieBookie</title>
 <link rel="stylesheet" href="style.css">
 <style>
-body{background:#000;color:#fff;font-family:Arial,sans-serif;margin:0;}
-.bb-page{max-width:1100px;margin:0 auto;padding:20px 14px 50px;}
-.bb-title{color:#00ff99;text-align:center;font-size:38px;margin:18px 0 6px;}
-.bb-sub{text-align:center;color:#ccc;margin-bottom:14px;}
-.bb-info{background:#111;border:2px solid #00ff99;border-radius:14px;padding:12px 16px;line-height:1.45;text-align:center;}
-.bb-info strong{color:#00ff99;}
-.bb-controls{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px;margin:14px 0;}
+body{background:#000;color:#fff;font-family:Arial,sans-serif;margin:0;overflow-x:auto;}
+.bb-page{padding:18px 20px 40px;width:max-content;min-width:100%;box-sizing:border-box;}
+.bb-title{color:#00ff99;text-align:center;font-size:34px;margin:10px 0 4px;}
+.bb-sub{text-align:center;color:#ccc;font-size:15px;margin-bottom:10px;}
+.bb-controls{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px;margin:10px 0 14px;}
 .bb-label{color:#ffdd44;font-weight:bold;}
 .bb-money{background:#111;color:#00ff99;border:2px solid #00ff99;border-radius:20px;padding:7px 14px;font-weight:bold;cursor:pointer;}
 .bb-money.active{background:#00ff99;color:#000;}
 .bb-reset{background:#ff4444;color:#fff;border:none;border-radius:20px;padding:8px 14px;font-weight:bold;cursor:pointer;}
-.bb-names{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0;}
-.bb-name{background:#111;border:1px solid #444;border-radius:10px;padding:9px;color:#fff;text-align:center;font-weight:bold;}
-.bb-ledger{overflow-x:auto;background:#111;border:2px solid #00ff99;border-radius:14px;padding:10px;}
-table{width:100%;border-collapse:collapse;min-width:700px;}
-th,td{padding:7px;border-bottom:1px solid #333;text-align:center;}
-th{color:#00ff99;background:#050505;}
-th:first-child,td:first-child{text-align:left;color:#ffdd44;font-weight:bold;}
-select{width:100%;min-width:125px;background:#000;color:#fff;border:1px solid #00ff99;border-radius:7px;padding:7px;font-weight:bold;}
-.bb-totals{margin-top:14px;background:#111;border:2px solid #ffdd44;border-radius:14px;padding:10px;}
-.bb-total-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
-.bb-total{background:#000;border:1px solid #555;border-radius:10px;padding:9px;text-align:center;font-weight:bold;}
-.bb-total span{display:block;color:#00ff99;font-size:18px;margin-top:3px;}
-@media(max-width:700px){.bb-title{font-size:30px}.bb-names{grid-template-columns:repeat(2,1fr)}.bb-total-grid{grid-template-columns:repeat(2,1fr)}}
+.bb-rule{color:#ffdd44;text-align:center;font-weight:bold;margin-bottom:14px;}
+.bb-ledger{overflow-x:auto;}
+.bb-row{display:flex;align-items:center;margin-bottom:8px;}
+.bb-row:first-child{margin-bottom:10px;}
+.bb-player{width:120px;min-width:120px;height:48px;display:flex;align-items:center;box-sizing:border-box;padding:4px;color:#00ff99;font-size:18px;font-weight:bold;}
+.bb-player-input{width:120px;min-width:120px;height:48px;background:#fff;color:#000;border:none;border-radius:9px;padding:6px 8px;box-sizing:border-box;font-size:18px;font-weight:bold;}
+.bb-head{width:55px;min-width:55px;height:48px;margin-right:5px;border-radius:9px;background:#00ff99;color:#000;display:flex;align-items:center;justify-content:center;font-weight:bold;}
+.bb-total-head{width:68px;min-width:68px;}
+.bb-cell{width:55px;min-width:55px;height:48px;margin-right:5px;border-radius:9px;border:2px solid #00ff99;background:#111;color:#fff;text-align:center;font-size:21px;font-weight:bold;box-sizing:border-box;}
+.bb-cell.valid{background:#073d23;border-color:#00ff99;}
+.bb-cell.invalid{background:#5a1414;border-color:#ff4444;}
+.bb-total{width:68px;min-width:68px;height:48px;margin-right:5px;border-radius:9px;border:2px solid #00ff99;background:#111;color:#fff;text-align:center;font-size:20px;font-weight:bold;box-sizing:border-box;}
+.bb-status{margin-top:10px;color:#aaa;text-align:center;font-size:14px;}
+@media(max-width:700px){.bb-page{padding-left:8px;padding-right:8px}.bb-title{font-size:28px}}
 </style>
 </head>
 <body>
@@ -46,14 +45,7 @@ select{width:100%;min-width:125px;background:#000;color:#fff;border:1px solid #0
 
 <main class="bb-page">
 <h1 class="bb-title">🎯 BINGO BANGO BONGO</h1>
-<div class="bb-sub">3 points available on every hole</div>
-
-<div class="bb-info">
-<strong>BINGO</strong> = first on the green &nbsp;|&nbsp;
-<strong>BANGO</strong> = closest once everyone is on &nbsp;|&nbsp;
-<strong>BONGO</strong> = first to hole out<br>
-<strong>Play order matters:</strong> farthest from the hole plays first.
-</div>
+<div class="bb-sub">Three points are available on every hole.</div>
 
 <div class="bb-controls">
 <span class="bb-label">POINT VALUE:</span>
@@ -66,92 +58,120 @@ select{width:100%;min-width:125px;background:#000;color:#fff;border:1px solid #0
 <button id="bbReset" class="bb-reset">RESET</button>
 </div>
 
-<div class="bb-names" id="bbNames"></div>
+<div class="bb-rule">Enter the points won by each player. Every completed hole must total exactly 3 points.</div>
 
 <div class="bb-ledger">
-<table>
-<thead>
-<tr><th>HOLE</th><th>BINGO</th><th>BANGO</th><th>BONGO</th></tr>
-</thead>
-<tbody id="bbRows"></tbody>
-</table>
+<div class="bb-row">
+<div class="bb-player">PLAYER</div>
+<div class="bb-head">1</div><div class="bb-head">2</div><div class="bb-head">3</div><div class="bb-head">4</div><div class="bb-head">5</div><div class="bb-head">6</div><div class="bb-head">7</div><div class="bb-head">8</div><div class="bb-head">9</div>
+<div class="bb-head bb-total-head">OUT</div>
+<div class="bb-head">10</div><div class="bb-head">11</div><div class="bb-head">12</div><div class="bb-head">13</div><div class="bb-head">14</div><div class="bb-head">15</div><div class="bb-head">16</div><div class="bb-head">17</div><div class="bb-head">18</div>
+<div class="bb-head bb-total-head">IN</div>
+<div class="bb-head bb-total-head">TOT</div>
 </div>
 
-<div class="bb-totals">
-<div style="text-align:center;color:#ffdd44;font-weight:bold;margin-bottom:8px;">POINT TOTALS / MONEY</div>
-<div class="bb-total-grid" id="bbTotals"></div>
+<div class="bb-row" id="bb1"><input class="bb-player-input" id="bbName1" readonly></div>
+<div class="bb-row" id="bb2"><input class="bb-player-input" id="bbName2" readonly></div>
+<div class="bb-row" id="bb3"><input class="bb-player-input" id="bbName3" readonly></div>
+<div class="bb-row" id="bb4"><input class="bb-player-input" id="bbName4" readonly></div>
 </div>
+
+<div class="bb-status" id="bbStatus">$1 per point</div>
 </main>
 
 <script>
 const BB_KEY = "birdiebookieBingoBongoRound";
 let pointValue = 1;
-const players = [1,2,3,4].map(i=>({name:`Player ${i}`,points:0}));
-const round = Array.from({length:18},()=>({bingo:null,bango:null,bongo:null}));
 
-function loadMainNames(){
-  const keys=["name1","name2","name3","name4"];
-  keys.forEach((key,i)=>{
-    const direct=localStorage.getItem(key);
-    if(direct && direct.trim()) players[i].name=direct.trim();
-  });
+function getMainNames(){
   try{
-    const scorecard=JSON.parse(localStorage.getItem("birdiebookieScorecard")||"null");
-    if(scorecard){
-      [scorecard.name1,scorecard.name2,scorecard.name3,scorecard.name4].forEach((n,i)=>{
-        if(n && String(n).trim()) players[i].name=String(n).trim();
-      });
-    }
+    const saved = JSON.parse(localStorage.getItem("birdiebookieScorecard") || "null");
+    if(saved) return [saved.name1,saved.name2,saved.name3,saved.name4].map((n,i)=>String(n || ("Player " + (i+1))).trim());
   }catch(e){}
+  return [1,2,3,4].map(i=>"Player " + i);
+}
+
+function buildRows(){
+  const names=getMainNames();
+  for(let p=1;p<=4;p++){
+    const row=document.getElementById("bb"+p);
+    let html=`<input class="bb-player-input" id="bbName${p}" value="${escapeHtml(names[p-1])}" readonly>`;
+    for(let h=0;h<18;h++) html+=`<input class="bb-cell" inputmode="numeric" pattern="[0-3]" min="0" max="3" maxlength="1" data-player="${p-1}" data-hole="${h}">`;
+    html+=`<input class="bb-total" id="bbOut${p}" readonly><input class="bb-total" id="bbIn${p}" readonly><input class="bb-total" id="bbTot${p}" readonly>`;
+    row.innerHTML=html;
+  }
+  document.querySelectorAll(".bb-cell").forEach(box=>box.addEventListener("input",function(){
+    this.value=this.value.replace(/[^0-3]/g,"").slice(0,1);
+    updateBBB();
+    saveBBB();
+  }));
 }
 
 function escapeHtml(s){return String(s).replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c]));}
-function saveRound(){localStorage.setItem(BB_KEY,JSON.stringify({pointValue,players:players.map(p=>p.name),round}));}
-function loadRound(){
-  loadMainNames();
+
+function loadBBB(){
+  buildRows();
   try{
     const saved=JSON.parse(localStorage.getItem(BB_KEY)||"null");
     if(!saved)return;
     pointValue=Number(saved.pointValue)||1;
-    if(Array.isArray(saved.players))saved.players.slice(0,4).forEach((n,i)=>{if(n)players[i].name=n;});
-    if(Array.isArray(saved.round)&&saved.round.length===18)saved.round.forEach((h,i)=>{round[i]=h;});
+    (saved.values||[]).forEach((row,p)=>row.forEach((v,h)=>{
+      const box=document.querySelector(`.bb-cell[data-player="${p}"][data-hole="${h}"]`);
+      if(box)box.value=v||"";
+    }));
   }catch(e){}
+  updateMoneyButtons();
+  updateBBB();
 }
 
-function renderNames(){
-  document.getElementById("bbNames").innerHTML=players.map((p,i)=>`<div class="bb-name"><input id="bbName${i}" value="${escapeHtml(p.name)}" style="width:100%;box-sizing:border-box;background:#fff;color:#000;border:none;border-radius:7px;padding:7px;text-align:center;font-weight:bold;"></div>`).join("");
-  players.forEach((p,i)=>document.getElementById(`bbName${i}`).addEventListener("input",e=>{p.name=e.target.value||`Player ${i+1}`;renderRows();renderTotals();saveRound();}));
+function saveBBB(){
+  const values=[0,1,2,3].map(p=>Array.from(document.querySelectorAll(`.bb-cell[data-player="${p}"]`)).map(x=>x.value));
+  localStorage.setItem(BB_KEY,JSON.stringify({pointValue,values}));
 }
 
-function options(selected){
-  return `<option value="">—</option>`+players.map((p,i)=>`<option value="${i}" ${selected===i?'selected':''}>${escapeHtml(p.name)}</option>`).join("");
+function updateMoneyButtons(){
+  document.querySelectorAll(".bb-money").forEach(b=>b.classList.toggle("active",Number(b.dataset.value)===pointValue));
+  document.getElementById("bbStatus").textContent="$"+pointValue+" per point";
 }
 
-function renderRows(){
-  document.getElementById("bbRows").innerHTML=round.map((h,i)=>`<tr><td>${i+1}</td><td><select data-hole="${i}" data-type="bingo">${options(h.bingo)}</select></td><td><select data-hole="${i}" data-type="bango">${options(h.bango)}</select></td><td><select data-hole="${i}" data-type="bongo">${options(h.bongo)}</select></td></tr>`).join("");
-  document.querySelectorAll("select[data-hole]").forEach(sel=>sel.addEventListener("change",()=>{round[Number(sel.dataset.hole)][sel.dataset.type]=sel.value===""?null:Number(sel.value);updateTotals();saveRound();}));
+function updateBBB(){
+  let front=[0,0,0,0], back=[0,0,0,0], total=[0,0,0,0];
+  for(let h=0;h<18;h++){
+    let sum=0;
+    for(let p=0;p<4;p++){
+      const box=document.querySelector(`.bb-cell[data-player="${p}"][data-hole="${h}"]`);
+      const v=box && box.value!=="" ? Number(box.value) : 0;
+      sum+=v;
+      total[p]+=v;
+      if(h<9)front[p]+=v; else back[p]+=v;
+    }
+    document.querySelectorAll(`.bb-cell[data-hole="${h}"]`).forEach(box=>{
+      const anyEntered=document.querySelectorAll(`.bb-cell[data-hole="${h}"]`);
+      const hasEntry=Array.from(anyEntered).some(x=>x.value!=="");
+      box.classList.toggle("valid",hasEntry && sum===3);
+      box.classList.toggle("invalid",hasEntry && sum!==3);
+    });
+  }
+  for(let p=1;p<=4;p++){
+    document.getElementById("bbOut"+p).value=front[p-1]||"";
+    document.getElementById("bbIn"+p).value=back[p-1]||"";
+    document.getElementById("bbTot"+p).value=total[p-1]||"";
+  }
 }
 
-function renderTotals(){
-  document.getElementById("bbTotals").innerHTML=players.map((p,i)=>`<div class="bb-total">${escapeHtml(p.name)}<span id="bbPts${i}">0 pts / $0</span></div>`).join("");
-}
+document.querySelectorAll(".bb-money").forEach(btn=>btn.addEventListener("click",()=>{pointValue=Number(btn.dataset.value);updateMoneyButtons();saveBBB();}));
 
-function updateTotals(){
-  players.forEach(p=>p.points=0);
-  round.forEach(h=>[h.bingo,h.bango,h.bongo].forEach(w=>{if(w!==null&&w!==undefined)players[w].points++;}));
-  players.forEach((p,i)=>{const el=document.getElementById(`bbPts${i}`);if(el)el.textContent=`${p.points} pts / $${(p.points*pointValue).toFixed(2)}`;});
-}
+document.getElementById("bbReset").addEventListener("click",()=>{
+  if(!confirm("Reset the Bingo Bango Bongo round?"))return;
+  localStorage.removeItem(BB_KEY);
+  pointValue=1;
+  document.querySelectorAll(".bb-money").forEach(b=>b.classList.toggle("active",Number(b.dataset.value)===1));
+  buildRows();
+  updateBBB();
+  updateMoneyButtons();
+});
 
-document.querySelectorAll(".bb-money").forEach(btn=>btn.addEventListener("click",()=>{pointValue=Number(btn.dataset.value);document.querySelectorAll(".bb-money").forEach(b=>b.classList.remove("active"));btn.classList.add("active");updateTotals();saveRound();}));
-
-document.getElementById("bbReset").addEventListener("click",()=>{if(!confirm("Reset the Bingo Bango Bongo round?"))return;round.forEach(h=>{h.bingo=h.bango=h.bongo=null;});players.forEach(p=>p.points=0);localStorage.removeItem(BB_KEY);renderRows();renderTotals();updateTotals();});
-
-loadRound();
-renderNames();
-renderRows();
-renderTotals();
-document.querySelectorAll(".bb-money").forEach(b=>{b.classList.toggle("active",Number(b.dataset.value)===pointValue);});
-updateTotals();
+loadBBB();
 </script>
 </body>
 </html>
