@@ -5,147 +5,161 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bingo Bango Bongo - BirdieBookie</title>
 <link rel="stylesheet" href="style.css">
+<style>
+body{background:#000;color:#fff;font-family:Arial,sans-serif;margin:0;}
+.bb-page{max-width:1200px;margin:0 auto;padding:24px 16px 60px;}
+.bb-top{background:#111;border:2px solid #00ff99;border-radius:18px;padding:18px;margin-bottom:18px;}
+.bb-top h1{color:#00ff99;text-align:center;margin:0 0 8px;font-size:40px;}
+.bb-sub{text-align:center;color:#ccc;font-size:16px;margin-bottom:18px;}
+.bb-rules{background:#090909;border:1px solid #333;border-radius:14px;padding:14px;color:#eee;line-height:1.5;}
+.bb-rules strong{color:#00ff99;}
+.bb-controls{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;margin:16px 0;}
+.bb-label{color:#ffdd44;font-weight:bold;font-size:18px;}
+.bb-money-btn{background:#111;color:#00ff99;border:2px solid #00ff99;border-radius:22px;padding:8px 16px;font-weight:bold;cursor:pointer;}
+.bb-money-btn.active{background:#00ff99;color:#000;}
+.bb-action{background:#ffdd44;color:#000;border:none;border-radius:22px;padding:9px 18px;font-weight:bold;cursor:pointer;}
+.bb-leader{background:#111;border:2px solid #ffdd44;border-radius:16px;padding:14px;margin-bottom:18px;}
+.bb-leader h2{color:#ffdd44;text-align:center;margin:0 0 12px;}
+.bb-leader-row{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;}
+.bb-leader-item{background:#000;border:2px solid #666;border-radius:18px;padding:8px 14px;font-weight:bold;}
+.bb-win{color:#00ff66;border-color:#00ff66;}.bb-lose{color:#ff4444;border-color:#ff4444;}.bb-even{color:#fff;}
+.bb-players{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-bottom:18px;}
+.bb-player{background:#111;border:2px solid #00ff99;border-radius:12px;padding:10px;}
+.bb-player input{width:100%;box-sizing:border-box;background:#fff;color:#000;border:none;border-radius:8px;padding:9px;font-size:18px;font-weight:bold;}
+.bb-player small{display:block;color:#aaa;margin-top:6px;}
+.bb-hole{background:#111;border:2px solid #222;border-radius:16px;padding:14px;margin:12px 0;}
+.bb-hole h3{color:#00ff99;margin:0 0 10px;font-size:22px;}
+.bb-point-row{display:grid;grid-template-columns:95px 1fr;gap:8px;align-items:center;margin:8px 0;}
+.bb-point-name{font-weight:bold;color:#ffdd44;}
+.bb-buttons{display:grid;grid-template-columns:repeat(4,minmax(90px,1fr));gap:6px;}
+.bb-point-btn{background:#000;color:#fff;border:1px solid #555;border-radius:9px;padding:8px 5px;cursor:pointer;font-weight:bold;min-height:38px;}
+.bb-point-btn.selected{background:#00ff99;color:#000;border-color:#00ff99;}
+.bb-total{margin-left:auto;color:#ffdd44;font-weight:bold;font-size:16px;}
+@media(max-width:700px){.bb-top h1{font-size:30px}.bb-point-row{grid-template-columns:1fr}.bb-buttons{grid-template-columns:repeat(2,1fr)}.bb-total{margin-left:0}}
+</style>
 </head>
-
 <body>
-
 <header class="hero">
-
 <nav>
-
-<div class="logo">
-Birdie<span>Bookie</span>
-</div>
-
+<div class="logo">Birdie<span>Bookie</span></div>
 <div class="nav-links">
 <a href="index.html">Home</a>
 <a href="games.html">Games</a>
 <a href="scorecards.html">Scorecards</a>
 </div>
-
 </nav>
-
-<div class="hero-content">
-
-<h1>🎯 Bingo Bango Bongo</h1>
-
-<p>
-One of the most competitive and underrated golf gambling games ever created.
-Every hole has 3 points available.
-</p>
-
-</div>
-
 </header>
 
-<section class="section">
-
-<h2>How Bingo Bango Bongo Works</h2>
-
-<div class="card">
-
-<p>
-Each hole has 3 separate points:
-</p>
-
-<ul>
-<li><strong>Bingo</strong> = First player on the green</li>
-<li><strong>Bango</strong> = Closest to the pin once everyone reaches the green</li>
-<li><strong>Bongo</strong> = First player to hole out</li>
-</ul>
-
-<p>
-Players earn points throughout the round and the highest total wins.
-</p>
-
-<p>
-Playing order matters heavily and strategy becomes important around the greens.
-</p>
-
+<main class="bb-page">
+<section class="bb-top">
+<h1>🎯 BINGO BANGO BONGO</h1>
+<div class="bb-sub">Three points available on every hole.</div>
+<div class="bb-rules">
+<strong>BINGO</strong> = first player on the green.<br>
+<strong>BANGO</strong> = closest to the pin once everyone is on the green.<br>
+<strong>BONGO</strong> = first player to hole out.<br><br>
+<strong>Play order matters:</strong> the player farthest from the hole plays first.
 </div>
-
+<div class="bb-controls">
+<span class="bb-label">POINT VALUE:</span>
+<button class="bb-money-btn active" data-value="1">$1</button>
+<button class="bb-money-btn" data-value="5">$5</button>
+<button class="bb-money-btn" data-value="10">$10</button>
+<button class="bb-money-btn" data-value="25">$25</button>
+<button class="bb-money-btn" data-value="50">$50</button>
+<button class="bb-money-btn" data-value="100">$100</button>
+<button id="bbReset" class="bb-action">RESET ROUND</button>
+</div>
+<div id="bbPointDisplay" style="text-align:center;color:#ffdd44;font-weight:bold;font-size:18px;">Each point = $1</div>
 </section>
 
-<section class="section dark">
-
-<h2>Why Players Love It</h2>
-
-<div class="card-grid">
-
-<div class="card">
-<h3>Everyone Stays Alive</h3>
-<p>
-Even weaker golfers can win points during the round.
-</p>
-</div>
-
-<div class="card">
-<h3>Constant Action</h3>
-<p>
-Every hole creates multiple chances to win money.
-</p>
-</div>
-
-<div class="card">
-<h3>Great Pressure</h3>
-<p>
-Short putts and approach shots become high-stakes moments.
-</p>
-</div>
-
-</div>
-
+<section class="bb-leader">
+<h2>🏆 BINGO BANGO BONGO LEADERBOARD</h2>
+<div id="bbLeaderboard" class="bb-leader-row"></div>
 </section>
 
-<section class="section">
+<section class="bb-players" id="bbPlayers"></section>
 
-<h2>BirdieBookie Tip</h2>
+<section id="bbHoles"></section>
+</main>
 
-<div class="card">
+<script>
+const BB_KEY = "birdiebookieBingoBongoRound";
+let pointValue = 1;
+const players = [1,2,3,4].map(i => ({name:`Player ${i}`, points:0}));
+const round = Array.from({length:18}, () => ({ bingo:null, bango:null, bongo:null }));
 
-<p>
-Before the round decide:
-</p>
+function loadMainNames(){
+  try{
+    const saved = JSON.parse(localStorage.getItem("birdiebookieScorecard") || "null");
+    if(saved){
+      const names = [saved.name1,saved.name2,saved.name3,saved.name4];
+      names.forEach((n,i)=>{ if(n && String(n).trim()) players[i].name = String(n).trim(); });
+    }
+  }catch(e){}
+}
 
-<ul>
-<li>Point value</li>
-<li>Tie rules</li>
-<li>Whether honors matters</li>
-<li>Whether Bingo requires being first from off the green</li>
-</ul>
+function saveRound(){
+  localStorage.setItem(BB_KEY, JSON.stringify({pointValue, players:players.map(p=>p.name), round}));
+}
 
-<p>
-Bingo Bango Bongo works especially well with mixed skill groups.
-</p>
+function loadRound(){
+  loadMainNames();
+  try{
+    const saved = JSON.parse(localStorage.getItem(BB_KEY) || "null");
+    if(!saved) return;
+    if(saved.pointValue) pointValue = Number(saved.pointValue);
+    if(Array.isArray(saved.players)) saved.players.slice(0,4).forEach((n,i)=>{if(n) players[i].name=n;});
+    if(Array.isArray(saved.round) && saved.round.length===18) saved.round.forEach((h,i)=>{round[i]=h;});
+  }catch(e){}
+}
 
-</div>
+function renderPlayers(){
+  const el=document.getElementById('bbPlayers');
+  el.innerHTML=players.map((p,i)=>`<div class="bb-player"><input value="${escapeHtml(p.name)}" data-player-name="${i}"><small>Points: <span id="bbPoints${i}">0</span> &nbsp; Money: <span id="bbMoney${i}">$0</span></small></div>`).join('');
+  el.querySelectorAll('[data-player-name]').forEach(input=>input.addEventListener('input',e=>{players[Number(e.target.dataset.playerName)].name=e.target.value || `Player ${Number(e.target.dataset.playerName)+1}`; renderLeaderboard(); saveRound();}));
+}
 
-</section>
+function escapeHtml(s){return String(s).replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c]));}
 
-<footer>
+function playerButtons(holeIndex, type){
+  return players.map((p,i)=>`<button class="bb-point-btn ${round[holeIndex][type]===i?'selected':''}" onclick="setWinner(${holeIndex},'${type}',${i})">${escapeHtml(p.name)}</button>`).join('');
+}
 
-<h3>BirdieBookie</h3>
+function renderHoles(){
+  const el=document.getElementById('bbHoles');
+  el.innerHTML=round.map((h,i)=>`<div class="bb-hole"><h3>Hole ${i+1}<span class="bb-total" id="holeTotal${i}"></span></h3><div class="bb-point-row"><div class="bb-point-name">BINGO</div><div class="bb-buttons">${playerButtons(i,'bingo')}</div></div><div class="bb-point-row"><div class="bb-point-name">BANGO</div><div class="bb-buttons">${playerButtons(i,'bango')}</div></div><div class="bb-point-row"><div class="bb-point-name">BONGO</div><div class="bb-buttons">${playerButtons(i,'bongo')}</div></div></div>`).join('');
+}
 
-<p>
-Gamblers with a golfing problem
-</p>
+function setWinner(hole,type,player){
+  round[hole][type] = round[hole][type] === player ? null : player;
+  renderHoles();
+  updateTotals();
+  saveRound();
+}
 
-</footer>
+function updateTotals(){
+  players.forEach(p=>p.points=0);
+  round.forEach(h=>['bingo','bango','bongo'].forEach(type=>{if(h[type]!==null && h[type]!==undefined) players[h[type]].points++;}));
+  players.forEach((p,i)=>{const pts=document.getElementById('bbPoints'+i), money=document.getElementById('bbMoney'+i); if(pts) pts.textContent=p.points; if(money) money.textContent='$'+(p.points*pointValue).toFixed(2);});
+  renderLeaderboard();
+}
 
+function renderLeaderboard(){
+  const rows=players.map((p,i)=>({i,name:p.name || `Player ${i+1}`,points:p.points||0,money:(p.points||0)*pointValue})).sort((a,b)=>b.money-a.money);
+  document.getElementById('bbLeaderboard').innerHTML=rows.map(r=>`<div class="bb-leader-item ${r.money>0?'bb-win':'bb-even'}">${escapeHtml(r.name)}: ${r.points} pts / $${r.money.toFixed(2)}</div>`).join('');
+}
+
+document.querySelectorAll('.bb-money-btn').forEach(btn=>btn.addEventListener('click',()=>{pointValue=Number(btn.dataset.value);document.querySelectorAll('.bb-money-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.getElementById('bbPointDisplay').textContent='Each point = $'+pointValue;updateTotals();saveRound();}));
+
+document.getElementById('bbReset').addEventListener('click',()=>{if(!confirm('Reset the Bingo Bango Bongo round?')) return; round.forEach(h=>{h.bingo=null;h.bango=null;h.bongo=null;}); players.forEach((p,i)=>p.points=0); localStorage.removeItem(BB_KEY); renderHoles(); updateTotals();});
+
+loadRound();
+renderPlayers();
+renderHoles();
+document.querySelectorAll('.bb-money-btn').forEach(b=>{if(Number(b.dataset.value)===pointValue)b.classList.add('active');else b.classList.remove('active');});
+document.getElementById('bbPointDisplay').textContent='Each point = $'+pointValue;
+updateTotals();
+</script>
 </body>
 </html>
-<div class="degenerate-box">
-
-<div class="degenerate-title">
-Degenerate Rating
-</div>
-
-<div class="degenerate-emojis">
-🟠🟠
-</div>
-
-<div class="degenerate-text">
-Mostly harmless. Usually.
-</div>
-
-</div>
