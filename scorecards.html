@@ -1910,7 +1910,8 @@ function updateRabbitMoney(money) {
    updateNassauMoney(money);
     updateIndivTeamMoney(money);
             if (JSON.parse(localStorage.getItem("selectedGames") || "[]").some(g => g.includes("Rabbit"))) updateRabbitMoney(money);
-    const players = names.map(function(name, idx) { return { name: name, total: money[idx] }; });
+        const players = names.map(function(name, idx) { return { name: name, total: money[idx] }; });
+    window.currentRoundMoney = money.slice();
     players.sort(function(a, b) { return b.total - a.total; });
 
     function fmtMoney(n) {
@@ -2498,7 +2499,11 @@ function saveRound() {
         indivNassauToggle: !!(document.getElementById("indivNassauToggle") && document.getElementById("indivNassauToggle").checked),
         teamNassauToggle: !!(document.getElementById("teamNassauToggle") && document.getElementById("teamNassauToggle").checked),
         indivNassauValue: document.getElementById("indivNassauValue") ? document.getElementById("indivNassauValue").value : "",
-        teamNassauValue: document.getElementById("teamNassauValue") ? document.getElementById("teamNassauValue").value : ""
+        teamNassauValue: document.getElementById("teamNassauValue") ? document.getElementById("teamNassauValue").value : "",
+        player1Money: window.currentRoundMoney ? window.currentRoundMoney[0] : 0,
+        player2Money: window.currentRoundMoney ? window.currentRoundMoney[1] : 0,
+        player3Money: window.currentRoundMoney ? window.currentRoundMoney[2] : 0,
+        player4Money: window.currentRoundMoney ? window.currentRoundMoney[3] : 0
     };
    /* =========================================
    SAVE ROUND TO SCORE HISTORY
