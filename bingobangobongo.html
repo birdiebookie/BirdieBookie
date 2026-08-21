@@ -7,30 +7,29 @@
 <link rel="stylesheet" href="style.css">
 <style>
 body{background:#000;color:#fff;font-family:Arial,sans-serif;margin:0;}
-.bb-page{max-width:1200px;margin:0 auto;padding:24px 16px 60px;}
-.bb-top{background:#111;border:2px solid #00ff99;border-radius:18px;padding:18px;margin-bottom:18px;}
-.bb-top h1{color:#00ff99;text-align:center;margin:0 0 8px;font-size:40px;}
-.bb-sub{text-align:center;color:#ccc;font-size:16px;margin-bottom:18px;}
-.bb-rules{background:#090909;border:1px solid #333;border-radius:14px;padding:14px;color:#eee;line-height:1.5;}
-.bb-rules strong{color:#00ff99;}
-.bb-controls{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;margin:16px 0;}
-.bb-label{color:#ffdd44;font-weight:bold;font-size:18px;}
-.bb-money-btn{background:#111;color:#00ff99;border:2px solid #00ff99;border-radius:22px;padding:8px 16px;font-weight:bold;cursor:pointer;}
-.bb-money-btn.active{background:#00ff99;color:#000;}
-.bb-action{background:#ffdd44;color:#000;border:none;border-radius:22px;padding:9px 18px;font-weight:bold;cursor:pointer;}
-.bb-players{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-bottom:18px;}
-.bb-player{background:#111;border:2px solid #00ff99;border-radius:12px;padding:10px;}
-.bb-player input{width:100%;box-sizing:border-box;background:#fff;color:#000;border:none;border-radius:8px;padding:9px;font-size:18px;font-weight:bold;}
-.bb-player small{display:block;color:#aaa;margin-top:6px;}
-.bb-hole{background:#111;border:2px solid #222;border-radius:16px;padding:14px;margin:12px 0;}
-.bb-hole h3{color:#00ff99;margin:0 0 10px;font-size:22px;}
-.bb-point-row{display:grid;grid-template-columns:95px 1fr;gap:8px;align-items:center;margin:8px 0;}
-.bb-point-name{font-weight:bold;color:#ffdd44;}
-.bb-buttons{display:grid;grid-template-columns:repeat(4,minmax(90px,1fr));gap:6px;}
-.bb-point-btn{background:#000;color:#fff;border:1px solid #555;border-radius:9px;padding:8px 5px;cursor:pointer;font-weight:bold;min-height:38px;}
-.bb-point-btn.selected{background:#00ff99;color:#000;border-color:#00ff99;}
-.bb-total{margin-left:auto;color:#ffdd44;font-weight:bold;font-size:16px;}
-@media(max-width:700px){.bb-top h1{font-size:30px}.bb-point-row{grid-template-columns:1fr}.bb-buttons{grid-template-columns:repeat(2,1fr)}.bb-total{margin-left:0}}
+.bb-page{max-width:1100px;margin:0 auto;padding:20px 14px 50px;}
+.bb-title{color:#00ff99;text-align:center;font-size:38px;margin:18px 0 6px;}
+.bb-sub{text-align:center;color:#ccc;margin-bottom:14px;}
+.bb-info{background:#111;border:2px solid #00ff99;border-radius:14px;padding:12px 16px;line-height:1.45;text-align:center;}
+.bb-info strong{color:#00ff99;}
+.bb-controls{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px;margin:14px 0;}
+.bb-label{color:#ffdd44;font-weight:bold;}
+.bb-money{background:#111;color:#00ff99;border:2px solid #00ff99;border-radius:20px;padding:7px 14px;font-weight:bold;cursor:pointer;}
+.bb-money.active{background:#00ff99;color:#000;}
+.bb-reset{background:#ff4444;color:#fff;border:none;border-radius:20px;padding:8px 14px;font-weight:bold;cursor:pointer;}
+.bb-names{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0;}
+.bb-name{background:#111;border:1px solid #444;border-radius:10px;padding:9px;color:#fff;text-align:center;font-weight:bold;}
+.bb-ledger{overflow-x:auto;background:#111;border:2px solid #00ff99;border-radius:14px;padding:10px;}
+table{width:100%;border-collapse:collapse;min-width:700px;}
+th,td{padding:7px;border-bottom:1px solid #333;text-align:center;}
+th{color:#00ff99;background:#050505;}
+th:first-child,td:first-child{text-align:left;color:#ffdd44;font-weight:bold;}
+select{width:100%;min-width:125px;background:#000;color:#fff;border:1px solid #00ff99;border-radius:7px;padding:7px;font-weight:bold;}
+.bb-totals{margin-top:14px;background:#111;border:2px solid #ffdd44;border-radius:14px;padding:10px;}
+.bb-total-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.bb-total{background:#000;border:1px solid #555;border-radius:10px;padding:9px;text-align:center;font-weight:bold;}
+.bb-total span{display:block;color:#00ff99;font-size:18px;margin-top:3px;}
+@media(max-width:700px){.bb-title{font-size:30px}.bb-names{grid-template-columns:repeat(2,1fr)}.bb-total-grid{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
@@ -46,103 +45,112 @@ body{background:#000;color:#fff;font-family:Arial,sans-serif;margin:0;}
 </header>
 
 <main class="bb-page">
-<section class="bb-top">
-<h1>🎯 BINGO BANGO BONGO</h1>
-<div class="bb-sub">Three points available on every hole.</div>
-<div class="bb-rules">
-<strong>BINGO</strong> = first player on the green.<br>
-<strong>BANGO</strong> = closest to the pin once everyone is on the green.<br>
-<strong>BONGO</strong> = first player to hole out.<br><br>
-<strong>Play order matters:</strong> the player farthest from the hole plays first.
+<h1 class="bb-title">🎯 BINGO BANGO BONGO</h1>
+<div class="bb-sub">3 points available on every hole</div>
+
+<div class="bb-info">
+<strong>BINGO</strong> = first on the green &nbsp;|&nbsp;
+<strong>BANGO</strong> = closest once everyone is on &nbsp;|&nbsp;
+<strong>BONGO</strong> = first to hole out<br>
+<strong>Play order matters:</strong> farthest from the hole plays first.
 </div>
+
 <div class="bb-controls">
 <span class="bb-label">POINT VALUE:</span>
-<button class="bb-money-btn active" data-value="1">$1</button>
-<button class="bb-money-btn" data-value="5">$5</button>
-<button class="bb-money-btn" data-value="10">$10</button>
-<button class="bb-money-btn" data-value="25">$25</button>
-<button class="bb-money-btn" data-value="50">$50</button>
-<button class="bb-money-btn" data-value="100">$100</button>
-<button id="bbReset" class="bb-action">RESET ROUND</button>
+<button class="bb-money active" data-value="1">$1</button>
+<button class="bb-money" data-value="5">$5</button>
+<button class="bb-money" data-value="10">$10</button>
+<button class="bb-money" data-value="25">$25</button>
+<button class="bb-money" data-value="50">$50</button>
+<button class="bb-money" data-value="100">$100</button>
+<button id="bbReset" class="bb-reset">RESET</button>
 </div>
-<div id="bbPointDisplay" style="text-align:center;color:#ffdd44;font-weight:bold;font-size:18px;">Each point = $1</div>
-</section>
 
-<section class="bb-players" id="bbPlayers"></section>
+<div class="bb-names" id="bbNames"></div>
 
-<section id="bbHoles"></section>
+<div class="bb-ledger">
+<table>
+<thead>
+<tr><th>HOLE</th><th>BINGO</th><th>BANGO</th><th>BONGO</th></tr>
+</thead>
+<tbody id="bbRows"></tbody>
+</table>
+</div>
+
+<div class="bb-totals">
+<div style="text-align:center;color:#ffdd44;font-weight:bold;margin-bottom:8px;">POINT TOTALS / MONEY</div>
+<div class="bb-total-grid" id="bbTotals"></div>
+</div>
 </main>
 
 <script>
 const BB_KEY = "birdiebookieBingoBongoRound";
 let pointValue = 1;
-const players = [1,2,3,4].map(i => ({name:`Player ${i}`, points:0}));
-const round = Array.from({length:18}, () => ({ bingo:null, bango:null, bongo:null }));
+const players = [1,2,3,4].map(i=>({name:`Player ${i}`,points:0}));
+const round = Array.from({length:18},()=>({bingo:null,bango:null,bongo:null}));
 
 function loadMainNames(){
+  const keys=["name1","name2","name3","name4"];
+  keys.forEach((key,i)=>{
+    const direct=localStorage.getItem(key);
+    if(direct && direct.trim()) players[i].name=direct.trim();
+  });
   try{
-    const saved = JSON.parse(localStorage.getItem("birdiebookieScorecard") || "null");
-    if(saved){
-      const names = [saved.name1,saved.name2,saved.name3,saved.name4];
-      names.forEach((n,i)=>{ if(n && String(n).trim()) players[i].name = String(n).trim(); });
+    const scorecard=JSON.parse(localStorage.getItem("birdiebookieScorecard")||"null");
+    if(scorecard){
+      [scorecard.name1,scorecard.name2,scorecard.name3,scorecard.name4].forEach((n,i)=>{
+        if(n && String(n).trim()) players[i].name=String(n).trim();
+      });
     }
   }catch(e){}
 }
 
-function saveRound(){
-  localStorage.setItem(BB_KEY, JSON.stringify({pointValue, players:players.map(p=>p.name), round}));
-}
-
+function escapeHtml(s){return String(s).replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c]));}
+function saveRound(){localStorage.setItem(BB_KEY,JSON.stringify({pointValue,players:players.map(p=>p.name),round}));}
 function loadRound(){
   loadMainNames();
   try{
-    const saved = JSON.parse(localStorage.getItem(BB_KEY) || "null");
-    if(!saved) return;
-    if(saved.pointValue) pointValue = Number(saved.pointValue);
-    if(Array.isArray(saved.players)) saved.players.slice(0,4).forEach((n,i)=>{if(n) players[i].name=n;});
-    if(Array.isArray(saved.round) && saved.round.length===18) saved.round.forEach((h,i)=>{round[i]=h;});
+    const saved=JSON.parse(localStorage.getItem(BB_KEY)||"null");
+    if(!saved)return;
+    pointValue=Number(saved.pointValue)||1;
+    if(Array.isArray(saved.players))saved.players.slice(0,4).forEach((n,i)=>{if(n)players[i].name=n;});
+    if(Array.isArray(saved.round)&&saved.round.length===18)saved.round.forEach((h,i)=>{round[i]=h;});
   }catch(e){}
 }
 
-function renderPlayers(){
-  const el=document.getElementById('bbPlayers');
-  el.innerHTML=players.map((p,i)=>`<div class="bb-player"><input value="${escapeHtml(p.name)}" data-player-name="${i}"><small>Points: <span id="bbPoints${i}">0</span> &nbsp; Money: <span id="bbMoney${i}">$0</span></small></div>`).join('');
-  el.querySelectorAll('[data-player-name]').forEach(input=>input.addEventListener('input',e=>{players[Number(e.target.dataset.playerName)].name=e.target.value || `Player ${Number(e.target.dataset.playerName)+1}`; saveRound();}));
+function renderNames(){
+  document.getElementById("bbNames").innerHTML=players.map((p,i)=>`<div class="bb-name"><input id="bbName${i}" value="${escapeHtml(p.name)}" style="width:100%;box-sizing:border-box;background:#fff;color:#000;border:none;border-radius:7px;padding:7px;text-align:center;font-weight:bold;"></div>`).join("");
+  players.forEach((p,i)=>document.getElementById(`bbName${i}`).addEventListener("input",e=>{p.name=e.target.value||`Player ${i+1}`;renderRows();renderTotals();saveRound();}));
 }
 
-function escapeHtml(s){return String(s).replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c]));}
-
-function playerButtons(holeIndex, type){
-  return players.map((p,i)=>`<button class="bb-point-btn ${round[holeIndex][type]===i?'selected':''}" onclick="setWinner(${holeIndex},'${type}',${i})">${escapeHtml(p.name)}</button>`).join('');
+function options(selected){
+  return `<option value="">—</option>`+players.map((p,i)=>`<option value="${i}" ${selected===i?'selected':''}>${escapeHtml(p.name)}</option>`).join("");
 }
 
-function renderHoles(){
-  const el=document.getElementById('bbHoles');
-  el.innerHTML=round.map((h,i)=>`<div class="bb-hole"><h3>Hole ${i+1}<span class="bb-total" id="holeTotal${i}"></span></h3><div class="bb-point-row"><div class="bb-point-name">BINGO</div><div class="bb-buttons">${playerButtons(i,'bingo')}</div></div><div class="bb-point-row"><div class="bb-point-name">BANGO</div><div class="bb-buttons">${playerButtons(i,'bango')}</div></div><div class="bb-point-row"><div class="bb-point-name">BONGO</div><div class="bb-buttons">${playerButtons(i,'bongo')}</div></div></div>`).join('');
+function renderRows(){
+  document.getElementById("bbRows").innerHTML=round.map((h,i)=>`<tr><td>${i+1}</td><td><select data-hole="${i}" data-type="bingo">${options(h.bingo)}</select></td><td><select data-hole="${i}" data-type="bango">${options(h.bango)}</select></td><td><select data-hole="${i}" data-type="bongo">${options(h.bongo)}</select></td></tr>`).join("");
+  document.querySelectorAll("select[data-hole]").forEach(sel=>sel.addEventListener("change",()=>{round[Number(sel.dataset.hole)][sel.dataset.type]=sel.value===""?null:Number(sel.value);updateTotals();saveRound();}));
 }
 
-function setWinner(hole,type,player){
-  round[hole][type] = round[hole][type] === player ? null : player;
-  renderHoles();
-  updateTotals();
-  saveRound();
+function renderTotals(){
+  document.getElementById("bbTotals").innerHTML=players.map((p,i)=>`<div class="bb-total">${escapeHtml(p.name)}<span id="bbPts${i}">0 pts / $0</span></div>`).join("");
 }
 
 function updateTotals(){
   players.forEach(p=>p.points=0);
-  round.forEach(h=>['bingo','bango','bongo'].forEach(type=>{if(h[type]!==null && h[type]!==undefined) players[h[type]].points++;}));
-  players.forEach((p,i)=>{const pts=document.getElementById('bbPoints'+i), money=document.getElementById('bbMoney'+i); if(pts) pts.textContent=p.points; if(money) money.textContent='$'+(p.points*pointValue).toFixed(2);});
+  round.forEach(h=>[h.bingo,h.bango,h.bongo].forEach(w=>{if(w!==null&&w!==undefined)players[w].points++;}));
+  players.forEach((p,i)=>{const el=document.getElementById(`bbPts${i}`);if(el)el.textContent=`${p.points} pts / $${(p.points*pointValue).toFixed(2)}`;});
 }
 
-document.querySelectorAll('.bb-money-btn').forEach(btn=>btn.addEventListener('click',()=>{pointValue=Number(btn.dataset.value);document.querySelectorAll('.bb-money-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.getElementById('bbPointDisplay').textContent='Each point = $'+pointValue;updateTotals();saveRound();}));
+document.querySelectorAll(".bb-money").forEach(btn=>btn.addEventListener("click",()=>{pointValue=Number(btn.dataset.value);document.querySelectorAll(".bb-money").forEach(b=>b.classList.remove("active"));btn.classList.add("active");updateTotals();saveRound();}));
 
-document.getElementById('bbReset').addEventListener('click',()=>{if(!confirm('Reset the Bingo Bango Bongo round?')) return; round.forEach(h=>{h.bingo=null;h.bango=null;h.bongo=null;}); players.forEach((p,i)=>p.points=0); localStorage.removeItem(BB_KEY); renderHoles(); updateTotals();});
+document.getElementById("bbReset").addEventListener("click",()=>{if(!confirm("Reset the Bingo Bango Bongo round?"))return;round.forEach(h=>{h.bingo=h.bango=h.bongo=null;});players.forEach(p=>p.points=0);localStorage.removeItem(BB_KEY);renderRows();renderTotals();updateTotals();});
 
 loadRound();
-renderPlayers();
-renderHoles();
-document.querySelectorAll('.bb-money-btn').forEach(b=>{if(Number(b.dataset.value)===pointValue)b.classList.add('active');else b.classList.remove('active');});
-document.getElementById('bbPointDisplay').textContent='Each point = $'+pointValue;
+renderNames();
+renderRows();
+renderTotals();
+document.querySelectorAll(".bb-money").forEach(b=>{b.classList.toggle("active",Number(b.dataset.value)===pointValue);});
 updateTotals();
 </script>
 </body>
