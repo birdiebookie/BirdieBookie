@@ -1025,6 +1025,94 @@ input.player-name, #bankerName1, #bankerName2, #bankerName3, #bankerName4 {
     .then(r => r.json())
     .then(d => document.getElementById('bb-leftright-counter').textContent = d.value.toLocaleString());
 </script>
+<div id="vegasSection" style="display:none;">
+<h1 style="color:#00ff99;">VEGAS LEDGER</h1>
+
+<div class="scorecard" id="vegasLedger">
+
+<div class="row">
+<div class="player-name">PLAYER</div>
+
+<div class="header-box">1</div>
+<div class="header-box">2</div>
+<div class="header-box">3</div>
+<div class="header-box">4</div>
+<div class="header-box">5</div>
+<div class="header-box">6</div>
+<div class="header-box">7</div>
+<div class="header-box">8</div>
+<div class="header-box">9</div>
+
+<div class="header-box total-box">OUT</div>
+
+<div class="header-box">10</div>
+<div class="header-box">11</div>
+<div class="header-box">12</div>
+<div class="header-box">13</div>
+<div class="header-box">14</div>
+<div class="header-box">15</div>
+<div class="header-box">16</div>
+<div class="header-box">17</div>
+<div class="header-box">18</div>
+
+<div class="header-box total-box">IN</div>
+<div class="header-box total-box">TOT</div>
+</div>
+
+<div class="row" id="vg1">
+<input class="player-name" id="vgName1">
+<input class="hole-box vgbox"><input class="hole-box vgbox"><input class="hole-box vgbox">
+<input class="hole-box vgbox"><input class="hole-box vgbox"><input class="hole-box vgbox">
+<input class="hole-box vgbox"><input class="hole-box vgbox"><input class="hole-box vgbox">
+<input class="hole-box total-box" readonly>
+<input class="hole-box vgbox"><input class="hole-box vgbox"><input class="hole-box vgbox">
+<input class="hole-box vgbox"><input class="hole-box vgbox"><input class="hole-box vgbox">
+<input class="hole-box vgbox"><input class="hole-box vgbox"><input class="hole-box vgbox">
+<input class="hole-box total-box" readonly>
+<input class="hole-box total-box" readonly>
+</div>
+
+<div class="row" id="vg2">
+<input class="player-name" id="vgName2">
+<input class="hole-box vgbox"><input class="hole-box vgbox"><input class="hole-box vgbox">
+<input class="hole-box vgbox"><input class="hole-box vgbox"><input class="hole-box vgbox">
+<input class="hole-box vgbox"><input class="hole-box vgbox"><input class="hole-box vgbox">
+<input class="hole-box total-box" readonly>
+<input class="hole-box vgbox"><input class="hole-box vgbox"><input class="hole-box vgbox">
+<input class="hole-box vgbox"><input class="hole-box vgbox"><input class="hole-box vgbox">
+<input class="hole-box vgbox"><input class="hole-box vgbox"><input class="hole-box vgbox">
+<input class="hole-box total-box" readonly>
+<input class="hole-box total-box" readonly>
+</div>
+
+<div class="row" id="vg3">
+<input class="player-name" id="vgName3">
+<input class="hole-box vgbox"><input class="hole-box vgbox"><input class="hole-box vgbox">
+<input class="hole-box vgbox"><input class="hole-box vgbox"><input class="hole-box vgbox">
+<input class="hole-box vgbox"><input class="hole-box vgbox"><input class="hole-box vgbox">
+<input class="hole-box total-box" readonly>
+<input class="hole-box vgbox"><input class="hole-box vgbox"><input class="hole-box vgbox">
+<input class="hole-box vgbox"><input class="hole-box vgbox"><input class="hole-box vgbox">
+<input class="hole-box vgbox"><input class="hole-box vgbox"><input class="hole-box vgbox">
+<input class="hole-box total-box" readonly>
+<input class="hole-box total-box" readonly>
+</div>
+
+<div class="row" id="vg4">
+<input class="player-name" id="vgName4">
+<input class="hole-box vgbox"><input class="hole-box vgbox"><input class="hole-box vgbox">
+<input class="hole-box vgbox"><input class="hole-box vgbox"><input class="hole-box vgbox">
+<input class="hole-box vgbox"><input class="hole-box vgbox"><input class="hole-box vgbox">
+<input class="hole-box total-box" readonly>
+<input class="hole-box vgbox"><input class="hole-box vgbox"><input class="hole-box vgbox">
+<input class="hole-box vgbox"><input class="hole-box vgbox"><input class="hole-box vgbox">
+<input class="hole-box vgbox"><input class="hole-box vgbox"><input class="hole-box vgbox">
+<input class="hole-box total-box" readonly>
+<input class="hole-box total-box" readonly>
+</div>
+
+</div>
+</div>
     <div style="padding:30px;">
 
 <!-- CHIP AMOUNT SELECTOR -->
@@ -1291,6 +1379,37 @@ function validateStrokeAssignments() {
 }
 
 let lrValidateTimer = null;
+    let vgValidateTimer = null;
+
+function validateVegasZeroSum() {
+    const rows = ["vg1", "vg2", "vg3", "vg4"].map(function(id) {
+        return document.querySelectorAll("#" + id + " .vgbox");
+    });
+
+    if (rows.some(function(r) { return r.length === 0; })) return;
+
+    for (let i = 0; i < 18; i++) {
+        const boxes = rows.map(function(r) { return r[i]; });
+        const values = boxes.map(function(b) { return b.value.trim(); });
+        const allFilled = values.every(function(v) { return v !== ""; });
+
+        if (!allFilled) continue;
+
+        let sum = 0;
+        let valid = true;
+
+        values.forEach(function(v) {
+            const n = parseFloat(v);
+            if (isNaN(n)) valid = false;
+            else sum += n;
+        });
+
+        if (valid && sum !== 0) {
+            alert("Vegas hole " + (i + 1) + " doesn't add up to zero. Please check the scores.");
+            return;
+        }
+    }
+}
 
 function validateLeftRightZeroSum() {
     const rows = ["lr1", "lr2", "lr3", "lr4"].map(function(id) {
@@ -1472,7 +1591,20 @@ function updateLeftRightTotals() {
         boxes[20].value = (out + inn) || "";
     });
 }
+function updateVegasTotals() {
+    ["vg1","vg2","vg3","vg4"].forEach(function(id) {
+        const boxes = document.querySelectorAll("#" + id + " .hole-box");
+        let out = 0, inn = 0;
 
+        for (let i = 0; i <= 8; i++) out += parseInt(boxes[i].value) || 0;
+        for (let i = 10; i <= 18; i++) inn += parseInt(boxes[i].value) || 0;
+
+        boxes[9].value = out || "";
+        boxes[19].value = inn || "";
+        boxes[20].value = (out + inn) || "";
+    });
+}
+    
 function computeNassauDiffs() {
     const team12 = document.querySelectorAll("#total12 .hole-box");
     const team34 = document.querySelectorAll("#total34 .hole-box");
@@ -1984,6 +2116,10 @@ function updateNames() {
     document.getElementById("lrName2").value = names[1];
     document.getElementById("lrName3").value = names[2];
     document.getElementById("lrName4").value = names[3];
+    document.getElementById("vgName1").value = names[0];
+document.getElementById("vgName2").value = names[1];
+document.getElementById("vgName3").value = names[2];
+document.getElementById("vgName4").value = names[3];
     document.getElementById("chipName1").value = names[0];
     document.getElementById("chipName2").value = names[1];
     document.getElementById("chipName3").value = names[2];
@@ -2009,6 +2145,9 @@ document.querySelectorAll(".hole-box").forEach(function(box) {
         checkSkins();
         colorLeftRight();
         updateLeftRightTotals();
+        updateVegasTotals();
+        clearTimeout(vgValidateTimer);
+vgValidateTimer = setTimeout(validateVegasZeroSum, 800);
         updateNassauTracker();
         updateLeaderboard();
        clearTimeout(lrValidateTimer);
@@ -2421,7 +2560,10 @@ function newRound() {
       if (savedGames.some(g => g.includes('Left Right'))) {
     document.getElementById('leftRightSection').style.display = 'block';
 }
-if (savedGames.some(g => g.includes('Nassau'))) {
+if (savedGames.some(g => g.includes('Vegas'))) {
+    document.getElementById('vegasSection').style.display = 'block';
+}
+      if (savedGames.some(g => g.includes('Nassau'))) {
     document.getElementById('nassauSection').style.display = 'block';
 }
 if (savedGames.some(g => g.includes('Skins'))) {
