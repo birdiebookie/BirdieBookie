@@ -1,0 +1,193 @@
+name: Patch Bingo Bango Bongo scorecard
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  patch-bbb:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Patch scorecards.html
+        shell: python
+        run: |
+          from pathlib import Path
+
+          path = Path('scorecards.html')
+          text = path.read_text(encoding='utf-8')
+
+          if '<!-- BBB_LEDGER_V2 -->' in text:
+              print('BBB patch already present; nothing to do.')
+              raise SystemExit(0)
+
+          html = r'''<!-- BBB_LEDGER_V2 -->
+          <style>
+          .bbbbox{
+              width:55px;
+              height:55px;
+              margin-right:5px;
+              border-radius:10px;
+              border:2px solid #00ff99;
+              background:#111;
+              color:white;
+              text-align:center;
+              font-size:22px;
+          }
+          .bbbbox.bbb-valid{background:#00ff99;color:black;}
+          .bbbbox.bbb-invalid{background:#7a263a;color:white;border-color:#b84d68;}
+          .bbbbox.bbb-blank{background:#111;color:white;}
+          </style>
+          <div id="bingoBangoBongoSection" style="display:none; margin-top:20px;">
+          <h1 style="color:#00ff99; text-align:center;">🎯 BINGO BANGO BONGO</h1>
+          <div style="text-align:center; color:#fff; margin-bottom:12px;">
+            <strong style="color:#ffdd44;">3 points every hole</strong> — enter the points each player won.
+          </div>
+          <div style="text-align:center; margin-bottom:16px;">
+            <span style="color:#ffdd44; font-weight:bold; margin-right:8px;">POINT VALUE:</span>
+            <button type="button" class="bbb-value" data-value="1">$1</button>
+            <button type="button" class="bbb-value" data-value="5">$5</button>
+            <button type="button" class="bbb-value" data-value="10">$10</button>
+            <button type="button" class="bbb-value" data-value="25">$25</button>
+            <button type="button" class="bbb-value" data-value="50">$50</button>
+            <button type="button" class="bbb-value" data-value="100">$100</button>
+          </div>
+          <div style="text-align:center; color:#ffdd44; font-size:14px; margin-bottom:12px;">
+            A completed hole must total 3 points. Example: Player 1 = 2, Player 3 = 1.
+          </div>
+          <div class="scorecard" id="bingoBangoBongoLedger">
+          <div class="row">
+          <div class="player-name">PLAYER</div>
+          <div class="header-box">1</div><div class="header-box">2</div><div class="header-box">3</div><div class="header-box">4</div><div class="header-box">5</div><div class="header-box">6</div><div class="header-box">7</div><div class="header-box">8</div><div class="header-box">9</div>
+          <div class="header-box total-box">OUT</div>
+          <div class="header-box">10</div><div class="header-box">11</div><div class="header-box">12</div><div class="header-box">13</div><div class="header-box">14</div><div class="header-box">15</div><div class="header-box">16</div><div class="header-box">17</div><div class="header-box">18</div>
+          <div class="header-box total-box">IN</div><div class="header-box total-box">TOT</div>
+          </div>
+          <div class="row" id="bbb1"><input class="player-name" id="bbbName1" readonly>
+          <input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox total-box" readonly><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox total-box" readonly><input class="bbbbox total-box" readonly></div>
+          <div class="row" id="bbb2"><input class="player-name" id="bbbName2" readonly>
+          <input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox total-box" readonly><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox total-box" readonly><input class="bbbbox total-box" readonly></div>
+          <div class="row" id="bbb3"><input class="player-name" id="bbbName3" readonly>
+          <input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox total-box" readonly><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox total-box" readonly><input class="bbbbox total-box" readonly></div>
+          <div class="row" id="bbb4"><input class="player-name" id="bbbName4" readonly>
+          <input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox total-box" readonly><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox" type="number" min="0" max="3" step="1"><input class="bbbbox total-box" readonly><input class="bbbbox total-box" readonly></div>
+          </div>
+          <div id="bbbRoundStatus" style="text-align:center; margin:14px 0 30px; color:#ffdd44; font-weight:bold;">Enter points as they are won. Every completed hole must total 3.</div>
+          </div>'''
+
+          anchor = '    <div style="padding:30px;">\n\n<!-- CHIP AMOUNT SELECTOR -->'
+          if anchor not in text:
+              raise SystemExit('BBB HTML anchor not found')
+          text = text.replace(anchor, html + '\n' + anchor, 1)
+
+          js = r'''let bbbPointValue = Number(localStorage.getItem("bbbPointValue") || "1");
+function bbbIsSelected() {
+    return JSON.parse(localStorage.getItem("selectedGames") || "[]").some(function(g) {
+        const s = String(g).toLowerCase();
+        return s.includes("bingo") && s.includes("bango");
+    });
+}
+function updateBingoBangoBongo() {
+    const rows = ["bbb1","bbb2","bbb3","bbb4"].map(function(id){ return document.querySelectorAll("#" + id + " .bbbbox"); });
+    if (rows.some(function(r){ return r.length !== 21; })) return;
+    let completed = 0, bad = 0;
+    for (let hole = 0; hole < 18; hole++) {
+        const boxes = rows.map(function(r){ return r[hole]; });
+        let total = 0, entered = false;
+        boxes.forEach(function(b){ const v = b.value.trim(); if (v !== "") { entered = true; total += parseInt(v,10) || 0; } });
+        boxes.forEach(function(b){ b.classList.remove("bbb-valid","bbb-invalid","bbb-blank"); b.classList.add(!entered ? "bbb-blank" : (total === 3 ? "bbb-valid" : "bbb-invalid")); });
+        if (!entered) continue;
+        if (total === 3) completed++; else bad++;
+    }
+    ["bbb1","bbb2","bbb3","bbb4"].forEach(function(id){
+        const boxes = document.querySelectorAll("#" + id + " .bbbbox");
+        let out=0, inn=0;
+        for(let i=0;i<=8;i++) out += parseInt(boxes[i].value,10) || 0;
+        for(let i=10;i<=18;i++) inn += parseInt(boxes[i].value,10) || 0;
+        boxes[9].value = out || "";
+        boxes[19].value = inn || "";
+        boxes[20].value = (out + inn) || "";
+    });
+    const status = document.getElementById("bbbRoundStatus");
+    if (status) status.textContent = bad ? ("⚠ " + bad + " hole" + (bad === 1 ? " is" : "s are") + " not at 3 points yet.") : (completed ? (completed + " hole" + (completed === 1 ? "" : "s") + " completed at 3 points.") : "Enter points as they are won. Every completed hole must total 3.");
+    localStorage.setItem("bbbPointValue", String(bbbPointValue));
+    localStorage.setItem("bbbScores", JSON.stringify([1,2,3,4].map(function(n){ return Array.from(document.querySelectorAll("#bbb" + n + " .bbbbox")).slice(0,18).map(function(b){ return b.value; }); })));
+    if (typeof updateLeaderboard === "function") updateLeaderboard();
+}
+function updateBingoBangoBongoMoney(money) {
+    if (!bbbIsSelected()) return;
+    const value = Number(bbbPointValue) || 1;
+    const rows = ["bbb1","bbb2","bbb3","bbb4"].map(function(id){ return document.querySelectorAll("#" + id + " .bbbbox"); });
+    if (rows.some(function(r){ return r.length !== 21; })) return;
+    for (let hole=0; hole<18; hole++) {
+        const points = rows.map(function(r){ return parseInt(r[hole].value,10) || 0; });
+        if (points.some(function(p){ return p<0 || p>3; })) continue;
+        const total = points.reduce(function(a,b){ return a+b; },0);
+        const any = points.some(function(p){ return p!==0; });
+        if (!any || total !== 3) continue;
+        points.forEach(function(p,i){ money[i] += (4*p - 3) * value; });
+    }
+}
+function loadBingoBangoBongo() {
+    try {
+        const data = JSON.parse(localStorage.getItem("bbbScores") || "null");
+        if (Array.isArray(data) && data.length === 4) data.forEach(function(row,i){
+            const boxes = document.querySelectorAll("#bbb" + (i+1) + " .bbbbox");
+            (row || []).forEach(function(v,j){ if (boxes[j]) boxes[j].value = v; });
+        });
+        document.querySelectorAll(".bbb-value").forEach(function(btn){ btn.classList.toggle("bbb-active", Number(btn.dataset.value) === bbbPointValue); });
+        updateBingoBangoBongo();
+    } catch(e) {}
+}
+document.querySelectorAll(".bbb-value").forEach(function(btn){
+    btn.addEventListener("click", function(){
+        bbbPointValue = Number(btn.dataset.value) || 1;
+        document.querySelectorAll(".bbb-value").forEach(function(b){ b.classList.remove("bbb-active"); });
+        btn.classList.add("bbb-active");
+        updateBingoBangoBongo();
+    });
+});
+document.querySelectorAll(".bbbbox").forEach(function(box){ box.addEventListener("input", updateBingoBangoBongo); });
+loadBingoBangoBongo();'''
+          text = text.replace('</style>\n</head>', '<style>\n.bbb-value{background:#111;color:#00ff99;border:2px solid #00ff99;border-radius:20px;padding:7px 14px;font-weight:bold;cursor:pointer;margin:2px;}\n.bbb-active{background:#00ff99;color:#000;}\n</style>\n</head>', 1)
+          text = text.replace('function computeNassauDiffs() {', js + '\n\nfunction computeNassauDiffs() {', 1)
+
+          update_names_anchor = 'document.getElementById("vgName4").value = names[3];'
+          if update_names_anchor not in text: raise SystemExit('bbb name anchor not found')
+          text = text.replace(update_names_anchor, update_names_anchor + '\ndocument.getElementById("bbbName1").value = names[0];\ndocument.getElementById("bbbName2").value = names[1];\ndocument.getElementById("bbbName3").value = names[2];\ndocument.getElementById("bbbName4").value = names[3];', 1)
+
+          listener_anchor = 'document.querySelectorAll(".chipbox").forEach(function(box) {'
+          if listener_anchor not in text: raise SystemExit('bbb listener anchor not found')
+          bbb_listener = 'document.querySelectorAll(".bbbbox").forEach(function(box) { box.addEventListener("input", updateBingoBangoBongo); });\n\n'
+          # Avoid adding a second listener block if the function block above already created it.
+          text = text.replace(listener_anchor, bbb_listener + listener_anchor, 1)
+
+          leaderboard_anchor = '    if (JSON.parse(localStorage.getItem("selectedGames") || "[]").some(g => g.includes("Rabbit"))) updateRabbitMoney(money);'
+          if leaderboard_anchor not in text: raise SystemExit('bbb leaderboard anchor not found')
+          text = text.replace(leaderboard_anchor, leaderboard_anchor + '\n    updateBingoBangoBongoMoney(money);', 1)
+
+          vegas_anchor = "if (savedGames.some(g => g.includes('Vegas'))) {\n    document.getElementById('vegasSection').style.display = 'block';\n}"
+          if vegas_anchor not in text: raise SystemExit('bbb visibility anchor not found')
+          text = text.replace(vegas_anchor, vegas_anchor + "\nif (savedGames.some(g => String(g).toLowerCase().includes('bingo') && String(g).toLowerCase().includes('bango'))) {\n    document.getElementById('bingoBangoBongoSection').style.display = 'block';\n}", 1)
+
+          path.write_text(text, encoding='utf-8')
+          print('Patched scorecards.html successfully.')
+      
+      - name: Commit patched scorecard
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git add scorecards.html
+          git commit -m "Add compact Bingo Bango Bongo ledger to scorecard"
+          git push
