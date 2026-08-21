@@ -334,4 +334,292 @@
     updateToggleButton();
   };
 
+  // ---------------- BINGO BANGO BONGO INTEGRATION ----------------
+  const BBB_KEY = 'birdiebookieBingoBongoRound';
+  let bbbState = {
+    pointValue: 1,
+    round: Array.from({length:18}, () => ({ bingo:null, bango:null, bongo:null }))
+  };
+
+  function bbbIsSelected() {
+    try {
+      const games = JSON.parse(localStorage.getItem('selectedGames') || '[]');
+      return games.some(g => String(g).includes('Bingo Bango Bongo'));
+    } catch(e) {
+      return false;
+    }
+  }
+
+  function loadBBBState() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(BBB_KEY) || 'null');
+      if (!saved) return;
+      if (saved.pointValue) bbbState.pointValue = Number(saved.pointValue) || 1;
+      if (Array.isArray(saved.round) && saved.round.length === 18) {
+        bbbState.round = saved.round.map(h => ({
+          bingo: h && h.bingo !== undefined ? h.bingo : null,
+          bango: h && h.bango !== undefined ? h.bango : null,
+          bongo: h && h.bongo !== undefined ? h.bongo : null
+        }));
+      }
+    } catch(e) {}
+  }
+
+  function saveBBBState() {
+    localStorage.setItem(BBB_KEY, JSON.stringify({
+      pointValue: bbbState.pointValue,
+      players: getPlayerNames(),
+      round: bbbState.round
+    }));
+  }
+
+  function getBBBPoints() {
+    const points = [0,0,0,0];
+    bbbState.round.forEach(hole => {
+      ['bingo','bango','bongo'].forEach(type => {
+        const winner = hole[type];
+        if (winner !== null && winner !== undefined && winner >= 0 && winner < 4) points[winner] += 1;
+      });
+    });
+    return points;
+  }
+
+  function getBBBMoney() {
+    const points = getBBBPoints();
+    const totalPoints = points.reduce((a,b) => a+b, 0);
+    if (!totalPoints) return [0,0,0,0];
+    const avg = totalPoints / 4;
+    return points.map(p => (p - avg) * bbbState.pointValue);
+  }
+
+  function escapeBBB(text) {
+    return String(text).replace(/[&<>\"]/g, function(c) {
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];
+    });
+  }
+
+  function createBBBSection() {
+    if (document.getElementById('bbBingoBangoBongoSection')) return document.getElementById('bbBingoBangoBongoSection');
+
+    const section = document.createElement('section');
+    section.id = 'bbBingoBangoBongoSection';
+    section.style.cssText = 'margin:30px 0; padding:20px; background:#050505; border:3px solid #00ff99; border-radius:16px; overflow-x:auto;';
+    section.innerHTML = `
+      <h1 style="color:#00ff99; text-align:center; margin:0 0 8px 0;">🎯 BINGO BANGO BONGO</h1>
+      <div style="text-align:center; color:#ccc; margin-bottom:14px;">Three points are available on every hole. <b style="color:#ffdd44;">The player farthest from the hole plays first.</b></div>
+      <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:8px; align-items:center; margin-bottom:12px;">
+        <span style="color:#ffdd44; font-weight:bold;">POINT VALUE:</span>
+        <button type="button" class="bbb-value-btn" data-bbb-value="1">$1</button>
+        <button type="button" class="bbb-value-btn" data-bbb-value="5">$5</button>
+        <button type="button" class="bbb-value-btn" data-bbb-value="10">$10</button>
+        <button type="button" class="bbb-value-btn" data-bbb-value="25">$25</button>
+        <button type="button" class="bbb-value-btn" data-bbb-value="50">$50</button>
+        <button type="button" class="bbb-value-btn" data-bbb-value="100">$100</button>
+      </div>
+      <div style="text-align:center; color:#ffdd44; font-size:14px; margin-bottom:16px;">Money is settled by point differential at the end of the round.</div>
+      <div id="bbbSummary" style="display:grid; grid-template-columns:repeat(4,minmax(150px,1fr)); gap:8px; margin-bottom:16px;"></div>
+      <div id="bbbHoles"></div>
+    `;
+
+    const mainCore = document.getElementById('mainScorecardCore');
+    if (mainCore && mainCore.parentNode) mainCore.parentNode.insertBefore(section, mainCore.nextSibling);
+    else document.body.appendChild(section);
+
+    section.querySelectorAll('.bbb-value-btn').forEach(btn => {
+      btn.style.cssText = 'background:#111;color:#00ff99;border:2px solid #00ff99;border-radius:20px;padding:7px 14px;font-weight:bold;cursor:pointer;';
+      btn.addEventListener('click', function() {
+        bbbState.pointValue = Number(this.dataset.bbbValue) || 1;
+        saveBBBState();
+        updateBBBSection();
+        if (typeof window.updateLeaderboard === 'function') window.updateLeaderboard();
+      });
+    });
+
+    return section;
+  }
+
+  function renderBBBHoles() {
+    const holesEl = document.getElementById('bbbHoles');
+    if (!holesEl) return;
+    const names = getPlayerNames();
+    let html = '';
+    for (let h = 0; h < 18; h++) {
+      html += `<div style="background:#111;border:1px solid #333;border-radius:12px;padding:10px;margin-bottom:10px;">
+        <div style="color:#00ff99;font-weight:bold;font-size:18px;margin-bottom:8px;">HOLE ${h+1}</div>`;
+      ['bingo','bango','bongo'].forEach(type => {
+        const label = type.toUpperCase();
+        html += `<div style="display:grid;grid-template-columns:80px 1fr;gap:8px;align-items:center;margin:6px 0;">
+          <div style="color:#ffdd44;font-weight:bold;">${label}</div>
+          <div style="display:grid;grid-template-columns:repeat(4,minmax(100px,1fr));gap:6px;">`;
+        for (let p = 0; p < 4; p++) {
+          html += `<button type="button" class="bbb-player-btn" data-bbb-hole="${h}" data-bbb-type="${type}" data-bbb-player="${p}" style="background:#000;color:#fff;border:1px solid #555;border-radius:8px;padding:8px;cursor:pointer;font-weight:bold;">${escapeBBB(names[p])}</button>`;
+        }
+        html += `</div></div>`;
+      });
+      html += `</div>`;
+    }
+    holesEl.innerHTML = html;
+    holesEl.querySelectorAll('.bbb-player-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const h = Number(this.dataset.bbbHole);
+        const type = this.dataset.bbbType;
+        const p = Number(this.dataset.bbbPlayer);
+        bbbState.round[h][type] = bbbState.round[h][type] === p ? null : p;
+        saveBBBState();
+        updateBBBSection();
+        if (typeof window.updateLeaderboard === 'function') window.updateLeaderboard();
+      });
+    });
+  }
+
+  function updateBBBNames() {
+    const names = getPlayerNames();
+    document.querySelectorAll('.bbb-player-btn').forEach(btn => {
+      const p = Number(btn.dataset.bbbPlayer);
+      if (!isNaN(p) && names[p]) btn.textContent = names[p];
+    });
+  }
+
+  function updateBBBSection() {
+    const section = document.getElementById('bbBingoBangoBongoSection');
+    if (!section) return;
+    const active = bbbIsSelected();
+    section.style.display = active ? 'block' : 'none';
+    if (!active) return;
+
+    section.querySelectorAll('.bbb-value-btn').forEach(btn => {
+      const activeValue = Number(btn.dataset.bbbValue) === bbbState.pointValue;
+      btn.style.background = activeValue ? '#00ff99' : '#111';
+      btn.style.color = activeValue ? '#000' : '#00ff99';
+    });
+
+    updateBBBNames();
+
+    const points = getBBBPoints();
+    const money = getBBBMoney();
+    const names = getPlayerNames();
+    const summary = document.getElementById('bbbSummary');
+    if (summary) {
+      summary.innerHTML = names.map((name, i) => {
+        const net = money[i];
+        const color = net > 0.004 ? '#00ff66' : (net < -0.004 ? '#ff4444' : '#fff');
+        const sign = net > 0 ? '+' : '';
+        return `<div style="background:#000;border:2px solid ${color};border-radius:10px;padding:8px;text-align:center;font-weight:bold;">
+          <div style="color:#fff;">${escapeBBB(name)}</div>
+          <div style="color:#ffdd44;">${points[i]} pts</div>
+          <div style="color:${color};">${sign}$${net.toFixed(2)}</div>
+        </div>`;
+      }).join('');
+    }
+
+    document.querySelectorAll('.bbb-player-btn').forEach(btn => {
+      const h = Number(btn.dataset.bbbHole);
+      const type = btn.dataset.bbbType;
+      const p = Number(btn.dataset.bbbPlayer);
+      const selected = bbbState.round[h][type] === p;
+      btn.style.background = selected ? '#00ff99' : '#000';
+      btn.style.color = selected ? '#000' : '#fff';
+      btn.style.borderColor = selected ? '#00ff99' : '#555';
+    });
+  }
+
+  function applyBBBToLeaderboard() {
+    if (!bbbIsSelected()) return;
+    const list = document.getElementById('leaderboardList');
+    if (!list) return;
+
+    const names = getPlayerNames();
+    const bbbMoney = getBBBMoney();
+    const base = [0,0,0,0];
+    const spans = Array.from(list.querySelectorAll('.leaderboard-item'));
+
+    spans.forEach((span, index) => {
+      const text = span.textContent.trim();
+      const match = text.match(/(-?)\$(\d+(?:\.\d+)?)\s*$/);
+      if (!match) return;
+      const amount = parseFloat(match[2]) * (match[1] === '-' ? -1 : 1);
+      const name = text.replace(/\s*(-?)\$(\d+(?:\.\d+)?)\s*$/, '').trim();
+      const idx = names.indexOf(name);
+      if (idx >= 0) base[idx] = amount;
+      else if (index < 4) base[index] = amount;
+    });
+
+    const combined = names.map((name, i) => ({ name, total: base[i] + bbbMoney[i] }));
+    combined.sort((a,b) => b.total - a.total);
+
+    function fmt(n) {
+      const sign = n < -0.004 ? '-' : '';
+      const abs = Math.abs(n);
+      const shown = abs % 1 === 0 ? abs.toFixed(0) : abs.toFixed(2);
+      return sign + '$' + shown;
+    }
+
+    list.innerHTML = combined.map(p => {
+      const cls = p.total > 0.004 ? 'leaderboard-win' : (p.total < -0.004 ? 'leaderboard-lose' : 'leaderboard-even');
+      return `<span class="leaderboard-item ${cls}">${escapeBBB(p.name)} ${fmt(p.total)}</span>`;
+    }).join('');
+  }
+
+  function installBBBLeaderboardHook() {
+    if (typeof window.updateLeaderboard === 'function' && !window.updateLeaderboard.__bbbHooked) {
+      const original = window.updateLeaderboard;
+      const wrapped = function() {
+        original.apply(this, arguments);
+        try { applyBBBToLeaderboard(); } catch(e) { console.error(e); }
+      };
+      wrapped.__bbbHooked = true;
+      window.updateLeaderboard = wrapped;
+    }
+  }
+
+  function installBBBCloudHooks() {
+    if (typeof window.collectRoundDataForCloud === 'function' && !window.collectRoundDataForCloud.__bbbHooked) {
+      const originalCollect = window.collectRoundDataForCloud;
+      const wrappedCollect = function() {
+        const data = originalCollect.apply(this, arguments);
+        data.bingoBangoBongo = JSON.parse(JSON.stringify(bbbState));
+        return data;
+      };
+      wrappedCollect.__bbbHooked = true;
+      window.collectRoundDataForCloud = wrappedCollect;
+    }
+
+    if (typeof window.applyCloudRoundData === 'function' && !window.applyCloudRoundData.__bbbHooked) {
+      const originalApply = window.applyCloudRoundData;
+      const wrappedApply = function(data) {
+        originalApply.apply(this, arguments);
+        if (data && data.bingoBangoBongo) {
+          bbbState = JSON.parse(JSON.stringify(data.bingoBangoBongo));
+          saveBBBState();
+          updateBBBSection();
+          applyBBBToLeaderboard();
+        }
+      };
+      wrappedApply.__bbbHooked = true;
+      window.applyCloudRoundData = wrappedApply;
+    }
+  }
+
+  function initBBBIntegration() {
+    loadBBBState();
+    createBBBSection();
+    renderBBBHoles();
+    updateBBBSection();
+
+    document.querySelectorAll('.player-input').forEach(input => {
+      input.addEventListener('input', function() {
+        updateBBBNames();
+        saveBBBState();
+        updateBBBSection();
+        if (typeof window.updateLeaderboard === 'function') window.updateLeaderboard();
+      });
+    });
+
+    installBBBLeaderboardHook();
+    installBBBCloudHooks();
+    if (typeof window.updateLeaderboard === 'function') window.updateLeaderboard();
+  }
+
+  setTimeout(initBBBIntegration, 0);
+
 })();
