@@ -1581,7 +1581,7 @@ function updatePlayerTotals() {
 }
 
 function updateLeftRightTotals() {
-    ["lr1","lr2","lr3","lr4"].forEach(function(id) {
+    ["lr1","lr2","lr3","lr4"].forEach(function(id) 
         const boxes = document.querySelectorAll("#" + id + " .hole-box");
         let out = 0, inn = 0;
         for (let i = 0; i <= 8; i++) out += parseInt(boxes[i].value) || 0;
@@ -1944,7 +1944,7 @@ function updateChipsTotals() {
 }
 
 function colorLeftRight() {
-    ["lr1","lr2","lr3","lr4"].forEach(function(id) {
+    ["lr1","lr2","lr3","lr4","vg1","vg2","vg3","vg4"].forEach(function(id) {
         const boxes = document.querySelectorAll("#" + id + " .hole-box");
         boxes.forEach(function(box) {
             const value = parseInt(box.value);
