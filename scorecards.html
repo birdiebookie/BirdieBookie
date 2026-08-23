@@ -1238,7 +1238,7 @@ input.player-name, #bankerName1, #bankerName2, #bankerName3, #bankerName4 {
 document.addEventListener("DOMContentLoaded", function () {
 
 function sanitizeScoreInput(box) {
-    const allowNegative = box.classList.contains("lrbox");
+    const allowNegative = box.classList.contains("lrbox") || box.classList.contains("vgbox");
     let val = box.value;
     if (allowNegative) {
         val = val.replace(/[^0-9-]/g, "");
