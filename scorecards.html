@@ -1940,7 +1940,7 @@ function updateRabbitMoney(money) {
     if (listEl) {
         listEl.innerHTML = players.map(function(p) {
             const cls = p.total > 0.004 ? "leaderboard-win" : (p.total < -0.004 ? "leaderboard-lose" : "leaderboard-even");
-            
+ return '<span class="leaderboard-item ' + cls + '">' + p.name + ' ' + fmtMoney(p.total) + '</span>';           
         }).join("");
     }
 }
