@@ -1393,7 +1393,8 @@ function validateStrokeAssignments() {
     return valid;
 }
 
-let lrValidateTimer = null;
+    let lrValidateTimer = null;
+const lrAlertedHoles = new Set();
     let vgValidateTimer = null;
 
 function validateVegasZeroSum() {
