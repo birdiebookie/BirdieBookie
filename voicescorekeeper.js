@@ -4,23 +4,10 @@
     'zero':0,'one':1,'two':2,'three':3,'four':4,'five':5,
     'six':6,'seven':7,'eight':8,'nine':9,'ten':10,
     'eleven':11,'twelve':12,
-    'for':4,'fore':4,'ford':4,'too':2,
+    'for':4,'fore':4,'ford':4,'too':2,'to':2,
     '0':0,'1':1,'2':2,'3':3,'4':4,
     '5':5,'6':6,'7':7,'8':8,'9':9,'10':10,'11':11,'12':12
   };
-
-  function parseSpokenNumber(text) {
-    if (!text) return NaN;
-    const t = text.toLowerCase();
-    const tokens = t.split(/\s+/);
-    for (const tok of tokens) {
-      const cleaned = tok.replace(/[^a-z0-9]/g, '');
-      if (wordToNum[cleaned] !== undefined) return wordToNum[cleaned];
-    }
-    const digitMatch = t.match(/\d+/);
-    if (digitMatch) return parseInt(digitMatch[0]);
-    return NaN;
-  }
 
   function speak(text) {
     return new Promise(resolve => {
@@ -116,6 +103,52 @@
     return null;
   }
 
+  // ---------------- NEW: single-utterance parsing ----------------
+
+  function extractHoleNumber(text) {
+    const m = text.match(/\bhole\s+(\w+)/);
+    if (!m) return null;
+    const cleaned = m[1].replace(/[^a-z0-9]/g, '');
+    const val = wordToNum[cleaned];
+    if (val !== undefined) return val;
+    const asInt = parseInt(cleaned);
+    return isNaN(asInt) ? null : asInt;
+  }
+
+  function stripWakeAndHole(text) {
+    let t = text;
+    t = t.replace(/\bhey\b/g, '');
+    t = t.replace(/\bbirdie\s?bookie\b/g, '');
+    t = t.replace(/\bbirdie\s?rookie\b/g, '');
+    t = t.replace(/\bbirdie\s?cookie\b/g, '');
+    t = t.replace(/\bbirdie\s?boogie\b/g, '');
+    t = t.replace(/\bhole\s+\w+\b/g, '');
+    return t.trim();
+  }
+
+  function parseHoleSentence(text, names) {
+    const tokens = text.toLowerCase().split(/\s+/)
+      .map(t => t.replace(/[^a-z0-9]/g, ''))
+      .filter(Boolean);
+    const lowerNames = names.map(n => (n || '').toLowerCase().split(/\s+/)[0]);
+    const scores = {};
+
+    for (let i = 0; i < tokens.length; i++) {
+      const tok = tokens[i];
+      const playerIdx = lowerNames.findIndex(n => n && n === tok);
+      if (playerIdx === -1) continue;
+      for (let j = i + 1; j < Math.min(i + 4, tokens.length); j++) {
+        const val = wordToNum[tokens[j]];
+        if (val !== undefined) {
+          scores[playerIdx] = val;
+          i = j;
+          break;
+        }
+      }
+    }
+    return scores;
+  }
+
   function createMicIcon() {
     const existing = document.getElementById('bb-mic-icon');
     if (existing) return existing;
@@ -168,17 +201,12 @@
   let qaActive = false;
   let qaResolveAnswer = null;
 
-  function listenForAnswer(timeoutMs) {
+  function listenForFollowUp(timeoutMs) {
     return new Promise(resolve => {
       let done = false;
       const timer = setTimeout(() => {
-        if (!done) {
-          done = true;
-          qaResolveAnswer = null;
-          resolve(null);
-        }
+        if (!done) { done = true; qaResolveAnswer = null; resolve(null); }
       }, timeoutMs);
-
       qaResolveAnswer = function(transcript) {
         if (done) return;
         done = true;
@@ -189,12 +217,26 @@
     });
   }
 
-  async function runScoreSession() {
+  async function processUtterance(rawText) {
     if (qaActive) return;
     qaActive = true;
     micIcon.style.display = 'block';
 
-    const hole = getNextIncompleteHole();
+    let hole = extractHoleNumber(rawText);
+    let names = getPlayerNames();
+    let scores = parseHoleSentence(stripWakeAndHole(rawText), names);
+
+    if (Object.keys(scores).length === 0) {
+      debugLog('Heard wake word — waiting for scores...');
+      const followUp = await listenForFollowUp(8000);
+      if (followUp) {
+        debugLog('Heard: ' + followUp);
+        if (hole === null) hole = extractHoleNumber(followUp);
+        scores = parseHoleSentence(stripWakeAndHole(followUp), names);
+      }
+    }
+
+    if (hole === null) hole = getNextIncompleteHole();
     if (hole === null) {
       debugLog('✅ All 18 holes already complete.');
       await speak('All holes are already filled in.');
@@ -203,30 +245,21 @@
       return;
     }
 
-    debugLog('🏌️ Starting score entry for hole ' + hole);
-    const names = getPlayerNames();
-    const scores = {};
-
-    for (let i = 0; i < 4; i++) {
-      await speak(`What was ${names[i]}'s score?`);
-      const answer = await listenForAnswer(6000);
-      if (answer === null) {
-        debugLog('⚠️ No answer heard for ' + names[i] + ' — leaving blank.');
-        continue;
-      }
-      debugLog('Heard answer for ' + names[i] + ': ' + answer);
-      const num = parseSpokenNumber(answer);
-      if (isNaN(num)) {
-        debugLog('⚠️ Could not understand answer for ' + names[i] + ': "' + answer + '" — leaving blank.');
-        continue;
-      }
-      scores[i] = num;
+    if (Object.keys(scores).length === 0) {
+      debugLog('⚠️ Could not find any names or scores in that.');
+      await speak("I didn't catch any scores. Please try again.");
+      qaActive = false;
+      micIcon.style.display = 'none';
+      return;
     }
 
-    debugLog('✅ Hole ' + hole + ' — collected: ' + JSON.stringify(scores));
     fillScoresWithHighlight(hole, scores);
+    debugLog('✅ Hole ' + hole + ' — collected: ' + JSON.stringify(scores));
 
-    await speak('Scores entered.');
+    const missingNames = names.filter((_, i) => scores[i] === undefined);
+    let msg = 'Hole ' + hole + ' scores entered.';
+    if (missingNames.length) msg += ' Missing ' + missingNames.join(', ') + '.';
+    await speak(msg);
 
     const winner = getSkinWinner(scores, names);
     if (winner) {
@@ -248,36 +281,31 @@
 
     r.onresult = function(event) {
       const result = event.results[event.results.length - 1];
-      let transcripts = [];
-      for (let i = 0; i < result.length; i++) {
-        transcripts.push(result[i].transcript.toLowerCase());
-      }
-      const transcript = transcripts[0];
-      debugLog('Heard: ' + transcript);
+      const transcript = result[0].transcript.toLowerCase();
 
       if (qaActive) {
+        // We're mid-processing (or speaking a confirmation) — ignore our own
+        // audio feedback, UNLESS we're specifically waiting on a follow-up.
         if (qaResolveAnswer) qaResolveAnswer(transcript);
         return;
       }
 
-      const hasTrigger = transcripts.some(t =>
-        t.includes('birdiebookie') ||
-        t.includes('birdie bookie') ||
-        t.includes('birdie rookie') ||
-        t.includes('birdie cookie') ||
-        t.includes('birdie boogie')
-      );
+      debugLog('Heard: ' + transcript);
+
+      const hasTrigger = transcript.includes('birdiebookie') ||
+        transcript.includes('birdie bookie') ||
+        transcript.includes('birdie rookie') ||
+        transcript.includes('birdie cookie') ||
+        transcript.includes('birdie boogie');
 
       if (hasTrigger) {
-        runScoreSession();
+        processUtterance(transcript);
       }
     };
 
     r.onerror = function(e) {
       debugLog('⚠️ Voice error: ' + e.error);
-      if (qaActive) {
-        if (qaResolveAnswer) qaResolveAnswer(null);
-      }
+      if (qaResolveAnswer) qaResolveAnswer(null);
     };
 
     r.onend = function() {
@@ -329,7 +357,7 @@
       userWantsListening = true;
       recognition = buildRecognition();
       try { recognition.start(); } catch(e) {}
-      debugLog('🎙️ Listening for "Hey BirdieBookie"...');
+      debugLog('🎙️ Listening for "BirdieBookie hole 1 John 4 Sonny 4..."');
     }
     updateToggleButton();
   };
