@@ -1431,11 +1431,13 @@ function validateLeftRightZeroSum() {
     const rows = ["lr1", "lr2", "lr3", "lr4"].map(function(id) {
         return document.querySelectorAll("#" + id + " .lrbox");
     });
+
     if (rows.some(function(r) { return r.length === 0; })) return;
 
     for (let i = 0; i < 18; i++) {
         const boxes = rows.map(function(r) { return r[i]; });
         const values = boxes.map(function(b) { return b.value.trim(); });
+
         const allFilled = values.every(function(v) { return v !== ""; });
 
         if (!allFilled) {
@@ -1445,24 +1447,31 @@ function validateLeftRightZeroSum() {
 
         let sum = 0;
         let valid = true;
+
         values.forEach(function(v) {
-            if (v === "") return;
             const n = parseFloat(v);
-            if (isNaN(n)) valid = false;
-            else sum += n;
+
+            if (isNaN(n)) {
+                valid = false;
+            } else {
+                sum += n;
+            }
         });
 
         if (valid && sum !== 0) {
             if (!lrAlertedHoles.has(i)) {
                 lrAlertedHoles.add(i);
+
                 alert("Left-Right hole " + (i + 1) + " doesn't add up to zero. Please check the scores.");
+
+                boxes[boxes.length - 1].value = "";
+                boxes[boxes.length - 1].focus();
             }
         } else {
             lrAlertedHoles.delete(i);
         }
     }
 }
-    function checkSkins() {
     document.querySelectorAll(".hole-box").forEach(box => {
         box.style.backgroundColor = "#111";
         box.style.color = "white";
