@@ -123,7 +123,12 @@
     t = t.replace(/\bbirdie\s?cookie\b/g, '');
     t = t.replace(/\bbirdie\s?boogie\b/g, '');
     t = t.replace(/\bhole\s+\w+\b/g, '');
+    t = t.replace(/\benter\s+scores?\b/g, '');
     return t.trim();
+  }
+
+  function hasEnterCommand(text) {
+    return /\benter\s+scores?\b/.test(text);
   }
 
   function parseHoleSentence(text, names) {
@@ -217,6 +222,28 @@
     });
   }
 
+  function stopListening() {
+    userWantsListening = false;
+    qaActive = false;
+    qaResolveAnswer = null;
+    if (recognition) {
+      try { recognition.stop(); } catch(e) {}
+    }
+    if (micIcon) micIcon.style.display = 'none';
+    if (debugBox) debugBox.style.display = 'none';
+    updateToggleButton();
+  }
+
+  function finishUtterance(goToSleep) {
+    if (goToSleep) {
+      debugLog('🛌 "Enter score" heard — going quiet.');
+      stopListening();
+    } else {
+      qaActive = false;
+      micIcon.style.display = 'none';
+    }
+  }
+
   async function processUtterance(rawText) {
     if (qaActive) return;
     qaActive = true;
@@ -224,6 +251,7 @@
 
     let hole = extractHoleNumber(rawText);
     let names = getPlayerNames();
+    let goToSleep = hasEnterCommand(rawText);
     let scores = parseHoleSentence(stripWakeAndHole(rawText), names);
 
     if (Object.keys(scores).length === 0) {
@@ -232,6 +260,7 @@
       if (followUp) {
         debugLog('Heard: ' + followUp);
         if (hole === null) hole = extractHoleNumber(followUp);
+        if (!goToSleep) goToSleep = hasEnterCommand(followUp);
         scores = parseHoleSentence(stripWakeAndHole(followUp), names);
       }
     }
@@ -240,16 +269,14 @@
     if (hole === null) {
       debugLog('✅ All 18 holes already complete.');
       await speak('All holes are already filled in.');
-      qaActive = false;
-      micIcon.style.display = 'none';
+      finishUtterance(goToSleep);
       return;
     }
 
     if (Object.keys(scores).length === 0) {
       debugLog('⚠️ Could not find any names or scores in that.');
       await speak("I didn't catch any scores. Please try again.");
-      qaActive = false;
-      micIcon.style.display = 'none';
+      finishUtterance(goToSleep);
       return;
     }
 
@@ -267,8 +294,7 @@
       await playCaching();
     }
 
-    qaActive = false;
-    micIcon.style.display = 'none';
+    finishUtterance(goToSleep);
   }
 
   function buildRecognition() {
@@ -345,14 +371,7 @@
     if (!debugBox) debugBox = createDebugBox();
 
     if (userWantsListening) {
-      userWantsListening = false;
-      qaActive = false;
-      qaResolveAnswer = null;
-      if (recognition) {
-        try { recognition.stop(); } catch(e) {}
-      }
-      micIcon.style.display = 'none';
-      debugBox.style.display = 'none';
+      stopListening();
     } else {
       userWantsListening = true;
       recognition = buildRecognition();
