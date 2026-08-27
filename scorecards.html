@@ -1455,7 +1455,7 @@ function validateLeftRightZeroSum() {
         if (valid && sum !== 0) {
             if (!lrAlertedHoles.has(i)) {
                 lrAlertedHoles.add(i);
-                alert("Left-Right hole " + (i + 1) + " doesn't add up to zero. Please check the scores.");
+                alert("Left-Right hole " + (i + 1) + " doesn't add up to zero. Please check the scores."); boxes[boxes.length - 1].value = ""; boxes[boxes.length - 1].focus();
             }
         } else {
             lrAlertedHoles.delete(i);
