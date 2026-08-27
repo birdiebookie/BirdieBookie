@@ -1472,6 +1472,16 @@ function validateLeftRightZeroSum() {
         }
     }
 }
+                alert("Left-Right hole " + (i + 1) + " doesn't add up to zero. Please check the scores.");
+
+                boxes[boxes.length - 1].value = "";
+                boxes[boxes.length - 1].focus();
+            }
+        } else {
+            lrAlertedHoles.delete(i);
+        }
+    }
+}
     document.querySelectorAll(".hole-box").forEach(box => {
         box.style.backgroundColor = "#111";
         box.style.color = "white";
