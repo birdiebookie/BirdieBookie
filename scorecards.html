@@ -1941,7 +1941,7 @@ function updateRabbitMoney(money) {
     if (listEl) {
         listEl.innerHTML = players.map(function(p) {
             const cls = p.total > 0.004 ? "leaderboard-win" : (p.total < -0.004 ? "leaderboard-lose" : "leaderboard-even");
- return '<span class="leaderboard-item ' + cls + '">' + p.name + ' ' + fmtMoney(p.total) + '</span>';           
+return '<span class="leaderboard-item ' + cls + '">' + p.name + ' ' + fmtMoney(p.total) + (p.total > 200 ? ' - I accept cash or Venmo. No checks.' : p.total > 150 ? ' - You should play with better friends.' : p.total > 100 ? ' - Free round' : p.total > 50 ? ' - Easy money' : p.total > 0 ? ' - Nice' : p.total < -100 ? ' - Have you considered pickleball?' : p.total < -75 ? ' - Official ass whipping going on' : p.total < -50 ? ' - Sucker' : p.total < -20 ? ' - Ouch' : '') + '</span>';         
         }).join("");
     }
 }
