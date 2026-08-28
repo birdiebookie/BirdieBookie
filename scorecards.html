@@ -1922,7 +1922,15 @@ function updateRabbitMoney(money) {
             }
         });
     }
-
+    const vegasSection = document.getElementById("vegasSection");
+    if (vegasSection && vegasSection.style.display !== "none") {
+        ["vg1","vg2","vg3","vg4"].forEach(function(id, idx) {
+            const boxes = document.querySelectorAll("#" + id + " .hole-box");
+            if (boxes.length === 21) {
+                money[idx] += parseFloat(boxes[20].value) || 0;
+            }
+        });
+    }
    updateNassauMoney(money);
     updateIndivTeamMoney(money);
             if (JSON.parse(localStorage.getItem("selectedGames") || "[]").some(g => g.includes("Rabbit"))) updateRabbitMoney(money);
