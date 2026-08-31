@@ -2855,7 +2855,7 @@ async function cloudSaveRound() {
     const isNewRoom = !code;
     if (!code) {
         code = generateRoomCode();
-        sessionStorage.setItem("birdiebookieRoomCode", code);
+    localStorage.setItem("birdiebookieRoomCode", code);
     }
 
     const data = collectRoundDataForCloud();
