@@ -7,6 +7,20 @@
     return localStorage.getItem('birdiebookieRoomCode') || sessionStorage.getItem('birdiebookieRoomCode') || '';
   }
 
+  function createRoomCodeIfNeeded() {
+    let code = roomCode();
+    if (!code) {
+      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+      code = '';
+      for (let i = 0; i < 4; i++) code += chars.charAt(Math.floor(Math.random() * chars.length));
+      localStorage.setItem('birdiebookieRoomCode', code);
+      sessionStorage.setItem('birdiebookieRoomCode', code);
+      localStorage.setItem('birdiebookieIsScorekeeper', 'true');
+      sessionStorage.setItem('birdiebookieIsScorekeeper', 'true');
+    }
+    return code;
+  }
+
   function addStyles() {
     if (document.getElementById('bbFastInviteStyles')) return;
     const s = document.createElement('style');
@@ -74,23 +88,18 @@
     const b=document.getElementById('bbfiSend'),st=document.getElementById('bbfiStatus'),c=contacts();
     if(!c.some(x=>x.name||x.phone)){st.textContent='Enter at least one golfer.';return;}
     b.disabled=true;
-    st.textContent='Saving round...';
     try{
       syncNames(c);
 
-      /* Use the existing, already-working BirdieBookie cloud-save routine.
-         This avoids creating a second Supabase connection/save path. */
-      if(typeof window.cloudSaveRound!=='function') throw new Error('BirdieBookie cloud save is not available.');
-      await window.cloudSaveRound();
-
-      const code=roomCode();
-      if(!code) throw new Error('Room code was not created.');
-
+      /* Create the room code BEFORE any await. This keeps navigator.share inside
+         the original button click's user gesture. Cloud saving happens after share. */
+      const code=createRoomCodeIfNeeded();
       const url=joinUrl(code);
       const names=c.filter(x=>x.name).map(x=>x.name).join(', ');
       const text=(names?names+', ':'')+'you are invited to a BirdieBookie round!\n\nRoom Code: '+code+'\n\nTap to join:\n'+url;
 
       if(navigator.share){
+        st.textContent='Opening share...';
         await navigator.share({title:'BirdieBookie Invite',text:text,url:url});
       } else if(navigator.clipboard){
         await navigator.clipboard.writeText(text);
@@ -98,6 +107,12 @@
       } else {
         window.prompt('Copy this BirdieBookie invitation:',text);
       }
+
+      /* Save AFTER the share request so the browser still considers Share a
+         direct response to the SEND INVITES button click. */
+      if(typeof window.cloudSaveRound!=='function') throw new Error('BirdieBookie cloud save is not available.');
+      st.textContent='Saving round...';
+      await window.cloudSaveRound();
 
       const p=document.getElementById(PANEL);if(p)p.remove();
     }catch(e){
