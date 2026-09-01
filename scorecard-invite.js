@@ -7,13 +7,6 @@
     return localStorage.getItem('birdiebookieRoomCode') || sessionStorage.getItem('birdiebookieRoomCode') || '';
   }
 
-  function saveRoom(code) {
-    localStorage.setItem('birdiebookieRoomCode', code);
-    sessionStorage.setItem('birdiebookieRoomCode', code);
-    localStorage.setItem('birdiebookieIsScorekeeper', 'true');
-    sessionStorage.setItem('birdiebookieIsScorekeeper', 'true');
-  }
-
   function addStyles() {
     if (document.getElementById('bbFastInviteStyles')) return;
     const s = document.createElement('style');
@@ -21,6 +14,8 @@
     s.textContent = `
 #bbFastInvitePanel{background:#111;border:3px solid #00ff99;border-radius:16px;margin:14px;padding:16px;box-sizing:border-box;font-family:Arial;text-align:center}
 .bbfi-title{color:#00ff99;font-size:24px;font-weight:bold}.bbfi-sub{color:#fff;font-size:14px;margin:6px auto 14px;max-width:850px}
+.bbfi-skip{display:flex;justify-content:center;align-items:center;gap:10px;color:#ffdd44;font-size:16px;font-weight:bold;margin:0 auto 14px}
+.bbfi-skip input{width:20px;height:20px;accent-color:#00ff99;cursor:pointer}
 .bbfi-head,.bbfi-row{display:grid;grid-template-columns:110px 1fr 1fr;gap:10px;align-items:center;max-width:900px;margin:0 auto 8px}
 .bbfi-head{color:#ffdd44;font-size:13px;font-weight:bold;text-align:left}.bbfi-row strong{color:#00ff99;text-align:left}
 .bbfi-row input{width:100%;box-sizing:border-box;background:#000;color:#fff;border:2px solid #00ff99;border-radius:8px;padding:10px;font-size:16px}
@@ -37,6 +32,7 @@
     p.innerHTML = `
       <div class="bbfi-title">📲 INVITE YOUR GOLFERS</div>
       <div class="bbfi-sub">Enter the 3 golfers you want to invite. Their names will also be placed on the scorecard.</div>
+      <label class="bbfi-skip"><input id="bbfiSkip" type="checkbox"> SKIP INVITES</label>
       <div class="bbfi-head"><span>PLAYER</span><span>NAME</span><span>PHONE NUMBER</span></div>
       ${[1,2,3].map(n=>`<div class="bbfi-row"><strong>PLAYER ${n}</strong><input id="bbfiName${n}" type="text" placeholder="Name"><input id="bbfiPhone${n}" type="tel" placeholder="Phone number"></div>`).join('')}
       <div class="bbfi-actions"><button id="bbfiSend">📲 SEND INVITES</button><span id="bbfiStatus"></span></div>`;
@@ -44,6 +40,12 @@
     const old = JSON.parse(localStorage.getItem('birdiebookieInviteContacts') || '[]');
     [1,2,3].forEach(n=>{ if(old[n-1]){document.getElementById('bbfiName'+n).value=old[n-1].name||'';document.getElementById('bbfiPhone'+n).value=old[n-1].phone||'';} });
     document.getElementById('bbfiSend').onclick = sendInvites;
+    document.getElementById('bbfiSkip').onchange = function(){
+      if(this.checked){
+        const panel=document.getElementById(PANEL);
+        if(panel)panel.remove();
+      }
+    };
   }
 
   function contacts() {
