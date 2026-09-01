@@ -6,12 +6,14 @@
   function roomCode() {
     return localStorage.getItem('birdiebookieRoomCode') || sessionStorage.getItem('birdiebookieRoomCode') || '';
   }
+
   function saveRoom(code) {
     localStorage.setItem('birdiebookieRoomCode', code);
     sessionStorage.setItem('birdiebookieRoomCode', code);
     localStorage.setItem('birdiebookieIsScorekeeper', 'true');
     sessionStorage.setItem('birdiebookieIsScorekeeper', 'true');
   }
+
   function addStyles() {
     if (document.getElementById('bbFastInviteStyles')) return;
     const s = document.createElement('style');
@@ -27,6 +29,7 @@
     `;
     document.head.appendChild(s);
   }
+
   function makePanel() {
     if (document.getElementById(PANEL)) return;
     const p = document.createElement('div');
@@ -42,54 +45,76 @@
     [1,2,3].forEach(n=>{ if(old[n-1]){document.getElementById('bbfiName'+n).value=old[n-1].name||'';document.getElementById('bbfiPhone'+n).value=old[n-1].phone||'';} });
     document.getElementById('bbfiSend').onclick = sendInvites;
   }
+
   function contacts() {
     return [1,2,3].map(n=>({name:document.getElementById('bbfiName'+n).value.trim(),phone:document.getElementById('bbfiPhone'+n).value.trim()}));
   }
+
   function syncNames(c) {
-    c.forEach((x,i)=>{const el=document.getElementById('name'+(i+1));if(el&&x.name){el.value=x.name;el.dispatchEvent(new Event('input',{bubbles:true}));el.dispatchEvent(new Event('change',{bubbles:true}));}});
+    c.forEach((x,i)=>{
+      const el=document.getElementById('name'+(i+1));
+      if(el&&x.name){
+        el.value=x.name;
+        el.dispatchEvent(new Event('input',{bubbles:true}));
+        el.dispatchEvent(new Event('change',{bubbles:true}));
+      }
+    });
     if(typeof updateNames==='function')updateNames();
     if(typeof updateLeaderboard==='function')updateLeaderboard();
     localStorage.setItem('birdiebookieInviteContacts',JSON.stringify(c));
   }
-  async function createRoom() {
-    if(typeof sbClient==='undefined'||typeof collectRoundDataForCloud!=='function') throw new Error('BirdieBookie cloud system is not ready.');
-    let code=roomCode();
-    if(!code) code=generateRoomCode();
-    const data=collectRoundDataForCloud();
-    const payload={room_code:code,data:{...data,played_at:new Date().toISOString()}};
-    if(!roomCode()) payload.scorekeeper_device=DEVICE_ID;
-    const r=await sbClient.from('birdiebookie_rounds').upsert(payload,{onConflict:'room_code'});
-    if(r.error)throw new Error(r.error.message);
-    saveRoom(code);
-    const d=document.getElementById('roomCodeDisplay');if(d)d.textContent='Room Code: '+code;
-    if(typeof setEditingLocked==='function')setEditingLocked(false);
-    return code;
+
+  function joinUrl(code){
+    return window.location.origin+'/scorecards.html?room='+encodeURIComponent(code);
   }
-  function joinUrl(code){return window.location.origin+'/scorecards.html?room='+encodeURIComponent(code)}
+
   async function sendInvites(){
     const b=document.getElementById('bbfiSend'),st=document.getElementById('bbfiStatus'),c=contacts();
     if(!c.some(x=>x.name||x.phone)){st.textContent='Enter at least one golfer.';return;}
-    b.disabled=true;st.textContent='Creating room...';
+    b.disabled=true;
+    st.textContent='Saving round...';
     try{
-      syncNames(c);const code=await createRoom();const url=joinUrl(code);
+      syncNames(c);
+
+      /* Use the existing, already-working BirdieBookie cloud-save routine.
+         This avoids creating a second Supabase connection/save path. */
+      if(typeof window.cloudSaveRound!=='function') throw new Error('BirdieBookie cloud save is not available.');
+      await window.cloudSaveRound();
+
+      const code=roomCode();
+      if(!code) throw new Error('Room code was not created.');
+
+      const url=joinUrl(code);
       const names=c.filter(x=>x.name).map(x=>x.name).join(', ');
       const text=(names?names+', ':'')+'you are invited to a BirdieBookie round!\n\nRoom Code: '+code+'\n\nTap to join:\n'+url;
-      if(navigator.share){await navigator.share({title:'BirdieBookie Invite',text:text,url:url});}
-      else if(navigator.clipboard){await navigator.clipboard.writeText(text);st.textContent='INVITATION COPIED!';}
-      else{window.prompt('Copy this BirdieBookie invitation:',text);}
+
+      if(navigator.share){
+        await navigator.share({title:'BirdieBookie Invite',text:text,url:url});
+      } else if(navigator.clipboard){
+        await navigator.clipboard.writeText(text);
+        st.textContent='INVITATION COPIED!';
+      } else {
+        window.prompt('Copy this BirdieBookie invitation:',text);
+      }
+
       const p=document.getElementById(PANEL);if(p)p.remove();
-    }catch(e){if(e.name==='AbortError')st.textContent='Share cancelled. Room '+roomCode()+' is still active.';else st.textContent='Invite failed: '+e.message;}
-    finally{b.disabled=false;}
+    }catch(e){
+      if(e.name==='AbortError')st.textContent='Share cancelled. Room '+roomCode()+' is still active.';
+      else st.textContent='Invite failed: '+e.message;
+    }finally{b.disabled=false;}
   }
+
   async function autoJoin(){
     const code=(new URLSearchParams(location.search).get('room')||'').trim().toUpperCase();
     if(!code||typeof sbClient==='undefined')return;
     try{
       const r=await sbClient.from('birdiebookie_rounds').select('data,scorekeeper_device').eq('room_code',code).single();
       if(r.error||!r.data){alert('This BirdieBookie room could not be found.');return;}
-      localStorage.setItem('birdiebookieRoomCode',code);sessionStorage.setItem('birdiebookieRoomCode',code);
+      localStorage.setItem('birdiebookieRoomCode',code);
+      sessionStorage.setItem('birdiebookieRoomCode',code);
       const keeper=r.data.scorekeeper_device===DEVICE_ID;
-      localStorage.setItem('birdiebookieIsScorekeeper',keeper?'true':'false');sessionStorage.setItem('birdiebookieIsScorekeeper',keeper?'true':'false');
+      localStorage.setItem('birdiebookieIsScorekeeper',keeper?'true':'false');
+      sessionStorage.setItem('birdiebookieIsScorekeeper',keeper?'true':'false');
       if(typeof applyCloudRoundData==='function')applyCloudRoundData(r.data.data);
       if(typeof setEditingLocked==='function')setEditingLocked(!keeper);
       const d=document.getElementById('roomCodeDisplay');if(d)d.textContent='Room Code: '+code;
@@ -97,6 +122,10 @@
       history.replaceState({},document.title,location.pathname);
     }catch(e){console.error(e)}
   }
-  window.cloudSaveRound=async function(){try{const code=await createRoom();alert('Saved to cloud! Room Code: '+code);}catch(e){alert('Cloud save failed: '+e.message)}};
-  document.addEventListener('DOMContentLoaded',function(){addStyles();makePanel();setTimeout(autoJoin,250);});
+
+  document.addEventListener('DOMContentLoaded',function(){
+    addStyles();
+    makePanel();
+    setTimeout(autoJoin,250);
+  });
 })();
