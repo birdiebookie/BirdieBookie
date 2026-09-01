@@ -15,9 +15,9 @@
       for (let i = 0; i < 4; i++) code += chars.charAt(Math.floor(Math.random() * chars.length));
       localStorage.setItem('birdiebookieRoomCode', code);
       sessionStorage.setItem('birdiebookieRoomCode', code);
-      localStorage.setItem('birdiebookieIsScorekeeper', 'true');
-      sessionStorage.setItem('birdiebookieIsScorekeeper', 'true');
     }
+    localStorage.setItem('birdiebookieIsScorekeeper', 'true');
+    sessionStorage.setItem('birdiebookieIsScorekeeper', 'true');
     return code;
   }
 
@@ -56,6 +56,12 @@
     document.getElementById('bbfiSend').onclick = sendInvites;
     document.getElementById('bbfiSkip').onchange = function(){
       if(this.checked){
+        /* Skipping invites still means THIS device is the scorekeeper.
+           Make sure the existing scorecard inputs are unlocked before removing the panel. */
+        createRoomCodeIfNeeded();
+        if(typeof setEditingLocked==='function') setEditingLocked(false);
+        const d=document.getElementById('roomCodeDisplay');
+        if(d) d.textContent='Room Code: '+roomCode();
         const panel=document.getElementById(PANEL);
         if(panel)panel.remove();
       }
@@ -90,9 +96,6 @@
     b.disabled=true;
     try{
       syncNames(c);
-
-      /* Create the room code BEFORE any await. This keeps navigator.share inside
-         the original button click's user gesture. Cloud saving happens after share. */
       const code=createRoomCodeIfNeeded();
       const url=joinUrl(code);
       const names=c.filter(x=>x.name).map(x=>x.name).join(', ');
@@ -108,8 +111,6 @@
         window.prompt('Copy this BirdieBookie invitation:',text);
       }
 
-      /* Save AFTER the share request so the browser still considers Share a
-         direct response to the SEND INVITES button click. */
       if(typeof window.cloudSaveRound!=='function') throw new Error('BirdieBookie cloud save is not available.');
       st.textContent='Saving round...';
       await window.cloudSaveRound();
