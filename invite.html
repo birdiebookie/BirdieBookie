@@ -14,45 +14,43 @@ body{
 }
 
 .wrap{
-    max-width:1100px;
-    margin:30px auto;
-    padding:20px;
+    max-width:520px;
+    margin:0 auto;
+    padding:16px 16px 40px;
 }
 
 h1{
     color:#00ff99;
     text-align:center;
-    font-size:52px;
+    font-size:32px;
+    margin:18px 0 20px;
 }
 
 .panel{
     border:2px solid #00ff99;
     border-radius:14px;
-    padding:18px;
-    margin-bottom:22px;
+    padding:16px;
+    margin-bottom:18px;
 }
 
 h2{
     color:#00ff99;
-    margin:0 0 16px;
-}
-
-.grid3{
-    display:grid;
-    grid-template-columns:1fr 1fr 1fr;
-    gap:20px;
+    margin:0 0 12px;
+    font-size:16px;
+    letter-spacing:0.5px;
 }
 
 label{
     display:block;
     font-weight:bold;
     margin-bottom:6px;
+    font-size:14px;
+    color:#ccc;
 }
 
-input[type="text"],
-select{
+input[type="text"]{
     width:100%;
-    padding:12px;
+    padding:14px;
     border-radius:8px;
     border:2px solid #00ff99;
     background:#111;
@@ -61,46 +59,102 @@ select{
     box-sizing:border-box;
 }
 
-#selectedGames{
-    height:auto;
-    min-height:150px;
+.roomBox{
+    text-align:center;
+    padding:14px;
+    border-radius:10px;
+    background:#00291c;
+    border:2px solid #00ff99;
+}
+
+.roomBox .code{
+    font-size:30px;
+    font-weight:bold;
+    color:#00ff99;
+    letter-spacing:4px;
+}
+
+.roomBox.warn{
+    background:#2a1500;
+    border-color:#ffdd44;
+}
+
+.roomBox.warn .code{
+    color:#ffdd44;
+    font-size:16px;
+    letter-spacing:normal;
+}
+
+.chips{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+}
+
+.chip{
+    padding:10px 16px;
+    border-radius:20px;
+    border:2px solid #00ff99;
+    background:#111;
+    color:#00ff99;
+    font-weight:bold;
+    font-size:14px;
+    cursor:pointer;
+    user-select:none;
+}
+
+.chip.on{
+    background:#00ff99;
+    color:#000;
+}
+
+.chipNote{
+    font-size:12px;
+    color:#ffdd44;
+    margin-top:8px;
+    min-height:14px;
 }
 
 .playerRow{
-    display:grid;
-    grid-template-columns:180px 1fr 1fr;
-    gap:18px;
-    align-items:center;
     border:2px solid #00ff99;
     border-radius:12px;
-    padding:18px;
-    margin:16px 0;
+    padding:14px;
+    margin-bottom:12px;
 }
 
 .playerTitle{
-    font-size:30px;
+    font-size:18px;
     color:#00ff99;
     font-weight:bold;
+    margin-bottom:10px;
+}
+
+.playerRow input{
+    margin-bottom:10px;
+}
+
+.playerRow input:last-child{
+    margin-bottom:0;
 }
 
 .toggle-row{
     display:flex;
     align-items:center;
-    gap:18px;
-    margin:24px 0;
+    gap:14px;
+    margin:18px 0;
     cursor:pointer;
 }
 
 .toggle-box{
-    width:60px;
-    height:60px;
-    border-radius:12px;
+    width:44px;
+    height:44px;
+    border-radius:10px;
     border:3px solid #00ff99;
     background:#111;
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:32px;
+    font-size:24px;
     flex-shrink:0;
     transition:background 0.2s;
 }
@@ -111,7 +165,7 @@ select{
 }
 
 .toggle-label{
-    font-size:28px;
+    font-size:16px;
     font-weight:bold;
     color:#00ff99;
 }
@@ -120,59 +174,53 @@ select{
     display:none;
 }
 
-button{
+button, .sendBtn{
     width:100%;
-    padding:18px;
-    font-size:30px;
+    padding:16px;
+    font-size:20px;
     font-weight:bold;
     background:#00ff99;
     color:#000;
     border:none;
     border-radius:12px;
     cursor:pointer;
-    margin-top:10px;
+    margin-top:6px;
 }
 
 button:disabled{
-    opacity:.6;
-    cursor:wait;
+    opacity:.5;
+    cursor:not-allowed;
 }
 
-@media (max-width:700px){
+.textLinks{
+    margin-top:18px;
+    display:none;
+}
 
-    .grid3{
-        grid-template-columns:1fr;
-    }
+.textLink{
+    display:block;
+    text-decoration:none;
+    text-align:center;
+    padding:16px;
+    font-size:18px;
+    font-weight:bold;
+    background:#111;
+    color:#00ff99;
+    border:2px solid #00ff99;
+    border-radius:12px;
+    margin-bottom:10px;
+}
 
-    .playerRow{
-        grid-template-columns:1fr;
-        gap:10px;
-        padding:14px;
-    }
+.textLink.sent{
+    background:#00ff99;
+    color:#000;
+}
 
-    .playerTitle{
-        font-size:24px;
-    }
-
-    h1{
-        font-size:36px;
-    }
-
-    input[type="text"],
-    select{
-        font-size:16px;
-        padding:10px;
-    }
-
-    .toggle-label{
-        font-size:20px;
-    }
-
-    .toggle-box{
-        width:44px;
-        height:44px;
-        font-size:24px;
-    }
+.hint{
+    font-size:13px;
+    color:#999;
+    text-align:center;
+    margin-top:4px;
 }
 </style>
 </head>
@@ -183,743 +231,267 @@ button:disabled{
 
 <h1>🏌️ Invite Players</h1>
 
-<div class="grid3">
+<div class="panel">
+    <h2>ROOM</h2>
+    <div class="roomBox" id="roomBox">
+        <div class="code" id="roomCodeText">Loading...</div>
+    </div>
+</div>
 
-    <!-- HOST -->
-    <div class="panel">
-        <h2>HOST INFORMATION</h2>
+<div class="panel">
+    <label>Host Name</label>
+    <input type="text" id="hostName" placeholder="Your name">
+</div>
 
-        <label>Host Name</label>
-        <input type="text" id="hostName">
+<div class="panel">
+    <h2>GAMES (pick up to 2)</h2>
+    <div class="chips" id="gameChips"></div>
+    <div class="chipNote" id="chipNote"></div>
+</div>
+
+<div id="playersWrap">
+
+    <div class="playerRow">
+        <div class="playerTitle">PLAYER 1</div>
+        <input type="text" class="playerName" placeholder="Name">
+        <input type="text" class="playerPhone" placeholder="Phone number" inputmode="tel">
     </div>
 
-   
+    <div class="playerRow">
+        <div class="playerTitle">PLAYER 2</div>
+        <input type="text" class="playerName" placeholder="Name">
+        <input type="text" class="playerPhone" placeholder="Phone number" inputmode="tel">
+    </div>
 
-    <!-- GAMES -->
-    <div class="panel">
-        <h2>GAMES</h2>
-
-        <label>Selected Games</label>
-
-        <select id="selectedGames" multiple size="4">
-            <option value="Nassau">Nassau</option>
-            <option value="Skins">Skins</option>
-            <option value="Wolf">Wolf</option>
-            <option value="Left Right">Left Right</option>
-            <option value="Vegas">Vegas</option>
-            <option value="Quota">Quota</option>
-            <option value="Rabbit">Rabbit</option>
-            <option value="Stableford">Stableford</option>
-            <option value="Bingo Bango Bongo">Bingo Bango Bongo</option>
-            <option value="Game of 9">Game of 9</option>
-            <option value="Chairman">Chairman</option>
-            <option value="Press">Press</option>
-        </select>
-
-        <label style="margin-top:12px;">
-            Round / Room Number
-        </label>
-
-        <input type="text" id="roomCode" readonly>
+    <div class="playerRow">
+        <div class="playerTitle">PLAYER 3</div>
+        <input type="text" class="playerName" placeholder="Name">
+        <input type="text" class="playerPhone" placeholder="Phone number" inputmode="tel">
     </div>
 
 </div>
 
-
-<!-- PLAYER 1 -->
-<div class="playerRow">
-
-    <div class="playerTitle">
-        PLAYER 1
-    </div>
-
-    <div>
-        <label>Name</label>
-        <input type="text" class="playerName">
-    </div>
-
-    <div>
-        <label>Phone Number</label>
-        <input type="text" class="playerPhone">
-    </div>
-
-</div>
-
-
-<!-- PLAYER 2 -->
-<div class="playerRow">
-
-    <div class="playerTitle">
-        PLAYER 2
-    </div>
-
-    <div>
-        <label>Name</label>
-        <input type="text" class="playerName">
-    </div>
-
-    <div>
-        <label>Phone Number</label>
-        <input type="text" class="playerPhone">
-    </div>
-
-</div>
-
-
-<!-- PLAYER 3 -->
-<div class="playerRow">
-
-    <div class="playerTitle">
-        PLAYER 3
-    </div>
-
-    <div>
-        <label>Name</label>
-        <input type="text" class="playerName">
-    </div>
-
-    <div>
-        <label>Phone Number</label>
-        <input type="text" class="playerPhone">
-    </div>
-
-</div>
-
-
-<!-- ADD GOLFERS -->
 <div class="toggle-row" onclick="toggleExtra()">
-
-    <div class="toggle-box" id="extraBox">
-        ＋
-    </div>
-
-    <div class="toggle-label">
-        Add Golfers 4–7
-    </div>
-
+    <div class="toggle-box" id="extraBox">＋</div>
+    <div class="toggle-label">Add Golfers 4–7</div>
 </div>
-
 
 <div id="extra">
 
-    <!-- PLAYER 4 -->
     <div class="playerRow">
-
-        <div class="playerTitle">
-            PLAYER 4
-        </div>
-
-        <div>
-            <label>Name</label>
-            <input type="text" class="playerName">
-        </div>
-
-        <div>
-            <label>Phone Number</label>
-            <input type="text" class="playerPhone">
-        </div>
-
+        <div class="playerTitle">PLAYER 4</div>
+        <input type="text" class="playerName" placeholder="Name">
+        <input type="text" class="playerPhone" placeholder="Phone number" inputmode="tel">
     </div>
 
-
-    <!-- PLAYER 5 -->
     <div class="playerRow">
-
-        <div class="playerTitle">
-            PLAYER 5
-        </div>
-
-        <div>
-            <label>Name</label>
-            <input type="text" class="playerName">
-        </div>
-
-        <div>
-            <label>Phone Number</label>
-            <input type="text" class="playerPhone">
-        </div>
-
+        <div class="playerTitle">PLAYER 5</div>
+        <input type="text" class="playerName" placeholder="Name">
+        <input type="text" class="playerPhone" placeholder="Phone number" inputmode="tel">
     </div>
 
-
-    <!-- PLAYER 6 -->
     <div class="playerRow">
-
-        <div class="playerTitle">
-            PLAYER 6
-        </div>
-
-        <div>
-            <label>Name</label>
-            <input type="text" class="playerName">
-        </div>
-
-        <div>
-            <label>Phone Number</label>
-            <input type="text" class="playerPhone">
-        </div>
-
+        <div class="playerTitle">PLAYER 6</div>
+        <input type="text" class="playerName" placeholder="Name">
+        <input type="text" class="playerPhone" placeholder="Phone number" inputmode="tel">
     </div>
 
-
-    <!-- PLAYER 7 -->
     <div class="playerRow">
-
-        <div class="playerTitle">
-            PLAYER 7
-        </div>
-
-        <div>
-            <label>Name</label>
-            <input type="text" class="playerName">
-        </div>
-
-        <div>
-            <label>Phone Number</label>
-            <input type="text" class="playerPhone">
-        </div>
-
+        <div class="playerTitle">PLAYER 7</div>
+        <input type="text" class="playerName" placeholder="Name">
+        <input type="text" class="playerPhone" placeholder="Phone number" inputmode="tel">
     </div>
 
 </div>
 
-
-<!-- REMEMBER GOLFERS -->
 <div class="toggle-row" onclick="toggleRemember()">
-
-    <div class="toggle-box" id="rememberBox">
-        ＋
-    </div>
-
-    <div class="toggle-label">
-        Remember These Golfers
-    </div>
-
+    <div class="toggle-box" id="rememberBox">＋</div>
+    <div class="toggle-label">Remember These Golfers</div>
 </div>
 
+<button id="sendInvitesBtn">SEND INVITES</button>
+<div class="hint">Tap SEND, then tap each player's text button below.</div>
 
-<!-- SEND -->
-<button id="sendInvitesBtn">
-    SEND INVITES
-</button>
+<div class="textLinks" id="textLinks"></div>
 
 </div>
-
 
 <script>
 
-/* =========================================================
-   SUPABASE
-   ========================================================= */
+const GAME_OPTIONS = ["Nassau","Skins","Wolf","Left Right","Vegas","Quota","Rabbit","Stableford","Bingo Bango Bongo","Game of 9","Chairman","Press"];
+let selectedGames = [];
 
-const SUPABASE_URL =
-        "https://wcbsfanihwqibojxrqns.supabase.co";
-
-const SUPABASE_KEY =
-    "sb_publishable_IY6_FwkAvwrbn7QphyjEhQ_mDUEyQ05";
-
-
-/* =========================================================
-   PAGE LOAD
-   ========================================================= */
-
-document.addEventListener("DOMContentLoaded", async function(){
-
+document.addEventListener("DOMContentLoaded", function(){
     loadHost();
-
-    
-    loadGames();
-
-    await loadRoomNumber();
-
+    buildGameChips();
+    loadRoomCode();
+    loadRememberedGolfers();
 });
 
-
-/* =========================================================
-   HOST
-   ========================================================= */
-
+/* HOST */
 function loadHost(){
-
-    const host =
-        localStorage.getItem("hostName");
-
-    if(host){
-
-        document.getElementById("hostName").value =
-            host;
-
-    }
-
+    const host = localStorage.getItem("hostName");
+    if(host) document.getElementById("hostName").value = host;
+    document.getElementById("hostName").addEventListener("input", function(){
+        localStorage.setItem("hostName", this.value);
+    });
 }
 
+/* ROOM CODE - reads what the scorecard already saved. No network call, no mismatch. */
+function loadRoomCode(){
+    const box = document.getElementById("roomBox");
+    const text = document.getElementById("roomCodeText");
+    const code = localStorage.getItem("birdiebookieRoomCode");
+    const btn = document.getElementById("sendInvitesBtn");
 
-/* =========================================================
-   COURSE
-   ========================================================= */
-
-
-/* =========================================================
-   GAMES
-   ========================================================= */
-
-function loadGames(){
-
-    const gameSelect =
-        document.getElementById("selectedGames");
-
-    let savedGames = [];
-
-    try{
-
-        savedGames =
-            JSON.parse(
-                localStorage.getItem("bb_games") || "[]"
-            );
-
+    if(code){
+        text.textContent = code;
+        box.classList.remove("warn");
+        btn.disabled = false;
+    } else {
+        text.textContent = "No active room yet — open the scorecard and tap SAVE TO CLOUD first, then come back here.";
+        box.classList.add("warn");
+        btn.disabled = true;
     }
-    catch(error){
-
-        savedGames = [];
-
-    }
-
-
-    savedGames.forEach(function(game){
-
-        Array.from(gameSelect.options).forEach(function(option){
-
-            if(option.value === game){
-
-                option.selected = true;
-
-            }
-
-        });
-
-    });
-
-
-    gameSelect.addEventListener("change", function(){
-
-        const selected =
-            Array.from(gameSelect.selectedOptions);
-
-        if(selected.length > 2){
-
-            selected[selected.length - 1].selected =
-                false;
-
-            alert(
-                "You can select a maximum of 2 games."
-            );
-
-        }
-
-    });
-
 }
 
+/* GAMES as tap chips, max 2 */
+function buildGameChips(){
+    const wrap = document.getElementById("gameChips");
+    let saved = [];
+    try{ saved = JSON.parse(localStorage.getItem("bb_games") || "[]"); } catch(e){ saved = []; }
+    selectedGames = saved;
 
-/* =========================================================
-   ROOM NUMBER
-   ========================================================= */
+    wrap.innerHTML = GAME_OPTIONS.map(g =>
+        `<div class="chip${saved.includes(g)?' on':''}" data-game="${g}">${g}</div>`
+    ).join("");
 
-async function loadRoomNumber(){
+    wrap.querySelectorAll(".chip").forEach(chip => {
+        chip.addEventListener("click", function(){
+            const game = this.getAttribute("data-game");
+            const note = document.getElementById("chipNote");
+            const isOn = this.classList.contains("on");
 
-    const roomInput =
-        document.getElementById("roomCode");
-
-
-    /*
-       FIRST TRY SUPABASE.
-
-       This is the important part because the
-       room belongs to the current scorekeeper
-       device and is stored in birdiebookie_rounds.
-    */
-
-    const deviceId =
-        localStorage.getItem(
-            "birdiebookieDeviceId"
-        );
-
-
-    if(deviceId){
-
-        try{
-
-            const url =
-                SUPABASE_URL +
-                "/rest/v1/birdiebookie_rounds" +
-                "?select=room_code" +
-                "&scorekeeper_device=eq." +
-                encodeURIComponent(deviceId) +
-                "&limit=1";
-
-
-            const response =
-                await fetch(url, {
-
-                    method:"GET",
-
-                    headers:{
-                        "apikey":SUPABASE_KEY,
-                        "Authorization":
-                            "Bearer " + SUPABASE_KEY
-                    }
-
-                });
-
-
-            if(response.ok){
-
-                const rows =
-                    await response.json();
-
-
-                if(
-                    rows.length > 0 &&
-                    rows[0].room_code
-                ){
-
-                    const roomCode =
-                        rows[0].room_code;
-
-
-                    localStorage.setItem(
-                        "birdiebookieRoomCode",
-                        roomCode
-                    );
-
-
-                    roomInput.value =
-                        roomCode;
-
-
+            if(isOn){
+                this.classList.remove("on");
+                selectedGames = selectedGames.filter(g => g !== game);
+                note.textContent = "";
+            } else {
+                if(selectedGames.length >= 2){
+                    note.textContent = "You can only pick 2 games. Tap one off first.";
                     return;
-
                 }
-
+                this.classList.add("on");
+                selectedGames.push(game);
+                note.textContent = "";
             }
-
-        }
-        catch(error){
-
-            console.log(
-                "Supabase room lookup error:",
-                error
-            );
-
-        }
-
-    }
-
-
-    /*
-       FALLBACK:
-       Use the locally saved room number if
-       Supabase did not return one.
-    */
-
-    const savedRoom =
-        localStorage.getItem(
-            "birdiebookieRoomCode"
-        );
-
-
-    if(savedRoom){
-
-        roomInput.value =
-            savedRoom;
-
-    }
-
+            localStorage.setItem("bb_games", JSON.stringify(selectedGames));
+        });
+    });
 }
 
-
-/* =========================================================
-   SEND INVITE
-   ========================================================= */
-
-document
-.getElementById("sendInvitesBtn")
-.addEventListener("click", async function(){
-
-    const button =
-        document.getElementById("sendInvitesBtn");
-
-
-    /* -----------------------------------------
-       COURSE
-       ----------------------------------------- */
-
-    const course = "Golf Course";
-
-
-    /* -----------------------------------------
-       GAMES
-       ----------------------------------------- */
-
-    const games =
-        Array.from(
-            document
-            .getElementById("selectedGames")
-            .selectedOptions
-        )
-        .map(option => option.value)
-        .join(", ") ||
-        "Golf";
-
-
-    /* -----------------------------------------
-       ROOM
-       ----------------------------------------- */
-
-    const room =
-        document
-        .getElementById("roomCode")
-        .value ||
-        "";
-
-
-    if(!room){
-
-        alert(
-            "The Room Number has not loaded yet.\n\n" +
-            "Please wait a moment and try again."
-        );
-
-        return;
-
-    }
-
-
-    /* -----------------------------------------
-       FIND FIRST ENTERED PLAYER
-       ----------------------------------------- */
-
-    const phoneInputs =
-        Array.from(
-            document.querySelectorAll(".playerPhone")
-        );
-
-
-    const nameInputs =
-        Array.from(
-            document.querySelectorAll(".playerName")
-        );
-
-
-    let playerPhone = "";
-
-    let playerName = "";
-
-
-    for(let i = 0; i < phoneInputs.length; i++){
-
-        const phone =
-            phoneInputs[i].value.trim();
-
-        if(phone){
-
-            playerPhone =
-                phone.replace(/\D/g,"");
-
-            if(nameInputs[i]){
-
-                playerName =
-                    nameInputs[i].value.trim();
-
-            }
-
-            break;
-
-        }
-
-    }
-
-
-    if(!playerPhone){
-
-        alert(
-            "Please enter a player's phone number first."
-        );
-
-        return;
-
-    }
-
-
-    /* -----------------------------------------
-       INVITATION TEXT
-       ----------------------------------------- */
-
-    let greeting =
-        "Hi";
-
-    if(playerName){
-
-        greeting =
-            "Hi " + playerName;
-
-    }
-
-
-    const message =
-        greeting + "!\n\n" +
-        "🏌️ BirdieBookie Golf Invitation\n\n" +
-        "Course: " + course + "\n" +
-        "Games: " + games + "\n" +
-        "Round / Room Number: " + room + "\n\n" +
-        "Open BirdieBookie and use the Room Number above to join the round.";
-
-
-    button.disabled = true;
-
-
-    try{
-
-        /*
-           MOBILE:
-           Open the phone's SMS app directly with
-           the phone number already entered and the
-           complete invitation already filled in.
-        */
-
-        if(
-            /Android|iPhone|iPad|iPod/i.test(
-                navigator.userAgent
-            )
-        ){
-
-            const smsUrl =
-                "sms:" +
-                playerPhone +
-                "?body=" +
-                encodeURIComponent(message);
-
-
-            window.location.href =
-                smsUrl;
-
-        }
-
-        /*
-           DESKTOP:
-           Keep the normal share/clipboard behavior.
-        */
-
-        else if(navigator.share){
-
-            await navigator.share({
-
-                title:
-                    "BirdieBookie Golf Invitation",
-
-                text:
-                    message
-
-            });
-
-        }
-
-        else{
-
-            await navigator.clipboard.writeText(
-                message
-            );
-
-            alert(
-                "INVITATION COPIED!\n\n" +
-                "Paste it into a text, email, or Messenger."
-            );
-
-        }
-
-    }
-    catch(error){
-
-        console.log(
-            "Invite error:",
-            error
-        );
-
-
-        try{
-
-            await navigator.clipboard.writeText(
-                message
-            );
-
-            alert(
-                "INVITATION COPIED!\n\n" +
-                "Paste it into a text message."
-            );
-
-        }
-        catch(copyError){
-
-            alert(message);
-
-        }
-
-    }
-    finally{
-
-        button.disabled =
-            false;
-
-    }
-
-});
-
-
-/* =========================================================
-   ADD GOLFERS
-   ========================================================= */
-
+/* ADD GOLFERS 4-7 */
 function toggleExtra(){
-
-    const box =
-        document.getElementById("extraBox");
-
-    const extra =
-        document.getElementById("extra");
-
-
-    const isOn =
-        box.classList.toggle("on");
-
-
-    box.textContent =
-        isOn ? "✓" : "＋";
-
-
-    extra.style.display =
-        isOn ? "block" : "none";
-
+    const box = document.getElementById("extraBox");
+    const extra = document.getElementById("extra");
+    const isOn = box.classList.toggle("on");
+    box.textContent = isOn ? "✓" : "＋";
+    extra.style.display = isOn ? "block" : "none";
 }
 
-
-/* =========================================================
-   REMEMBER GOLFERS
-   ========================================================= */
-
+/* REMEMBER GOLFERS */
 function toggleRemember(){
-
-    const box =
-        document.getElementById("rememberBox");
-
-
-    const isOn =
-        box.classList.toggle("on");
-
-
-    box.textContent =
-        isOn ? "✓" : "＋";
-
+    const box = document.getElementById("rememberBox");
+    const isOn = box.classList.toggle("on");
+    box.textContent = isOn ? "✓" : "＋";
+    localStorage.setItem("bb_rememberGolfers", isOn ? "true" : "false");
 }
+
+function loadRememberedGolfers(){
+    const remember = localStorage.getItem("bb_rememberGolfers") === "true";
+    const box = document.getElementById("rememberBox");
+    if(remember){
+        box.classList.add("on");
+        box.textContent = "✓";
+    }
+    let saved = [];
+    try{ saved = JSON.parse(localStorage.getItem("bb_savedGolfers") || "[]"); } catch(e){ saved = []; }
+    const names = document.querySelectorAll(".playerName");
+    const phones = document.querySelectorAll(".playerPhone");
+    saved.forEach((p, i) => {
+        if(names[i] && p.name) names[i].value = p.name;
+        if(phones[i] && p.phone) phones[i].value = p.phone;
+    });
+}
+
+/* Build an sms: link that works on both iPhone and Android */
+function smsHref(phone, body){
+    const digits = phone.replace(/[^\d+]/g, "");
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    const sep = isIOS ? "&" : "?";
+    return "sms:" + digits + sep + "body=" + encodeURIComponent(body);
+}
+
+/* SEND INVITES */
+document.getElementById("sendInvitesBtn").addEventListener("click", function(){
+    const room = localStorage.getItem("birdiebookieRoomCode");
+    if(!room){
+        alert("No active room yet. Open the scorecard and tap SAVE TO CLOUD first.");
+        return;
+    }
+
+    const hostName = document.getElementById("hostName").value.trim();
+    const names = Array.from(document.querySelectorAll(".playerName"));
+    const phones = Array.from(document.querySelectorAll(".playerPhone"));
+    const games = selectedGames.join(" & ") || "Golf";
+    const joinUrl = window.location.origin + "/scorecards.html?room=" + encodeURIComponent(room);
+
+    const players = [];
+    for(let i = 0; i < names.length; i++){
+        const name = names[i].value.trim();
+        const phone = phones[i].value.trim();
+        if(name || phone) players.push({name, phone});
+    }
+
+    if(players.length === 0){
+        alert("Enter at least one golfer's name and phone number.");
+        return;
+    }
+    if(!players.some(p => p.phone)){
+        alert("Enter at least one phone number.");
+        return;
+    }
+
+    if(document.getElementById("bb_remembered") === null &&
+       localStorage.getItem("bb_rememberGolfers") === "true"){
+        localStorage.setItem("bb_savedGolfers", JSON.stringify(players));
+    }
+
+    const linksWrap = document.getElementById("textLinks");
+    linksWrap.innerHTML = "";
+    linksWrap.style.display = "block";
+
+    players.forEach(p => {
+        if(!p.phone) return;
+        const greeting = p.name ? "Hi " + p.name : "Hi";
+        const message = greeting + "!\n\n" +
+            (hostName ? hostName + " invited" : "You're invited") + " you to a BirdieBookie golf round!\n\n" +
+            "Games: " + games + "\n\n" +
+            "Tap to join the scorecard:\n" + joinUrl;
+
+        const a = document.createElement("a");
+        a.className = "textLink";
+        a.href = smsHref(p.phone, message);
+        a.textContent = "📱 Text " + (p.name || p.phone);
+        a.addEventListener("click", function(){
+            this.classList.add("sent");
+            this.textContent = "✓ Sent to " + (p.name || p.phone);
+        });
+        linksWrap.appendChild(a);
+    });
+
+    linksWrap.scrollIntoView({behavior:"smooth", block:"start"});
+});
 
 </script>
 
