@@ -2853,10 +2853,11 @@ function setEditingLocked(locked) {
 async function cloudSaveRound() {
     let code = localStorage.getItem("birdiebookieRoomCode");
     const isNewRoom = !code;
-    if (!code) {
+       if (!code) {
         code = generateRoomCode();
     localStorage.setItem("birdiebookieRoomCode", code);
     }
+    sessionStorage.setItem("birdiebookieRoomCode", code);
 
     const data = collectRoundDataForCloud();
     const payload = { room_code: code, data: { ...data, played_at: new Date().toISOString() } };
@@ -2899,10 +2900,12 @@ async function joinRoundByCode() {
         return;
     }
 
-    localStorage.setItem("birdiebookieRoomCode", code);
+      localStorage.setItem("birdiebookieRoomCode", code);
+    sessionStorage.setItem("birdiebookieRoomCode", code);
 
     const isScorekeeper = data.scorekeeper_device === DEVICE_ID;
     localStorage.setItem("birdiebookieIsScorekeeper", isScorekeeper ? "true" : "false");
+    sessionStorage.setItem("birdiebookieIsScorekeeper", isScorekeeper ? "true" : "false");
 
     applyCloudRoundData(data.data);
     setEditingLocked(!isScorekeeper);
@@ -2963,6 +2966,40 @@ function releaseScorekeeper() {
     localStorage.setItem("birdiebookieIsScorekeeper", "false");
     setEditingLocked(true);
 }
+
+async function autoJoinFromRoomLink() {
+    const params = new URLSearchParams(window.location.search);
+    const code = (params.get("room") || "").trim().toUpperCase();
+    if (!code) return;
+
+    const { data, error } = await sbClient
+        .from("birdiebookie_rounds")
+        .select("data, scorekeeper_device")
+        .eq("room_code", code)
+        .single();
+
+    if (error || !data) {
+        alert("Couldn't find that room. Double check the invite link and try again.");
+        return;
+    }
+
+    localStorage.setItem("birdiebookieRoomCode", code);
+    sessionStorage.setItem("birdiebookieRoomCode", code);
+
+    const isScorekeeper = data.scorekeeper_device === DEVICE_ID;
+    localStorage.setItem("birdiebookieIsScorekeeper", isScorekeeper ? "true" : "false");
+    sessionStorage.setItem("birdiebookieIsScorekeeper", isScorekeeper ? "true" : "false");
+
+    applyCloudRoundData(data.data);
+    setEditingLocked(!isScorekeeper);
+
+    const display = document.getElementById("roomCodeDisplay");
+    if (display) display.textContent = "Room Code: " + code;
+
+    history.replaceState({}, document.title, window.location.pathname);
+}
+
+document.addEventListener("DOMContentLoaded", autoJoinFromRoomLink);
 
 document.addEventListener("DOMContentLoaded", function() {
 
