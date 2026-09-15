@@ -223,7 +223,7 @@ button:disabled{
     margin-top:4px;
 }
 </style>
-</head>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script> <script> const SUPABASE_URL = "https://rkyupmpnsjjgditslpiz.supabase.co"; const SUPABASE_KEY = "sb_publishable_hicUgD5WOhRlbPtwMzkaqQ_WktOF7qL"; const sbClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY); </script> </head>
 
 <body>
 
@@ -234,7 +234,7 @@ button:disabled{
 <div class="panel">
     <h2>ROOM</h2>
     <div class="roomBox" id="roomBox">
-        <div class="code" id="roomCodeText">Loading...</div>
+        <div class="code" id="roomCodeText">Loading...</div><button id="startRoundBtn" onclick="startRound()" style="background:#00ff99;color:black;border:none;padding:10px 20px;border-radius:16px;font-weight:bold;font-size:16px;cursor:pointer;margin-top:10px;">START ROUND</button>
     </div>
 </div>
 
@@ -338,7 +338,28 @@ function loadHost(){
 }
 
 /* ROOM CODE - reads what the scorecard already saved. No network call, no mismatch. */
-function loadRoomCode(){
+function loadRoomCode(){async function startRound(){
+    let code = localStorage.getItem("birdiebookieRoomCode");
+    if(!code){
+        const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+        code = "";
+        for(let i=0;i<4;i++) code += chars.charAt(Math.floor(Math.random()*chars.length));
+        localStorage.setItem("birdiebookieRoomCode", code);
+    }
+    sessionStorage.setItem("birdiebookieRoomCode", code);
+    const btn = document.getElementById("startRoundBtn");
+    btn.disabled = true;
+    btn.textContent = "SAVING...";
+    const { error } = await sbClient.from("birdiebookie_rounds").upsert({ room_code: code, data: {} }, { onConflict: "room_code" });
+    if(error){
+        alert("Could not start round: " + error.message);
+        btn.disabled = false;
+        btn.textContent = "START ROUND";
+        return;
+    }
+    btn.style.display = "none";
+    loadRoomCode();
+}
     const box = document.getElementById("roomBox");
     const text = document.getElementById("roomCodeText");
     const code = localStorage.getItem("birdiebookieRoomCode");
